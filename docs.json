@@ -53,8 +53,8 @@
     ]
   },
   "logo": {
-    "light": "/logo/brightsdk_log_light.svg",
-    "dark": "/logo/brightsdk_log_dark.svg"
+    "light": "/logo/brightsdk_logo_light.svg",
+    "dark": "/logo/brightsdk_logo_dark.svg"
   },
   "navbar": {
     "links": [
