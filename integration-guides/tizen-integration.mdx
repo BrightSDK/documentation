@@ -17,7 +17,7 @@ sidebarTitle: "Tizen"
     <u>Format:</u> It generally consists of a 10-character alphanumeric package ID followed by a project name (e.g., `brightdata.actionGames`).
   </Step>
   <Step title="Extract SDK Framework">
-    Download the latest Bright SDK from the [Bright SDK Dashboard](https://bright-sdk.com/cp/docs/sdk/tizen),unzip it.
+    Download the latest Bright SDK from the [Bright SDK Dashboard](https://bright-sdk.com/cp/docs/sdk/tizen), unzip it.
 
     1. **SDK Structure:**
 
@@ -35,18 +35,17 @@ sidebarTitle: "Tizen"
     ```
 
     2. **SDK Overview:**
-
-    - **sample_app -** Demonstrates possible integration options. Represents the general architecture of Tizen TV applications and can also be used for [Tizen Web Applications](https://docs.tizen.org/application/web/index).
-    - **SDK Integration Components:**
-      - <u>service directory -</u> The main engine containing all logic required to run the SDK. Must be copied next to your other services.
-      - <u>brd_api.js -</u> Frontend interface implementing the consent screen. Must be integrated with your application's frontend.
+       - **sample_app -** Demonstrates possible integration options. Represents the general architecture of Tizen TV applications and can also be used for [Tizen Web Applications](https://docs.tizen.org/application/web/index).
+       - **SDK Integration Components:**
+         1. <u>service directory -</u> The main engine containing all logic required to run the SDK. Must be copied next to your other services.
+         2. <u>brd_api.js -</u> Frontend interface implementing the consent screen. Must be integrated with your application's frontend.
   </Step>
   <Step title="Integrate Bright SDK in Your Code">
     1. **Prepare the Files:**
 
-    <u>Copy Service Folder:</u> copy `sdk/service` folder to your project.
+       <u>Copy Service Folder -</u> copy`sdk/service`folder to your project.
 
-    <u>Add Service to config.xml:</u> Add the following to your `config.xml`:
+       <u>Add Service to config.xml -</u> Add the following to your`config.xml`:
 
     ```xml
     <tizen:privilege name='http://tizen.org/privilege/alarm'/> 
@@ -83,13 +82,12 @@ sidebarTitle: "Tizen"
     </Info>
     2. **Embed SDK Dialog in Your Code:**
 
-    You can use `sample_app` as a reference.
+       You can use `sample_app` as a reference.
 
-    Import brd_api.js
-
-    - Copy `brd_api.js` into your app directory.
-    - Import it from the main file responsible for app initialization.
-    - After `brd_api.js` execution, the `brd_api` global object will be available.
+       **Import brd_api.js**
+       - Copy `brd_api.js` into your app directory.
+       - Import it from the main file responsible for app initialization.
+       - After `brd_api.js` execution, the `brd_api` global object will be available.
 
     ```html
     <!DOCTYPE html>
@@ -107,7 +105,7 @@ sidebarTitle: "Tizen"
     3. **Add SDK Initialization:**
  Call `brd_api.init()` after page load to access all SDK methods.
 
-    Example:
+       Example:
 
     ```html
     <!DOCTYPE html>
@@ -141,12 +139,13 @@ sidebarTitle: "Tizen"
     ```
 
     Consent behavior:
-     - On first call `brd_api.init()` will show a consent screen.
-     - The user must agree or disagree.
-     - Get the result by setting the `on_status_change` callback.
-     - The consent screen handles TV remote control input.
-     - You must disable your remote input processing when the consent screen is shown.
-     - `on_status_change` will be called after the consent screen is closed.
+
+    - On first call `brd_api.init()` will show a consent screen.
+    - The user must agree or disagree.
+    - Get the result by setting the `on_status_change` callback.
+    - The consent screen handles TV remote control input.
+    - You must disable your remote input processing when the consent screen is shown.
+    - `on_status_change` will be called after the consent screen is closed.
   </Step>
   <Step title="Add Opt-In/Out Settings Option">
     SHARED CONTENT - will add
@@ -163,7 +162,7 @@ sidebarTitle: "Tizen"
     **Important: Clean Build**
 
     Remove all dynamic files from the app and service folders before building.
-    Examples: logs, `service/data/*.*`
+ Examples: logs, `service/data/*.*`
   </Step>
   <Step title="Self-check your integration">
     SHARED CONTENT - will add
