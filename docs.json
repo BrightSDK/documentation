@@ -53,14 +53,14 @@
     ]
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/brightsdk_log_light.svg",
+    "dark": "/logo/brightsdk_log_dark.svg"
   },
   "navbar": {
     "links": [
       {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "label": "Contact us!",
+        "href": "mailto:sales_sdk@brightdata.com"
       }
     ],
     "primary": {
