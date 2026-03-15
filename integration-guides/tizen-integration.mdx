@@ -1,0 +1,181 @@
+---
+title: "Bright SDK for Tizen - Integration Guide"
+description: "This guide is for developers who want to monetize TizenOS applications with Bright SDK."
+sidebarTitle: "Tizen"
+---
+
+### Requirements
+
+- Bright SDK for TizenOS requires Tizen 6.5 or newer
+- Latest Bright SDK version for Tizen (supports Tizen 2.4 and above)
+- Latest Tizen Studio installed
+
+<Steps>
+  <Step title="Create App ID on Dashboard">
+    If you haven't done this yet, log in to [your dashboard](https://bright-sdk.com/cp/apps) and create your app ID first.
+
+    <u>Format:</u> It generally consists of a 10-character alphanumeric package ID followed by a project name (e.g., `brightdata.actionGames`).
+  </Step>
+  <Step title="Extract SDK Framework">
+    Download the latest Bright SDK from the [Bright SDK Dashboard](https://bright-sdk.com/cp/docs/sdk/tizen),unzip it.
+
+    1. **SDK Structure:**
+
+    ```markdown
+    sample_app
+    └── sdk
+        ├── consent
+        │   └── brd_api.js
+        └── service
+            ├── peer_node
+            ├── util
+            ├── sdk_service.js
+            ├── service.js
+            └── Ver_conf.js
+    ```
+
+    2. **SDK Overview:**
+
+    - **sample_app -** Demonstrates possible integration options. Represents the general architecture of Tizen TV applications and can also be used for [Tizen Web Applications](https://docs.tizen.org/application/web/index).
+    - **SDK Integration Components:**
+      - <u>service directory -</u> The main engine containing all logic required to run the SDK. Must be copied next to your other services.
+      - <u>brd_api.js -</u> Frontend interface implementing the consent screen. Must be integrated with your application's frontend.
+  </Step>
+  <Step title="Integrate Bright SDK in Your Code">
+    1. **Prepare the Files:**
+
+    <u>Copy Service Folder:</u> copy `sdk/service` folder to your project.
+
+    <u>Add Service to config.xml:</u> Add the following to your `config.xml`:
+
+    ```xml
+    <tizen:privilege name='http://tizen.org/privilege/alarm'/> 
+    
+    <tizen:service id="brdsample0.Service">
+    
+        <tizen:content src="service/service.js"/>
+    
+        <tizen:name>WebUIService</tizen:name>
+    
+        <tizen:description>WebUIService</tizen:description>
+    
+        <tizen:metadata key="meta-key" value="meta-value"/>
+    
+        <tizen:category name="http://tizen.org/category/service"/>
+    
+    </tizen:service>
+    ```
+
+    <Warning>
+      **Important:** Replace `brdsample0` with your package ID.
+    </Warning>
+    <Note>
+      **Package ID Naming Tip:** After creating a Tizen app, we recommend changing the package ID to something more readable using your partner ID from the Control Panel.
+
+      Examples:
+
+      `blUqHYQcnKEE.actionGames` → `brightdata.actionGames`
+
+      `super_games` → `SuperGames` (remove illegal characters)
+    </Note>
+    <Info>
+      The `tizen_ prefix` will be added automatically by the SDK.
+    </Info>
+    2. **Embed SDK Dialog in Your Code:**
+
+    You can use `sample_app` as a reference.
+
+    Import brd_api.js
+
+    - Copy `brd_api.js` into your app directory.
+    - Import it from the main file responsible for app initialization.
+    - After `brd_api.js` execution, the `brd_api` global object will be available.
+
+    ```html
+    <!DOCTYPE html>
+    <html>
+      <head>
+    ...
+        <script src=brd_api.js></script>
+      </head>
+      <body>
+    ...
+      </body>
+    </html>
+    ```
+
+    3. **Add SDK Initialization:**
+ Call `brd_api.init()` after page load to access all SDK methods.
+
+    Example:
+
+    ```html
+    <!DOCTYPE html>
+    <html>
+      <head>
+    ...
+        <script>
+          window.onload = function(){
+      var api_settings = {
+        app_name: 'BrightData Tizen Sample',
+              app_logo: 'icon_130.png',
+            };
+            try {
+        brd_api.init(api_settings, {
+                on_failure: function(message){
+                  console.log('init failure. Error: ', message);
+                },
+                on_success: function(){ console.log('init success'); },
+              });
+            } catch(e){
+              console.error(e); 
+            }
+          };
+        </script>
+    ...
+      </head>
+      <body>
+    ...
+      </body>
+    </html>
+    ```
+
+    Consent behavior:
+     - On first call `brd_api.init()` will show a consent screen.
+     - The user must agree or disagree.
+     - Get the result by setting the `on_status_change` callback.
+     - The consent screen handles TV remote control input.
+     - You must disable your remote input processing when the consent screen is shown.
+     - `on_status_change` will be called after the consent screen is closed.
+  </Step>
+  <Step title="Add Opt-In/Out Settings Option">
+    These are instructions or content that only pertain to the first step.
+  </Step>
+  <Step title="Custom Consent Screen (optional)">
+    These are instructions or content that only pertain to the second step.
+  </Step>
+  <Step title="App Performance">
+    These are instructions or content that only pertain to the third step.
+  </Step>
+  <Step title="Build Your App">
+    Build your app using the [Tizen](https://developer.tizen.org/development/tizen-studio/web-tools/cli) CLI command.
+
+    **Important: Clean Build**
+
+    Remove all dynamic files from the app and service folders before building.
+    Examples: logs, `service/data/*.*`
+  </Step>
+  <Step title="Self-check your integration">
+    These are instructions or content that only pertain to the second step.
+  </Step>
+  <Step title="Update Your Terms of Service">
+    These are instructions or content that only pertain to the third step.
+  </Step>
+  <Step title="Submit Your Integration for review">
+    These are instructions or content that only pertain to the third step.
+  </Step>
+</Steps>
+
+### How to Update SDK
+
+### API Documentation
