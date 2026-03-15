@@ -7,7 +7,7 @@
     "light": "#6b9dfd",
     "dark": "#2563eb"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/logo/bright-sdk.com-favicon.ico",
   "navigation": {
     "tabs": [
       {
@@ -16,9 +16,7 @@
           {
             "group": "Getting started",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
+              "index"
             ]
           },
           {
