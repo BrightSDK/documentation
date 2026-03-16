@@ -26,7 +26,8 @@
               {
                 "group": "Tizen",
                 "pages": [
-                  "integration-guides/tizen-integration"
+                  "integration-guides/tizen-integration",
+                  "integration-guides/how-to-upload-apps-to-the-samsung-store"
                 ]
               }
             ]
