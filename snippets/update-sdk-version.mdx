@@ -1,4 +1,22 @@
 ---
-title: 'Update Sdk Version'
+title: "Update Sdk Version"
 ---
 
+Download the latest SDK from our website and follow these steps:
+
+1. **Standard Update Process**
+   - Replace `brd_api.js` with the newer version.
+   - Delete the existing service directory and replace it with the new version.
+   - **WebOs:** see [<u>3.1 Configure app/service identifiers</u>](https://docs.google.com/document/d/1bJsCxJEMdT3Pyv2t5Sv9fiFllSuiHWt9xzIVXAsjXBI/edit?tab=t.0#heading=h.hnmdz86ieczi)<u>.</u>
+   - **Tizen:** see [<u>3.1 Prepare the Files</u>](https://docs.google.com/document/d/1ca-qa5H7YeNAIssB4dEZjx_V78vnMr9yHnOhdehOVmM/edit?tab=t.0#heading=h.e0bmnoe93iun)
+2. **Hosted Web App Considerations**
+
+   Important: if your app is [<u>Hosted Web App</u>](https://webostv.developer.lge.com/develop/getting-started/web-app-types) maintain SDK file version consistency across all components.
+
+   Since `brd_api.js` is typically hosted on your web server, ensure backward compatibility with previous app versions before submitting to LG.
+
+   Example:
+   - <u>Current version:</u> www.mywebsite.com/myapp (keep old `brd_api.js` here).
+   - <u>Updated version:</u> www.mywebsite.com/myapp/v2 (use new `brd_api.js`).
+
+   This approach allows older app installations to continue functioning while new versions use the updated SDK.

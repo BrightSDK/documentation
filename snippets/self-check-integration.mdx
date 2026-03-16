@@ -1,0 +1,26 @@
+---
+title: "Self Check Integration"
+---
+
+Complete this verification checklist to ensure your integration works correctly before submitting for review.
+
+**Test Checklist:**
+
+1. Test 1: On first `init()` call, consent dialog is shown.
+2. Test 2: Press "Disagree" button.
+   - Consent dialog closes.
+   - `get_status()->consent` returns `false`.
+3. Test 3: Close and reopen app, call `init()`.
+   - Consent screen should NOT be shown.
+   - `get_status()->consent` returns `false`.
+4. Test 4: Call `show_consent()` from settings menu.
+   - Consent dialog is shown.
+5. Test 5: Press "Agree" button.
+   - `get_status()->consent` returns `true`.
+6. Test 6: Restart app, call `init()`.
+   - Consent screen should NOT be shown.
+   - `get_status()->consent` returns `true`.
+7. Test 7: Call `opt_out()` from settings menu.
+   - `get_status()->consent` returns `false`.
+8. Test 8: Checkbox state matches `get_status()->consent` value.
+   - Must call `init()` and `get_status()` before displaying checkbox.
