@@ -22,8 +22,13 @@
           {
             "group": "Integration Guides",
             "pages": [
-              "integration-guides/tizen-integration",
-              "integration-guides/webos-integration"
+              "integration-guides/webos-integration",
+              {
+                "group": "Tizen",
+                "pages": [
+                  "integration-guides/tizen-integration"
+                ]
+              }
             ]
           },
           {
