@@ -25,6 +25,12 @@
               "integration-guides/tizen-integration",
               "integration-guides/webos-integration"
             ]
+          },
+          {
+            "group": "Technical Implementation",
+            "pages": [
+              "technical-implementation/LG-WebOS-SDK"
+            ]
           }
         ]
       },
