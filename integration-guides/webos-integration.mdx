@@ -13,8 +13,7 @@ import OptInOut from "/snippets/add-opt-in-out-option.mdx";
 - webOS CLI (latest).
 - webOS Emulator/Simulator (Recommended).
 
-<Steps titleSize="h3">
-  <Step title="Create App ID on Dashboard">
+### Step 1 Create App ID on Dashboard
     If you haven't done this yet, log in to [your dashboard](https://bright-sdk.com/cp/apps) and create your app ID first.
 
     <Note>
@@ -24,8 +23,8 @@ import OptInOut from "/snippets/add-opt-in-out-option.mdx";
       - Incorrect: `com.game6.nice`
       - Correct: `com.gamesix.nice`
     </Note>
-  </Step>
-  <Step title="Extract SDK Framework">
+
+  ### Step 2 Extract SDK Framework
     Download the latest Bright SDK from the [<u>Bright SDK Dashboard</u>](https://bright-sdk.com/cp/docs/sdk/webos), unzip it.
 
     1. **SDK Structure:**
@@ -45,15 +44,15 @@ import OptInOut from "/snippets/add-opt-in-out-option.mdx";
     ```
 
     2. **SDK Overview:**
-       - **<u>sample_app</u>** <u>-</u> A standard webOS app architecture example. Can also be used as a reference for Hosted Web Apps.
-       - **<u>iframe_sample_app</u>** <u>-</u> Example for apps where the UI is rendered inside an iFrame.
+       - **<u>sample_app</u>** <u>-</u> A standard webOS app architecture example. Can also be used as a reference for Hosted Web Apps.
+       - **<u>iframe_sample_app</u>** <u>-</u> Example for apps where the UI is rendered inside an iFrame.
        - **<u>SDK Integration Components:</u>**
          1. **service directory** - The main engine containing all logic required to run the SDK. Must be copied next to your other services.
          2. **brd_api.js** - Frontend interface implementing the consent screen. Must be integrated with your application's frontend.
 
          See the [<u>sequence diagram</u>](https://help.bright-sdk.com/hc/article_attachments/20309527641489) for integrating the most common case.
-  </Step>
-  <Step title="Integrate Bright SDK in Your Code">
+
+  ### Step 3 Integrate Bright SDK in Your Code
     You must update IDs in the SDK config files to match your application.
 
     1. **Configure app/service identifiers:**
@@ -97,7 +96,7 @@ import OptInOut from "/snippets/add-opt-in-out-option.mdx";
          If your app is rendered in an iFrame:
          - `brd_api.js` must be included in the HTML page that is located on your server.
          - Add `brd_iframe.js` on the `*.ipk` side `iframe_sample_app/lib/brd_iframe.js`).
-         - Set `iframe: true` `in api_settings`.
+         - Set `iframe: true` `in api_settings`.
 
            The location of SDK components is presented in the table below.
 
@@ -152,17 +151,17 @@ import OptInOut from "/snippets/add-opt-in-out-option.mdx";
     - The consent screen handles TV remote control input.
     - You must disable your remote input processing when the consent screen is shown.
     - `on_status_change` will be called after the consent screen is closed.
-  </Step>
-  <Step title="Add Opt-In/Out Settings Option">
+
+  ### Step 4 Add Opt-In/Out Settings Option
     <OptInOut />
-  </Step>
-  <Step title="Custom Consent Screen (optional)">
+
+  ### Step 5 Custom Consent Screen (optional)
     SHARED CONTENT - will add
-  </Step>
-  <Step title="App Performance">
+
+  ### Step 6 App Performance
     SHARED CONTENT - will add
-  </Step>
-  <Step title="Build Your App">
+
+  ### Step 7 Build Your App
     **Build your app using the** [**<u>ares-package</u>**](https://webostv.developer.lge.com/sdk/command-line-interface/intro-cli/?wos_flag=ares-package#ares-package)\*\* CLI command (part of the webOS CLI).\*\*\
     Build Command: Use the `-n` flag to disable source code minification, example:
 
@@ -173,17 +172,15 @@ import OptInOut from "/snippets/add-opt-in-out-option.mdx";
     **Important: Clean Build**
 
     Remove all dynamic files from the app and service folders before building. Examples: logs, `service/data/*.*`
-  </Step>
-  <Step title="Self-check your integration">
+
+  ### Step 8 Self-check your integration
     SHARED CONTENT - will add
-  </Step>
-  <Step title="Update Your Terms of Service">
+
+  ### Step 9 Update Your Terms of Service
     SHARED CONTENT - will add
-  </Step>
-  <Step title="Submit your integration for review">
+
+  ### Step 10 Submit your integration for review
     SHARED CONTENT - will add
-  </Step>
-</Steps>
 
 ### How to Update SDK
 
