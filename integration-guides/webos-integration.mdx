@@ -20,7 +20,7 @@ import ApiDocumentation from "/snippets/api-documentation.mdx";
 - webOS CLI (latest).
 - webOS Emulator/Simulator (Recommended).
 
-### Step 1 Create App ID on Dashboard
+### Step 1: Create App ID on Dashboard
     If you haven't done this yet, log in to [your dashboard](https://bright-sdk.com/cp/apps) and create your app ID first.
 
     <Note>
@@ -31,7 +31,7 @@ import ApiDocumentation from "/snippets/api-documentation.mdx";
       - Correct: `com.gamesix.nice`
     </Note>
 
-  ### Step 2 Extract SDK Framework
+  ### Step 2: Extract SDK Framework
     Download the latest Bright SDK from the [<u>Bright SDK Dashboard</u>](https://bright-sdk.com/cp/docs/sdk/webos), unzip it.
 
     1. **SDK Structure:**
@@ -59,7 +59,7 @@ import ApiDocumentation from "/snippets/api-documentation.mdx";
 
          See the [<u>sequence diagram</u>](https://help.bright-sdk.com/hc/article_attachments/20309527641489) for integrating the most common case.
 
-  ### Step 3 Integrate Bright SDK in Your Code
+  ### Step 3: Integrate Bright SDK in Your Code
     You must update IDs in the SDK config files to match your application.
 
     1. **Configure app/service identifiers:**
@@ -159,16 +159,16 @@ import ApiDocumentation from "/snippets/api-documentation.mdx";
     - You must disable your remote input processing when the consent screen is shown.
     - `on_status_change` will be called after the consent screen is closed.
 
-  ### Step 4 Add Opt-In/Out Settings Option
+  ### Step 4: Add Opt-In/Out Settings Option
     <OptInOut />
 
-  ### Step 5 Custom Consent Screen (optional)
+  ### Step 5: Custom Consent Screen (optional)
     <CustomConsent />
 
-  ### Step 6 App Performance
+  ### Step 6: App Performance
     <AppPerformance />
 
-  ### Step 7 Build Your App
+  ### Step 7: Build Your App
     Build your app using the ares-package CLI command (part of the webOS CLI).
     
     Build Command: Use the -n flag to disable source code minification, example:
@@ -181,13 +181,13 @@ import ApiDocumentation from "/snippets/api-documentation.mdx";
 
     Remove all dynamic files from the app and service folders before building. Examples: logs, `service/data/*.*`
 
-  ### Step 8 Self-check your integration
+  ### Step 8: Self-check your integration
     <SelfCheckIntegration />
 
-  ### Step 9 Update Your Terms of Service
+  ### Step 9: Update Your Terms of Service
     <UpdateTermsOfService />
 
-  ### Step 10 Submit your integration for review
+  ### Step 10: Submit your integration for review
     <SubmitIntegrationReview />
 
 ### How to Update SDK
