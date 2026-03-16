@@ -2,7 +2,7 @@
 title: "How To Upload Apps To The Samsung Store"
 ---
 
-### Prerequisites
+### <u>Prerequisites</u>
 
 Before you begin:
 
@@ -15,24 +15,175 @@ Before you begin:
 
 1. Log in to your Samsung Seller Office.
 2. Navigate to Applications.
-3. Click +Create App.
+3. Click <u>\+Create App</u>.
+
+**<u>Configure App Settings:</u>**
+
+1. Application Name for management: Type the name of your app.
+2. App type: Select Tizen Web Application.
+3. Default Language: Select English.
+4. Click **DONE**.
 
 ### Step 2: Upload App Package
 
+1. Go to Applications \> App Package \> Upload Package.
+2. Upload App Package: Click _"Choose a file"_.
+3. Select your app package file.
+4. Click **DONE**.
+
 ### Step 3: Review Pre-Test Results
+
+**<u>Wait for Pre-Testing:</u>**
+
+When the pre-testing process is finished, you should see: `2. Pre-Test: Pass`.
+
+**<u>Review App Information:</u>**
+
+1. Review the app information displayed.
+2. Share App Source with Members? Select **YES**.
+3. Click **DONE**.
+
+**<u>Confirmation:</u>**
+
+A pop-up will appear: _"Are you sure to add this app package?"_ Click <u>Confirm</u>.
 
 ### Step 4: Upload App Images
 
+Navigate to Applications \> App Images.
+
+**<u>Required Assets:</u>**
+
+1. **Icon Images - 1920x1080**
+
+   You must provide two files:
+   1. Logo Asset with Transparency:
+      - <u>Size:</u> 1920x1080 pixels
+      - <u>Format:</u> PNG (RGBA), 32-bit
+      - <u>Max Size:</u> 300KB
+   2. Background Image:
+      - <u>Size:</u> 1920x1080 pixels
+      - <u>Format:</u> PNG (RGBA) or JPG, 24-bit
+      - <u>Max Size:</u> 300KB
+
+<Note>
+  **<u>Note:</u>** 16:9 and 1:1 full-color assets will be auto-generated from these files.
+</Note>
+
+2. **Icon - 512x423**
+
+   Full-Color Asset:
+   - <u>Size:</u> 512x423 pixels
+   - <u>Format:</u> PNG
+   - <u>Max Size:</u> 300KB
+3. **Screenshot Images**
+
+   Requirements:
+   - <u>Size:</u> 1280x720 or 1920x1080 pixels
+   - <u>Format:</u> JPG
+   - <u>Max Size:</u> 500KB each
+   - <u>Quantity:</u> 4 screenshots required
+
+**<u>Save Images:</u>**
+
+1. Click **SAVE**.
+2. Confirmation pop-up: _"Are you sure to save app images?"_.
+3. Click **Confirm**.
+
 ### Step 5: Service Info
+
+Navigate to Applications \> Service Info.
+
+1. **Service Category**
+
+   Select: Game (Game).
+2. **Rating**
+
+   Choose the appropriate age rating for your app.
+3. **Language**
+
+   Select: English.
+4. **Privacy Information**
+   - Collect Personal Information of your user in this application? - YES.
+   - URL of Privacy Policy in English - Enter your Privacy Policy URL.
+   - URL of Privacy Policy in Korean - Enter your Privacy Policy URL.
+   - Did you check "App Development Privacy Guide"? - YES.
+5. **Seller Information**
+
+   Fill in all required fields.
+6. **Click Save**
 
 ### Step 6: Title/Description on TV
 
+Navigate to Applications \> Title/Description on TV.
+
+**<u>Required Fields:</u>**
+
+1. **App Title:** Enter your app title.
+2. **Description:** Write a description of your app.
+3. **Tags:** Add relevant search tags.
+
+<Note>
+  **Important:** App title should match the `<name>xxxx</name>` in your `config.xml` file.
+</Note>
+
+4. Click **Save**.
+
 ### Step 7: Service Country/Region
+
+Navigate to Applications \> Service Country/Region.
+
+1. **Rating Certification -** No change required.
+2. **Service Country or Region**
+
+   Choose ALL countries EXCEPT:
+   - Brazil
+   - China
+   - Cuba
+   - Iran
+   - Iraq
+   - Korea
+   - Lebanon
+   - Palestinian Territory
+   - Syrian Arab Republic
+3. Click **Save**.
 
 ### Step 8: Billing Info
 
+Navigate to Applications \> Billing Info.
+
+Choose **FREE** and click **Save**.
+
 ### Step 9: App Feature Info
+
+Navigate to Applications \> App Feature Info.
+
+Choose **NOT APPLICABLE** and click **Save**.
 
 ### Step 10: Verification Info
 
+Navigate to Applications \> Verification Info.
+
+1. **App Description File -** Upload a PPTX file describing the application.
+2. **Geo IP Block -** Select: **Unuse**.
+3. **Test Account -** Enter: **"No need"**.
+4. **Voucher Code -** Enter: **"No need"**.
+5. **Click Save.**
+
 ### Step 11: Request New Release
+
+1. **Initiate Release Request**
+   1. Navigate to Applications \> Distribute.
+   2. Click +Request New Release.
+1. **Configure Release**
+
+   Navigate to Applications \> Distribute \> App Service \> Request New Release.
+   1. **Select App Version to Release -** Mark the relevant package checkbox. 
+   2. **Select Model Group to be Released the App Version.**
+   <Note>BrightSDK works on Tizen 6.5 and above</Note>
+   3. **Enter Release Information**
+      - What's new in this version - Add release notes.
+      <Note>These notes are visible to users</Note>
+      - Is mandatory update required for this version? - Select: Optional (Even if user rejects an update, they can still continue to use current version).
+      - Note for Tester (include what's new) - Add notes for the tester team.
+      - Agree to release your application with minor defects? - Select: Yes.
+2. **Submit - Click NEXT.**
