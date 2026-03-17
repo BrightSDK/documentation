@@ -35,7 +35,8 @@
           {
             "group": "Technical Implementation",
             "pages": [
-              "technical-implementation/LG-WebOS-SDK"
+              "technical-implementation/LG-WebOS-SDK",
+              "technical-implementation/how-to-upload-apps-to-the-lg-store"
             ]
           }
         ]

@@ -1,0 +1,248 @@
+---
+title: "How To Upload Apps To The LG Store"
+description: "Submitting apps to the LG Store is a detailed process. This guide will help you submit your application efficiently to minimize delays or rejections."
+sidebarTitle: "Upload Apps TO LG Store"
+---
+
+### <u>Prerequisites</u>
+
+- ✅ Valid LG developer account.
+- ✅ IPK file ready for upload.
+- ✅ App assets prepared (icon, screenshots, splash screen).
+- ✅ Bundle ID matching your Bright SDK dashboard app ID.
+
+### Step 1: Create New App
+
+1. Log in to your [<u>LG developer account</u>](https://us.lgaccount.com/login/sign_in?country=US&svcCode=SVC301)<u>.</u>
+2. Navigate to **Applications** from the left menu bar.
+3. Click + **CREATE APP** button.
+
+### Step 2: Set App ID
+
+**<u>Understanding App IDs:</u>**
+
+- Your Bundle ID: `com.mycompany.tetris`.
+- Bright SDK App ID: `webos_com.mycompany.tetris`.
+
+<Note>
+  **<u>Important:</u>** Enter only your bundle ID (e.g., `com.mycompany.tetris`), NOT the Bright SDK ID.
+</Note>
+
+**<u>Steps:</u>**
+
+1. Enter your bundle ID in the App ID field.
+2. Click Confirm.
+
+### Step 3: Select Service Platform
+
+1. Select **WebOS**.
+2. Do `NOT` select "NetCast".
+3. Click Done.
+
+A drop-down will appear after clicking Done.
+
+### Step 4: Upload IPK File
+
+**<u>First Upload:</u>**
+
+1. Click File Upload.
+2. A pop-up will appear - Click Yes.
+3. Click Add File.
+4. Select your IPK file.
+
+<Note>
+  <u>A message may appear:</u> _"If you want to update files or file information that you have already registered, click the Modify button."_
+</Note>
+
+**<u>Configure for UHD Devices (1920x1080):</u>**
+
+1. In the Select Service drop-down: Choose 2020 and later (version 5.0.0 will auto-update).
+2. In the Resolution drop-down: Choose 1920,1080 : (UHD device).
+3. Click Save.
+
+**<u>Configure for HD Devices (1280x720):</u>**
+
+1. Upload the same IPK file again.
+2. In the Select Service drop-down: Choose 2020 and later (version 5.0.0 will auto-update).
+3. In the Resolution drop-down: Choose 1280,720.
+4. Click Save.
+
+### Step 5: Images Page
+
+**<u>App Icon Image:</u>**
+
+- Requirements:
+  1. <u>Size:</u> 400x400 pixels.
+  2. Must have a solid color border to blend with LG UI elements.
+- Steps:
+  1. Upload your icon image.
+  2. If not automatically updated, manually upload.
+
+**<u>App Tile Color:</u>**
+
+1. Click on the icon picture.
+2. Click on the picture's border to match the color.
+3. Click OK.
+
+**<u>Screenshot Images:</u>**
+
+Upload at least 3 screenshots
+
+Requirements:
+
+- <u>Recommended Size:</u> 1920x1080 or 1280x720 pixels (Square Type Only).
+- <u>Available Formats:</u> JPG, PNG (Max 5MB each).
+
+**<u>Splash Screen Background Image:</u>**
+
+Requirements:
+
+- <u>Recommended Size:</u> 1920x1080 pixels.
+- <u>Available Formats:</u> JPG, PNG (Max 10MB).
+
+### Step 6: Service Country Info
+
+**<u>Select App Service Countries:</u>**
+
+Choose all countries EXCEPT:
+
+- Iran
+- Iraq
+- Syrian Arab Republic
+- Lebanon
+- Occupied Palestinian Territory
+- Democratic Republic of the Congo
+- Korea
+- Cuba
+- Sudan
+- KR_Others (in "others" section)
+
+**<u>Select App Service Languages:</u>**
+
+1. Select English.
+2. Click the arrow pointing right (→).
+3. Click Save.
+
+### Step 7: Display Info
+
+**<u>Set Default Display on TV:</u>**
+
+1. English (Default) App Description: Write a short app description.
+
+**<u>Set Display Other Service Languages:</u>**
+
+1. Add additional languages if needed.
+2. Click Save.
+
+### Step 8: Service Info
+
+**<u>Set App Category:</u>**
+
+1. First drop-down: Choose Game.
+2. Second drop-down: Choose the appropriate subcategory for your game.
+
+**<u>Set App Version:</u>**
+
+Enter your version number (e.g., 1.0.0 for first release, or your new version number).
+
+**<u>Set App Rating:</u>**
+
+Click the appropriate age group/audience.
+
+For Brazil:
+
+1. Choose Content Rating Self-Check option.
+2. Click Assessment of Content Rating.
+3. Go through each section carefully and tick yes/no.
+4. Click Complete.
+
+**<u>Set Content Rating:</u>**
+
+Question: Does the app contain adult content/materials?\
+Answer: No.
+
+**<u>Enter Tag Keywords:</u>**
+
+Guidelines:
+
+- Enter keywords to help users search for your app.
+- Insert spaces between words for multiple keywords (e.g., "car game").
+- Do NOT use special characters - they may cause system errors.
+
+**<u>Enter Contact Seller Information:</u>**
+
+1. Enter an email address.
+2. Click Save.
+
+### Step 9: Feature Info
+
+**<u>Check Device Requirement(s):</u>**
+
+1. Choose None.
+2. Click Save.
+
+### Step 10: Test Info
+
+**<u>Enter Reference E-mail (for QA Results):</u>**
+
+Enter your email address to receive App QA results (Max 5 addresses).
+
+**<u>Upload UX Scenario File (Max 3ea):</u>**
+
+Purpose: Upload UX Scenario files for App QA
+
+Requirements:
+
+- <u>Available Formats:</u> JPG, PNG, PDF, DOC, PPT, XLS, ZIP, XLSX (Max 10MB).
+
+Steps:
+
+1. Download the UX Scenario template.
+2. Fill it with your app information.
+3. Upload the completed file.
+
+<Note>
+  **<u>Tip:</u>** See [<u>this example</u>](https://docs.google.com/presentation/d/18kvCLhbgXzNjjyKkiCDeN4iNn3DpZfVz/edit?slide=id.p13#slide=id.p13) of a complete UX Scenario for a Bright Data application.
+</Note>
+
+**<u>Enter Note for Tester:</u>**
+
+1. Choose "Other information" option.
+2. Write: _"Thanks for reviewing this app"_.
+
+**<u>Test Account/Password (Max 5ea):</u>**
+
+Enter: _Not applicable_.
+
+**<u>Voucher Code:</u>**
+
+Enter: _Not applicable_.
+
+**<u>Additional Settings:</u>**
+
+- <u>Enter Test IPK File or Test URL:</u> Skip this section.
+- <u>Select use Geo IP Block:</u> No.
+- <u>Select use Billing:</u> Not applicable.
+- <u>Select use In-App Ad:</u> Not applicable.
+- <u>Select Player Specification:</u> Not applicable.
+
+Click Save.
+
+### Step 11: Self-Check List
+
+**<u>Complete the Self-Check List:</u>**
+
+1. Click "All Pass".
+2. <u>For the following items, change to N/A:</u> 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 41, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52.
+
+**<u>Submit Your App:</u>**
+
+1. Click Submit.
+2. <u>In the pop-up:</u> Click Yes.
+3. Tick "I agree" for all agreements.
+
+**<u>Important: Privacy Questions:</u>**
+
+<Danger>
+  **<u>Critical Requirement:</u>** Make sure you fill in privacy-related questions based on [<u>this article</u>](https://docs.google.com/document/d/15I2uvRTryJaN0Dp9Oz_55xnAVKWXJFmGHIEVeQMROWA/edit?tab=t.0#heading=h.kaghsej8mg7).
+</Danger>
