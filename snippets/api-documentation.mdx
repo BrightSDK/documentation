@@ -1,6 +1,6 @@
 1. **brd_api.init(settings, callbacks) -** initialize the API. Should be called at the app `init`. All other methods will be accessible after successful initialization. Consent screen will be shown on first initialization by default, but can be skipped by setting `skip_consent` to true.
 2. **brd_api.show_consent(callbacks) -** shows the consent on the user's action. This can be used when a user tries to close an ad or clicks the checkbox to activate Bright SDK.
-3. **brd_api.external_opt_in(callbacks) -** if you use your own consent screen, call it after agreeing. For more details see [<u>custom consent screen (optional)</u>](https://docs.google.com/document/d/1y-qTCojMd4Bp0yVtXyffwELaKgi2tJ1aouD1C6qTHiQ/edit?tab=t.0#bookmark=id.i9h6v51yqu4z)<u>.</u>
+3. **brd_api.external_opt_in(callbacks) -** if you use your own consent screen, call it after agreeing.
 4. **brd_api.opt_out(callbacks) -** disable Bright SDK.
 5. **brd_api.get_status() -** returns status object.
 6. **Status (object) properties:**
@@ -15,7 +15,7 @@
     2. **app_logo (string) -** path to your app logo for the consent screen. **Required.**
     3. **skip_consent (boolean) -** can be passed to skip showing the consent screen on the initialisation of the API. The consent screen can be shown later with `show_consent` method.
     4. **tracking_id (string) -** a unique tracking id for reports and debugging.
-    5. **simple_opt_out (boolean/object) -** allow a user to opt-out by pressing [5] (this will reopen the consent screen). If a user opted out, the consent screen will be shown after several app restarts (see. `repeat_consent`).You can pass the object to this setting to redefine the consent button text. (for more see [<u>4.2 If You Don't Have a Settings Menu</u>](https://docs.google.com/document/d/1y-qTCojMd4Bp0yVtXyffwELaKgi2tJ1aouD1C6qTHiQ/edit?tab=t.0#heading=h.cw9m1tumx1i1)).
+    5. **simple_opt_out (boolean/object) -** allow a user to opt-out by pressing [5] (this will reopen the consent screen). If a user opted out, the consent screen will be shown after several app restarts (see. `repeat_consent`).You can pass the object to this setting to redefine the consent button text.
 
        Example:
 
