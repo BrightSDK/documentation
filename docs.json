@@ -23,12 +23,17 @@
             "group": "Integration Guides",
             "pages": [
               "integration-guides/webos-integration",
-              "integration-guides/windows-integration",
               {
                 "group": "Tizen",
                 "pages": [
                   "integration-guides/tizen-integration",
                   "integration-guides/how-to-upload-apps-to-the-samsung-store"
+                ]
+              },
+              {
+                "group": "Windows",
+                "pages": [
+                  "integration-guides/windows-integration"
                 ]
               }
             ]
