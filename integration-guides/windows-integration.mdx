@@ -91,9 +91,10 @@ Steps:
   **<u>Note:</u>** Init will show consent screen to the user only if they haven't seen it before (didn't agree or disagree). You can disable consent on Init completely with `Setting.SkipConsent=true` and manually show it later with `Api.ShowConsent()`.
 </Note>
 
-See Code Example and use `cs_winform_anycpu` and `cs_wpf_anycpu` from samples directory for reference.
+See [Code Example](https://docs.bright-sdk.com/integration-guides/windows-integration#code-example) and use `cs_winform_anycpu` and `cs_wpf_anycpu` from samples directory for reference.
 
 ### Step 4: Add Opt-In/Out Settings Option
+
 <OptInOut />
 
 ### Step 5: Update Application Installer
@@ -141,7 +142,7 @@ Add the following to your application's update script:
       - Shows consent to user (they can accept or decline).
       - Requires admin privileges.
       - Use `brd_config.json` for consent customization.
-   2. \*\*Option B: \*\*Restart service if it exists
+   2. **Option B:** Restart service if it exists
       - Does not require admin privileges.
       - Does not show consent.
 
@@ -171,6 +172,7 @@ If the `ServiceStatus` is `NotInstalled`, `Installed`, or `NotRunning`, you can 
 You can also trigger this on user action (e.g., "Click here to fix Bright Data SDK and regain benefit").
 
 ### Step 7: Custom Consent Screen (optional)
+
 <CustomConsent />
 
 ### Step 8: Self-Check Your Integration
@@ -193,9 +195,11 @@ While testing, you can:
    - This deletes all SDK files.
 
 ### Step 9: Update Your Terms of Service
+
 <UpdateTermsOfService />
 
 ### Step 10: Submit your integration for review
+
 <SubmitIntegrationReview />
 
 ### How to Update SDK
