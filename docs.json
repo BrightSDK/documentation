@@ -33,7 +33,8 @@
               {
                 "group": "Windows",
                 "pages": [
-                  "integration-guides/windows-integration"
+                  "integration-guides/windows-integration",
+                  "integration-guides/c-c"
                 ]
               }
             ]
