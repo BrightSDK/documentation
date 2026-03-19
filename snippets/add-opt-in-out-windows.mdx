@@ -1,0 +1,87 @@
+---
+title: "Add Opt In Out Windows"
+---
+
+<Danger>
+  **<u>Critical Requirement:</u>** The user must always be able to opt-out of Bright SDK after giving their initial consent.
+</Danger>
+
+Regardless of the user's initial choice, you must add an option for users to opt-in/out at any time. This is usually placed in the settings menu.
+
+**<u>Adding Opt-In/Out to Your Existing Settings Menu:</u>**
+
+<u>Requirements:</u>
+
+1. Add a switch (checkbox/toggle button) labeled "Web Indexing":
+   - Must clearly reflect current status (opted-in or opted-out).
+   - Should be checked if `BrightData.Api.ConsentChoice` is true.
+   - Unchecking it should call `BrightData.Api.OptOut()`.
+   - Checking it should call `BrightData.Api.ShowConsent()`.
+2. Add value text below the switch:
+   - Emphasize the benefits users get when opting in.
+3. Include a "Learn More" option:
+   - Hyperlink should open a browser window: [<u>https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing</u>](https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing)
+4. UX Guidelines:
+   - You're free to choose the UX (radio button, switch, etc.).
+   - The opt-out option must be clearly labeled.
+   - Users must be able to freely opt-out.
+
+<Info>
+  Ensure the opt-out functionality is fully implemented before submitting for review. Bright Data will verify both UX and functionality during the approval process.
+</Info>
+
+**<u>Examples of opted-in and opted-out scenarios:</u>**
+
+<Columns cols={2}>
+  <Card img="/snippets/image/opt-in-out-windows-1.png">
+  </Card>
+
+  <Card img="/snippets/image/opt-in-out-windows-2.png">
+  </Card>
+
+  <Card img="/snippets/image/opt-in-out-windows-3.png">
+  </Card>
+
+  <Card img="/snippets/image/opt-in-out-windows-4.png">
+  </Card>
+</Columns>
+
+**<u>Value Text Examples:</u>**
+
+| **When opted-out:** | **When opted-in:** |
+| :-- | :-- |
+| Enable to see fewer ads | When enabled you see fewer ads |
+| Enable to get 100 extra coins | When enabled you get 100 extra coins |
+| Enable to enjoy premium features | When enabled you enjoy premium features |
+| Enable to get 2 free cars | When enabled you get 2 free cars |
+| Enable to unlock more levels | When enabled you unlock more levels |
+
+**<u>Common Mistakes to Avoid:</u>**
+
+| **Example** | **Issue** |
+| :-- | :-- |
+| Label: "Bright SDK" | ❌ Label should be "Web Indexing", not "Bright/Bright SDK" |
+| Switch without value text | ❌ Missing text emphasizing value to users |
+| Switch without status indicator | ❌ Switch should clearly show current opt-in/opt-out status |
+| No "Learn More" option | ❌ Missing link/QR code to information page |
+
+<u>Optional: Confirmation Dialogs</u>
+
+You may add pop-up/confirmation dialogs to:
+
+- <u>Discourage opt-out:</u> "If you disable Web Indexing, you will start seeing ads. Do you want to see ads?"
+- <u>Confirm opt-out:</u> "You have successfully disabled Web Indexing. You may enable it again anytime from the settings menu."
+
+<Info>
+  You are responsible for the text and design. These will be reviewed before publishing.
+</Info>
+
+**<u>Opt-Out Messages examples:</u>**
+
+<Columns cols={2}>
+  <Card img="/snippets/image/opt-in-out-windows-5.png">
+  </Card>
+
+  <Card img="/snippets/image/opt-in-out-windows-6.png">
+  </Card>
+</Columns>
