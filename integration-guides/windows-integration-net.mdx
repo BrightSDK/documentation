@@ -4,6 +4,8 @@ description: "This guide is for developers who want to monetize .NET Windows app
 sidebarTitle: ".NET"
 ---
 
+import IntegrationWin from "/snippets/win-integration-methods.mdx";
+import AppIdWin from "/snippets/create-app-id-windows.mdx";
 import OptInOutWin from "/snippets/add-opt-in-out-windows.mdx";
 import CustomConsentWin from "/snippets/custom-consent-windows.mdx";
 import AppPerformance from "/snippets/app-performance.mdx";
@@ -15,12 +17,7 @@ import ApiDocumentation from "/snippets/api-documentation.mdx";
 
 ### Integration Methods
 
-<u>You can integrate Bright SDK in 2 ways:</u>
-
-1. Full SDK implementation (recommended) - SDK integrated into your app.
-2. Wrapper installer - Standalone Bright SDK application (easier but lower conversion rates).
-
-This guide covers the full implementation (#1). For #2, contact us for details.
+<IntegrationWin />
 
 ### Requirements
 
@@ -31,9 +28,7 @@ This guide covers the full implementation (#1). For #2, contact us for details.
 
 ### Step 1: Create App ID on Dashboard
 
-If you haven't done this yet, log in to your [<u>Bright SDK Dashboard</u>](https://bright-sdk.com/cp/apps) and create your app ID first.
-
-<u>Format:</u> Your assigned App ID uniquely identifies your application and associates the peers provided by your application with you in the Bright Data network.
+<AppIdWin />
 
 ### Step 2: Extract SDK Framework
 
