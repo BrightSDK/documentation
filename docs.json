@@ -23,6 +23,7 @@
             "group": "Integration Guides",
             "pages": [
               "integration-guides/webos-integration",
+              "integration-guides/windows-integration",
               {
                 "group": "Tizen",
                 "pages": [

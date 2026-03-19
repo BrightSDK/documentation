@@ -1,0 +1,310 @@
+---
+title: "Bright SDK for Windows - Integration Guide"
+description: "This guide is for developers who want to monetize Windows applications with Bright SDK."
+sidebarTitle: "Windows"
+---
+
+import OptInOut from "/snippets/add-opt-in-out-option.mdx";
+import CustomConsent from "/snippets/custom-consent-screen.mdx";
+import AppPerformance from "/snippets/app-performance.mdx";
+import SelfCheckIntegration from "/snippets/self-check-integration.mdx";
+import UpdateTermsOfService from "/snippets/update-terms-of-service.mdx";
+import SubmitIntegrationReview from "/snippets/submit-integration-review.mdx";
+import UpdateSdkVersion from "/snippets/update-sdk-version.mdx";
+import ApiDocumentation from "/snippets/api-documentation.mdx";
+
+### Integration Methods
+
+<u>You can integrate Bright SDK in 2 ways:</u>
+
+1. Full SDK implementation (recommended) - SDK integrated into your app.
+2. Wrapper installer - Standalone Bright SDK application (easier but lower conversion rates).
+
+This guide covers the full implementation (#1). For #2, contact us for details.
+
+### Requirements
+
+- Windows operating system.
+- .NET Framework 4.5 or newer.
+- Visual Studio (recommended).
+- Assigned App ID from Bright SDK Dashboard.
+
+### Step 1: Create App ID on Dashboard
+
+If you haven't done this yet, log in to your [<u>Bright SDK Dashboard</u>](https://bright-sdk.com/cp/apps) and create your app ID first.
+
+<u>Format:</u> Your assigned App ID uniquely identifies your application and associates the peers provided by your application with you in the Bright Data network.
+
+### Step 2: Extract SDK Framework
+
+**<u>Download the SDK:</u>**
+
+Download the latest Bright SDK from the [<u>Bright SDK Dashboard</u>](https://bright-sdk.com/cp/docs/sdk/windows) ,unzip it.
+
+**<u>SDK Structure:</u>**
+
+| File | Description |
+| :-- | :-- |
+| `net_updater32.exe` | Bright Data Windows service installer, uninstaller and entry point |
+| `lum_sdk.dll` | .NET API, targeting .NET Framework 4.5 (AnyCPU) |
+| `brd_config.json` | consent configuration and customization |
+| `lum_sdk.xml` | .NET API documentation for Visual Studio |
+
+<Note>
+  **<u>Important:</u>** `lum_sdk.dll`, `net_updater32.exe` and `brd_config.json` files must be located next to each other when running the application.
+</Note>
+
+### Step 3: Integrate Bright SDK in Your Code
+
+**Add SDK Files to Your Solution:**
+
+1. **Build-time Dependencies:**
+   1. Copy the following files to any location inside your repository:
+      - `lum_sdk.dll`
+      - `lum_sdk.xml`
+   2. Add them to your source control.
+   3. Add reference from your main project to lum\_sdk.dll (Copy Local = true).
+   <Note>
+     `lum_sdk.xml` is for Visual Studio to display documentation of the API and must be located next to the referenced `lum_sdk.dll`. It is not needed at runtime.
+   </Note>
+2. **Run-time Dependencies:**
+   1. Copy the following files to the root of your main project:
+      - `net_updater32.exe`
+      - `brd_config.json`
+   2. Add them to your source control.
+   3. Add them to your project as Content.
+   4. Set them to be copied to the output folder.
+
+**Add SDK Initialization to Your Code:**
+
+Steps:
+
+1. Instantiate `BrightData.Api`.
+2. Initialize it <u>during your application's startup</u> initialization.
+   - Set required fields now and you can customize the consent screen later.
+3. Use `brd_config.json` and/or set them programmatically (see [<u>API Documentation</u>](https://help.bright-sdk.com/hc/en-us/articles/16679091791121-Windows-SDK-Integration-Guide-NET#h_01H4DTG5GKMKKKA2N4GPR4MZSK)).
+4. Write handler code for the user choice changed event.
+   - <u>For example:</u> enable/disable ads or premium features.
+5. Close the SDK when your application is exiting.
+
+<Note>
+  **<u>Note:</u>** Init will show consent screen to the user only if they haven't seen it before (didn't agree or disagree). You can disable consent on Init completely with `Setting.SkipConsent=true` and manually show it later with `Api.ShowConsent()`.
+</Note>
+
+See Code Example and use `cs_winform_anycpu` and `cs_wpf_anycpu` from samples directory for reference.
+
+### Step 4: Add Opt-In/Out Settings Option
+<OptInOut />
+
+### Step 5: Update Application Installer
+
+**<u>Install:</u>**
+
+1. Add the following text to your installation wizard under "License agreement":
+
+```markdown
+{App name} installs Bright Data components (no execution).
+You will be able to view the component details in full before you accept this offer, as well as being able to turn Bright Data on and off directly from the 'App Settings'. Read more about Bright Data's EULA here.
+```
+
+2. Add step to deploy the following to your install directory:
+   - `lum_sdk.dll`
+   - `net_updater32.exe`
+   - `Brd_config.json`
+3. Add step to execute Bright Data service installer during app installation (recommended, optional):
+   - Process to start: `net_updater32.exe --install-ui APPID` It will show the consent screen and if agreed, install the service.
+4. Run `net_updater32.exe -h` in command prompt to see available `--dlg-` parameters, or set them in `brd_config.json`.
+5. Wait for the process to finish before proceeding.
+
+**<u>Uninstall:</u>**
+
+Add the following to your application's uninstall script:
+
+1. Make sure no process uses `lum_sdk.dll` (terminate your application).
+2. Uninstall Bright Data service and remove all SDK files by executing  `net_updater32.exe --uninstall APPID`.
+3. Wait for uninstall to finish before proceeding.
+
+**<u>Update:</u>**
+
+Add the following to your application's update script:
+
+1. Stop your application (which is using `lum_sdk.dll`).
+2. Stop Bright Data service: `luminati_net_updater_APPID`
+   - Where APPID is your assigned APPID with . (dot) replaced with \_ (underscore).
+   - Example: `win_abc.myapp.com` → `luminati_net_updater_win_abc_myapp_com`.
+3. Deploy new files:
+   - `net_updater32.exe`
+   - `lum_sdk.dll`
+   - `Brd_config.json` your
+4. **Choose one option:**
+   1. **Option A:** Install new `net_updater` : `net_updater32.exe --install-ui APPID` 
+      - Shows consent to user (they can accept or decline).
+      - Requires admin privileges.
+      - Use `brd_config.json` for consent customization.
+   2. \*\*Option B: \*\*Restart service if it exists
+      - Does not require admin privileges.
+      - Does not show consent.
+
+### Step 6: Add SDK Service Status Notifications (Optional)
+
+**<u>Notifications:</u>**
+
+You can register your app for notifications about the SDK service status. This allows you to:
+
+- Know if the SDK is in a valid usable state.
+- Prevent users from receiving benefits until they restore the SDK service.
+
+Implementation:
+
+Add delegate for the `BrightData.Api.ServiceStatusChanged` event, the handler for the event is an EventHandler that receives the `BrightData.Api.ServiceStatusChangedEventArgs` as event data.
+
+See `ServiceStatus` enum for more information on the different status.
+
+<Note>
+  The callback function can be called from a different thread than the one used to register the callback.
+</Note>
+
+**<u>Recovery:</u>**
+
+If the `ServiceStatus` is `NotInstalled`, `Installed`, or `NotRunning`, you can use the `FixServiceStatus` API to trigger automatic recovery.
+
+You can also trigger this on user action (e.g., "Click here to fix Bright Data SDK and regain benefit").
+
+### Step 7: Custom Consent Screen (optional)
+<CustomConsent />
+
+### Step 8: Self-Check Your Integration
+
+**<u>Testing Mode:</u>**
+
+You may set `BrightData.Api.Settings.TestMode = true` while developing. This way the BrightData service will not be installed when you accept the consent screen, making it easier to develop.
+
+**<u>Resetting During Testing:</u>**
+
+While testing, you can:
+
+1. Option 1: Opt-out through settings
+   - Remove Bright Data service by opting out through your application settings.
+   - Delete the `luminati` folder (or your entire output folder).
+   - This resets your consent choice.
+   - Consent screen will display next time you run the application.
+2. Option 2: Uninstall via command
+   - Execute `net_updater32.exe --uninstall APPID` in your output folder.
+   - This deletes all SDK files.
+
+### Step 9: Update Your Terms of Service
+<UpdateTermsOfService />
+
+### Step 10: Submit your integration for review
+<SubmitIntegrationReview />
+
+### How to Update SDK
+
+Download the latest SDK from the [<u>Bright SDK Dashboard</u>](https://bright-sdk.com/cp/docs/sdk/windows) and follow these steps:
+
+**<u>Step 1: Replace SDK Files</u>**
+
+Replace the following files with newer versions:
+
+- `net_updater32.exe` (or `net_updater64.exe`).
+- `lum_sdk.dll` (or `lum_sdk32.dll` / `lum_sdk64.dll`).
+- `brd_config.json`.
+
+**<u>Step 2: Rebuild Project</u>**
+
+1. Clean your project.
+2. Rebuild your project.
+
+### Code Example
+
+**Main Application Form:**
+
+```csharp
+public partial class ExampleAppMainForm : Form
+{
+  private BrightData.Api _brightSdk = new BrightData.Api();
+  private void BrightSdk_ConsentChoiceChanged(object sender,
+      BrightData.Api.ConsentChoiceChangedEventArgs e)
+  {
+    if (e.Choice == true)
+    {
+      // user agreed to Bright Data consent
+      // you can disable ads here, for example
+    }
+    else
+    {
+      // user disagreed to the consent or opted out
+      // you can enable ads here, for example
+    }
+  }
+  private void BrightSdk_ServiceStatusChanged(object sender,
+      BrightData.Api.ServiceStatusChangedEventArgs e)
+  {
+    if (!_brightSdk.ConsentChoice)
+      return;
+
+    if (e.Status == BrightData.Api.ServiceStatus.NotInstalled)
+    {
+      // optional: notify user about SDK service not installed and offer to recover
+      // optional: automatically try and recover (might cause bad UX)
+      if (userWantsToRecover || autoRecoverIsEnabled)
+        _brightSdk.FixServiceStatus();
+    }
+    else if (e.Status == BrightData.Api.ServiceStatus.Installed ||
+      e.Status == BrightData.Api.ServiceStatus.NotRunning)
+    {
+      // optional: notify user about SDK service not running and offer to recover
+      // optional: automatically try and recover (might cause bad UX)
+      if (userWantsToRecover || autoRecoverIsEnabled)
+        _brightSdk.FixServiceStatus();
+    }
+  }
+  protected override void OnFormClosing(FormClosingEventArgs e) 
+  {
+      _brightSdk.Close();
+      base.OnFormClosing(e);
+  }
+  private void SettingsToolStripMenuItem_Click(object sender, EventArgs e)
+  {
+    new SettingsForm(_brightSdk).ShowDialog();
+  }
+}
+```
+
+**Settings Form:**
+
+```csharp
+public partial class SettingsForm : Form
+{
+  private readonly BrightData.Api _brightSdk;
+  public SettingsForm(BrightData.Api brightSdk)
+  {
+    InitializeComponent();
+    _brightSdk = brightSdk;
+    _brightSdk.ConsentChoiceChanged += BrightSdk_ConsentChoiceChanged;
+    _chkBrightData.AutoCheck = false;
+    _chkBrightData.Checked = _brightSdk.ConsentChoice ?? false;
+    _chkBrightData.Click += ChkBrightData_Click;
+  }
+  protected override void OnClosing(CancelEventArgs e)
+  {
+    // make sure to avoid event handler leak
+    _brightSdk.ConsentChoiceChanged -= BrightSdk_ConsentChoiceChanged;
+    base.OnClosing(e);
+  }
+  private void ChkBrightData_Click(object sender, EventArgs e)
+  {
+    if (_brightSdk.ConsentChoice == true)
+      _brightSdk.OptOut();
+    else
+      _brightSdk.ShowConsent();
+  }
+  private void BrightSdk_ConsentChoiceChanged(object sender,
+    BrightData.Api.ConsentChoiceChangedEventArgs e)
+  {
+    _chkBrightData.Checked = e.Choice ?? false;
+  }
+}
+```
+
+### API Documentation
