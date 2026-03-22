@@ -14,7 +14,6 @@ import SelfCheckIntegration from "/snippets/self-check-integration.mdx";
 import UpdateTermsOfService from "/snippets/update-terms-of-service.mdx";
 import SubmitIntegrationReview from "/snippets/submit-integration-review.mdx";
 import UpdateSdkVersion from "/snippets/update-sdk-version.mdx";
-import ApiDocumentation from "/snippets/api-documentation.mdx";
 
 ### Integration Methods
 
@@ -263,3 +262,41 @@ public partial class SettingsForm : Form
 ```
 
 ### API Documentation
+
+- Settings in `brd_config.json` are shared by both `lum_sdk.dll` and `net_updater32.exe`.
+- You can use the config file together with the programmatic API.
+- Programmatic API settings take precedence over config file settings.
+
+**<u>Configuration File (brd\_config.json):</u>**
+
+1. <u>Required Properties:</u>
+   | **Property** | **Type** | **Description** |
+   | :-- | :-- | :-- |
+   | `app_id` | string | Your APPID |
+   | `app_name` | string | Friendly name of your app that appears on the consent screen |
+   | `logo_link` | string | URL to your app's logo for the consent screen |
+2. <u>Optional Properties:</u>
+   | Property | Type | Description |
+   | :-- | :-- | :-- |
+   | `benefit` | string | Description of benefits user gets when enabling SDK. Changes consent screen wording. Becomes the first part of the first sentence on the consent screen |
+   | `agree_btn` | string | Text of the consent screen's agree button |
+   | `disagree_btn` | string | Text of the consent screen's disagree button |
+   | `opt_out_txt` | string | Text of the consent screen's opt-out instructions |
+
+**<u>.NET API Reference:</u>**
+
+1. <u>Methods:</u>
+   | **Method** | **Description** |
+   | :-- | :-- |
+   | `void BrightData.Api.Init(Settings settings)` | Initializes Bright SDK. Should be called during app initialization. All other methods will be accessible afterwards. By default, consent screen will be shown if the user hasn't made a choice yet, but can be skipped with `Settings.SkipConsent = true` |
+   | `void BrightData.Api.ShowConsent()` | Displays consent screen. (Clears user choice and removes Brightdata service if installed.) Can be used when a user tries to close an ad or clicks the checkbox to activate Bright SDK |
+   | `void BrightData.Api.OptOut()` | Disables Bright SDK and removes Brightdata service. `ConsentChoice `will change to false |
+   | `void BrightData.Api.Close()` | Closes Bright SDK. Should be called when the application exits if the SDK cannot automatically detect the application exit and keeps running, keeping the app process running |
+   | `string BrightData.Api.GetUuid()` | Returns the peer's unique identifier. Useful for debugging |
+2. <u>Properties:</u>
+3. <u>Events:</u>
+4. <u>Event Example:</u>
+
+**<u>Settings Class:</u>**
+
+**<u>Command Line Tool (net\_updater32.exe):</u>**
