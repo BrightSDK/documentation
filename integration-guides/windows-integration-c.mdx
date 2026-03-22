@@ -4,4 +4,179 @@ description: "This guide is for developers who want to monetize C/C++ Windows ap
 sidebarTitle: "C/C++"
 ---
 
-# SOON
+import IntegrationWin from "/snippets/win-integration-methods.mdx";
+import AppIdWin from "/snippets/create-app-id-windows.mdx";
+import OptInOutWin from "/snippets/add-opt-in-out-windows.mdx";
+import UpdateAppInstall from "/snippets/update-application-installer-windows.mdx";
+import CustomConsentWin from "/snippets/custom-consent-windows.mdx";
+import AppPerformance from "/snippets/app-performance.mdx";
+import SelfCheckIntegration from "/snippets/self-check-integration.mdx";
+import UpdateTermsOfService from "/snippets/update-terms-of-service.mdx";
+import SubmitIntegrationReview from "/snippets/submit-integration-review.mdx";
+import UpdateSdkVersion from "/snippets/update-sdk-version.mdx";
+import ApiDocumentation from "/snippets/api-documentation.mdx";
+
+### Integration Methods
+
+<IntegrationWin />
+
+### Requirements
+
+- Windows operating system.
+- C/C\+\+ compiler (Visual Studio recommended).
+- Assigned App ID from Bright SDK Dashboard.
+
+### Step 1: Create App ID on Dashboard
+
+<AppIdWin />
+
+### Step 2: Extract SDK Framework
+
+1. **Download the SDK:** Download the latest Bright SDK from the [<u>Bright SDK Dashboard</u>](https://bright-sdk.com/cp/docs/sdk/windows) ,unzip it.
+2. **SDK Structure:** Once you unzip the SDK, the following files are of interest:
+   | **File (32-bit)** | **File (64-bit)** | **Description** |
+   | :-- | :-- | :-- |
+   | `net_updater32.exe` | `net_updater64.exe` | Bright Data Windows service installer, uninstaller and entry point |
+   | `lum_sdk32.dll` | `lum_sdk64.dll` | C\+\+ native API |
+   | `lum_sdk32.lib` | `lum_sdk64.lib` | Link lib for \`lum\_sdk(32 |
+   | `lum_sdk.h` | `lum_sdk.h` | Header file to include in C/C\+\+ binaries (imports with \*\_c suffix are c-style) |
+   | `brd_config.json` | `brd_config.json` | Consent configuration and customization |
+   <Note>
+     **<u>Important:</u>** `lum_sdk.dll`, `net_updater32.exe` and `brd_config.json` files must be located next to each other when running the application.
+   </Note>
+
+### Step 3: Integrate Bright SDK in Your Code
+
+1. **<u>Add SDK Files to Your Solution:</u>**
+   1. <u>Microsoft Visual C/C\+\+ App:</u> Use `vc++_console_64bit` from samples directory for reference. Add the following files to your project:
+      - `lum_sdk.h`
+      - `lum_sdk(32|64).lib`
+      - `lum_sdk(32|64).dll`
+      - `brd_config.json` Make sure `lum_sdk(32|64).dll` and `brd_config.json` are copied to the output folder.
+   2. <u>Non-Microsoft or Non-C Apps:</u>
+      - Use the equivalent to `LoadLibrary` & `GetProcAddress` in your language/compiler.
+      - Load all `xxx_c` method variants you require from `lum_sdk32.dll`.
+      - Don't forget to include the `dll` in your app package.
+      - Once imported, use same API flow as in previous implementation sample.
+      <Note>
+        All included samples in the SDK package should compile and run as-is (Note: some of the more exotic samples are not verified for each release).
+      </Note>
+2. **<u>Add SDK Initialization to Your Code:</u>** <u>Steps:</u>
+   1. Configure and initialize Bright SDK during your application's startup initialization.
+   2. Set required fields (use `brd_config.json` and/or set them programmatically - see [<u>API Documentation</u>](https://docs.google.com/document/d/1AIi5kvNqdJZtq4SCKqNRZjWzo676fCZSlyjsKhQDzig/edit?tab=t.0#heading=h.f0myqqi7idid)).
+   3. Call `brd_sdk_init()`.
+   4. Write handler code for the user choice change event.
+      - For example: enable/disable ads or premium features. Close the SDK when your application is exiting.
+   <Note>
+     `brd_sdk_init()` will show a consent screen to the user only if the user hasn't seen the consent screen before (didn't agree or disagree). You can disable consent on `init` completely with `brd_sdk_set_skip_consent_on_init(TRUE)` and manually show it later with `brd_sdk_show_consent()`.
+   </Note>
+   See Code Example at the end of the guide.
+
+### Step 4: Add Opt-In/Out Settings Option
+
+<OptInOutWin />
+
+### Step 5: Update Application Installer
+
+<UpdateAppInstall />
+
+### Step 6: Add SDK Service Status Notifications (Optional)
+
+**<u>Notifications:</u>**
+
+You can register your app for notifications about the SDK service status. This allows you to:
+
+- Know if the SDK is in a valid usable state.
+- Prevent users from receiving benefits until they restore the SDK service.
+
+<u>Implementation:</u>
+
+Register a notification callback using the `brd_sdk_set_service_status_change_cb()` API. The callback function should be of the `brd_sdk_service_status_change_t` type.
+
+See `service_status_t` enum for more information on the different statuses.
+
+<Note>
+  The callback function can be called from a different thread than the one used to register the callback.
+</Note>
+
+**Recovery:**
+
+If the `service_status_t` is `SERVICE_STATUS_NOT_INSTALLED`, `SERVICE_STATUS_INSTALLED`, or `SERVICE_STATUS_NOT_RUNNING`, you can use the `brd_sdk_fix_service_status()` API to trigger automatic recovery.
+
+You can also trigger this on user action (e.g., "Click here to fix Bright Data SDK and regain benefit").
+
+### Step 7: Custom Consent Screen (Optional)
+
+<CustomConsentWin />
+
+### Step 8: Self-Check Your Integration
+
+<SelfCheckIntegration />
+
+### Step 9: Update Your Terms of Service
+
+<UpdateTermsOfService />
+
+### Step 10: Submit Your Integration for Review
+
+<SubmitIntegrationReview />
+
+### How to Update SDK
+
+<UpdateSdkVersion />
+
+### Code Example
+
+```cpp
+#include "lum_sdk.h"
+
+void WINAPI brd_choice_change_cb(int choice)
+{
+    if (choice == LUM_SDK_CHOICE_PEER)
+    {
+        // user agreed to Bright Data consent
+        // you can disable ads here, for example
+    }
+    else
+    {
+        // user disagreed to the consent or opted out
+        // you can enable ads here, for example
+    }
+}
+
+void WINAPI brd_service_status_change_cb(int status)
+{
+    if (!brd_sdk_get_consent_choice())
+        return;
+    if (status == SERVICE_STATUS_NOT_INSTALLED)
+    {
+        // optional: notify user about SDK service not installed and offer to recover
+        // optional: automatically try and recover (might cause bad UX)
+        if (userWantsToRecover || autoRecoverIsEnabled)
+            brd_sdk_fix_service_status();
+    }
+    else if (status == SERVICE_STATUS_INSTALLED || status == SERVICE_STATUS_NOT_RUNNING)
+    {
+        // optional: notify user about SDK service not running and offer to recover
+        // optional: automatically try and recover (might cause bad UX)
+        if (userWantsToRecover || autoRecoverIsEnabled)
+            brd_sdk_fix_service_status();
+    }
+}
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+    brd_sdk_set_appid("APPID_GOES_HERE");
+    brd_sdk_set_app_name("APP_NAME_GOES_HERE");
+    brd_sdk_set_logo_link("URL_TO_YOUR_APP_LOGO_GOES_HERE");
+    brd_sdk_set_choice_change_cb(brd_choice_change_cb);
+    brd_sdk_set_service_status_change_cb(brd_service_status_change_cb);
+    brd_sdk_init();
+
+    // run your application
+    brd_sdk_close();
+    return 0;
+}
+```
+
+### API Documentation

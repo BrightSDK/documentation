@@ -1,0 +1,50 @@
+---
+title: 'Update Application Installer Windows'
+---
+
+**<u>Install:</u>**
+
+1. Add the following text to your installation wizard under "License agreement":
+
+```markdown
+{App name} installs Bright Data components (no execution).
+You will be able to view the component details in full before you accept this offer, as well as being able to turn Bright Data on and off directly from the 'App Settings'. Read more about Bright Data's EULA here.
+```
+
+2. Add step to deploy the following to your install directory:
+   - `lum_sdk.dll`
+   - `net_updater32.exe`
+   - `Brd_config.json`
+3. Add step to execute Bright Data service installer during app installation (recommended, optional):
+   - Process to start: `net_updater32.exe --install-ui APPID` It will show the consent screen and if agreed, install the service.
+4. Run `net_updater32.exe -h` in command prompt to see available `--dlg-` parameters, or set them in `brd_config.json`.
+5. Wait for the process to finish before proceeding.
+
+**<u>Uninstall:</u>**
+
+Add the following to your application's uninstall script:
+
+1. Make sure no process uses `lum_sdk.dll` (terminate your application).
+2. Uninstall Bright Data service and remove all SDK files by executing  `net_updater32.exe --uninstall APPID`.
+3. Wait for uninstall to finish before proceeding.
+
+**<u>Update:</u>**
+
+Add the following to your application's update script:
+
+1. Stop your application (which is using `lum_sdk.dll`).
+2. Stop Bright Data service: `luminati_net_updater_APPID`
+   - Where APPID is your assigned APPID with . (dot) replaced with \_ (underscore).
+   - Example: `win_abc.myapp.com` → `luminati_net_updater_win_abc_myapp_com`.
+3. Deploy new files:
+   - `net_updater32.exe`
+   - `lum_sdk.dll`
+   - `Brd_config.json` your
+4. **Choose one option:**
+   1. **Option A:** Install new `net_updater` : `net_updater32.exe --install-ui APPID` 
+      - Shows consent to user (they can accept or decline).
+      - Requires admin privileges.
+      - Use `brd_config.json` for consent customization.
+   2. **Option B:** Restart service if it exists
+      - Does not require admin privileges.
+      - Does not show consent.
