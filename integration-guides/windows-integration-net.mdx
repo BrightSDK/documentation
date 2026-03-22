@@ -294,9 +294,95 @@ public partial class SettingsForm : Form
    | `void BrightData.Api.Close()` | Closes Bright SDK. Should be called when the application exits if the SDK cannot automatically detect the application exit and keeps running, keeping the app process running |
    | `string BrightData.Api.GetUuid()` | Returns the peer's unique identifier. Useful for debugging |
 2. <u>Properties:</u>
+   | **Property** | **Description** |
+   | :-- | :-- |
+   | `bool? BrightData.Api.ConsentChoice { get; }` | Returns the user's consent choice. true if the user agreed, false if disagreed and null if no choice has been made |
 3. <u>Events:</u>
+   | **Event** | **Description** |
+   | :-- | :-- |
+   | `event BrightData.Api.ConsentChoiceChanged` | Occurs when the user's consent choice has changed. For example when they accepted the consent or they disabled Bright SDK through your application settings |
+   | `event BrightData.Api.ConsentDialogShown` | Occurs when the consent dialog is shown |
+   | `event BrightData.Api.ConsentDialogClosed` | Occurs when the consent dialog is closed |
 4. <u>Event Example:</u>
+   ```csharp
+   _brightSdk.ConsentChoiceChanged += (sender, e) => 
+   {
+       if (e.Choice == true)
+           // User opted in
+       else
+           // User opted out
+   };
+   ```
 
 **<u>Settings Class:</u>**
 
+`class BrightData.Api.Settings`
+
+1. <u>Required Properties:</u>
+   | **Property** | **Type** | **Description** |
+   | :-- | :-- | :-- |
+   | `AppId` | string | Your APPID. Required if not in `brd_config.json` |
+   | `AppName` | string | Friendly name for consent screen. Required if not in `brd_config.json` |
+   | `AppLogo` | string | URL to your app's logo. Required if not in `brd_config.json` |
+2. <u>Basic Configuration:</u>
+   | **Property** | **Type** | **Default** | **Description** |
+   | :-- | :-- | :-- | :-- |
+   | `SkipConsent` | bool | false | If true, Init won't show consent screen. Use `ShowConsent()` to display later |
+   | `Benefit` | string | - | Description of benefits. Changes consent wording. Becomes first part of first sentence |
+   | `OptOutText` | string | - | Text of consent opt-out instructions |
+   | `Campaign` | string | - | Optional parameter for statistics breakdown by campaign |
+3. <u>Button Customization:</u>
+   | **Property** | **Type** | **Description** |
+   | :-- | :-- | :-- |
+   | `AgreeBtn` | string | Text of consent screen's agree button |
+   | `DisagreeBtn` | string | Text of consent screen's disagree button |
+4. <u>Visual Customization:</u>
+   | **Property** | **Type** | **Format** | **Description** |
+   | :-- | :-- | :-- | :-- |
+   | `TextColor` | string | Hex ARGB "#AABBCCDD" | Color of consent text |
+   | `AppNameColor` | string | Hex ARGB "#AABBCCDD" | Color of application name text |
+   | `BrightDataLogoColor` | string | Hex ARGB "#AABBCCDD" | Color of BrightData logo background |
+   | `BackgroundColor` | string | Hex ARGB "#AABBCCDD" | Background color of consent screen |
+   | `ButtonColor` | string | Hex ARGB "#AABBCCDD" | Button color of consent screen |
+5. <u>Localization:</u>
+   | **Property** | **Type** | **Default** | **Description** |
+   | :-- | :-- | :-- | :-- |
+   | `Language` | string | "en-US" | Language code for consent screen. Supported: en-US, de-De, es-Es, fr-FR, it-IT, pt-PT, ru-RU, zh-CN |
+
 **<u>Command Line Tool (net\_updater32.exe):</u>**
+
+1. **Help & Information:**
+   | **Argument** | **Description** |
+   | :-- | :-- |
+   | `-h` | Print command descriptions and help |
+2. **Service Management:**
+   | **Argument** | **Description** |
+   | :-- | :-- |
+   | `--install-ui <appid>` | Install service with provided appid after showing dialog and getting user permission |
+   | `--uninstall <appid>` | Remove service with provided appid (must match appid used during install) |
+   | `--start-service <appid>` | Start Bright Data service |
+   | `--stop-service <appid>` | Stop Bright Data service |
+   | `--check-peer <appid>` | Validate peer |
+3. **Dialog Customization:**
+   | **Argument** | **Description** |
+   | :-- | :-- |
+   | `--dlg-app-name <name>` | Friendly name of your app for consent screen |
+   | `--dlg-logo-link <logo>` | URL to your app's logo for consent screen |
+   | `--dlg-benefit <benefit>` | Description of benefits. Changes consent wording |
+   | `--dlg-language <culture>` | Language code. Default: "en-US". Supported: en-US, de-De, es-Es, fr-FR, it-IT, pt-PT, ru-RU, zh-CN |
+4. **Analytics:**
+   | **Argument** | **Description** |
+   | :-- | :-- |
+   | `--campaign <campaign_id>` | Optional parameter for statistics breakdown by campaign |
+5. **Command Examples:**
+   ```bash
+   # Install with dialog
+   net_updater32.exe --install-ui myapp.example.com
+   # Install with customization
+   net_updater32.exe --install-ui myapp.example.com --dlg-app-name "My App" --dlg-logo-link "https://example.com/logo.png"
+   # Uninstall
+   net_updater32.exe --uninstall myapp.example.com
+   # Start/Stop service
+   net_updater32.exe --start-service myapp.example.com
+   net_updater32.exe --stop-service myapp.example.com
+   ```
