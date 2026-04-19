@@ -40,8 +40,8 @@
                 "group": "webOS",
                 "pages": [
                   "integration-guides/webos-integration",
-                  "technical-implementation/LG-WebOS-SDK",
-                  "technical-implementation/how-to-upload-apps-to-the-lg-store"
+                  "technical-implementation/how-to-upload-apps-to-the-lg-store",
+                  "technical-implementation/LG-WebOS-SDK"
                 ]
               }
             ]
