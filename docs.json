@@ -22,11 +22,11 @@
           {
             "group": "Integration Guides",
             "pages": [
-              "integration-guides/webos-integration",
               {
                 "group": "Tizen",
                 "pages": [
-                  "integration-guides/tizen-integration"
+                  "integration-guides/tizen-integration",
+                  "technical-implementation/how-to-upload-apps-to-the-samsung-store"
                 ]
               },
               {
@@ -35,15 +35,15 @@
                   "integration-guides/windows-integration-net",
                   "integration-guides/windows-integration-c"
                 ]
+              },
+              {
+                "group": "webOS",
+                "pages": [
+                  "integration-guides/webos-integration",
+                  "technical-implementation/LG-WebOS-SDK",
+                  "technical-implementation/how-to-upload-apps-to-the-lg-store"
+                ]
               }
-            ]
-          },
-          {
-            "group": "Technical Implementation",
-            "pages": [
-              "technical-implementation/LG-WebOS-SDK",
-              "technical-implementation/how-to-upload-apps-to-the-lg-store",
-              "technical-implementation/how-to-upload-apps-to-the-samsung-store"
             ]
           }
         ]
