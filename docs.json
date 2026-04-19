@@ -26,8 +26,7 @@
               {
                 "group": "Tizen",
                 "pages": [
-                  "integration-guides/tizen-integration",
-                  "integration-guides/how-to-upload-apps-to-the-samsung-store"
+                  "integration-guides/tizen-integration"
                 ]
               },
               {
@@ -43,7 +42,8 @@
             "group": "Technical Implementation",
             "pages": [
               "technical-implementation/LG-WebOS-SDK",
-              "technical-implementation/how-to-upload-apps-to-the-lg-store"
+              "technical-implementation/how-to-upload-apps-to-the-lg-store",
+              "technical-implementation/how-to-upload-apps-to-the-samsung-store"
             ]
           }
         ]
