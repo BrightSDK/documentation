@@ -316,11 +316,36 @@ add shared content
 
 ## Step 7: Flows of Showing the Consent Screen
 
+This section describes the `authorizeDevice` method and the two consent screen flows available.
+
+Since version `<version>`, you can use either your own custom consent screen or the SDK's built-in consent screen, and call `external_opt_in `methods.
+
+**Flow 1 - SDK's built-in consent screen:**\
+The SDK checks authorization internally. No additional setup required.
+
+**Flow 2 - Custom consent screen:**
+
+1. Call `brd_api.authorizeDevice()` - status must be .authorized to proceed.
+2. Present your custom consent screen.
+3. Call `brd_api.consent_shown()` after the screen is presented to register its display.
+4. Call `external_opt_in()` on agree, `opt_out()` on disagree.
+
+<Tip>
+  See [<u>Custom Consent Screen (optional)</u>](https://docs.google.com/document/d/14TcuduJU-AzxYBWyttBmSVb_M0rELo8-4dKY2YMue0M/edit?tab=t.0#heading=h.ffcu2euoip0n) for design and full integration requirements.
+</Tip>
+
 ## Step 8: App Performance
 
 add shared content
 
 ## Step 9: Build & Run Your App
+
+- Native iOS / tvOS - Use Xcode to build and run your app. Ensure New Build System is selected under File → Project Settings.
+- Unity After generating the Xcode project (see [<u>Step 3.5.3</u>](https://docs.google.com/document/d/14TcuduJU-AzxYBWyttBmSVb_M0rELo8-4dKY2YMue0M/edit?tab=t.0#heading=h.yx6jn3coq7k3)):
+  1. Select the main project scheme.
+  2. Connect your iPhone/Apple TV and select it as the target device.
+  3. Configure Signing & Capabilities for the main target.
+  4. Press Product → Run (⌘R).
 
 ## Step 10: Update Your Terms of Service
 
