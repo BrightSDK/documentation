@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "maple",
+  "theme": "almond",
   "name": "Bright SDK Documentation",
   "colors": {
     "primary": "#3d7ffc",
