@@ -1,0 +1,339 @@
+---
+title: "Bright SDK for iOS/tvOS - Integration Guide"
+description: "This guide is for developers who want to monetize iOS/tvOS applications with Bright SDK."
+sidebarTitle: "iOS/tvOS SDK"
+---
+
+## Requirements
+
+- iOS 13.0 or newer / tvOS 15.0 or newer
+- Xcode (13.4 or newer recommended)
+- Bright SDK for iOS/tvOS (latest)
+- For Unity projects: Unity Editor 2020.2.5f1 or newer
+
+<Note>
+  Bright Data **must** review your application **before** you submit it to the Apple App Store. Send your test build via TestFlight for review.
+</Note>
+
+## Important Notes
+
+- Take care when implementing the consent screen and the opt-out mechanisms in a way which follows guidelines in this document.
+- Users must **always, voluntarily** decide to opt in after seeing the consent screen, and must **always** have an easy way to opt out.
+- Bright Data recommends offering value in exchange for opting in (e.g., fewer ads, bonus coins, premium features). However, simply asking for user support is also acceptable.
+- Do not suggest Bright SDK as an alternative to paying for premium items or subscriptions via the App Store. **This violates App Store policy**.
+- **Bright SDK does not do any user tracking**. It is not related to Apple's ATT (App Tracking Transparency). You may show the consent screen regardless of ATT status.
+- Bright Data reviews SDK integration after initial release and regularly thereafter. Your account will be terminated if you violate the guidelines in this document.
+- Starting from version 1.385.451, Bright SDK checks for parental controls. If enabled, the consent screen will **NOT** be displayed - this is by design to ensure informed consent.
+
+## Step 1: Create App ID on Dashboard
+
+If you haven't done this yet, log in to [<u>your dashboard</u>](https://bright-sdk.com/cp/apps) and create your app ID first.
+
+The App ID for iOS/tvOS apps is constructed as follows: `ios_<your Apple Bundle ID>`
+
+<u>Example:</u> If your Bundle ID is `com.mycompany.MyGame`, your App ID will be `ios_com.mycompany.MyGame`.
+
+## Step 2: Extract SDK Framework
+
+Download the latest Bright SDK from the Bright SDK Dashboard or from the link provided in the latest release email. Unzip the archive.
+
+**<u>SDK Structure and overview</u>**
+
+| Component | Description |
+| --- | --- |
+| `brdsdk.xcframework` | Universal framework for Xcode. Contains iPhoneOS & Simulator builds. Min iOS: 13.0, Min tvOS: 15.0 |
+| `unity_plugin/brdsdk.unitypackage` | Unity plugin package for Unity-level integration |
+| `unity_sample_app_2020.2.5` | Reference sample for Unity integration at the Unity Editor level |
+| `unity_xcode_sample_app` | Reference sample for Unity integration at the Xcode level. Note: Missing `UnityFramework.framework` — build and copy it from your own integration |
+| `sample_tvos_xcode` | Reference sample for tvOS Xcode integration |
+| `xcode_swiftui_sample_app` | Reference sample for native iOS using SwiftUI |
+| `xcode_uikit_sample_app` | Reference sample for native iOS using UIKit (Swift or Objective-C) |
+
+## Step 3: Integrate Bright SDK
+
+Choose the integration path that matches your project type:
+
+| Project Type | Integration Path |
+| --- | --- |
+| Native iOS (Swift) | [Step 3.1](#step-3-1) → [Step 3.2](#step-3-2) |
+| Native iOS (Objective-C) | [Step 3.1](#step-3-1) → [Step 3.3](#step-3-3) |
+| tvOS | [Step 3.1](#step-3-1) → [Step 3.4](#step-3-4) |
+| Unity (Unity Editor level) | [Step 3.5](#step-3-5) |
+| Unity (Xcode level) | [Step 3.1](#step-3-1) → [Step 3.6](#step-3-6) |
+
+### 3.1 Embedding the Framework in Xcode
+
+This step is common to all Xcode-based integrations (native iOS, tvOS, and Unity at Xcode level).
+
+1. Copy `brdsdk.xcframework` into your app's project folder (e.g., `<MyProject>/Libraries`).
+2. Open your project in Xcode.
+3. In the Project Navigator (left pane), select the project at the top.
+4. Select your app target under the Targets list.
+5. Go to the General tab → scroll to Frameworks, Libraries, and Embedded Content.
+6. Click \+ → Add Other… → Add Files.
+7. Locate and select `brdsdk.xcframework` → click Open.
+8. Confirm that it shows Embed & Sign next to `brdsdk.xcframework.`
+
+### 3.2 Integration in Xcode (iOS – Swift)
+
+Reference sample: `xcode_swiftui_sample_app, xcode_uikit_sample_app`.
+
+Short steps:
+
+1. Import the framework: import `brdsdk`.
+2. Initialize the SDK via the `brd_api` constructor (see example below). Typically done in the app delegate on the app-launched event.
+3. Show the consent screen:
+   - Pass `skip_consent: false` → consent screen appears automatically on initialization.
+   - Pass `skip_consent: true` → you must call `brd_api.show_consent()` manually later.
+4. To disable the SDK, call `brd_api.opt_out()`.
+
+<Warning>
+  _It is not recommended to initialize the SDK on the main thread._
+</Warning>
+
+Here’s the example:
+
+1. Initialization:
+
+```swift
+ do {
+    try brd_api(
+        benefit: "<BENEFIT>",
+        agree_btn: "<AGREE>",
+        disagree_btn: "<DISAGREE>",
+        language: "en",
+        skip_consent: true,
+        campaign: nil
+    ) { [weak self] choice in
+        // handle updated choice
+    }
+    uuidTextField.text = brd_api.get_uuid()
+} catch {
+    let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+    present(alert, animated: true)
+}
+```
+
+2. Presenting the consent screen manually:
+
+```swift
+brd_api.show_consent(self)
+```
+
+3. Opting out:
+
+```swift
+brd_api.opt_out()
+```
+
+### 3.3 Integration in Xcode (iOS – Objective-C)
+
+Reference sample: `xcode_uikit_sample_app`.
+
+Short steps:
+
+1. Import the framework: `#import <brdsdk/brdsdk.h>`.
+2. Initialize the SDK by calling `brd_api` constructor. Typically done in the app delegate on the app-launched event.
+3. Show the consent screen:
+   - Pass `NO` to `skip_consent` → consent screen appears automatically on initialization.
+   - Pass `YES` to `skip_consent` → you must call `[brd_api show_consent]` manually later.
+4. To disable the SDK, call `[brd_api opt_out]`.
+
+<Warning>
+  _It is not recommended to initialize the SDK on the main thread._
+</Warning>
+
+Here’s the example:
+
+1. Initialization:
+
+```text
+NSError *error = nil;
+__weak typeof(self) wSelf = self;
+
+
+(void)[[brd_api alloc] initWithBenefit:NULL
+                             agree_btn:NULL
+                          disagree_btn:NULL
+                  opt_out_instructions:NULL
+                               appicon:[UIImage imageNamed:@"appicon"]
+                                   cwd:NULL
+                            sys_app_id:NULL
+                              language:NULL
+                                colors:NULL
+                      background_image:background
+                           opt_in_info:NULL
+                          opt_out_info:NULL
+                                 fonts:NULL
+                          skip_consent:YES
+                              campaign:NULL
+                                 error:&error
+                      on_choice_change:^(NSInteger choice) {
+    // handle updated choice
+}];
+```
+
+2. Presenting the consent screen manually:
+
+```text
+[brd_api show_consent:self benefit:@"<BENEFIT>" agree_btn:@"<AGREE>" disagree_btn:@"<DISAGREE>" language:@"en"];
+```
+
+3. Opting out:
+
+```text
+[brd_api opt_out];
+```
+
+### 3.4 Integration in Xcode (tvOS)
+
+Reference sample: `sample_tvos_xcode`.
+
+<Warning>
+  _Please contact our partnership managers to share information about your tvOS app before beginning implementation._
+</Warning>
+
+Bright SDK must show a consent screen right after the app is launched. Your app must initialize the main screen first, show the consent screen, and only then pass control to other functions/screens.
+
+1. Embed the framework - follow [<u>Step 3.1</u>](https://docs.google.com/document/d/14TcuduJU-AzxYBWyttBmSVb_M0rELo8-4dKY2YMue0M/edit?tab=t.0#heading=h.3fumz9ya2f0k)<u>.</u>
+2. Open `SampleAppApp.swift` from `sample_tvos_xcode` and implement similar SDK initialization logic in your app.
+3. Open `SettingsView.swift` from `sample_tvos_xcode` and implement the settings screen similarly:
+   - Web Indexing section should have Enable and Disable buttons.
+   - Button actions delegate to `enableIndexingCallback`, then to `ContentViewModel.setIndexing(enable:, callback:)` (defined in `ContentView.swift`), which calls:
+     - `brd_api.show_consent()` - to enable the SDK.
+     - `brd_api.opt_out()` - to disable the SDK.
+
+### 3.5 Integration in Unity Editor
+
+This section will guide you on how to integrate SDK **at Unity level** (no **code** changes in Xcode).
+
+Reference sample: `unity_sample_app_2020.2.5`, `unity_admob_sample_app`.
+
+Use this path if you want to integrate Bright SDK entirely at the Unity level without modifying Xcode. If you prefer to integrate at the Xcode level instead, skip to [<u>Step 3.6</u>](https://docs.google.com/document/d/14TcuduJU-AzxYBWyttBmSVb_M0rELo8-4dKY2YMue0M/edit?tab=t.0#heading=h.e3426ot8bw8h). Do not follow both - choose one.
+
+<Warning>
+  _If you have other 3rd-party frameworks that need to initialize before your game launches, integrating via the Unity plugin ensures the correct user flow: Bright SDK consent screen → 3rd party initialization → game launch._
+</Warning>
+
+We recommend Unity Editor 2020.2.5f1. If you encounter issues, use `unity_sample_app_2020.2.5` as a reference.
+
+#### 3.5.1 Import the SDK Package
+
+1. In Unity Editor, go to Assets → Import Package → Custom Package.
+2. Select `brdsdk.unitypackage` from the `unity_plugin` folder.
+3. In the Import Unity Package dialog, click Import:
+   - This adds `brdsdk.framework`, `BrdsdkBridge.cs`, and other required files.
+4. Confirm there are no compilation errors.
+
+#### 3.5.2 Add SDK Initialization to Your Code
+
+1. Open `BrightDataSDK/BrdsdkBridge.cs` and review the available SDK API calls ( [<u>API (Unity Plugin)</u>](https://docs.google.com/document/d/1y-qTCojMd4Bp0yVtXyffwELaKgi2tJ1aouD1C6qTHiQ/edit?tab=t.0#heading=h.m1zyw37jj2sk))
+2. Call `BrdsdkBridge.init(...)` from the `Start()` method of your game object handler (e.g., instead of direct ad initialization)
+3. Implement the `on_choice_callback` method properly - see `BrightDataSDK/Sample/SampleBehaviour.cs` for an example. The result of consent will be delivered via this callback.
+4. Implement the Settings screen following [<u>Step 4: Add Opt-In/Out Settings Option</u>](https://docs.google.com/document/d/14TcuduJU-AzxYBWyttBmSVb_M0rELo8-4dKY2YMue0M/edit?tab=t.0#heading=h.aaeyd22qcd48), using `BrightDataSDK/Sample/SettingsBehaviour.cs` as a reference.
+
+#### 3.5.3 Generate the Xcode Project
+
+1. Go to File → Build Settings and switch to the iOS platform.
+2. Click Player Settings:
+   - Scroll to Other Settings.
+   - Set Target SDK to Device SDK.
+   - Set Target minimum iOS Version to 12 or higher.
+   - Update Bundle Identifier and other settings as needed.
+3. Close Player Settings.
+4. In Build Settings, click Build and choose the destination folder.
+5. Wait for the Xcode project to be generated.
+
+#### 3.5.4 Run the App on a Device
+
+1. Select the main project scheme (usually selected by default).
+2. Connect your iPhone and select it as the target device.
+3. Configure Signing & Capabilities for the main project target.
+4. Confirm New Build System is selected: File → Project Settings → Build System.
+5. Press Product → Run (⌘R).
+
+### 3.6 Integration in Xcode (Unity)
+
+This section will guide you on how to integrate SDK **in Xcode level** (no code changes in Xcode).
+
+Reference sample: `unity_xcode_sample_app`
+
+Use this path if you want to integrate Bright SDK at the Xcode level for a Unity project. If you already completed [<u>Step 3.5</u>](https://docs.google.com/document/d/14TcuduJU-AzxYBWyttBmSVb_M0rELo8-4dKY2YMue0M/edit?tab=t.0#heading=h.jophwo33zu71), skip this section.
+
+Unity generates an Xcode project when building for iOS. The default template passes app lifecycle control to `UnityFramework` immediately after launch. Bright SDK must show the consent screen before the game launches, so your app must initialize the root view controller, show consent, and only then pass control to `UnityFramework`.
+
+Use `unity_xcode_sample_app` as reference. This is based on Unity's [<u>official documentation for integrating Unity as a library into a standard iOS app</u>](https://github.com/Unity-Technologies/uaal-example/blob/master/docs/ios.md), simplified to the minimum steps needed for Bright SDK.
+
+<Warning>
+  _If you have other 3rd-party frameworks that need to initialize before your game launches, consider using [<u>Step 3.5 (Unity Editor integration)</u>](https://docs.google.com/document/d/14TcuduJU-AzxYBWyttBmSVb_M0rELo8-4dKY2YMue0M/edit?tab=t.0#heading=h.jophwo33zu71) instead._
+</Warning>
+
+#### 3.6.1 Embed the Bright SDK Framework
+
+1. Follow [<u>Step 3.1</u>](https://docs.google.com/document/d/14TcuduJU-AzxYBWyttBmSVb_M0rELo8-4dKY2YMue0M/edit?tab=t.0#heading=h.3fumz9ya2f0k) for the main app target.
+2. Additionally, link `brdsdk.xcframework` with `UnityFramework`:
+   - In Project Navigator, select the project → select `UnityFramework` under Targets.
+   - Go to Build Phases → expand Link Binary With Libraries.
+   - Click \+, select `brdsdk.xcframework`, click Add.
+
+#### 3.6.2 Embed the SDK Dialog in Your Code
+
+Using `unity_xcode_sample_app` as a reference:
+
+1. Copy the contents of `unity_xcode_sample_app/main/main.m` into `MainApp/main.mm` of your Unity project.
+2. Open `MainApp/main.mm` and locate `loadBrightFramework` - set appropriate button titles for the consent screen:
+
+```text
+agree_btn:"PeerTextREMOVE_ADS"
+disagree_btn: "NotPeerTextADS"
+```
+
+3. If you offer ads as a monetization fallback, locate `loadUnityFramework` and enable your ad platform:
+
+```text
+if (useMonetizationFallback) {
+    // TODO: user did not agree to share resources with BrightData
+    // set up showing advertisements instead
+```
+
+4. Embed the Data folder into `UnityFramework.framework`:
+   - Select the Data folder in Project Navigator.
+   - In the Inspector pane (right side), find Target Membership.
+   - Move the checkbox to the `UnityFramework` target.
+
+## Step 4: Add Opt-In/Out Settings Option
+
+add shared content
+
+## Step 5: Consent Dialog Customization
+
+add shared content
+
+## Step 6: Custom Consent Screen (optional)
+
+add shared content
+
+## Step 7: Flows of Showing the Consent Screen
+
+## Step 8: App Performance
+
+add shared content
+
+## Step 9: Build & Run Your App
+
+## Step 10: Update Your Terms of Service
+
+add shared content
+
+## Step 11: Submit Your Integration for Review
+
+add shared content
+
+## How to Update the SDK
+
+add shared content
+
+## API Documentation
+
+add shared content

@@ -43,6 +43,13 @@
                   "technical-implementation/how-to-upload-apps-to-the-lg-store",
                   "technical-implementation/LG-WebOS-SDK"
                 ]
+              },
+              {
+                "group": "iOS",
+                "pages": [
+                  "i-os-tv-os",
+                  "mac-os"
+                ]
               }
             ]
           },
