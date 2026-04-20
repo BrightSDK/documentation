@@ -47,7 +47,7 @@
               {
                 "group": "iOS",
                 "pages": [
-                  "i-os-tv-os",
+                  "ios-tvos",
                   "mac-os"
                 ]
               }
