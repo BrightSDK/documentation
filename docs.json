@@ -45,6 +45,12 @@
                 ]
               }
             ]
+          },
+          {
+            "group": "Technical Implementation",
+            "pages": [
+              "technical-implementation/FAQ"
+            ]
           }
         ]
       }
