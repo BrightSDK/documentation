@@ -47,8 +47,8 @@
               {
                 "group": "iOS",
                 "pages": [
-                  "ios-tvos",
-                  "mac-os"
+                  "integration-guides/ios-tvos",
+                  "integration-guides/mac-os"
                 ]
               }
             ]
