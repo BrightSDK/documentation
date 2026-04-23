@@ -17,10 +17,14 @@ Your app must include a settings option allowing users to opt in or out at any t
 {platform === "ios" && <>
 **<u>Implementation:</u>**
 
-- Use get_choice() to get the current status for the switch/checkbox
-- When the user disables the switch → call opt_out()
-- When the user enables the switch → call show_consent() (the user must actively opt in through the consent screen - there is no way to directly opt in programmatically)
-- Use the on_choice_change callback (passed during init) to keep the UI automatically updated
+- Use get_choice() to get the current status for the switch/checkbox.
+
+- When the user disables the switch → call opt_out().
+
+- When the user enables the switch → call show_consent() (the user must actively opt in through the consent screen - there is no way to directly opt in programmatically).
+
+- Use the on_choice_change callback (passed during init) to keep the UI automatically updated.
+
 </>}
 
 {platform === "macos" && (
