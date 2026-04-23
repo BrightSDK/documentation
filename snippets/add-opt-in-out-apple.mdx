@@ -1,0 +1,75 @@
+---
+title: "Add Opt-In/Out Settings Option"
+---
+
+<Danger>
+  The user must always be able to opt out of Bright SDK after giving their initial consent.
+</Danger>
+
+Your app must include a settings option allowing users to opt in or out at any time. This is typically placed in a Settings menu.
+
+**<u>Requirements:</u>**
+
+- Add a toggle/switch labeled "Web Indexing" that clearly reflects the current status (opted in or out).
+- Below the switch, add text emphasizing the value users receive when opting in.
+- Include a "Learn more" link that opens: [<u>https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing</u>](https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing)<u>.</u>
+
+{platform === "ios" && <>
+**<u>Implementation:</u>**
+
+- Use get_choice() to get the current status for the switch/checkbox
+- When the user disables the switch → call opt_out()
+- When the user enables the switch → call show_consent() (the user must actively opt in through the consent screen - there is no way to directly opt in programmatically)
+- Use the on_choice_change callback (passed during init) to keep the UI automatically updated
+</>}
+
+{platform === "macos" && (
+  <>
+    **<u>Implementation:</u>**
+
+    - Set the initial checkbox state based on the current SDK choice:
+
+    <pre><code>{`bright_sdk_checkbox.state = (sdk?.choice == .peer) ? .on : .off`}</code></pre>
+
+    - Add control logic for the checkbox:
+
+    <pre><code>{`@IBOutlet weak var bright_sdk_checkbox: NSButton!
+
+@IBAction func bright_sdk_checkbox_action(_ sender: NSButton) {
+    if bright_sdk_checkbox.state == NSControl.StateValue.off {
+        bright_sdk_checkbox.state = .off
+        sdk?.opt_out()
+    } else {
+        bright_sdk_checkbox.state = .on
+        show_bright_sdk()
+    }
+}`}</code></pre>
+  </>
+)}
+
+<Note>
+  <u>Note:</u> There is no way to directly opt in. Only the user can decide. You must show the consent screen — opt-in happens automatically only if the user agrees.
+</Note>
+
+**<u>Value text suggestions:</u>**
+
+| State | Example text |
+| --- | --- |
+| `Opted out` | "Enable to see fewer ads" |
+| `Opted out` | "Enable to get 100 extra coins" |
+| `Opted out` | "Enable to enjoy premium features" |
+| `Opted in` | "When enabled you see fewer ads" |
+| `Opted in` | "When enabled you get 100 extra coins" |
+
+Refrain from using technical terms like "opt in" / "opt out" — always speak in terms of user value.
+
+You may add a confirmation dialog to discourage opting out (e.g., "_If you disable Web Indexing, you will start seeing ads. Continue?_"), and a confirmation message after opting out (e.g., "_Web Indexing disabled. You can re-enable it anytime from Settings._")
+
+**<u>Common mistakes to avoid:</u>**
+
+| Issue                              | Guidance                                       |
+| ---------------------------------- | ---------------------------------------------- |
+| Label reads "Bright" or "Bright SDK" | Label must read "Web Indexing"               |
+| No value text                      | Always include text describing what the user gains |
+| No "Learn more" link               | Required — must link to the URL above          |
+| Switch doesn't reflect current state | Switch must always show the true current status |
