@@ -1,0 +1,188 @@
+---
+title: "Consent Dialog Customization"
+---
+
+<Info>
+  All customization parameters are available for Xcode-level integration. A subset is available for Unity Editor-level integration via [<u>BrdsdkBridge.cs</u>](http://brdsdkbridge.cs).
+</Info>
+
+You can customize the consent dialog by passing additional parameters during SDK initialization. The following subsections cover all available customization options
+
+### 5.1 Background Images
+
+You can set background images for portrait and landscape orientations. Supported scale modes:
+
+- `ScaleToFill` - stretches to fill, may change aspect ratio.
+- `ScaleAspectFit` - fits within bounds, transparent areas remain.
+- `ScaleAspectFill` - fills bounds, some content may be clipped.
+
+Landscape image is optional - portrait will be used as fallback.
+
+**Unity:**
+
+```csharp
+ConsentBackgroundImage backgroundImage = new ConsentBackgroundImage();
+// By xcasset name (add the image to xcassets in Xcode after export):
+backgroundImage.portraitImage = "portrait";
+// Or by file path:
+backgroundImage.landscapeImage = Path.Combine(Application.dataPath, "Raw/landscape.jpg");
+backgroundImage.scaleMode = ConsentBackgroundImage.ScaleMode.ScaleAspectFill;
+
+BrdsdkBridge.init("To support this app", "I Agree", "I disagree",
+    "opt-out instructions", appicon, choiceChanged, skip_consent,
+    language, colors, backgroundImage, optIn, optOut);
+```
+
+**Swift:**
+
+```swift
+let background = ConsentBackgroundImage(portraitName: "portrait", landscapeName: "landscape")
+
+try brd_api(background_image: background, skip_consent: true, campaign: nil) { choice in
+    let choice = Choice(rawValue: choice) ?? .none
+    self.choice = choice
+}
+```
+
+**Objective-C:**
+
+```objective-c
+ConsentBackgroundImage *background = [[ConsentBackgroundImage alloc]
+    initWithPortraitName:@"portrait"
+           landscapeName:@"landscape"
+               scaleMode:UIViewContentModeScaleAspectFill
+                      in:NSBundle.mainBundle];
+
+(void)[[brd_api alloc] initWithBenefit:NULL agree_btn:NULL disagree_btn:NULL
+    opt_out_instructions:@"<OPT-OUT INSTRUCTIONS>"
+    appicon:[UIImage imageNamed:@"<YOUR APP ICON NAME>"]
+    cwd:NULL sys_app_id:NULL language:NULL colors:NULL
+    background_image:background opt_in_info:NULL opt_out_info:NULL
+    fonts:NULL skip_consent:YES campaign:NULL error:&error
+    on_choice_change:^(NSInteger choice) {
+        ViewController *vc = (ViewController *)[application getKeyWindow].rootViewController;
+        vc.choice = choice;
+    }];
+```
+
+### 5.2 Action Button Images (Opt-In / Opt-Out)
+
+Customize the opt-in and opt-out button appearance. For each button you can set:
+
+- A background image (overrides background color if set).
+- A text image (overrides button text if set).
+- A background color.
+- A text color.
+
+**Unity:**
+
+```csharp
+ConsentActionInfo optIn = new ConsentActionInfo(
+    null, null,
+    unchecked((Int32)0xffdb8e5a),
+    unchecked((Int32)0xff36271d)
+);
+ConsentActionInfo optOut = new ConsentActionInfo(
+    Path.Combine(Application.streamingAssetsPath, "opt_out_bg.png"),
+    Path.Combine(Application.streamingAssetsPath, "opt_out_text.png"),
+    null, null
+);
+
+BrdsdkBridge.init("To support this app", "I Agree", "I disagree",
+    "opt-out instructions", appicon, choiceChanged, skip_consent,
+    language, colors, backgroundImage, optIn, optOut);
+```
+
+**Swift:**
+
+```swift
+let optIn = ConsentActionInfo(backgroundName: "opt_in_bg", textName: "opt_in_text")
+let optOut = ConsentActionInfo(backgroundName: "opt_out_bg", textName: "opt_out_text")
+
+try brd_api(opt_in_info: optIn, opt_out_info: optOut, skip_consent: true, campaign: nil) { choice in
+    let choice = Choice(rawValue: choice) ?? .none
+    self.choice = choice
+}
+```
+
+**Objective-C:**
+
+```objective-c
+ConsentActionInfo *optIn = [[ConsentActionInfo alloc]
+    initWithBackgroundName:@"opt_in_bg" textName:@"opt_in_text" in:NSBundle.mainBundle];
+ConsentActionInfo *optOut = [[ConsentActionInfo alloc]
+    initWithBackgroundName:@"opt_out_bg" textName:@"opt_out_text" in:NSBundle.mainBundle];
+
+(void)[[brd_api alloc] initWithBenefit:NULL agree_btn:NULL disagree_btn:NULL
+    opt_out_instructions:@"<OPT-OUT INSTRUCTIONS>"
+    appicon:[UIImage imageNamed:@"<YOUR APP ICON NAME>"]
+    cwd:NULL sys_app_id:NULL language:NULL colors:NULL
+    background_image:NULL opt_in_info:optIn opt_out_info:optOut
+    fonts:NULL skip_consent:YES campaign:NULL error:&error
+    on_choice_change:^(NSInteger choice) {
+        ViewController *vc = (ViewController *)[application getKeyWindow].rootViewController;
+        vc.choice = choice;
+    }];
+```
+
+### 5.3 Consent Icon
+
+- Native SDK: Pass a `UIImage` via the `appicon` parameter in the `brd_api` initializer.
+- Unity: Pass an image path or its `xcassets` name via the `appicon` parameter in `BrdsdkBridge.init()`.
+
+### 5.4 Colors
+
+Use `ColorSettings` (Swift/ObjC) or `ConsentColors` (Unity) to customize consent screen element colors.
+
+**Unity:**
+
+```csharp
+ConsentColors colors = new ConsentColors();
+colors.backgroundColor       = unchecked((Int32)0xffEFF0E9);
+colors.titleColor            = unchecked((Int32)0xff741313);
+colors.consentMessageColor   = unchecked((Int32)0xff50C7C7);
+colors.consentLinksColor     = unchecked((Int32)0xff506BC7);
+colors.privacyColor          = unchecked((Int32)0xff658582);
+colors.privacyLinksColor     = unchecked((Int32)0xff656785);
+colors.iconsForegroundColor  = unchecked((Int32)0xff344d70);
+colors.iconsBackgroundColor  = unchecked((Int32)0xffe7effa);
+
+BrdsdkBridge.init("To support this app", "I Agree", "I disagree",
+    "opt-out instructions", appicon, choiceChanged, skip_consent,
+    language, colors, backgroundImage, optIn, optOut);
+```
+
+**Objective-C:** Use the `ColorSettings` class — see <u>API Documentation</u> for full property list.
+
+### 5.5 Fonts
+
+Use `ConsentFontsInfo` to override default fonts. You can set fonts for:
+
+- Title text
+- Main text
+- Under-icons text
+- License text
+- Buttons text
+
+<Danger>
+  <u>Warning:</u> The SDK has limitations for font sizes.
+</Danger>
+
+**Unity:**
+
+```csharp
+ConsentFontsInfo fonts = new ConsentFontsInfo();
+string fontPath = Path.Combine(Application.streamingAssetsPath, "CroissantOne-Regular.ttf");
+string registeredFontName = "BebasNeue-Regular"; // must be listed in Info.plist
+
+fonts.titleText   = new ConsentFontsInfo.ConsentFont(fontPath, 20);
+fonts.mainText    = new ConsentFontsInfo.ConsentFont(fontPath, 16);
+fonts.licenseText = new ConsentFontsInfo.ConsentFont(registeredFontName, 14);
+fonts.buttonsText = new ConsentFontsInfo.ConsentFont(fontPath, 16);
+
+BrdsdkBridge.init("To support this app", "I Agree", "I disagree",
+    "opt-out instructions", appicon, choiceChanged, skip_consent,
+    language, colors, backgroundImage, optIn, optOut, fonts);
+```
+
+**Objective-C:** Use the `ConsentFontsInfo` class — see <u>API Documentation</u> for full constructor and method list.
