@@ -75,6 +75,13 @@ Choose the integration path that matches your project type:
 This step is common to all Xcode-based integrations (native iOS, tvOS, and Unity at Xcode level).
 
 1. Copy `brdsdk.xcframework` into your app's project folder (e.g., `<MyProject>/Libraries`).
+
+<img
+     src="/integration-guides/image/tvOS_Integrate_Bright_SDK_1.png"
+     alt="Alt text"
+     width="400"
+   />
+
 2. Open your project in Xcode.
 3. In the Project Navigator (left pane), select the project at the top.
 4. Select your app target under the Targets list.
@@ -82,6 +89,12 @@ This step is common to all Xcode-based integrations (native iOS, tvOS, and Unity
 6. Click \+ → Add Other… → Add Files.
 7. Locate and select `brdsdk.xcframework` → click Open.
 8. Confirm that it shows Embed & Sign next to `brdsdk.xcframework.`
+
+<img
+     src="/integration-guides/image/tvOS_Integrate_Bright_SDK_2.png"
+     alt="Alt text"
+     width="400"
+   />
 
 ### 3.2 Integration in Xcode (iOS – Swift)
 
@@ -286,7 +299,19 @@ Use `unity_xcode_sample_app` as reference. This is based on Unity's [<u>official
    - Go to Build Phases → expand Link Binary With Libraries.
    - Click \+, select `brdsdk.xcframework`, click Add.
 
+   <img
+     src="/integration-guides/image/tvOS_Integrate_Bright_SDK_3.png"
+     alt="Alt text"
+     width="400"
+   />
+
 #### 3.6.2 Embed the SDK Dialog in Your Code
+
+<img
+     src="/integration-guides/image/tvOS_Integrate_Bright_SDK_4.png"
+     alt="Alt text"
+     width="400"
+   />
 
 Using `unity_xcode_sample_app` as a reference:
 
@@ -310,6 +335,12 @@ if (useMonetizationFallback) {
    - Select the Data folder in Project Navigator.
    - In the Inspector pane (right side), find Target Membership.
    - Move the checkbox to the `UnityFramework` target.
+
+   <img
+     src="/integration-guides/image/tvOS_Integrate_Bright_SDK_5.png"
+     alt="Alt text"
+     width="400"
+   />
 
 ## Step 4: Add Opt-In/Out Settings Option
 
