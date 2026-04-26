@@ -32,11 +32,11 @@ If you haven't done this yet, log in to [<u>your dashboard</u>](https://bright-s
 
 ## Step 2: Extract SDK Framework
 
-Download the latest Bright SDK from the [Bright SDK Dashboard](#) or from the link provided in the latest release email. Unzip the archive.
+Download the latest Bright SDK from the Bright SDK Dashboard or from the link provided in the latest release email. Unzip the archive.
 
 ### SDK Structure
 
-```
+```text
 brdsdk.framework
 net_updater.app
 net_updater.entitlements
@@ -66,40 +66,39 @@ resign_net_updater.sh
 2. In the **Frameworks, Libraries, and Embedded Content** section, add both `brdsdk.framework` and `net_updater.app`.
 
 <img
-     src="/integration-guides/image/macos_integrate_bright_SDK_1.png"
-     alt="Alt text"
-     width="400"
-   />
+  src="/integration-guides/image/macos_integrate_bright_SDK_1.png"
+  alt="Alt text"
+  width="400"
+/>
 
 3. Both items will now appear in the project structure.
 
 <img
-     src="/integration-guides/image/macos_integrate_bright_SDK_2.png"
-     alt="Alt text"
-     width="400"
-   />
+  src="/integration-guides/image/macos_integrate_bright_SDK_2.png"
+  alt="Alt text"
+  width="400"
+/>
 
-#### Configure net_updater Copy Location
+#### Configure net\_updater Copy Location
 
 1. Navigate to **Build Phases**.
 2. In the **Copy Bundle Resources** section, remove `net_updater`.
 
 <img
-     src="/integration-guides/image/macos_integrate_bright_SDK_3.png"
-     alt="Alt text"
-     width="400"
-   />
+  src="/integration-guides/image/macos_integrate_bright_SDK_3.png"
+  alt="Alt text"
+  width="400"
+/>
 
 3. Add a new **Copy Files** build phase:
    - Set **Destination** to `Wrapper`.
    - Set **Subpath** to `Contents/Library/LoginItems`.
    - Add `net_updater` to this phase.
-
    <img
      src="/integration-guides/image/macos_integrate_bright_SDK_4.png"
      alt="Alt text"
      width="400"
-   />
+      />
 
 #### Add Supporting Files
 
@@ -121,10 +120,10 @@ In the **Build Settings** tab of your main app target, create a custom setting:
 - Assign `resign_net_updater.sh` as its content (or paste the script contents directly).
 
 <img
-     src="/integration-guides/image/macos_integrate_bright_SDK_5.png"
-     alt="Alt text"
-     width="400"
-   />
+  src="/integration-guides/image/macos_integrate_bright_SDK_5.png"
+  alt="Alt text"
+  width="400"
+/>
 
 <Warning>
   App Sandbox is not supported. If your app has the sandbox entitlement, the SDK will not function.
@@ -199,22 +198,16 @@ Before submitting, verify that the SDK is running correctly on your device:
 
 1. Compile and run your app, then click **"I Agree"** in the SDK consent dialog.
 2. Open a terminal and run:
-
    ```shell
    ps -ef | grep [n]et_
    ```
-
    You should see 1 process running from inside your app directory: `net_updater`.
-
 3. Navigate to:
-
-   ```
+   ```text
    /Users/{USER}/Library/Group Containers/<team_id>.com.brdsdk.shared
    ```
-
 4. Look for the `cid` file matching your Bundle ID. It should look similar to:
-
-   ```
+   ```text
    10.59.36.4-ccaa3e53/ls17c2p443_10.59.36.4_60015
    ```
 

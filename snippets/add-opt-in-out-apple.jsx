@@ -1,4 +1,4 @@
-export const OptInOutSettings = ({ platform }) => (
+export const OptInOut = ({ platform }) => (
   <>
     <Danger>
       The user must always be able to opt out of Bright SDK after giving their initial consent.
