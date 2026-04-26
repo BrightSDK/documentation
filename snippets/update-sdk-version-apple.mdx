@@ -7,9 +7,22 @@ title: "Update Sdk Version Apple"
 1. Replace `brdsdk.xcframework` in its current location (e.g., `<MyProject>/Libraries`).
 2. Clean the build folder: Product → Clean Build Folder in Xcode.
 
+<img
+     src="/snippets/image/update_SDK_iOS_1.png"
+     alt="Alt text"
+     width="400"
+   />
+
 If cleaning doesn't help, clear `DerivedData` (default path: `~/Library/Developer/Xcode/DerivedData`). Typically, a clean build is sufficient.
 
 ### Updating in a Unity Project
 
 1. Remove the existing `brdsdk.unitypackage` asset from Unity Editor.
+
+<img
+     src="/snippets/image/update_SDK_iOS_2.png"
+     alt="Alt text"
+     width="400"
+   />
+
 2. Re-import the new package following [<u>Step 3.5.1</u>](https://docs.google.com/document/d/14TcuduJU-AzxYBWyttBmSVb_M0rELo8-4dKY2YMue0M/edit?tab=t.0#heading=h.uvdm61s1h3yz)<u>.</u>
