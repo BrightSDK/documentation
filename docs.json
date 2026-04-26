@@ -54,7 +54,8 @@
               {
                 "group": "Android",
                 "pages": [
-                  "android-sdk"
+                  "integration-guides/android-sdk",
+                  "integration-guides/unity-sdk"
                 ]
               }
             ]
