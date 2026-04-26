@@ -50,6 +50,12 @@
                   "integration-guides/ios-tvos",
                   "integration-guides/mac-os"
                 ]
+              },
+              {
+                "group": "Android",
+                "pages": [
+                  "android-sdk"
+                ]
               }
             ]
           },
