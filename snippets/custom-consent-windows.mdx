@@ -4,6 +4,14 @@ title: "Custom Consent Windows"
 
 Subject to Bright SDK approval, you can create and use your own consent screen with Bright SDK. Please follow the following guidelines.
 
+This is what it looks like on the default Bright SDK screen:
+
+<img
+  src="/snippets/image/default_consent_screen.png"
+  alt="Alt text"
+  width="400"
+/>
+
 **<u>Design Requirements:</u>**
 
 Your custom consent screen must comply with the following requirements:
@@ -67,6 +75,7 @@ Example:
 
 **<u>Integration Code:</u>**
 
+{platform === "win" && <>
 1. **Skip Default Consent Screen - **Pass `SkipConsent = true` in the SDK's initialization method to prevent showing the default consent screen.
 2. **Track Consent Screen Display - **When your external consent screen is displayed, call `NotifyShowConsent()` method.
 3. **Handle User Response**
@@ -86,3 +95,14 @@ Example:
         alt="Alt text"
         width="400"
       />
+
+</>}
+
+{platform === "macos" && <>
+
+- Pass skip_consent: true (or equivalent) in the SDK initializer to prevent the default consent screen from showing.
+- The opt-in button (e.g., "I Agree") should call `external_opt_in()`.
+- The opt-out button (e.g., "I Disagree") should `call opt_out()`.
+- After presenting your custom screen, call `consent_shown()`.
+
+</>}

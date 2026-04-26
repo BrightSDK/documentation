@@ -5,3 +5,200 @@ sidebarTitle: "MacOS SDK"
 ---
 
 import OptInOut from "/snippets/add-opt-in-out-apple.mdx";
+import ConsentDialogCustom from "/snippets/consent-dialog-customization-ios.mdx";
+import CustomConsent from "/snippets/custom-consent-windows.mdx";
+import AppPerformance from "/snippets/app-performance.mdx";
+import tos from "/snippets/terms-of-service-apple.mdx";
+import SubmitIntegrationReview from "/snippets/submit-integration-review.mdx";
+import UpdateSDK from "/snippets/update-sdk-version-apple.mdx";
+import API from "/snippets/api-documentation-apple.mdx";
+
+## Requirements
+
+- macOS 10.15 or newer.
+- Xcode (latest recommended).
+- Bright SDK for macOS ([<u>latest</u>](https://bright-sdk.com/cp/docs/sdk/macos)).
+
+## Important Notes
+
+- Users **must always** voluntarily decide to opt in after seeing the consent screen, and **must always** have an easy way to opt out.
+- Bright Data **reviews** SDK integration after initial release and regularly thereafter. Your account will be **terminated** if you violate the guidelines in this document.
+- App Sandbox is **not supported**. If your app has the sandbox entitlement enabled, the SDK will **not function**.
+- Bright Data recommends offering value in exchange for opting in (e.g., fewer ads, bonus coins, premium features). However, simply asking for user support is also acceptable.
+
+## Step 1: Create App ID on Dashboard
+
+If you haven't done this yet, log in to [<u>your dashboard</u>](https://bright-sdk.com/cp/apps) and create your app ID first.
+
+## Step 2: Extract SDK Framework
+
+Download the latest Bright SDK from the [Bright SDK Dashboard](#) or from the link provided in the latest release email. Unzip the archive.
+
+### SDK Structure
+
+```
+brdsdk.framework
+net_updater.app
+net_updater.entitlements
+resign_net_updater.sh
+```
+
+### SDK Overview
+
+| Component | Description |
+| --- | --- |
+| `brdsdk.framework` | SDK control API |
+| `net_updater.app` | SDK background control service |
+| `net_updater.entitlements` | Entitlements file required for re-signing `net_updater` |
+| `resign_net_updater.sh` | Script used in build phases to re-sign `net_updater` for your Apple team |
+
+<Warning>
+  Before using `brdsdk.framework` and `net_updater.app`, additional Xcode project configuration steps are required — see [Step 3.1](#step-3-1).
+</Warning>
+
+## Step 3: Integrate Bright SDK
+
+### 3.1 Project Setup
+
+#### Add the Framework and Service to Your Target
+
+1. In Xcode, select your target and navigate to the **General** tab.
+2. In the **Frameworks, Libraries, and Embedded Content** section, add both `brdsdk.framework` and `net_updater.app`.
+
+Both items will now appear in the project structure.
+
+#### Configure net_updater Copy Location
+
+1. Navigate to **Build Phases**.
+2. In the **Copy Bundle Resources** section, remove `net_updater`.
+3. Add a new **Copy Files** build phase:
+   - Set **Destination** to `Wrapper`
+   - Set **Subpath** to `Contents/Library/LoginItems`
+   - Add `net_updater` to this phase
+
+#### Add Supporting Files
+
+- Copy `net_updater.entitlements` and `resign_net_updater.sh` into your project folder.
+- These files do not need to be added to any Xcode target.
+- `net_updater.entitlements` must be placed under the `${PROJECT_DIR}` path.
+
+#### Configure Build Settings
+
+In the **Build Settings** tab of your main app target, create a custom setting:
+
+- **Key:** `NET_UPDATER_ENTITLEMENTS`
+- **Value:** Path to `net_updater.entitlements` relative to `${PROJECT_DIR}`
+- Set `ENABLE_USER_SCRIPT_SANDBOXING` to `NO`
+
+#### Add Re-sign Build Phase
+
+- Add a **Run Script** build phase after the `net_updater` copy phase (e.g., name it `"Resign net_updater"`).
+- Assign `resign_net_updater.sh` as its content (or paste the script contents directly).
+
+<Warning>
+  App Sandbox is not supported. If your app has the sandbox entitlement, the SDK will not function.
+</Warning>
+
+### 3.2 Import the SDK
+
+In your `AppDelegate.swift`, import the Bright SDK:
+
+```swift
+import Cocoa
+// ... other imports ...
+import brdsdk
+```
+
+### 3.3 Initialize the SDK
+
+Initialize the SDK once in your `AppDelegate`, typically inside `applicationDidFinishLaunching`. Create a dedicated setup function (e.g., `start_bright_sdk`) to keep initialization clean. Should be invoked only once.
+
+```swift
+@NSApplicationMain
+class AppDelegate: NSObject, NSApplicationDelegate {
+
+    var sdk: brd_api?
+
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
+        // ...
+        try? start_bright_sdk()
+        // ...
+    }
+
+    func start_bright_sdk() throws {
+        sdk = try brd_api(campaign: nil,
+                         on_choice_change: { [weak self] new_choice in
+            // Handle user selection
+            switch new_choice {
+                case .peer:
+                    // e.g. update local settings — SDK enabled
+                    myapp.options.set_bright_sdk_enabled()
+                case .notPeer:
+                    // e.g. start a subscription process
+                    start_subscription_process()
+                case .none:
+                    // e.g. update local settings — SDK disabled
+                    myapp.options.set_bright_sdk_disabled()
+            }
+        })
+        show_bright_sdk()
+    }
+
+    func show_bright_sdk() {
+        sdk?.show_consent(force: true, on_choice: { _ in })
+    }
+}
+```
+
+## Step 4: Add Opt-In/Out Settings Option
+
+<OptInOut platform="macos" />
+
+## Step 5: Custom Consent Screen (optional)
+
+<CustomConsent platform="macos" />
+
+## Step 6: App Performance
+
+<AppPerformance />
+
+## Step 7: Verify Your Integration
+
+Before submitting, verify that the SDK is running correctly on your device:
+
+1. Compile and run your app, then click **"I Agree"** in the SDK consent dialog.
+2. Open a terminal and run:
+
+   ```shell
+   ps -ef | grep [n]et_
+   ```
+
+   You should see 1 process running from inside your app directory: `net_updater`.
+
+3. Navigate to:
+
+   ```
+   /Users/{USER}/Library/Group Containers/<team_id>.com.brdsdk.shared
+   ```
+
+4. Look for the `cid` file matching your Bundle ID. It should look similar to:
+
+   ```
+   10.59.36.4-ccaa3e53/ls17c2p443_10.59.36.4_60015
+   ```
+
+## Step 8: Update Your Terms of Service
+
+<tos />
+
+## Step 9: Submit Your Integration for Review
+
+<SubmitIntegrationReview />
+
+## How to Update the SDK
+
+To be updated
+
+## API Documentation
+
+To be updated
