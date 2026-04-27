@@ -300,6 +300,12 @@ When the user toggles on → call `BrightApi.showConsent(context)` to show the c
   - The QR code **must** be accompanied by the instruction: _"Scan the QR Code to learn more about web indexing by Bright Data."._
   - You may use your own branded QR code, or the [<u>hosted version</u>](https://media.bright-sdk.com/2023/09/qr-bright-sdk-faq.svg)<u>.</u>
 
+<img
+  src="/integration-guides/image/android_integration_guide_1.png"
+  alt="Alt text"
+  width="400"
+/>
+
 <Note>
   You may add a confirmation dialog to discourage opting out (e.g., "If you disable Web Indexing, you will start seeing ads. Continue?")
 </Note>
@@ -322,7 +328,27 @@ See the examples below, illustrating both opted-in and opted-out scenarios:
 
 **Mobile:**
 
+<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+  <img src="/integration-guides/image/android_integration_guide_2.png" alt="Alt text 1" width="400" />
+
+  <img src="/integration-guides/image/android_integration_guide_3.png" alt="Alt text 2" width="400" />
+
+  <img src="/integration-guides/image/android_integration_guide_4.png" alt="Alt text 3" width="400" />
+
+  <img src="/integration-guides/image/android_integration_guide_5.png" alt="Alt text 4" width="400" />
+</div>
+
 **TV:**
+
+<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+  <img src="/integration-guides/image/android_integration_guide_6.png" alt="Alt text 1" width="400" />
+
+  <img src="/integration-guides/image/android_integration_guide_7.png" alt="Alt text 2" width="400" />
+
+  <img src="/integration-guides/image/android_integration_guide_8.png" alt="Alt text 3" width="400" />
+
+  <img src="/integration-guides/image/android_integration_guide_9.png" alt="Alt text 4" width="400" />
+</div>
 
 **Common mistakes to avoid:**
 
@@ -347,6 +373,12 @@ There are two customization options:
 | External consent screen | Build your own consent UI entirely - see [Step 6](#step-6-external-consent-screen-optional) |
 
 This is what it looks like on the default Bright SDK screen:
+
+<img
+  src="/integration-guides/image/android_integration_guide_10.png"
+  alt="Alt text"
+  width="400"
+/>
 
 #### <u>5.1 CustomConsentSettings</u>
 
@@ -400,7 +432,7 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 ```
 
-See the full list of available CustomConsentSettings properties in the [API Documentation](#api-documentation).
+See the full list of available `CustomConsentSettings` properties in the [API Documentation](#api-documentation).
 
 ### Step 6: External Consent Screen (optional)
 
@@ -421,9 +453,11 @@ See the full list of available CustomConsentSettings properties in the [API Docu
    54.221.207.68-33f08a02/1s17c2p443_54.221.207.68_64377 [radio0]
    ```
 
-<Frame>
-  ![Logcat showing cskd/cid log line](/images/logcat-screenshot.png)
-</Frame>
+<img
+  src="/integration-guides/image/android_integration_guide_11.png"
+  alt="Alt text"
+  width="400"
+/>
 
 If this line appears, the integration is complete. If not, ensure you are not suppressing application output, then contact support.
 
@@ -523,9 +557,9 @@ void startBrightSdk(Context ctx) {
 | `static Boolean getConsentChoice(Context context)` | Returns `true` if user is peer, `false` if not peer, `null` if no choice has been made yet. |
 | `static boolean isSvcProcess()` | Returns `true` if the current process is the SDK service process. |
 | `static void setTrackingId(String trackingId)` | Adds a unique tracking ID for reports and debugging. Must be called **before**`BrightApi.init`. |
-| `static void reportConsentShown(Context context)` | <Warning>      Requires special permission.  </Warning>   Reports that a custom consent screen was shown. |
-| `static void reportConsentBackPress(Context context)` | <Warning>      Requires special permission.  </Warning>   Reports that the user pressed back without making a choice. |
-| `static void reportConsentOptOut(Context context)` | <Warning>      Requires special permission.  </Warning>   Reports that the user opted out via custom consent screen. |
+| `static void reportConsentShown(Context context)` | <Warning>         Requires special permission.   </Warning>    Reports that a custom consent screen was shown. |
+| `static void reportConsentBackPress(Context context)` | <Warning>         Requires special permission.   </Warning>    Reports that the user pressed back without making a choice. |
+| `static void reportConsentOptOut(Context context)` | <Warning>         Requires special permission.   </Warning>    Reports that the user opted out via custom consent screen. |
 
 #### <u>Settings</u>
 
