@@ -16,6 +16,11 @@ Your app must include a settings option allowing users to opt in or out at any t
 - Below the switch, add text emphasizing the value users receive when opting in
 - Include a **"Learn more"** link that opens: [https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing](https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing)
 
+<Columns cols={2}>
+  <img src="/snippets/image/add-opt-in-out-unity-1.png" alt="Alt text" width="400" />
+  <img src="/snippets/image/add-opt-in-out-unity-2.png" alt="Alt text" width="400" />
+</Columns>
+
 **Implementation:**
 
 When the user toggles **off**:
@@ -44,11 +49,20 @@ When the user toggles **on** → call `brightApi.CallStatic("showConsent", curre
   - Must be accompanied by: _"Scan the QR Code to learn more."_
   - You may use your own branded QR code, or the hosted [version provided](#)
 
-![QR code](path/to/qr-code.png)
+<img
+     src="/snippets/image/add-opt-in-out-unity-3.png"
+     alt="Alt text"
+     width="400"
+   />
 
 <Check>
   You may add a confirmation dialog to discourage opting out (e.g., "If you disable Web Indexing, you will start seeing ads. Continue?")
 </Check>
+
+<Columns cols={2}>
+  <img src="/snippets/image/add-opt-in-out-unity-4.png" alt="Alt text" width="400" />
+  <img src="/snippets/image/add-opt-in-out-unity-5.png" alt="Alt text" width="400" />
+</Columns>
 
 **Value text suggestions (both mobile and TV):**
 
