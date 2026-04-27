@@ -1,0 +1,73 @@
+---
+title: "Add Opt In Out Unity"
+---
+
+<Warning>
+  Read and implement this section carefully. The user must always be able to opt out of Bright SDK after giving their initial consent.
+</Warning>
+
+Your app must include a settings option allowing users to opt in or out at any time. This is typically placed in a **Settings** menu.
+
+#### 11.1 Mobile Apps
+
+**Requirements:**
+
+- Add a toggle/switch labeled **"Web Indexing"** that clearly reflects the current status (opted in or out)
+- Below the switch, add text emphasizing the value users receive when opting in
+- Include a **"Learn more"** link that opens: [https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing](https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing)
+
+**Implementation:**
+
+When the user toggles **off**:
+
+```csharp
+void UserRequestedToTurnOffBrightSdkFromOptions()
+{
+    // Disable Bright SDK
+    brightApi.CallStatic("optOut", currentActivity);
+}
+```
+
+When the user toggles **on** → call `brightApi.CallStatic("showConsent", currentActivity)` to show the consent screen.
+
+<Note>
+  There is no way to directly opt in. Only the user can decide. You must show the consent screen - opt-in happens automatically only if the user agrees.
+</Note>
+
+#### 11.2 TV Apps
+
+**Requirements:**
+
+- Add a toggle/switch labeled **"Web Indexing"** that clearly reflects the current status
+- Below the switch, add text emphasizing the value users receive when opting in
+- Include a **QR code** linking to: [https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing](https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing)
+  - Must be accompanied by: _"Scan the QR Code to learn more."_
+  - You may use your own branded QR code, or the hosted [version provided](#)
+
+![QR code](path/to/qr-code.png)
+
+<Check>
+  You may add a confirmation dialog to discourage opting out (e.g., "If you disable Web Indexing, you will start seeing ads. Continue?")
+</Check>
+
+**Value text suggestions (both mobile and TV):**
+
+| State | Example text |
+| --- | --- |
+| Opted out | "Enable to see fewer ads" |
+| Opted out | "Enable to get 100 extra coins" |
+| Opted out | "Enable to enjoy premium features" |
+| Opted in | "When enabled you see fewer ads" |
+| Opted in | "When enabled you get 100 extra coins" |
+
+Refrain from using technical terms like "opt in" / "opt out" — always speak in terms of user value.
+
+**Opt-Out Messages (Optional but highly recommended):**
+
+| Example | Comments                                                              |
+| ------- | --------------------------------------------------------------------- |
+| Bad     | Avoid using technical terms "opt in" / "opt out"                      |
+| Bad     | Default choice should be the green checkmark (Web Indexing enabled)   |
+| Good    | Dialog box discouraging opt-out, reminding user of value they lose    |
+| Good    | Correct messaging, correct default choice                             |
+| Good    | Dialog box validating user's choice, reminding how to opt back in     |

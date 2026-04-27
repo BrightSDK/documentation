@@ -3,6 +3,8 @@ title: "Bright SDK for Unity - Integration Guide"
 description: "This guide is for developers who want to monetize Unity applications with Bright SDK."
 sidebarTitle: "Unity SDK"
 ---
+import OptInOut from "/snippets/add-opt-in-out-unity.mdx";
+import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
 
 <Note>
   For the full Android integration reference, see the [Android SDK Integration Guide](https://docs.bright-sdk.com/integration-guides/android-sdk). This document covers only Unity-specific steps and should be used in conjunction with that guide.
@@ -366,7 +368,11 @@ brightApi.CallStatic("showConsent", currentActivity, settings);
 
 ### Step 11: Add Opt-In/Out Settings Option
 
+<OptInOut />
+
 ### Step 12: External Consent Screen (optional)
+
+<CustomConsent platform="macos" />
 
 ### How to Update the SDK
 
