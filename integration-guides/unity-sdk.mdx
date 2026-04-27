@@ -31,6 +31,12 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
    ```
 2. Drag the `bright_sdk.aar` file into the `Android` folder
 
+<img
+  src="/integration-guides/image/unity_integration_guide_1.png"
+  alt="Alt text"
+  width="400"
+/>
+
 ### Step 2: Add Main Gradle and Gradle Properties Files
 
 Enable the following options in Unity:
@@ -42,6 +48,12 @@ This will create the following files in `Assets > Plugins > Android`:
 
 - `mainTemplate.gradle`
 - `gradleTemplate.properties`
+
+<img
+  src="/integration-guides/image/unity_integration_guide_3.png"
+  alt="Alt text"
+  width="400"
+/>
 
 ### Step 3: Update Dependencies in mainTemplate
 
@@ -249,6 +261,12 @@ public class StreamingAsset
 
 The following is a complete end-to-end example of setting up the custom consent screen using Unity's editor-exposed fields, which is the recommended approach for designer-friendly customization.
 
+<img
+  src="/integration-guides/image/unity_integration_guide_4.png"
+  alt="Alt text"
+  width="400"
+/>
+
 ##### Step 1 - Define variables in your initializer script
 
 In the script that initializes Bright Data, define variables for images, button images, icon, and text colors:
@@ -277,20 +295,21 @@ private string _footerTextHex;
 private string _footerLinksHex;
 ```
 
-| Field | Value |
-| --- | --- |
-| Background Image | BD Background |
-| Button Image | None (Sprite) |
-| Icon Image | BD Icon |
-| Description Text Color |  |
-| Links Color |  |
-| Title Color |  |
-| Footer Text Color |  |
-| Footer Links Color |  |
+<img
+  src="/integration-guides/image/unity_integration_guide_5.png"
+  alt="Alt text"
+  width="400"
+/>
 
 <Warning>
   Images must have **"Read/Write"** enabled in their Unity import settings, otherwise they cannot be converted to byte arrays.
 </Warning>
+
+<img
+  src="/integration-guides/image/unity_integration_guide_6.png"
+  alt="Alt text"
+  width="400"
+/>
 
 ##### Step 2 - Convert images and colors in Awake()
 
