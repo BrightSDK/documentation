@@ -44,7 +44,9 @@ export const CustomConsent = ({ platform }) => (
 
     <p><strong><u>Interactive element:</u></strong></p>
     <ul>
-      <li>Tapping "public web data" must open a popup with additional information.</li>
+      <li>Tapping "public web data" must open a popup with additional information.
+      <img src="/snippets/image/android_unity_consent.png" alt="Popup example" width="400" />
+      </li>
     </ul>
 
     <p><strong><u>Translations:</u></strong></p>
@@ -109,5 +111,13 @@ settings.Call("setSkipConsent", true);`}</code></pre>
     )}
 
     <p>See below some examples of possible custom consent screens:</p>
+
+    <img src="/snippets/image/android_unity_consent_2.png" alt="Popup example" width="400" />
+
+    <img src="/snippets/image/android_unity_consent_3.png" alt="Popup example" width="400" />
+
+    <img src="/snippets/image/android_unity_consent_4.png" alt="Popup example" width="400" />
+
+    <img src="/snippets/image/android_unity_consent_5.png" alt="Popup example" width="400" />
   </>
 );
