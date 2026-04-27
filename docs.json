@@ -57,6 +57,15 @@
                   "integration-guides/android-sdk",
                   "integration-guides/unity-sdk"
                 ]
+              },
+              {
+                "group": "Bundle",
+                "pages": [
+                  "integration-guides/hola-vpn",
+                  "integration-guides/bright-vpn",
+                  "integration-guides/earn-app",
+                  "integration-guides/reward-gum"
+                ]
               }
             ]
           },
