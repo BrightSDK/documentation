@@ -4,6 +4,12 @@ description: "This guide is for developers and app owners who want to monetize t
 sidebarTitle: "EarnApp"
 ---
 
+import RegisterApp from "/snippets/bundles-register-your-app.mdx";
+import guidelines from "/snippets/bundles-av-guideline.mdx";
+import GetCertified from "/snippets/bundles-get-your-app-certified.mdx";
+import Report_Payment from "/snippets/bundles-report-payment-details.mdx";
+import FinalReview from "/snippets/bundles-final-review.mdx";
+
 Integrating EarnApp is the first step toward earning revenue. Once you've released your app bundle you can start earning per install!
 
 This document provides a step-by-step walkthrough for seamlessly incorporating Bright Data products into your application.
@@ -17,3 +23,132 @@ Implementation is simple - there are 3 steps:
 <Info>
   **Bright Data must review your application before you start distributing your app with a bundle offer.**
 </Info>
+
+### Step 1: Register Your App in the Dashboard
+
+<RegisterApp />
+
+### Step 2: Choose Your Offer Type
+
+<Note>
+  More offers coming soon.
+</Note>
+
+#### Scenario 1 - Installation Wizard Offer
+
+Offer your users the benefits of EarnApp by adding a screen to your install wizard.
+
+1. Promotional offer is shown within product installation wizard (start with offer screen setup and then implement exe file).
+   <Warning>
+     Make sure EarnApp offer screen does not interrupt the user's expected flow. Ideally it should show **AFTER** your install wizard process is complete. Otherwise, you need to have the user's permission to view optional offers before showing it.
+   </Warning>
+2. User clicks **Agree.**
+3. exe file downloads in the background.
+4. EarnApp setup is launched and presents the Bright SDK consent screen **only after** your app installation is complete.
+
+<Note>
+  For offer screen setup and technical integration, continue to [Step 3](#) and [Step 4](#).
+</Note>
+
+### Step 3: Set Up Your Offer Screen
+
+<Warning>
+  **Important!** Please follow the guidelines below to assure compliance with our policies. If you violate the guidelines, Bright Data reserves the right to terminate your account.
+</Warning>
+
+Optional: You may design the opt-in any way you choose (we recommend the design to be as close as possible to your installation wizard). However, the [EarnApp offer screen must always include an opt-in consent screen](#) with the mandatory text below.
+
+- You may implement the [EarnApp offer screen](#) onto your wizard (make sure to include all the links provided below).
+- In case you want to design your own EarnApp offer, please read below.
+- In the [Assets](#) section you may find all the imagery needed.
+
+#### Mandatory Text
+
+Optional offer by [earnapp](https://earnapp.com)
+
+When you click "Accept", you agree to install "EarnApp" and consent to its [Privacy Policy](#) and [EULA](#).
+
+#### Buttons
+
+**"Decline" / "Accept"**
+
+<Warning>
+  Make sure buttons return true value from user interaction ("Decline" = opt-out / "Accept" = opt-in). **DO NOT install anything on users' devices if they have not opted-in.**
+</Warning>
+
+#### Required Links
+
+| Text | URL |
+| --- | --- |
+| EarnApp | [https://earnapp.com/](https://earnapp.com/) |
+| EULA | [https://earnapp.com/user-agreement](https://earnapp.com/user-agreement) |
+| Privacy Policy | [https://earnapp.com/privacy](https://earnapp.com/privacy) |
+
+#### AV Guidelines
+
+<guidelines />
+
+### Assets
+
+Drive folder: [<u>Link</u>](https://drive.google.com/drive/folders/1qPW40HZITGKO71udwxKz1XxbW0RbwL5S)<u>.</u>
+
+### Restricted Countries
+
+<Warning>
+  **Important Note before integrating:** Due to local restrictions, EarnApp should not be offered in the following countries and/or regions. Please make sure you **disable the offer for**:
+</Warning>
+
+- Iran
+- Iraq
+- Syria
+- Lebanon
+- Palestine
+- Russia
+- Belarus
+- North Korea
+- Cuba
+- Sudan
+- Crimea region of Russia
+
+### Step 4: Technical Integration
+
+1. **Dynamically download** the bundler using the link present in your bundle page in the Bright SDK control panel. Download URL format:
+   ```text
+   https://cdn.bright-sdk.com/static/BrightSDK-Bundler.exe?filename=earnapp-bundle-[your_bundle_code].exe
+   ```
+   <u>Downloaded filename format:</u> `earnapp-bundle-XXXXX` <u>Example:</u> `earnapp-bundle-zx76b.exe`
+   <Warning>
+     **Important:** Make sure that the bundler executable file has your bundle code in its filename - if it isn't present **it will fail**. The filename must end with `-XXXXX.exe`, where `XXXXX` is your unique bundle code.
+   </Warning>
+2. **Save the user's choice** when the offer is displayed.
+3. Once your installer has finished - if the user clicked **"I agree"** on the offer screen, **run the bundler executable.**
+
+<Tip>
+  **Troubleshooting:** If you encounter any issues during the installation of the Bundler application, you can access debug logs by executing it through the Windows Command Prompt (CMD). This will assist you in identifying the underlying problem.
+</Tip>
+
+**<u>Validation Checklist:</u>**
+
+Before submitting for review, complete the following checklist:
+
+- Launch your app's install wizard.
+- Offer is displayed within the wizard (non-intrusive, with product description).
+- Privacy Policy and EULA links are visible and clickable.
+  - Privacy Policy: [https://earnapp.com/privacy](https://earnapp.com/privacy).
+  - EULA: [https://earnapp.com/user-agreement](https://earnapp.com/user-agreement).
+- Click "Install" / "Accept" to proceed.
+- Your app's install wizard completes successfully.
+- EarnApp installer launches automatically.
+- Main Screen of EarnApp is successfully launched.
+
+### Step 5: Send for Final Review
+
+<FinalReview />
+
+### Step 6: Get Your App Certified!
+
+<GetCertified />
+
+### Report and Payment Details
+
+<Report_Payment />

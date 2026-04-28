@@ -4,9 +4,11 @@ description: "This guide is for developers and app owners who want to monetize t
 sidebarTitle: "Hola VPN"
 ---
 
+import RegisterApp from "/snippets/bundles-register-your-app.mdx";
 import guidelines from "/snippets/bundles-av-guideline.mdx";
 import GetCertified from "/snippets/bundles-get-your-app-certified.mdx";
-import Report_Payment from "/snippets/snippets/bundles-report-payment-details.mdx";
+import Report_Payment from "/snippets/bundles-report-payment-details.mdx";
+import FinalReview from "/snippets/bundles-final-review.mdx";
 
 Integrating [<u>Hola VPN</u>](https://hola.org/) is the first step toward earning revenue. Once you've released your app with Hola VPN you can start earning per install!
 
@@ -24,7 +26,15 @@ Implementation is simple - there are 3 steps:
 
 ### Important Notes
 
+- Users must **ALWAYS** decide if they want to **VOLUNTARILY** install Hola VPN after seeing the offer and consent screen. Additionally, users should **ALWAYS** have a straightforward means to opt out of the installation process.
+- Take care when implementing the offer screen and the opt-out mechanisms in a way which follows guidelines in this document.
+- Follow consent screen implementation guidelines in order to return true value from user interaction. **DO NOT install anything on users' devices if they have not opted-in.**
+- Bright Data products do not do any user tracking of any kind. You can read more about Hola VPN and privacy in the [Privacy Policy](#).
+- It's important to follow the guidelines in this document to avoid violation of our company's policy which may lead to termination of agreement.
+
 ### Step 1: Register Your App in the Dashboard
+
+<RegisterApp />
 
 ### Step 2: Choose Your Offer Type
 
@@ -235,26 +245,7 @@ Press Kit: [<u>Download the press kit</u>](https://hola.org/static/press_kit/pre
 
 ### Step 5: Send for Final Review
 
-<Warning>
-  **Important!** To get paid for installs you must:
-</Warning>
-
-- Send your app for review and get approved (details below).
-- [Set up your billing details](#).
-
-Once you are done implementing, please upload your exe file for review under the **"Review Submission"** section in your dashboard app page:
-
-<Frame>
-  ![Review Submission section](/images/review-submission.png)
-</Frame>
-
-<Note>
-  Each offer type (Wizard, successful/uninstall page, in-app, etc.) requires separate dashboard setup and review.
-</Note>
-
-We will review the flow, send you feedback and add the right entities in our system and set it to **active** status in order to provide the right stats to start paying you for Hola VPN installs.
-
-Payments are done automatically according to the system's data - if you find any discrepancies, please let us know.
+<FinalReview />
 
 ### Step 6: Get Your App Certified!
 
