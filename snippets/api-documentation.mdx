@@ -1,80 +1,155 @@
-1. **brd_api.init(settings, callbacks) -** initialize the API. Should be called at the app `init`. All other methods will be accessible after successful initialization. Consent screen will be shown on first initialization by default, but can be skipped by setting `skip_consent` to true.
-2. **brd_api.show_consent(callbacks) -** shows the consent on the user's action. This can be used when a user tries to close an ad or clicks the checkbox to activate Bright SDK.
-3. **brd_api.external_opt_in(callbacks) -** if you use your own consent screen, call it after agreeing.
-4. **brd_api.opt_out(callbacks) -** disable Bright SDK.
-5. **brd_api.get_status() -** returns status object.
-6. **Status (object) properties:**
-   1. **consent (bool) -** indicates current SDK status. Possible values:
-      - `true` - SDK enabled and works.
-      - `false` - SDK disabled and disconnected.
-      - `null` - before the user pass consent screen for the first time.
-   2. **ver (string) -** current SDK version, e.g. “1.285.476”.
-   3. **tracking_id (string) -** the app's tracking id, can be set using `brd_api.init`.
-1. **Settings (object) properties:**
-    1. **app_name (string) -** your app name for the consent screen. **Required.**
-    2. **app_logo (string) -** path to your app logo for the consent screen. **Required.**
-    3. **skip_consent (boolean) -** can be passed to skip showing the consent screen on the initialisation of the API. The consent screen can be shown later with `show_consent` method.
-    4. **tracking_id (string) -** a unique tracking id for reports and debugging.
-    5. **simple_opt_out (boolean/object) -** allow a user to opt-out by pressing [5] (this will reopen the consent screen). If a user opted out, the consent screen will be shown after several app restarts (see. `repeat_consent`).You can pass the object to this setting to redefine the consent button text.
+---
+title: 'API documentation (TV)'
+---
 
-       Example:
+API (JavaScript):
 
-       ```markdown
-       {
-       	agree_btn: 'Keep Ad-Free',
-       	disagree_btn: 'ADS',
-       }
-       ```
-    6. **repeat_consent (integer \>= 3) -** shows the consent screen after the specified number of app restarts. Active only if `simple_opt_out` is set to true.
-    7. **agree_btn (string/enum) -** consent screen “agree” button text. Default value: `I_AGREE.`
+## Methods
 
-       Possible values:
+| Method | Parameters | Description |
+| :--- | :--- | :--- |
+| `brd_api.init()` | `settings`, `callbacks` | Initializes the API. Must be called at app startup. All other methods are accessible only after successful initialization. Consent screen is shown on first initialization by default - skip by setting `skip_consent: true` in settings. |
+| `brd_api.show_consent()` | `callbacks` | Displays the consent screen on user action. Use when a user tries to close an ad or clicks a checkbox to activate Bright SDK. |
+| `brd_api.external_opt_in()` | `callbacks` | Call this after the user agrees on your own custom consent screen. [See Custom Consent Screen (optional)](#) for more details. |
+| `brd_api.opt_out()` | `callbacks` | Disables Bright SDK. |
+| `brd_api.get_status()` | — | Returns the current `status` object. |
 
-       | Value         | Button text          |
-       | ------------- | -------------------- |
-       | `I_AGREE`     | I Agree              |
-       | `REMOVE_ADS`  | Remove Ads           |
-       | `PREMIUM_VER` | Premium version      |
-       | `FREE_APP`    | Get the app for free |
+## Status Object
 
-       You can assign custom text to the button. If you pass a string value that is not present in the value enum, it will be displayed as the text of the button.
-    9. **disagree_btn (string/enum) -** consent screen “disagree” button text. Default value: “Keep Ads”.
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `consent` | `bool` | Current SDK status |
+| `ver` | `string` | Current SDK version (e.g. `"1.285.476"`) |
+| `tracking_id` | `string` | The app's tracking ID - can be set via `brd_api.init` |
 
-       Possible values:
+**`consent` possible values:**
 
-       | Value          | Button text          |
-       | -------------- | -------------------- |
-       | `I_DISAGREE`   | I Disagree           |
-       | `ADS`          | I prefer to see ads  |
-       | `LIMITED`      | I prefer limited use |
-       | `PAY`          | I prefer to pay      |
-       | `NOT_AGREE`    | I Don't Agree        |
-       | `NO_THANK_YOU` | No, Thank You        |
+| Value | Meaning |
+| :--- | :--- |
+| `true` | SDK is enabled and working |
+| `false` | SDK is disabled and disconnected |
+| `null` | User has not passed the consent screen yet |
 
-       You can assign custom text to the button. If you pass a string value that is not present in the value enum, it will be displayed as the text of the button.
-   10. **opt_out_instructions (string) -** detailed instructions for users on how to disable the Bright SDK in your app's interface.
-   11. **benefit (string) -** a description of the benefits a user gets if he/she consents to enable Bright SDK.
-   12. **on_status_change (function) -** callback will be called every time the consent status is set.
-   13. **on_dialog_shown (function) -** callback will be called when consent dialog is shown.
-   14. **on_dialog_closed (function) -** callback will be called when consent dialog is closed.
-   15. **style (object) -** describe custom visual styles for consent screen:
-       - **custom_background_image (false|string) -** path to background image for consent screen.
-       - **agree_btn_focus_styles, disagree_btn_focus_styles, agree_btn_styles, disagree_btn_styles (string) -** css styles for buttons.
+## Settings Object
 
-         Example:
+### General
 
-         ```markdown
-         background-image: url(accept_button.jpg);
-         border: 3px solid black;
-         background-color: #0000;
-         ```
-   15. **custom_font_size, custom_title_font_size, custom_bottom_text_font_size, custom_button_font_size (string) -** the values are being used as the css font-size property. Example: '1.2vw'.
-   16. **custom_font_family (string) -** the values are being used as the css font-family property.
-   17. **custom_text_color, custom_text_button_color, custom_focus_text_button_color (string) -** font colors. The values are being used as the css color property.
-   18. **custom_background_color, custom_background_button_color, custom_focus_background_button_color (string) -** background colors. The values are being used as the css background-color property. Can be set to 'none' to get transparent with the background image.
-   19. **custom_qr_code_color, custom_qr_code_bg_color (string) -** colors for QR code.
-   20. **shadow (boolean) -** shadow for consent popup.
-   21. **custom_icon_color, custom_icon_color (string) -** icons background and image colors.
-   22. **callbacks (object) properties:**
-       - **on_failure (function) -** callback will be called when an error occurs in a called function.
-       - **on_success (function) -** the callback will be called when the called function completes successfully.
+| Property | Type | Required | Description |
+| :--- | :--- | :---: | :--- |
+| `app_name` | `string` | ✅ | Your app name — shown on the consent screen |
+| `app_logo` | `string` | ✅ | Path to your app logo — shown on the consent screen |
+| `tracking_id` | `string` | ❌ | Unique tracking ID for reports and debugging |
+| `skip_consent` | `boolean` | ❌ | If `true`, skips showing the consent screen on initialization. Use `show_consent()` to show it later. |
+| `benefit` | `string` | ❌ | Description of the benefit the user receives when opting in |
+| `opt_out_instructions` | `string` | ❌ | Instructions shown to users on how to disable Bright SDK in your app |
+
+### Consent Repeat Behavior
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `simple_opt_out` | `boolean` or `object` | Allows users to opt out by pressing **[5]** — this reopens the consent screen. If opted out, the consent screen will reappear after several app restarts (see `repeat_consent`). You can pass an object to redefine the consent button text. (see 4.2 If You Don't Have a Settings Menu) |
+| `repeat_consent` | `integer` (≥ 3) | Shows the consent screen again after the specified number of app restarts. Only active when `simple_opt_out` is `true`. |
+
+**`simple_opt_out` object example:**
+```javascript
+{
+    agree_btn: 'Keep Ad-Free',
+    disagree_btn: 'ADS',
+}
+```
+
+### Consent Screen Buttons
+
+#### `agree_btn` (string/enum)
+Sets the **agree** button text. Default: `I_AGREE`
+
+| Value | Button Text |
+| :--- | :--- |
+| `I_AGREE` | I Agree |
+| `REMOVE_ADS` | Remove Ads |
+| `PREMIUM_VER` | Premium version |
+| `FREE_APP` | Get the app for free |
+
+<Tip>You can also pass any custom string - if it doesn't match an enum value, it will be displayed as-is.</Tip>
+
+#### `disagree_btn` (string/enum)
+Sets the **disagree** button text. Default: `Keep Ads`
+
+| Value | Button Text |
+| :--- | :--- |
+| `I_DISAGREE` | I Disagree |
+| `ADS` | I prefer to see ads |
+| `LIMITED` | I prefer limited use |
+| `PAY` | I prefer to pay |
+| `NOT_AGREE` | I Don't Agree |
+| `NO_THANK_YOU` | No, Thank You |
+
+<Tip>You can also pass any custom string - if it doesn't match an enum value, it will be displayed as-is.</Tip>
+
+### Callbacks (in Settings)
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `on_status_change` | `function` | Called every time the consent status changes |
+| `on_dialog_shown` | `function` | Called when the consent dialog is shown |
+| `on_dialog_closed` | `function` | Called when the consent dialog is closed |
+
+## Style Object
+
+Use the `style` property to customize the visual appearance of the consent screen.
+
+### Background
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `custom_background_image` | `false` or `string` | Path to a background image for the consent screen |
+| `custom_background_color` | `string` | CSS `background-color` value. Set to `'none'` for transparent with background image |
+
+### Buttons
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `agree_btn_styles` | `string` | CSS styles for the agree button |
+| `disagree_btn_styles` | `string` | CSS styles for the disagree button |
+| `agree_btn_focus_styles` | `string` | CSS styles for the agree button on focus |
+| `disagree_btn_focus_styles` | `string` | CSS styles for the disagree button on focus |
+| `custom_background_button_color` | `string` | CSS `background-color` for buttons |
+| `custom_focus_background_button_color`| `string` | CSS `background-color` for buttons on focus |
+
+**Button style example:**
+```css
+background-image: url(accept_button.jpg);
+border: 3px solid black;
+background-color: #0000;
+```
+
+### Typography
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `custom_font_family` | `string` | CSS `font-family` value |
+| `custom_font_size` | `string` | CSS `font-size` for general text (e.g. `'1.2vw'`) |
+| `custom_title_font_size` | `string` | CSS `font-size` for the title |
+| `custom_bottom_text_font_size`| `string` | CSS `font-size` for bottom text |
+| `custom_button_font_size` | `string` | CSS `font-size` for button text |
+| `custom_text_color` | `string` | CSS `color` for general text |
+| `custom_text_button_color` | `string` | CSS `color` for button text |
+| `custom_focus_text_button_color`| `string` | CSS `color` for button text on focus |
+
+### Icons & QR Code
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `custom_icon_color` | `string` | Icon image color |
+| `custom_qr_code_color` | `string` | QR code foreground color |
+| `custom_qr_code_bg_color`| `string` | QR code background color |
+| `shadow` | `boolean` | Enables shadow on the consent popup |
+
+## Callbacks Object
+
+The `callbacks` object can be passed to any method that accepts it.
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `on_success` | `function` | Called when the method completes successfully |
+| `on_failure` | `function` | Called when an error occurs |

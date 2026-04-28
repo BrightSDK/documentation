@@ -32,8 +32,6 @@ title: 'API Documentation Apple'
 | `set_on_consent_presented_callback(callback)` | `void` | Sets a handler for when the consent screen is presented |
 | `set_on_consent_closed_callback(callback)` | `void` | Sets a handler for when the consent screen is dismissed (via close, agree, or disagree) |
 
----
-
 ### Method Details
 
 #### `init()`
@@ -154,8 +152,6 @@ Sets a handler for when the consent screen is dismissed (via close, agree, or di
 static void set_on_consent_closed_callback(EmptyCallback callback)
 ```
 
----
-
 ### Enums & Classes (Unity)
 
 **Enum: `BrdsdkBridge.AuthorizationStatus`**
@@ -239,8 +235,6 @@ public ConsentFont(string _nameOrPath, float _size)
 
 <br />
 
----
-
 ## Part 2: Swift / Objective-C
 
 <Info>
@@ -271,8 +265,6 @@ public ConsentFont(string _nameOrPath, float _size)
 | `consent_shown()` | `Bool` | Triggers post-actions when a custom consent screen is shown. Returns `false` if authorization status is not authorized. |
 | `authorizeDevice()` | `AuthorizationStatus` | Checks SDK availability. Required before showing a custom consent screen; optional otherwise. |
 | `get_uuid()` | `String?` | Returns current SDK UUID, or `nil` if SDK is not initialized |
-
----
 
 ### Method Details
 
@@ -391,8 +383,6 @@ Returns current SDK UUID, or `nil` if SDK is not initialized.
 ```swift
 static func get_uuid() -> String?
 ```
-
----
 
 ### Enums & Classes (Swift / Obj-C)
 
