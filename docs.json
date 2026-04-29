@@ -21,7 +21,6 @@
           },
           {
             "group": "Integration Guides",
-            "root": "integration-guides/overview",
             "pages": [
               {
                 "group": "Tizen",
@@ -72,7 +71,6 @@
           },
           {
             "group": "Technical Implementation",
-            "root": "technical-implementation/overview",
             "pages": [
               "technical-implementation/FAQ",
               "technical-implementation/troubleshooting"
