@@ -72,7 +72,8 @@
           {
             "group": "Technical Implementation",
             "pages": [
-              "technical-implementation/FAQ"
+              "technical-implementation/FAQ",
+              "technical-implementation/troubleshooting"
             ]
           }
         ]
