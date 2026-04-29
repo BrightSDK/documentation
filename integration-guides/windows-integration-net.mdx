@@ -26,363 +26,389 @@ import UpdateSdkVersion from "/snippets/update-sdk-version.mdx";
 - Visual Studio (recommended).
 - Assigned App ID from Bright SDK Dashboard.
 
-### Step 1: Create App ID on Dashboard
+<Steps>
+  <Step title="Create App ID on Dashboard" titleSize="h3">
+    <AppIdWin />
+  </Step>
 
-<AppIdWin />
+  <Step title="Extract SDK Framework" titleSize="h3">
+    **Download the SDK**
 
-### Step 2: Extract SDK Framework
+    Download the latest Bright SDK from the [<u>Bright SDK Dashboard</u>](https://bright-sdk.com/cp/docs/sdk/windows), unzip it.
 
-**<u>Download the SDK:</u>**
+    **SDK Structure**
 
-Download the latest Bright SDK from the [<u>Bright SDK Dashboard</u>](https://bright-sdk.com/cp/docs/sdk/windows) ,unzip it.
+    | File | Description |
+    | :-- | :-- |
+    | `net_updater32.exe` | Bright Data Windows service installer, uninstaller and entry point |
+    | `lum_sdk.dll` | .NET API, targeting .NET Framework 4.5 (AnyCPU) |
+    | `brd_config.json` | consent configuration and customization |
+    | `lum_sdk.xml` | .NET API documentation for Visual Studio |
 
-**<u>SDK Structure:</u>**
+    <Note>
+      **Important:** `lum_sdk.dll`, `net_updater32.exe` and `brd_config.json` files must be located next to each other when running the application.
+    </Note>
+  </Step>
 
-| File | Description |
-| :-- | :-- |
-| `net_updater32.exe` | Bright Data Windows service installer, uninstaller and entry point |
-| `lum_sdk.dll` | .NET API, targeting .NET Framework 4.5 (AnyCPU) |
-| `brd_config.json` | consent configuration and customization |
-| `lum_sdk.xml` | .NET API documentation for Visual Studio |
+  <Step title="Integrate Bright SDK in Your Code" titleSize="h3">
+    **Add SDK Files to Your Solution**
 
-<Note>
-  **<u>Important:</u>** `lum_sdk.dll`, `net_updater32.exe` and `brd_config.json` files must be located next to each other when running the application.
-</Note>
+    **Build-time Dependencies**
+    1. Copy the following files to any location inside your repository:
+       - `lum_sdk.dll`
+       - `lum_sdk.xml`
+    2. Add them to your source control.
+    3. Add reference from your main project to `lum_sdk.dll` (Copy Local = true).
+    
+    <Note>
+      `lum_sdk.xml` is for Visual Studio to display documentation of the API and must be located next to the referenced `lum_sdk.dll`. It is not needed at runtime.
+    </Note>
 
-### Step 3: Integrate Bright SDK in Your Code
+    **Run-time Dependencies**
+    1. Copy the following files to the root of your main project:
+       - `net_updater32.exe`
+       - `brd_config.json`
+    2. Add them to your source control.
+    3. Add them to your project as Content.
+    4. Set them to be copied to the output folder.
 
-**Add SDK Files to Your Solution:**
+    **Add SDK Initialization to Your Code**
 
-1. **Build-time Dependencies:**
-   1. Copy the following files to any location inside your repository:
-      - `lum_sdk.dll`
-      - `lum_sdk.xml`
-   2. Add them to your source control.
-   3. Add reference from your main project to lum\_sdk.dll (Copy Local = true).
-   <Note>
-     `lum_sdk.xml` is for Visual Studio to display documentation of the API and must be located next to the referenced `lum_sdk.dll`. It is not needed at runtime.
-   </Note>
-2. **Run-time Dependencies:**
-   1. Copy the following files to the root of your main project:
-      - `net_updater32.exe`
-      - `brd_config.json`
-   2. Add them to your source control.
-   3. Add them to your project as Content.
-   4. Set them to be copied to the output folder.
+    1. Instantiate `BrightData.Api`.
+    2. Initialize it **during your application's startup** initialization.
+       - Set required fields now and you can customize the consent screen later.
+    3. Use `brd_config.json` and/or set them programmatically (see [API Documentation](#api-documentation)).
+    4. Write handler code for the user choice changed event.
+       - *For example:* enable/disable ads or premium features.
+    5. Close the SDK when your application is exiting.
 
-**Add SDK Initialization to Your Code:**
+    <Note>
+      **Note:** Init will show consent screen to the user only if they haven't seen it before (didn't agree or disagree). You can disable consent on Init completely with `Setting.SkipConsent=true` and manually show it later with `Api.ShowConsent()`.
+    </Note>
 
-Steps:
+    See [Code Example](#code-example) and use `cs_winform_anycpu` and `cs_wpf_anycpu` from samples directory for reference.
+  </Step>
 
-1. Instantiate `BrightData.Api`.
-2. Initialize it <u>during your application's startup</u> initialization.
-   - Set required fields now and you can customize the consent screen later.
-3. Use `brd_config.json` and/or set them programmatically (see [<u>API Documentation</u>](https://docs.bright-sdk.com/integration-guides/windows-integration-net#api-documentation)).
-4. Write handler code for the user choice changed event.
-   - <u>For example:</u> enable/disable ads or premium features.
-5. Close the SDK when your application is exiting.
+  <Step title="Add Opt-In/Out Settings Option" titleSize="h3">
+    <OptInOutWin />
+  </Step>
 
-<Note>
-  **<u>Note:</u>** Init will show consent screen to the user only if they haven't seen it before (didn't agree or disagree). You can disable consent on Init completely with `Setting.SkipConsent=true` and manually show it later with `Api.ShowConsent()`.
-</Note>
+  <Step title="Update Application Installer" titleSize="h3">
+    <UpdateAppInstall />
+  </Step>
 
-See [Code Example](https://docs.bright-sdk.com/integration-guides/windows-integration-net#code-example) and use `cs_winform_anycpu` and `cs_wpf_anycpu` from samples directory for reference.
+  <Step title="Add SDK Service Status Notifications (Optional)" titleSize="h3">
+    **Notifications**
 
-### Step 4: Add Opt-In/Out Settings Option
+    You can register your app for notifications about the SDK service status. This allows you to:
+    - Know if the SDK is in a valid usable state.
+    - Prevent users from receiving benefits until they restore the SDK service.
 
-<OptInOutWin />
+    **Implementation:**
+    Add delegate for the `BrightData.Api.ServiceStatusChanged` event, the handler for the event is an EventHandler that receives the `BrightData.Api.ServiceStatusChangedEventArgs` as event data.
 
-### Step 5: Update Application Installer
+    See `ServiceStatus` enum for more information on the different status.
 
-<UpdateAppInstall />
+    <Note>
+      The callback function can be called from a different thread than the one used to register the callback.
+    </Note>
 
-### Step 6: Add SDK Service Status Notifications (Optional)
+    **Recovery**
 
-**<u>Notifications:</u>**
+    If the `ServiceStatus` is `NotInstalled`, `Installed`, or `NotRunning`, you can use the `FixServiceStatus` API to trigger automatic recovery.
 
-You can register your app for notifications about the SDK service status. This allows you to:
+    You can also trigger this on user action (e.g., "Click here to fix Bright Data SDK and regain benefit").
+  </Step>
 
-- Know if the SDK is in a valid usable state.
-- Prevent users from receiving benefits until they restore the SDK service.
+  <Step title="Custom Consent Screen (optional)" titleSize="h3">
+    <CustomConsentWin />
+  </Step>
 
-Implementation:
+  <Step title="Self-Check Your Integration" titleSize="h3">
+    **Testing Mode**
 
-Add delegate for the `BrightData.Api.ServiceStatusChanged` event, the handler for the event is an EventHandler that receives the `BrightData.Api.ServiceStatusChangedEventArgs` as event data.
+    You may set `BrightData.Api.Settings.TestMode = true` while developing. This way the BrightData service will not be installed when you accept the consent screen, making it easier to develop.
 
-See `ServiceStatus` enum for more information on the different status.
+    **Resetting During Testing**
 
-<Note>
-  The callback function can be called from a different thread than the one used to register the callback.
-</Note>
+    While testing, you can:
 
-**<u>Recovery:</u>**
+    **Option 1: Opt-out through settings**
+    - Remove Bright Data service by opting out through your application settings.
+    - Delete the `luminati` folder (or your entire output folder).
+    - This resets your consent choice.
+    - Consent screen will display next time you run the application.
 
-If the `ServiceStatus` is `NotInstalled`, `Installed`, or `NotRunning`, you can use the `FixServiceStatus` API to trigger automatic recovery.
+    **Option 2: Uninstall via command**
+    - Execute `net_updater32.exe --uninstall APPID` in your output folder.
+    - This deletes all SDK files.
+  </Step>
 
-You can also trigger this on user action (e.g., "Click here to fix Bright Data SDK and regain benefit").
+  <Step title="Update Your Terms of Service" titleSize="h3">
+    <UpdateTermsOfService />
+  </Step>
 
-### Step 7: Custom Consent Screen (optional)
+  <Step title="Submit your integration for review" titleSize="h3">
+    <SubmitIntegrationReview />
+  </Step>
 
-<CustomConsentWin />
+  <Step title="How to Update SDK" titleSize="h3">
+    Download the latest SDK from the [<u>Bright SDK Dashboard</u>](https://bright-sdk.com/cp/docs/sdk/windows) and follow these steps:
 
-### Step 8: Self-Check Your Integration
+    **Replace SDK Files**
+    Replace the following files with newer versions:
+    - `net_updater32.exe` (or `net_updater64.exe`).
+    - `lum_sdk.dll` (or `lum_sdk32.dll` / `lum_sdk64.dll`).
+    - `brd_config.json`.
 
-**<u>Testing Mode:</u>**
+    **Rebuild Project**
+    1. Clean your project.
+    2. Rebuild your project.
+  </Step>
 
-You may set `BrightData.Api.Settings.TestMode = true` while developing. This way the BrightData service will not be installed when you accept the consent screen, making it easier to develop.
+  <Step title="Code Example" titleSize="h3">
+    **Main Application Form:**
 
-**<u>Resetting During Testing:</u>**
-
-While testing, you can:
-
-1. Option 1: Opt-out through settings
-   - Remove Bright Data service by opting out through your application settings.
-   - Delete the `luminati` folder (or your entire output folder).
-   - This resets your consent choice.
-   - Consent screen will display next time you run the application.
-2. Option 2: Uninstall via command
-   - Execute `net_updater32.exe --uninstall APPID` in your output folder.
-   - This deletes all SDK files.
-
-### Step 9: Update Your Terms of Service
-
-<UpdateTermsOfService />
-
-### Step 10: Submit your integration for review
-
-<SubmitIntegrationReview />
-
-### How to Update SDK
-
-Download the latest SDK from the [<u>Bright SDK Dashboard</u>](https://bright-sdk.com/cp/docs/sdk/windows) and follow these steps:
-
-**<u>Step 1: Replace SDK Files</u>**
-
-Replace the following files with newer versions:
-
-- `net_updater32.exe` (or `net_updater64.exe`).
-- `lum_sdk.dll` (or `lum_sdk32.dll` / `lum_sdk64.dll`).
-- `brd_config.json`.
-
-**<u>Step 2: Rebuild Project</u>**
-
-1. Clean your project.
-2. Rebuild your project.
-
-### Code Example
-
-**Main Application Form:**
-
-```csharp
-public partial class ExampleAppMainForm : Form
-{
-  private BrightData.Api _brightSdk = new BrightData.Api();
-  private void BrightSdk_ConsentChoiceChanged(object sender,
-      BrightData.Api.ConsentChoiceChangedEventArgs e)
-  {
-    if (e.Choice == true)
+    ```csharp
+    public partial class ExampleAppMainForm : Form
     {
-      // user agreed to Bright Data consent
-      // you can disable ads here, for example
+      private BrightData.Api _brightSdk = new BrightData.Api();
+      private void BrightSdk_ConsentChoiceChanged(object sender,
+          BrightData.Api.ConsentChoiceChangedEventArgs e)
+      {
+        if (e.Choice == true)
+        {
+          // user agreed to Bright Data consent
+          // you can disable ads here, for example
+        }
+        else
+        {
+          // user disagreed to the consent or opted out
+          // you can enable ads here, for example
+        }
+      }
+      private void BrightSdk_ServiceStatusChanged(object sender,
+          BrightData.Api.ServiceStatusChangedEventArgs e)
+      {
+        if (!_brightSdk.ConsentChoice)
+          return;
+
+        if (e.Status == BrightData.Api.ServiceStatus.NotInstalled)
+        {
+          // optional: notify user about SDK service not installed and offer to recover
+          // optional: automatically try and recover (might cause bad UX)
+          if (userWantsToRecover || autoRecoverIsEnabled)
+            _brightSdk.FixServiceStatus();
+        }
+        else if (e.Status == BrightData.Api.ServiceStatus.Installed ||
+          e.Status == BrightData.Api.ServiceStatus.NotRunning)
+        {
+          // optional: notify user about SDK service not running and offer to recover
+          // optional: automatically try and recover (might cause bad UX)
+          if (userWantsToRecover || autoRecoverIsEnabled)
+            _brightSdk.FixServiceStatus();
+        }
+      }
+      protected override void OnFormClosing(FormClosingEventArgs e) 
+      {
+          _brightSdk.Close();
+          base.OnFormClosing(e);
+      }
+      private void SettingsToolStripMenuItem_Click(object sender, EventArgs e)
+      {
+        new SettingsForm(_brightSdk).ShowDialog();
+      }
     }
-    else
+    ```
+
+    **Settings Form:**
+
+    ```csharp
+    public partial class SettingsForm : Form
     {
-      // user disagreed to the consent or opted out
-      // you can enable ads here, for example
+      private readonly BrightData.Api _brightSdk;
+      public SettingsForm(BrightData.Api brightSdk)
+      {
+        InitializeComponent();
+        _brightSdk = brightSdk;
+        _brightSdk.ConsentChoiceChanged += BrightSdk_ConsentChoiceChanged;
+        _chkBrightData.AutoCheck = false;
+        _chkBrightData.Checked = _brightSdk.ConsentChoice ?? false;
+        _chkBrightData.Click += ChkBrightData_Click;
+      }
+      protected override void OnClosing(CancelEventArgs e)
+      {
+        // make sure to avoid event handler leak
+        _brightSdk.ConsentChoiceChanged -= BrightSdk_ConsentChoiceChanged;
+        base.OnClosing(e);
+      }
+      private void ChkBrightData_Click(object sender, EventArgs e)
+      {
+        if (_brightSdk.ConsentChoice == true)
+          _brightSdk.OptOut();
+        else
+          _brightSdk.ShowConsent();
+      }
+      private void BrightSdk_ConsentChoiceChanged(object sender,
+        BrightData.Api.ConsentChoiceChangedEventArgs e)
+      {
+        _chkBrightData.Checked = e.Choice ?? false;
+      }
     }
-  }
-  private void BrightSdk_ServiceStatusChanged(object sender,
-      BrightData.Api.ServiceStatusChangedEventArgs e)
-  {
-    if (!_brightSdk.ConsentChoice)
-      return;
+    ```
+  </Step>
 
-    if (e.Status == BrightData.Api.ServiceStatus.NotInstalled)
-    {
-      // optional: notify user about SDK service not installed and offer to recover
-      // optional: automatically try and recover (might cause bad UX)
-      if (userWantsToRecover || autoRecoverIsEnabled)
-        _brightSdk.FixServiceStatus();
-    }
-    else if (e.Status == BrightData.Api.ServiceStatus.Installed ||
-      e.Status == BrightData.Api.ServiceStatus.NotRunning)
-    {
-      // optional: notify user about SDK service not running and offer to recover
-      // optional: automatically try and recover (might cause bad UX)
-      if (userWantsToRecover || autoRecoverIsEnabled)
-        _brightSdk.FixServiceStatus();
-    }
-  }
-  protected override void OnFormClosing(FormClosingEventArgs e) 
-  {
-      _brightSdk.Close();
-      base.OnFormClosing(e);
-  }
-  private void SettingsToolStripMenuItem_Click(object sender, EventArgs e)
-  {
-    new SettingsForm(_brightSdk).ShowDialog();
-  }
-}
-```
+  <Step title="API Documentation" titleSize="h3">
+    - Settings in `brd_config.json` are shared by both `lum_sdk.dll` and `net_updater32.exe`.
+    - You can use the config file together with the programmatic API.
+    - Programmatic API settings take precedence over config file settings.
 
-**Settings Form:**
+    <Steps>
+      <Step title="Configuration File (brd_config.json)">
+        **Required Properties**
 
-```csharp
-public partial class SettingsForm : Form
-{
-  private readonly BrightData.Api _brightSdk;
-  public SettingsForm(BrightData.Api brightSdk)
-  {
-    InitializeComponent();
-    _brightSdk = brightSdk;
-    _brightSdk.ConsentChoiceChanged += BrightSdk_ConsentChoiceChanged;
-    _chkBrightData.AutoCheck = false;
-    _chkBrightData.Checked = _brightSdk.ConsentChoice ?? false;
-    _chkBrightData.Click += ChkBrightData_Click;
-  }
-  protected override void OnClosing(CancelEventArgs e)
-  {
-    // make sure to avoid event handler leak
-    _brightSdk.ConsentChoiceChanged -= BrightSdk_ConsentChoiceChanged;
-    base.OnClosing(e);
-  }
-  private void ChkBrightData_Click(object sender, EventArgs e)
-  {
-    if (_brightSdk.ConsentChoice == true)
-      _brightSdk.OptOut();
-    else
-      _brightSdk.ShowConsent();
-  }
-  private void BrightSdk_ConsentChoiceChanged(object sender,
-    BrightData.Api.ConsentChoiceChangedEventArgs e)
-  {
-    _chkBrightData.Checked = e.Choice ?? false;
-  }
-}
-```
+        | **Property** | **Type** | **Description** |
+        | :-- | :-- | :-- |
+        | `app_id` | string | Your APPID |
+        | `app_name` | string | Friendly name of your app that appears on the consent screen |
+        | `logo_link` | string | URL to your app's logo for the consent screen |
 
-### API Documentation
+        **Optional Properties**
 
-- Settings in `brd_config.json` are shared by both `lum_sdk.dll` and `net_updater32.exe`.
-- You can use the config file together with the programmatic API.
-- Programmatic API settings take precedence over config file settings.
+        | Property | Type | Description |
+        | :-- | :-- | :-- |
+        | `benefit` | string | Description of benefits user gets when enabling SDK. Changes consent screen wording. Becomes the first part of the first sentence on the consent screen |
+        | `agree_btn` | string | Text of the consent screen's agree button |
+        | `disagree_btn` | string | Text of the consent screen's disagree button |
+        | `opt_out_txt` | string | Text of the consent screen's opt-out instructions |
+      </Step>
 
-**<u>Configuration File (brd\_config.json):</u>**
+      <Step title=".NET API Reference">
+        **Methods**
 
-1. <u>Required Properties:</u>
-   | **Property** | **Type** | **Description** |
-   | :-- | :-- | :-- |
-   | `app_id` | string | Your APPID |
-   | `app_name` | string | Friendly name of your app that appears on the consent screen |
-   | `logo_link` | string | URL to your app's logo for the consent screen |
-2. <u>Optional Properties:</u>
-   | Property | Type | Description |
-   | :-- | :-- | :-- |
-   | `benefit` | string | Description of benefits user gets when enabling SDK. Changes consent screen wording. Becomes the first part of the first sentence on the consent screen |
-   | `agree_btn` | string | Text of the consent screen's agree button |
-   | `disagree_btn` | string | Text of the consent screen's disagree button |
-   | `opt_out_txt` | string | Text of the consent screen's opt-out instructions |
+        | **Method** | **Description** |
+        | :-- | :-- |
+        | `void BrightData.Api.Init(Settings settings)` | Initializes Bright SDK. Should be called during app initialization. All other methods will be accessible afterwards. By default, consent screen will be shown if the user hasn't made a choice yet, but can be skipped with `Settings.SkipConsent = true` |
+        | `void BrightData.Api.ShowConsent()` | Displays consent screen. (Clears user choice and removes Brightdata service if installed.) Can be used when a user tries to close an ad or clicks the checkbox to activate Bright SDK |
+        | `void BrightData.Api.OptOut()` | Disables Bright SDK and removes Brightdata service. `ConsentChoice `will change to false |
+        | `void BrightData.Api.Close()` | Closes Bright SDK. Should be called when the application exits if the SDK cannot automatically detect the application exit and keeps running, keeping the app process running |
+        | `string BrightData.Api.GetUuid()` | Returns the peer's unique identifier. Useful for debugging |
 
-**<u>.NET API Reference:</u>**
+        **Properties**
 
-1. <u>Methods:</u>
-   | **Method** | **Description** |
-   | :-- | :-- |
-   | `void BrightData.Api.Init(Settings settings)` | Initializes Bright SDK. Should be called during app initialization. All other methods will be accessible afterwards. By default, consent screen will be shown if the user hasn't made a choice yet, but can be skipped with `Settings.SkipConsent = true` |
-   | `void BrightData.Api.ShowConsent()` | Displays consent screen. (Clears user choice and removes Brightdata service if installed.) Can be used when a user tries to close an ad or clicks the checkbox to activate Bright SDK |
-   | `void BrightData.Api.OptOut()` | Disables Bright SDK and removes Brightdata service. `ConsentChoice `will change to false |
-   | `void BrightData.Api.Close()` | Closes Bright SDK. Should be called when the application exits if the SDK cannot automatically detect the application exit and keeps running, keeping the app process running |
-   | `string BrightData.Api.GetUuid()` | Returns the peer's unique identifier. Useful for debugging |
-2. <u>Properties:</u>
-   | **Property** | **Description** |
-   | :-- | :-- |
-   | `bool? BrightData.Api.ConsentChoice { get; }` | Returns the user's consent choice. true if the user agreed, false if disagreed and null if no choice has been made |
-3. <u>Events:</u>
-   | **Event** | **Description** |
-   | :-- | :-- |
-   | `event BrightData.Api.ConsentChoiceChanged` | Occurs when the user's consent choice has changed. For example when they accepted the consent or they disabled Bright SDK through your application settings |
-   | `event BrightData.Api.ConsentDialogShown` | Occurs when the consent dialog is shown |
-   | `event BrightData.Api.ConsentDialogClosed` | Occurs when the consent dialog is closed |
-4. <u>Event Example:</u>
-   ```csharp
-   _brightSdk.ConsentChoiceChanged += (sender, e) => 
-   {
-       if (e.Choice == true)
-           // User opted in
-       else
-           // User opted out
-   };
-   ```
+        | **Property** | **Description** |
+        | :-- | :-- |
+        | `bool? BrightData.Api.ConsentChoice { get; }` | Returns the user's consent choice. true if the user agreed, false if disagreed and null if no choice has been made |
 
-**<u>Settings Class:</u>**
+        **Events**
 
-`class BrightData.Api.Settings`
+        | **Event** | **Description** |
+        | :-- | :-- |
+        | `event BrightData.Api.ConsentChoiceChanged` | Occurs when the user's consent choice has changed. For example when they accepted the consent or they disabled Bright SDK through your application settings |
+        | `event BrightData.Api.ConsentDialogShown` | Occurs when the consent dialog is shown |
+        | `event BrightData.Api.ConsentDialogClosed` | Occurs when the consent dialog is closed |
 
-1. <u>Required Properties:</u>
-   | **Property** | **Type** | **Description** |
-   | :-- | :-- | :-- |
-   | `AppId` | string | Your APPID. Required if not in `brd_config.json` |
-   | `AppName` | string | Friendly name for consent screen. Required if not in `brd_config.json` |
-   | `AppLogo` | string | URL to your app's logo. Required if not in `brd_config.json` |
-2. <u>Basic Configuration:</u>
-   | **Property** | **Type** | **Default** | **Description** |
-   | :-- | :-- | :-- | :-- |
-   | `SkipConsent` | bool | false | If true, Init won't show consent screen. Use `ShowConsent()` to display later |
-   | `Benefit` | string | - | Description of benefits. Changes consent wording. Becomes first part of first sentence |
-   | `OptOutText` | string | - | Text of consent opt-out instructions |
-   | `Campaign` | string | - | Optional parameter for statistics breakdown by campaign |
-3. <u>Button Customization:</u>
-   | **Property** | **Type** | **Description** |
-   | :-- | :-- | :-- |
-   | `AgreeBtn` | string | Text of consent screen's agree button |
-   | `DisagreeBtn` | string | Text of consent screen's disagree button |
-4. <u>Visual Customization:</u>
-   | **Property** | **Type** | **Format** | **Description** |
-   | :-- | :-- | :-- | :-- |
-   | `TextColor` | string | Hex ARGB "#AABBCCDD" | Color of consent text |
-   | `AppNameColor` | string | Hex ARGB "#AABBCCDD" | Color of application name text |
-   | `BrightDataLogoColor` | string | Hex ARGB "#AABBCCDD" | Color of BrightData logo background |
-   | `BackgroundColor` | string | Hex ARGB "#AABBCCDD" | Background color of consent screen |
-   | `ButtonColor` | string | Hex ARGB "#AABBCCDD" | Button color of consent screen |
-5. <u>Localization:</u>
-   | **Property** | **Type** | **Default** | **Description** |
-   | :-- | :-- | :-- | :-- |
-   | `Language` | string | "en-US" | Language code for consent screen. Supported: en-US, de-De, es-Es, fr-FR, it-IT, pt-PT, ru-RU, zh-CN |
+        **Event Example**
+        ```csharp
+        _brightSdk.ConsentChoiceChanged += (sender, e) => 
+        {
+            if (e.Choice == true)
+                // User opted in
+            else
+                // User opted out
+        };
+        ```
+      </Step>
 
-**<u>Command Line Tool (net\_updater32.exe):</u>**
+      <Step title="Settings Class">
+        `class BrightData.Api.Settings`
 
-1. **Help & Information:**
-   | **Argument** | **Description** |
-   | :-- | :-- |
-   | `-h` | Print command descriptions and help |
-2. **Service Management:**
-   | **Argument** | **Description** |
-   | :-- | :-- |
-   | `--install-ui <appid>` | Install service with provided appid after showing dialog and getting user permission |
-   | `--uninstall <appid>` | Remove service with provided appid (must match appid used during install) |
-   | `--start-service <appid>` | Start Bright Data service |
-   | `--stop-service <appid>` | Stop Bright Data service |
-   | `--check-peer <appid>` | Validate peer |
-3. **Dialog Customization:**
-   | **Argument** | **Description** |
-   | :-- | :-- |
-   | `--dlg-app-name <name>` | Friendly name of your app for consent screen |
-   | `--dlg-logo-link <logo>` | URL to your app's logo for consent screen |
-   | `--dlg-benefit <benefit>` | Description of benefits. Changes consent wording |
-   | `--dlg-language <culture>` | Language code. Default: "en-US". Supported: en-US, de-De, es-Es, fr-FR, it-IT, pt-PT, ru-RU, zh-CN |
-4. **Analytics:**
-   | **Argument** | **Description** |
-   | :-- | :-- |
-   | `--campaign <campaign_id>` | Optional parameter for statistics breakdown by campaign |
-5. **Command Examples:**
-   ```bash
-   # Install with dialog
-   net_updater32.exe --install-ui myapp.example.com
-   # Install with customization
-   net_updater32.exe --install-ui myapp.example.com --dlg-app-name "My App" --dlg-logo-link "https://example.com/logo.png"
-   # Uninstall
-   net_updater32.exe --uninstall myapp.example.com
-   # Start/Stop service
-   net_updater32.exe --start-service myapp.example.com
-   net_updater32.exe --stop-service myapp.example.com
-   ```
+        **Required Properties**
+
+        | **Property** | **Type** | **Description** |
+        | :-- | :-- | :-- |
+        | `AppId` | string | Your APPID. Required if not in `brd_config.json` |
+        | `AppName` | string | Friendly name for consent screen. Required if not in `brd_config.json` |
+        | `AppLogo` | string | URL to your app's logo. Required if not in `brd_config.json` |
+
+        **Basic Configuration**
+
+        | **Property** | **Type** | **Default** | **Description** |
+        | :-- | :-- | :-- | :-- |
+        | `SkipConsent` | bool | false | If true, Init won't show consent screen. Use `ShowConsent()` to display later |
+        | `Benefit` | string | - | Description of benefits. Changes consent wording. Becomes first part of first sentence |
+        | `OptOutText` | string | - | Text of consent opt-out instructions |
+        | `Campaign` | string | - | Optional parameter for statistics breakdown by campaign |
+
+        **Button Customization**
+
+        | **Property** | **Type** | **Description** |
+        | :-- | :-- | :-- |
+        | `AgreeBtn` | string | Text of consent screen's agree button |
+        | `DisagreeBtn` | string | Text of consent screen's disagree button |
+
+        **Visual Customization**
+
+        | **Property** | **Type** | **Format** | **Description** |
+        | :-- | :-- | :-- | :-- |
+        | `TextColor` | string | Hex ARGB "#AABBCCDD" | Color of consent text |
+        | `AppNameColor` | string | Hex ARGB "#AABBCCDD" | Color of application name text |
+        | `BrightDataLogoColor` | string | Hex ARGB "#AABBCCDD" | Color of BrightData logo background |
+        | `BackgroundColor` | string | Hex ARGB "#AABBCCDD" | Background color of consent screen |
+        | `ButtonColor` | string | Hex ARGB "#AABBCCDD" | Button color of consent screen |
+
+        **Localization**
+
+        | **Property** | **Type** | **Default** | **Description** |
+        | :-- | :-- | :-- | :-- |
+        | `Language` | string | "en-US" | Language code for consent screen. Supported: en-US, de-De, es-Es, fr-FR, it-IT, pt-PT, ru-RU, zh-CN |
+      </Step>
+
+      <Step title="Command Line Tool (net_updater32.exe)">
+        **Help & Information**
+
+        | **Argument** | **Description** |
+        | :-- | :-- |
+        | `-h` | Print command descriptions and help |
+
+        **Service Management**
+
+        | **Argument** | **Description** |
+        | :-- | :-- |
+        | `--install-ui <appid>` | Install service with provided appid after showing dialog and getting user permission |
+        | `--uninstall <appid>` | Remove service with provided appid (must match appid used during install) |
+        | `--start-service <appid>` | Start Bright Data service |
+        | `--stop-service <appid>` | Stop Bright Data service |
+        | `--check-peer <appid>` | Validate peer |
+
+        **Dialog Customization**
+
+        | **Argument** | **Description** |
+        | :-- | :-- |
+        | `--dlg-app-name <name>` | Friendly name of your app for consent screen |
+        | `--dlg-logo-link <logo>` | URL to your app's logo for consent screen |
+        | `--dlg-benefit <benefit>` | Description of benefits. Changes consent wording |
+        | `--dlg-language <culture>` | Language code. Default: "en-US". Supported: en-US, de-De, es-Es, fr-FR, it-IT, pt-PT, ru-RU, zh-CN |
+
+        **Analytics**
+
+        | **Argument** | **Description** |
+        | :-- | :-- |
+        | `--campaign <campaign_id>` | Optional parameter for statistics breakdown by campaign |
+
+        **Command Examples**
+        ```bash
+        # Install with dialog
+        net_updater32.exe --install-ui myapp.example.com
+        # Install with customization
+        net_updater32.exe --install-ui myapp.example.com --dlg-app-name "My App" --dlg-logo-link "https://example.com/logo.png"
+        # Uninstall
+        net_updater32.exe --uninstall myapp.example.com
+        # Start/Stop service
+        net_updater32.exe --start-service myapp.example.com
+        net_updater32.exe --stop-service myapp.example.com
+        ```
+      </Step>
+    </Steps>
+  </Step>
+</Steps>
