@@ -8,7 +8,7 @@ title: "Add Opt In Out Unity"
 
 Your app must include a settings option allowing users to opt in or out at any time. This is typically placed in a **Settings** menu.
 
-#### 11.1 Mobile Apps
+**<u>Mobile Apps</u>**
 
 **Requirements:**
 
@@ -17,8 +17,17 @@ Your app must include a settings option allowing users to opt in or out at any t
 - Include a **"Learn more"** link that opens: [https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing](https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing)
 
 <Columns cols={2}>
-  <img src="/snippets/image/add-opt-in-out-unity-1.png" alt="Alt text" width="400" />
-  <img src="/snippets/image/add-opt-in-out-unity-2.png" alt="Alt text" width="400" />
+  <img
+    src="/snippets/image/add-opt-in-out-unity-1.png"
+    alt="Alt text"
+    width="400"
+  />
+
+  <img
+    src="/snippets/image/add-opt-in-out-unity-2.png"
+    alt="Alt text"
+    width="400"
+  />
 </Columns>
 
 **Implementation:**
@@ -39,7 +48,7 @@ When the user toggles **on** → call `brightApi.CallStatic("showConsent", curre
   There is no way to directly opt in. Only the user can decide. You must show the consent screen - opt-in happens automatically only if the user agrees.
 </Note>
 
-#### 11.2 TV Apps
+**<u>TV Apps</u>**
 
 **Requirements:**
 
@@ -50,18 +59,27 @@ When the user toggles **on** → call `brightApi.CallStatic("showConsent", curre
   - You may use your own branded QR code, or the hosted [version provided](#)
 
 <img
-     src="/snippets/image/add-opt-in-out-unity-3.png"
-     alt="Alt text"
-     width="400"
-   />
+  src="/snippets/image/add-opt-in-out-unity-3.png"
+  alt="Alt text"
+  width="400"
+/>
 
 <Check>
   You may add a confirmation dialog to discourage opting out (e.g., "If you disable Web Indexing, you will start seeing ads. Continue?")
 </Check>
 
 <Columns cols={2}>
-  <img src="/snippets/image/add-opt-in-out-unity-4.png" alt="Alt text" width="400" />
-  <img src="/snippets/image/add-opt-in-out-unity-5.png" alt="Alt text" width="400" />
+  <img
+    src="/snippets/image/add-opt-in-out-unity-4.png"
+    alt="Alt text"
+    width="400"
+  />
+
+  <img
+    src="/snippets/image/add-opt-in-out-unity-5.png"
+    alt="Alt text"
+    width="400"
+  />
 </Columns>
 
 **Value text suggestions (both mobile and TV):**
@@ -78,10 +96,10 @@ Refrain from using technical terms like "opt in" / "opt out" — always speak in
 
 **Opt-Out Messages (Optional but highly recommended):**
 
-| Example | Comments                                                              |
-| ------- | --------------------------------------------------------------------- |
-| Bad     | Avoid using technical terms "opt in" / "opt out"                      |
-| Bad     | Default choice should be the green checkmark (Web Indexing enabled)   |
-| Good    | Dialog box discouraging opt-out, reminding user of value they lose    |
-| Good    | Correct messaging, correct default choice                             |
-| Good    | Dialog box validating user's choice, reminding how to opt back in     |
+| Example | Comments |
+| --- | --- |
+| Bad | Avoid using technical terms "opt in" / "opt out" |
+| Bad | Default choice should be the green checkmark (Web Indexing enabled) |
+| Good | Dialog box discouraging opt-out, reminding user of value they lose |
+| Good | Correct messaging, correct default choice |
+| Good | Dialog box validating user's choice, reminding how to opt back in |
