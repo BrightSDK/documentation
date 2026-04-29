@@ -3,7 +3,7 @@ title: "Consent Dialog Customization"
 ---
 
 <Info>
-  All customization parameters are available for Xcode-level integration. A subset is available for Unity Editor-level integration via [<u>BrdsdkBridge.cs</u>](http://brdsdkbridge.cs).
+  All customization parameters are available for Xcode-level integration. A subset is available for Unity Editor-level integration via [BrdsdkBridge.cs](http://brdsdkbridge.cs).
 </Info>
 
 You can customize the consent dialog by passing additional parameters during SDK initialization. The following subsections cover all available customization options.
@@ -14,7 +14,7 @@ You can customize the consent dialog by passing additional parameters during SDK
      width="400"
    />
 
-### 5.1 Background Images
+**Background Images**
 
 You can set background images for portrait and landscape orientations. Supported scale modes:
 
@@ -71,7 +71,7 @@ ConsentBackgroundImage *background = [[ConsentBackgroundImage alloc]
     }];
 ```
 
-### 5.2 Action Button Images (Opt-In / Opt-Out)
+**Action Button Images (Opt-In / Opt-Out)**
 
 Customize the opt-in and opt-out button appearance. For each button you can set:
 
@@ -131,12 +131,12 @@ ConsentActionInfo *optOut = [[ConsentActionInfo alloc]
     }];
 ```
 
-### 5.3 Consent Icon
+**Consent Icon**
 
 - Native SDK: Pass a `UIImage` via the `appicon` parameter in the `brd_api` initializer.
 - Unity: Pass an image path or its `xcassets` name via the `appicon` parameter in `BrdsdkBridge.init()`.
 
-### 5.4 Colors
+**Colors**
 
 Use `ColorSettings` (Swift/ObjC) or `ConsentColors` (Unity) to customize consent screen element colors.
 
@@ -158,9 +158,9 @@ BrdsdkBridge.init("To support this app", "I Agree", "I disagree",
     language, colors, backgroundImage, optIn, optOut);
 ```
 
-**Objective-C:** Use the `ColorSettings` class — see <u>API Documentation</u> for full property list.
+**Objective-C:** Use the `ColorSettings` class — see API Documentation for full property list.
 
-### 5.5 Fonts
+**Fonts**
 
 Use `ConsentFontsInfo` to override default fonts. You can set fonts for:
 
@@ -171,7 +171,7 @@ Use `ConsentFontsInfo` to override default fonts. You can set fonts for:
 - Buttons text
 
 <Danger>
-  <u>Warning:</u> The SDK has limitations for font sizes.
+  **Warning:** The SDK has limitations for font sizes.
 </Danger>
 
 **Unity:**
@@ -191,4 +191,4 @@ BrdsdkBridge.init("To support this app", "I Agree", "I disagree",
     language, colors, backgroundImage, optIn, optOut, fonts);
 ```
 
-**Objective-C:** Use the `ConsentFontsInfo` class — see <u>API Documentation</u> for full constructor and method list.
+**Objective-C:** Use the `ConsentFontsInfo` class — see API Documentation for full constructor and method list.

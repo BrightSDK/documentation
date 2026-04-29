@@ -3,9 +3,9 @@ title: 'API Documentation Apple'
 ---
 
 <Steps>
-  <Step title="Part 1: Unity Plugin" titleSize="h2">
+  <Step title="Part 1: Unity Plugin" titleSize="h3">
     <Steps>
-      <Step title="Class: BrdsdkBridge" titleSize="h3">
+      <Step title="Class: BrdsdkBridge">
         **Constants:**
 
         | Constant | Description |
@@ -33,7 +33,7 @@ title: 'API Documentation Apple'
         | `set_on_consent_closed_callback(callback)` | `void` | Sets a handler for when the consent screen is dismissed (via close, agree, or disagree) |
       </Step>
 
-      <Step title="Method Details" titleSize="h3">
+      <Step title="Method Details">
         **`init()`**
         Initializes the SDK. Must be called at app startup. All other methods are accessible after successful initialization. Consent screen is shown on first initialization by default - skip by setting `skip_consent: true`.
 
@@ -153,7 +153,7 @@ title: 'API Documentation Apple'
         ```
       </Step>
 
-      <Step title="Enums & Classes (Unity)" titleSize="h3">
+      <Step title="Enums & Classes (Unity)">
         **Enum: `BrdsdkBridge.AuthorizationStatus`**
 
         | Value | Description |
@@ -236,13 +236,13 @@ title: 'API Documentation Apple'
     </Steps>
   </Step>
 
-  <Step title="Part 2: Swift / Objective-C" titleSize="h2">
+  <Step title="Part 2: Swift / Objective-C" titleSize="h3">
     <Info>
       The APIs are identical for Swift and Objective-C - they differ in syntax only. For Objective-C, the `init` call must be made on a `brd_api` instance: `[[brd_api alloc] init...]`
     </Info>
 
     <Steps>
-      <Step title="Class: brd_api" titleSize="h3">
+      <Step title="Class: brd_api">
         **Properties:**
 
         | Property | Type | Description |
@@ -267,7 +267,7 @@ title: 'API Documentation Apple'
         | `get_uuid()` | `String?` | Returns current SDK UUID, or `nil` if SDK is not initialized |
       </Step>
 
-      <Step title="Method Details" titleSize="h3">
+      <Step title="Method Details">
         **`init()`**
         Initializes the SDK. Throws `brd_api.api_error`.
 
@@ -385,7 +385,7 @@ title: 'API Documentation Apple'
         ```
       </Step>
 
-      <Step title="Enums & Classes (Swift / Obj-C)" titleSize="h3">
+      <Step title="Enums & Classes (Swift / Obj-C)">
         **Enum: `Choice`**
 
         | Value | Description |
