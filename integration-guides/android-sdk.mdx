@@ -27,447 +27,449 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
   If you are using Java \< v8, please [contact](mailto:sales_sdk@brightdata.com) our technical support.
 </Note>
 
-### Important Notes
+<Steps>
+  <Step title="Important Notes" titleSize="h3">
+    - Users must **always** voluntarily decide to opt in after seeing the consent screen, and must **always** have an easy way to opt out.
+    - Bright Data reviews SDK integration after initial release and regularly thereafter. Your account **will be terminated** if you violate the guidelines in this document.
+    - Bright Data recommends offering value in exchange for opting in (e.g., fewer ads, bonus coins, premium features). However, simply asking for user support is also acceptable.
+    - **Do not upload** your APK with Bright SDK to the Google Play Store **without prior approval**.
+  </Step>
 
-- Users must **always** voluntarily decide to opt in after seeing the consent screen, and must **always** have an easy way to opt out.
-- Bright Data reviews SDK integration after initial release and regularly thereafter. Your account **will be terminated** if you violate the guidelines in this document.
-- Bright Data recommends offering value in exchange for opting in (e.g., fewer ads, bonus coins, premium features). However, simply asking for user support is also acceptable.
-- **Do not upload** your APK with Bright SDK to the Google Play Store **without prior approval**.
+  <Step title="Create App ID on Dashboard" titleSize="h3">
+    If you haven't done this yet, log in to [<u>your dashboard</u>](https://bright-sdk.com/cp/apps) and create your app ID first.
+  </Step>
 
-### Step 1: Create App ID on Dashboard
+  <Step title="Extract SDK AAR" titleSize="h3">
+    Download the latest Bright SDK from the [<u>Bright SDK Dashboard</u>](https://bright-sdk.com/cp/docs/sdk/android) or from the link provided in the latest release email. Unzip the archive.
 
-If you haven't done this yet, log in to [<u>your dashboard</u>](https://bright-sdk.com/cp/apps) and create your app ID first.
+    #### <u>SDK Structure</u>
 
-### Step 2: Extract SDK AAR
+    ```text
+    all/
+        bright_sdk.aar    ← SDK AAR file (obfuscated)
+    ```
 
-Download the latest Bright SDK from the [<u>Bright SDK Dashboard</u>](https://bright-sdk.com/cp/docs/sdk/android) or from the link provided in the latest release email. Unzip the archive.
+    #### <u>SDK Overview</u>
 
-#### <u>SDK Structure</u>
+    | Component | Description |
+    | --- | --- |
+    | `bright_sdk.aar` | The main Bright SDK library for Android. Obfuscated. |
 
-```text
-all/
-    bright_sdk.aar    ← SDK AAR file (obfuscated)
-```
+    Copy `bright_sdk.aar` into your project's `/libs` directory.
+  </Step>
 
-#### <u>SDK Overview</u>
+  <Step title="Integrate Bright SDK" titleSize="h3">
+    #### <u>3.1 Configure Dependencies</u>
 
-| Component | Description |
-| --- | --- |
-| `bright_sdk.aar` | The main Bright SDK library for Android. Obfuscated. |
+    In your **app-level `build.gradle`** file, make the following additions:
 
-Copy `bright_sdk.aar` into your project's `/libs` directory.
+    **Add to `android` block:**
 
-### Step 3: Integrate Bright SDK
-
-#### <u>3.1 Configure Dependencies</u>
-
-In your **app-level `build.gradle`** file, make the following additions:
-
-**Add to `android` block:**
-
-```gradle
-compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-}
-```
-
-**Add `implementation fileTree(dir: 'libs', include: ['*.aar'])` to `dependencies` block:**
-
-```gradle
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'androidx.core:core:1.9.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation fileTree(dir: 'libs', include: ['*.aar'])
-}
-```
-
-**Add `flatDir {dirs "$rootProject.projectDir/libs"}` to `allprojects.repositories` block:**
-
-```gradle
-allprojects {
-    repositories {
-        jcenter()
-        maven { url "https://maven.google.com" }
-        flatDir { dirs "$rootProject.projectDir/libs" }
+    ```gradle
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
-}
-```
+    ```
 
-#### <u>3.2 Import the SDK</u>
+    **Add `implementation fileTree(dir: 'libs', include: ['*.aar'])` to `dependencies` block:**
 
-In your `MainActivity` (or equivalent entry point), import Bright SDK:
+    ```gradle
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+        implementation 'com.android.support:appcompat-v7:26.1.0'
+        implementation 'androidx.core:core:1.9.0'
+        implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+        implementation fileTree(dir: 'libs', include: ['*.aar'])
+    }
+    ```
 
-```java
-package ...
-import ...
-import ...
-import com.android.eapx;
-```
+    **Add `flatDir {dirs "$rootProject.projectDir/libs"}` to `allprojects.repositories` block:**
 
-#### <u>3.3 Initialize the SDK</u>
-
-Create a dedicated function `startBrightSdk` to set up the SDK. This should be **invoked only once** on first run.
-
-```java
-void startBrightSdk(Context context) {
-
-    // Create a Settings object
-    Settings settings = new Settings(context);
-
-    // Set the language for the consent screen
-    // If not set, the device's default language will be used
-    settings.setLanguage(Settings.ConsentLanguage.en);
-
-    // Set to true to prevent the consent screen from showing automatically
-    settings.setSkipConsent(true);
-
-    // Benefit text appears at the start of the consent text
-    settings.setBenefit("To play for free");
-
-    // Set button texts (defaults will be used if not set)
-    settings.setAgreeBtn("YES, NO ADS!");
-    settings.setDisagreeBtn("SHOW ME ADS");
-
-    // If you are using JobScheduler, set job id range to avoid collisions
-    settings.setMinJobId(1);
-    settings.setMaxJobId(1000);
-
-    // Handle user selection
-    settings.setOnStatusChange(choice -> {
-        switch (choice) {
-            case BrightApi.Choice.PEER:
-                // User agreed - e.g. update local settings
-                setBrightSdkEnabled(context);
-                break;
-            case BrightApi.Choice.NOT_PEER:
-                // User declined - e.g. start subscription process
-                startSubscriptionProcess(context);
-                break;
-            case BrightApi.Choice.NONE:
-                // Consent not shown yet or no choice made
-                break;
+    ```gradle
+    allprojects {
+        repositories {
+            jcenter()
+            maven { url "https://maven.google.com" }
+            flatDir { dirs "$rootProject.projectDir/libs" }
         }
-    });
+    }
+    ```
 
-    // Initialize the SDK
-    BrightApi.init(this, settings);
+    #### <u>3.2 Import the SDK</u>
 
-    // Show the consent dialog
-    BrightApi.showConsent(this);
-}
-```
+    In your `MainActivity` (or equivalent entry point), import Bright SDK:
 
-<Note>
-  The consent screen will be shown automatically when you call `BrightApi.init()`, unless you set `setSkipConsent(true)`. To show it manually later, call `BrightApi.showConsent(context)`.
-</Note>
+    ```java
+    package ...
+    import ...
+    import ...
+    import com.android.eapx;
+    ```
 
-#### <u>3.4 Ensure Single Initialization</u>
+    #### <u>3.3 Initialize the SDK</u>
 
-`startBrightSdk` must only be called **once**. Use `savedInstanceState` to guard against repeated calls:
+    Create a dedicated function `startBrightSdk` to set up the SDK. This should be **invoked only once** on first run.
 
-```java
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    ```java
+    void startBrightSdk(Context context) {
 
-    // Ensure startBrightSdk is called only on first run
-    if (savedInstanceState != null)
-        return;
+        // Create a Settings object
+        Settings settings = new Settings(context);
 
-    startBrightSdk(this);
-}
-```
+        // Set the language for the consent screen
+        // If not set, the device's default language will be used
+        settings.setLanguage(Settings.ConsentLanguage.en);
 
-#### <u>3.5 Encapsulate Application Class Code</u>
+        // Set to true to prevent the consent screen from showing automatically
+        settings.setSkipConsent(true);
 
-<Note>
-  This section only applies if you have extended the Application class or its descendants (e.g., `MultiDexApplication`). If not, skip to the next section.
-</Note>
+        // Benefit text appears at the start of the consent text
+        settings.setBenefit("To play for free");
 
-The SDK runs in a **separate process**. If your `Application.onCreate()` code crashes, it will also crash the SDK service and impact your revenue. To prevent this, exit early when inside the SDK service process:
+        // Set button texts (defaults will be used if not set)
+        settings.setAgreeBtn("YES, NO ADS!");
+        settings.setDisagreeBtn("SHOW ME ADS");
 
-**Option 1 - Using SDK helper method (recommended):**
+        // If you are using JobScheduler, set job id range to avoid collisions
+        settings.setMinJobId(1);
+        settings.setMaxJobId(1000);
 
-```java
-public class MyApplication extends Application {
+        // Handle user selection
+        settings.setOnStatusChange(choice -> {
+            switch (choice) {
+                case BrightApi.Choice.PEER:
+                    // User agreed - e.g. update local settings
+                    setBrightSdkEnabled(context);
+                    break;
+                case BrightApi.Choice.NOT_PEER:
+                    // User declined - e.g. start subscription process
+                    startSubscriptionProcess(context);
+                    break;
+                case BrightApi.Choice.NONE:
+                    // Consent not shown yet or no choice made
+                    break;
+            }
+        });
+
+        // Initialize the SDK
+        BrightApi.init(this, settings);
+
+        // Show the consent dialog
+        BrightApi.showConsent(this);
+    }
+    ```
+
+    <Note>
+      The consent screen will be shown automatically when you call `BrightApi.init()`, unless you set `setSkipConsent(true)`. To show it manually later, call `BrightApi.showConsent(context)`.
+    </Note>
+
+    #### <u>3.4 Ensure Single Initialization</u>
+
+    `startBrightSdk` must only be called **once**. Use `savedInstanceState` to guard against repeated calls:
+
+    ```java
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Ensure startBrightSdk is called only on first run
+        if (savedInstanceState != null)
+            return;
+
+        startBrightSdk(this);
+    }
+    ```
+
+    #### <u>3.5 Encapsulate Application Class Code</u>
+
+    <Note>
+      This section only applies if you have extended the Application class or its descendants (e.g., `MultiDexApplication`). If not, skip to the next section.
+    </Note>
+
+    The SDK runs in a **separate process**. If your `Application.onCreate()` code crashes, it will also crash the SDK service and impact your revenue. To prevent this, exit early when inside the SDK service process:
+
+    **Option 1 - Using SDK helper method (recommended):**
+
+    ```java
+    public class MyApplication extends Application {
+        @Override
+        public void onCreate() {
+            super.onCreate();
+
+            if (BrightApi.isSvcProcess())
+                return;
+
+            // rest of your application code
+        }
+    }
+    ```
+
+    **Option 2 - Manual process name detection:**
+
+    ```java
     public void onCreate() {
         super.onCreate();
 
-        if (BrightApi.isSvcProcess())
+        String processName = this.getProcessName();
+
+        if (processName != null
+                && (processName.endsWith("srvh")
+                || processName.endsWith("srvj"))) {
             return;
+        }
 
         // rest of your application code
     }
-}
-```
+    ```
 
-**Option 2 - Manual process name detection:**
+    <Note>
+      See [<u>this article</u>](https://stackoverflow.com/questions/19631894/is-there-a-way-to-get-current-process-name-in-android) for reference on detecting process names in Android.
+    </Note>
 
-```java
-public void onCreate() {
-    super.onCreate();
+    #### <u>3.6 Show Consent on Subscription Cancellation</u>
 
-    String processName = this.getProcessName();
+    When a user cancels their subscription, show the Bright SDK consent screen as an alternative:
 
-    if (processName != null
-            && (processName.endsWith("srvh")
-            || processName.endsWith("srvj"))) {
-        return;
+    ```java
+    void startSubscriptionProcess(Context context) {
+        // other subscription code
+        if (!subscribed) // show dialog on subscription cancel
+            BrightApi.showConsent(context);
     }
+    ```
 
-    // rest of your application code
-}
-```
+    To show the consent dialog at any point (e.g., from Settings, on opt-in request):
 
-<Note>
-  See [<u>this article</u>](https://stackoverflow.com/questions/19631894/is-there-a-way-to-get-current-process-name-in-android) for reference on detecting process names in Android.
-</Note>
+    ```java
+    // Show with existing settings:
+    BrightApi.showConsent(Context context);
 
-#### <u>3.6 Show Consent on Subscription Cancellation</u>
+    // Show with updated settings:
+    BrightApi.showConsent(Context context, Settings settings);
+    ```
 
-When a user cancels their subscription, show the Bright SDK consent screen as an alternative:
+    #### <u>3.7 Configure ProGuard</u>
 
-```java
-void startSubscriptionProcess(Context context) {
-    // other subscription code
-    if (!subscribed) // show dialog on subscription cancel
-        BrightApi.showConsent(context);
-}
-```
+    If you are using ProGuard, add the following to your `proguard-rules.pro` to avoid known build issues:
 
-To show the consent dialog at any point (e.g., from Settings, on opt-in request):
+    ```text
+    -dontnote brdat.sdk.**
+    ```
+  </Step>
 
-```java
-// Show with existing settings:
-BrightApi.showConsent(Context context);
+  <Step title="Add Opt-In/Out Settings Option" titleSize="h3">
+    <Warning>
+      Read and implement this section carefully. **The user must always be able to opt out of Bright SDK after giving their initial consent.**
+    </Warning>
 
-// Show with updated settings:
-BrightApi.showConsent(Context context, Settings settings);
-```
+    Your app must include a settings option allowing users to opt in or out at any time. This is typically placed in a **Settings** menu.
 
-#### <u>3.7 Configure ProGuard</u>
+    #### <u>4.1 Opt-Out for Mobile Apps</u>
 
-If you are using ProGuard, add the following to your `proguard-rules.pro` to avoid known build issues:
+    **Requirements:**
 
-```text
--dontnote brdat.sdk.**
-```
+    - Add a toggle/switch labeled **"Web Indexing"** that clearly reflects the current status (opted in or out).
+    - Below the switch, add text emphasizing the value users receive when opting in.
+    - Include a **Learn more** link that opens: [https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing](https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing).
 
-### Step 4: Add Opt-In/Out Settings Option
+    **Implementation:**
 
-<Warning>
-  Read and implement this section carefully. **The user must always be able to opt out of Bright SDK after giving their initial consent.**
-</Warning>
+    When the user toggles **off**:
 
-Your app must include a settings option allowing users to opt in or out at any time. This is typically placed in a **Settings** menu.
+    ```java
+    void userRequestedToTurnOffBrightSdkFromOptions(Context context) {
+        BrightApi.optOut(context);
+    }
+    ```
 
-#### <u>4.1 Opt-Out for Mobile Apps</u>
+    When the user toggles on → call `BrightApi.showConsent(context)` to show the consent screen.
 
-**Requirements:**
+    <Note>
+      Note: There is no way to directly opt in. Only the user can decide. You must show the consent screen - opt-in happens automatically only if the user agrees.
+    </Note>
 
-- Add a toggle/switch labeled **"Web Indexing"** that clearly reflects the current status (opted in or out).
-- Below the switch, add text emphasizing the value users receive when opting in.
-- Include a **Learn more** link that opens: [https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing](https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing).
+    #### <u>4.2 Opt-Out for TV Apps</u>
 
-**Implementation:**
+    **Requirements:**
 
-When the user toggles **off**:
+    - Add a toggle/switch labeled "**Web Indexing**" that clearly reflects the current status.
+    - Below the switch, add text emphasizing the value users receive when opting in.
+    - Include a QR code linking to: [<u>https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing</u>](https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing)<u>.</u>
+      - The QR code **must** be accompanied by the instruction: _"Scan the QR Code to learn more about web indexing by Bright Data."._
+      - You may use your own branded QR code, or the [<u>hosted version</u>](https://media.bright-sdk.com/2023/09/qr-bright-sdk-faq.svg)<u>.</u>
 
-```java Java
-void userRequestedToTurnOffBrightSdkFromOptions(Context context) {
-    BrightApi.optOut(context);
-}
-```
+    <img
+      src="/integration-guides/image/android_integration_guide_1.png"
+      alt="Alt text"
+      width="400"
+    />
 
-When the user toggles on → call `BrightApi.showConsent(context)` to show the consent screen.
+    <Note>
+      You may add a confirmation dialog to discourage opting out (e.g., "If you disable Web Indexing, you will start seeing ads. Continue?")
+    </Note>
 
-<Note>
-  Note: There is no way to directly opt in. Only the user can decide. You must show the consent screen - opt-in happens automatically only if the user agrees.
-</Note>
+    **Value text suggestions (both mobile and TV):**
 
-#### <u>4.2 Opt-Out for TV Apps</u>
+    | State | Example text |
+    | --- | --- |
+    | Opted out | "Enable to see fewer ads" |
+    | Opted out | "Enable to get 100 extra coins" |
+    | Opted out | "Enable to enjoy premium features" |
+    | Opted in | "When enabled you see fewer ads" |
+    | Opted in | "When enabled you get 100 extra coins" |
 
-**Requirements:**
+    <Note>
+      Refrain from using technical terms like "opt in" / "opt out" — always speak in terms of user value.
+    </Note>
 
-- Add a toggle/switch labeled "**Web Indexing**" that clearly reflects the current status.
-- Below the switch, add text emphasizing the value users receive when opting in.
-- Include a QR code linking to: [<u>https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing</u>](https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing)<u>.</u>
-  - The QR code **must** be accompanied by the instruction: _"Scan the QR Code to learn more about web indexing by Bright Data."._
-  - You may use your own branded QR code, or the [<u>hosted version</u>](https://media.bright-sdk.com/2023/09/qr-bright-sdk-faq.svg)<u>.</u>
+    See the examples below, illustrating both opted-in and opted-out scenarios:
 
-<img
-  src="/integration-guides/image/android_integration_guide_1.png"
-  alt="Alt text"
-  width="400"
-/>
+    **Mobile:**
 
-<Note>
-  You may add a confirmation dialog to discourage opting out (e.g., "If you disable Web Indexing, you will start seeing ads. Continue?")
-</Note>
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+      <img src="/integration-guides/image/android_integration_guide_2.png" alt="Alt text 1" width="400" />
 
-**Value text suggestions (both mobile and TV):**
+      <img src="/integration-guides/image/android_integration_guide_3.png" alt="Alt text 2" width="400" />
 
-| State | Example text |
-| --- | --- |
-| Opted out | "Enable to see fewer ads" |
-| Opted out | "Enable to get 100 extra coins" |
-| Opted out | "Enable to enjoy premium features" |
-| Opted in | "When enabled you see fewer ads" |
-| Opted in | "When enabled you get 100 extra coins" |
+      <img src="/integration-guides/image/android_integration_guide_4.png" alt="Alt text 3" width="400" />
 
-<Note>
-  Refrain from using technical terms like "opt in" / "opt out" — always speak in terms of user value.
-</Note>
+      <img src="/integration-guides/image/android_integration_guide_5.png" alt="Alt text 4" width="400" />
+    </div>
 
-See the examples below, illustrating both opted-in and opted-out scenarios:
+    **TV:**
 
-**Mobile:**
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+      <img src="/integration-guides/image/android_integration_guide_6.png" alt="Alt text 1" width="400" />
 
-<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-  <img src="/integration-guides/image/android_integration_guide_2.png" alt="Alt text 1" width="400" />
+      <img src="/integration-guides/image/android_integration_guide_7.png" alt="Alt text 2" width="400" />
 
-  <img src="/integration-guides/image/android_integration_guide_3.png" alt="Alt text 2" width="400" />
+      <img src="/integration-guides/image/android_integration_guide_8.png" alt="Alt text 3" width="400" />
 
-  <img src="/integration-guides/image/android_integration_guide_4.png" alt="Alt text 3" width="400" />
+      <img src="/integration-guides/image/android_integration_guide_9.png" alt="Alt text 4" width="400" />
+    </div>
 
-  <img src="/integration-guides/image/android_integration_guide_5.png" alt="Alt text 4" width="400" />
-</div>
+    **Common mistakes to avoid:**
 
-**TV:**
+    | Issue | Guidance |
+    | --- | --- |
+    | Label reads "Bright" or "Bright SDK" | Label must read "Web Indexing" |
+    | No value text | Always include text describing what the user gains |
+    | No "Learn more" link / QR code | Required — must link to the URL above |
+    | Switch doesn't reflect current state | Switch must always show the true current status |
+  </Step>
 
-<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-  <img src="/integration-guides/image/android_integration_guide_6.png" alt="Alt text 1" width="400" />
+  <Step title="Consent Dialog Customization" titleSize="h3">
+    While the standard Bright SDK consent screen is always available, we **highly encourage customization** to match your app's look & feel - this typically leads to higher conversion rates.
 
-  <img src="/integration-guides/image/android_integration_guide_7.png" alt="Alt text 2" width="400" />
+    ---
 
-  <img src="/integration-guides/image/android_integration_guide_8.png" alt="Alt text 3" width="400" />
+    There are two customization options:
 
-  <img src="/integration-guides/image/android_integration_guide_9.png" alt="Alt text 4" width="400" />
-</div>
+    | Option | Description |
+    | --- | --- |
+    | `CustomConsentSettings` | Modify the built-in Bright SDK consent screen |
+    | External consent screen | Build your own consent UI entirely - see [Step 6](#external-consent-screen-optional) |
 
-**Common mistakes to avoid:**
+    This is what it looks like on the default Bright SDK screen:
 
-| Issue | Guidance |
-| --- | --- |
-| Label reads "Bright" or "Bright SDK" | Label must read "Web Indexing" |
-| No value text | Always include text describing what the user gains |
-| No "Learn more" link / QR code | Required — must link to the URL above |
-| Switch doesn't reflect current state | Switch must always show the true current status |
+    <img
+      src="/integration-guides/image/android_integration_guide_10.png"
+      alt="Alt text"
+      width="400"
+    />
 
-### Step 5: Consent Dialog Customization
+    #### <u>5.1 CustomConsentSettings</u>
 
-While the standard Bright SDK consent screen is always available, we **highly encourage customization** to match your app's look & feel - this typically leads to higher conversion rates.
+    Use `CustomConsentSettings` to customize colors, fonts, backgrounds, and button styles:
 
----
+    ```java
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-There are two customization options:
+        CustomConsentSettings customConsentSettings = new CustomConsentSettings();
 
-| Option | Description |
-| --- | --- |
-| `CustomConsentSettings` | Modify the built-in Bright SDK consent screen |
-| External consent screen | Build your own consent UI entirely - see [Step 6](#step-6-external-consent-screen-optional) |
+        // Title color
+        customConsentSettings.setAppTitleTextColor("#facd00");
 
-This is what it looks like on the default Bright SDK screen:
+        // Custom background image
+        customConsentSettings.setBodyBackgroundImageResource(R.drawable.your_custom_background);
 
-<img
-  src="/integration-guides/image/android_integration_guide_10.png"
-  alt="Alt text"
-  width="400"
-/>
+        // Or use a background color instead
+        customConsentSettings.setBodyBackgroundColor("#D5E6FF");
 
-#### <u>5.1 CustomConsentSettings</u>
+        // Custom font using system fonts
+        CustomTypeface customTypeface = new CustomTypeface();
+        customTypeface.setFontFamily(CustomConsentSettings.CustomFontFamily.cursive);
+        customTypeface.setTextStyle(CustomConsentSettings.CustomTextStyle.bold);
 
-Use `CustomConsentSettings` to customize colors, fonts, backgrounds, and button styles:
+        // Or using a premade Typeface object
+        Typeface typeface = ResourcesCompat.getFont(this, R.font.pretendo);
+        customTypeface.setTypeface(typeface);
 
-```java Java
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+        // Apply to a specific element
+        customConsentSettings.setConsentTextTypeface(customTypeface);
 
-    CustomConsentSettings customConsentSettings = new CustomConsentSettings();
+        // Or apply to all text elements at once
+        // (specific element settings always take precedence)
+        customConsentSettings.setCustomTypeface(customTypeface);
 
-    // Title color
-    customConsentSettings.setAppTitleTextColor("#facd00");
+        // Other customizations
+        customConsentSettings.setTopIconColorFilter("#00ADB5");
+        customConsentSettings.setNetworkIconsColorFilter("#00ADB5");
+        customConsentSettings.setAgreeButtonBackgroundColor("#00ADB5");
+        customConsentSettings.setDisagreeButtonTextColor("#00ADB5");
+        customConsentSettings.setConsentTextLinksColor("#393E46");
+        customConsentSettings.setPrivacyMessageLinksColor("#00ADB5");
+        customConsentSettings.setAgreeButtonImageResource(R.drawable.your_custom_button);
+        customConsentSettings.setDisagreeButtonImageResource(R.drawable.your_custom_button);
 
-    // Custom background image
-    customConsentSettings.setBodyBackgroundImageResource(R.drawable.your_custom_background);
+        settings.setCustomConsentSettings(customConsentSettings);
+        BrightApi.showConsent(this, settings);
+    }
+    ```
 
-    // Or use a background color instead
-    customConsentSettings.setBodyBackgroundColor("#D5E6FF");
+    See the full list of available `CustomConsentSettings` properties in the [API Documentation](#api-documentation).
+  </Step>
 
-    // Custom font using system fonts
-    CustomTypeface customTypeface = new CustomTypeface();
-    customTypeface.setFontFamily(CustomConsentSettings.CustomFontFamily.cursive);
-    customTypeface.setTextStyle(CustomConsentSettings.CustomTextStyle.bold);
+  <Step title="External Consent Screen (optional)" titleSize="h3">
+    <CustomConsent platform="android" />
+  </Step>
 
-    // Or using a premade Typeface object
-    Typeface typeface = ResourcesCompat.getFont(this, R.font.pretendo);
-    customTypeface.setTypeface(typeface);
+  <Step title="App Performance" titleSize="h3">
+    <AppPerformance />
+  </Step>
 
-    // Apply to a specific element
-    customConsentSettings.setConsentTextTypeface(customTypeface);
+  <Step title="Verify Your Integration" titleSize="h3">
+    1. Compile and run your application on a device or emulator
+    2. Click **I Agree** in the SDK consent dialog
+    3. After a few minutes, search your logs for `cskd/cid`
+    4. You should see a line similar to:
+       ```text
+       2021-06-16 15:36:59.960 11557-11629/your.app.id I/cskd/cid:
+       54.221.207.68-33f08a02/1s17c2p443_54.221.207.68_64377 [radio0]
+       ```
 
-    // Or apply to all text elements at once
-    // (specific element settings always take precedence)
-    customConsentSettings.setCustomTypeface(customTypeface);
+    <img
+      src="/integration-guides/image/android_integration_guide_11.png"
+      alt="Alt text"
+      width="400"
+    />
 
-    // Other customizations
-    customConsentSettings.setTopIconColorFilter("#00ADB5");
-    customConsentSettings.setNetworkIconsColorFilter("#00ADB5");
-    customConsentSettings.setAgreeButtonBackgroundColor("#00ADB5");
-    customConsentSettings.setDisagreeButtonTextColor("#00ADB5");
-    customConsentSettings.setConsentTextLinksColor("#393E46");
-    customConsentSettings.setPrivacyMessageLinksColor("#00ADB5");
-    customConsentSettings.setAgreeButtonImageResource(R.drawable.your_custom_button);
-    customConsentSettings.setDisagreeButtonImageResource(R.drawable.your_custom_button);
+    If this line appears, the integration is complete. If not, ensure you are not suppressing application output, then contact support.
+  </Step>
 
-    settings.setCustomConsentSettings(customConsentSettings);
-    BrightApi.showConsent(this, settings);
-}
-```
+  <Step title="Update Your Terms of Service" titleSize="h3">
+    <UpdateTermsOfService />
+  </Step>
 
-See the full list of available `CustomConsentSettings` properties in the [API Documentation](#api-documentation).
-
-### Step 6: External Consent Screen (optional)
-
-<CustomConsent platform="android" />
-
-### Step 7: App Performance
-
-<AppPerformance />
-
-### Step 8: Verify Your Integration
-
-1. Compile and run your application on a device or emulator
-2. Click **I Agree** in the SDK consent dialog
-3. After a few minutes, search your logs for `cskd/cid`
-4. You should see a line similar to:
-   ```text
-   2021-06-16 15:36:59.960 11557-11629/your.app.id I/cskd/cid:
-   54.221.207.68-33f08a02/1s17c2p443_54.221.207.68_64377 [radio0]
-   ```
-
-<img
-  src="/integration-guides/image/android_integration_guide_11.png"
-  alt="Alt text"
-  width="400"
-/>
-
-If this line appears, the integration is complete. If not, ensure you are not suppressing application output, then contact support.
-
-### Step 9: Update Your Terms of Service
-
-<UpdateTermsOfService />
-
-### Step 10: Submit Your Integration for Review
-
-<SubmitIntegrationReview />
+  <Step title="Submit Your Integration for Review" titleSize="h3">
+    <SubmitIntegrationReview />
+  </Step>
+</Steps>
 
 ### How to Update the SDK
 
@@ -488,7 +490,7 @@ The V2 API introduces a customizable consent screen. All main V1 methods are dep
 
 **<u>Full V1 example:</u>**
 
-```java Java
+```java
 void start_bright_sdk(Context ctx) {
     main.set_tos_url("http://mysite.com/tos.html");
     main.set_decline_option(main.DECLINE_OPTION.NO_THANK_YOU);
@@ -514,7 +516,7 @@ void start_bright_sdk(Context ctx) {
 
 **<u>Full V2 example:</u>**
 
-```java Java
+```java
 void startBrightSdk(Context ctx) {
     Settings settings = new Settings(context);
 
@@ -557,15 +559,15 @@ void startBrightSdk(Context ctx) {
 | `static Boolean getConsentChoice(Context context)` | Returns `true` if user is peer, `false` if not peer, `null` if no choice has been made yet. |
 | `static boolean isSvcProcess()` | Returns `true` if the current process is the SDK service process. |
 | `static void setTrackingId(String trackingId)` | Adds a unique tracking ID for reports and debugging. Must be called **before**`BrightApi.init`. |
-| `static void reportConsentShown(Context context)` | <Warning>         Requires special permission.   </Warning>    Reports that a custom consent screen was shown. |
-| `static void reportConsentBackPress(Context context)` | <Warning>         Requires special permission.   </Warning>    Reports that the user pressed back without making a choice. |
-| `static void reportConsentOptOut(Context context)` | <Warning>         Requires special permission.   </Warning>    Reports that the user opted out via custom consent screen. |
+| `static void reportConsentShown(Context context)` | <Warning> Requires special permission. </Warning> Reports that a custom consent screen was shown. |
+| `static void reportConsentBackPress(Context context)` | <Warning> Requires special permission. </Warning> Reports that the user pressed back without making a choice. |
+| `static void reportConsentOptOut(Context context)` | <Warning> Requires special permission. </Warning> Reports that the user opted out via custom consent screen. |
 
 #### <u>Settings</u>
 
 **Constructor:**
 
-```java Java
+```java
 Settings(Context context)
 ```
 
@@ -637,7 +639,7 @@ Settings(Context context)
 
 **Constructors:**
 
-```java Java
+```java
 CustomTypeface()
 CustomTypeface(Typeface typeface)
 CustomTypeface(CustomConsentSettings.CustomFontFamily fontFamily,
