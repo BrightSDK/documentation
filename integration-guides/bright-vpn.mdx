@@ -4,6 +4,12 @@ description: "This guide is for developers and app owners who want to monetize t
 sidebarTitle: "Bright VPN"
 ---
 
+import RegisterApp from "/snippets/bundles-register-your-app.mdx";
+import Guidelines from "/snippets/bundles-av-guideline.mdx";
+import GetCertified from "/snippets/bundles-get-your-app-certified.mdx";
+import Report_Payment from "/snippets/bundles-report-payment-details.mdx";
+import FinalReview from "/snippets/bundles-final-review.mdx";
+
 Integrating [<u>Bright VPN</u>](https://brightvpn.com/) is the first step toward earning revenue. Once you've released your app bundle you can start earning per install!
 
 This document provides a step-by-step walkthrough for seamlessly incorporating Bright Data products into your application.
@@ -20,49 +26,49 @@ Implementation is simple - there are 3 steps:
 
 <Steps>
   <Step title="Important Notes" titleSize="h3">
+    - Users must **ALWAYS** decide if they want to **VOLUNTARILY** install EarnApp after seeing the offer and consent screen. Additionally, users should **ALWAYS** have a straightforward means to opt out of the installation process.
+    - Take care when implementing the offer screen and the opt-out mechanisms in a way which follows guidelines in this document.
+    - Follow consent screen implementation guidelines in order to return true value from user interaction. **DO NOT install anything on users' devices if they have not opted-in**.
+    - **Bright Data products do not do any user tracking of any kind**. You can read more about EarnApp and privacy in its [<u>FAQ</u>](https://brightvpn.com/faq).
+    - It's important to follow the guidelines in this document to avoid violation of our company's policy which may lead to termination of agreement.
   </Step>
   <Step title="Register Your App in the Dashboard" titleSize="h3">
-    Content for Step 1...
+    <RegisterApp />
   </Step>
   <Step title="Choose Your Offer Type" titleSize="h3">
-
     1. **Scenario 1 – Installation Wizard Offer**
     2. **Scenario 2 – Uninstall Webpage Offer**
     3. **Scenario 3 – Successful Install Page**
     4. **Scenario 4 – Ad Campaign**
     5. **Scenario 5 – In-App Offer**
     6. **Scenario 6 – Preinstalled App**
-
   </Step>
   <Step title="Set Up Your Offer Screen" titleSize="h3">
-
     1. **Mandatory Text**
     2. **Buttons**
     3. **Required Links**
     4. **Translations**
-
   </Step>
   <Step title="AV Guidelines" titleSize="h3">
-    Content...
+    <Guidelines />
   </Step>
   <Step title="Assets" titleSize="h3">
-    Content...
+    - Press Kit: [<u>Drive folder link</u>](https://drive.google.com/drive/folders/1et9wqt4uWKelzk7ihCxj4pfCXUfUggY9)<u>.</u>
+    - Translations: [<u>Get translations here</u>](https://docs.google.com/spreadsheets/d/1G0Y1CY9emvfM9qlGC4o7wM-ypWqHbGo5Jxx8rT7DCVs/edit?gid=1123111497#gid=1123111497) / [<u>Download offer screen design in all languages here</u>](https://drive.google.com/drive/folders/1boSsNqjq1GQjjp5kljJS9wZKLCMuzUxB)<u>.</u>
   </Step>
   <Step title="Restricted Countries" titleSize="h3">
     Content...
   </Step>
   <Step title="Technical Integration" titleSize="h3">
-
-    1. <u>Validation Checklist</u>
-
+    1. **Validation Checklist**
   </Step>
   <Step title="Send for Final Review" titleSize="h3">
-    Content...
+    <FinalReview />
   </Step>
   <Step title="Get Your App Certified!" titleSize="h3">
-    Content...
+    <GetCertified />
   </Step>
   <Step title="Report and Payment Details" titleSize="h3">
-    Content...
+    <Report_Payment />
   </Step>
 </Steps>
