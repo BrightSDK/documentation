@@ -469,207 +469,209 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
   <Step title="Submit Your Integration for Review" titleSize="h3">
     <SubmitIntegrationReview />
   </Step>
-</Steps>
 
-### How to Update the SDK
+  <Step title="How to Update the SDK" titleSize="h3">
+    <UpdateSDK />
+  </Step>
 
-<UpdateSDK />
+  <Step title="Migrating from API V1 to V2" titleSize="h3">
+    The V2 API introduces a customizable consent screen. All main V1 methods are deprecated and replaced by `BrightApi`.
 
-### Migrating from API V1 to V2
+    | V1 | V2 |
+    | --- | --- |
+    | `main.set_tos_url(...)` | Handled automatically |
+    | `main.set_decline_option(...)` | `settings.setDisagreeBtn(...)` |
+    | `main.set_jobid_range(min, max)` | `settings.setMinJobId(min)` \+ `settings.setMaxJobId(max)` |
+    | `main.set_choice_listener(...)` | `settings.setOnStatusChange(...)` |
+    | `main.start(ctx)` | `BrightApi.init(context, settings)` |
+    | `main.show_dialog(ctx, false)` | `BrightApi.showConsent(context)` |
 
-The V2 API introduces a customizable consent screen. All main V1 methods are deprecated and replaced by `BrightApi`.
+    **Full V1 example:**
 
-| V1 | V2 |
-| --- | --- |
-| `main.set_tos_url(...)` | Handled automatically |
-| `main.set_decline_option(...)` | `settings.setDisagreeBtn(...)` |
-| `main.set_jobid_range(min, max)` | `settings.setMinJobId(min)` \+ `settings.setMaxJobId(max)` |
-| `main.set_choice_listener(...)` | `settings.setOnStatusChange(...)` |
-| `main.start(ctx)` | `BrightApi.init(context, settings)` |
-| `main.show_dialog(ctx, false)` | `BrightApi.showConsent(context)` |
+    ```java
+    void start_bright_sdk(Context ctx) {
+        main.set_tos_url("http://mysite.com/tos.html");
+        main.set_decline_option(main.DECLINE_OPTION.NO_THANK_YOU);
+        main.set_jobid_range(1, 1000);
 
-**Full V1 example:**
+        main.set_choice_listener(new main.choice_listener() {
+            public void on_change(int choice) {
+                switch (choice) {
+                    case main.choice.PEER:
+                        set_bright_sdk_enabled(ctx);
+                        break;
+                    case main.choice.NOT_PEER:
+                        start_subscription_process(ctx);
+                        break;
+                }
+            }
+        });
 
-```java
-void start_bright_sdk(Context ctx) {
-    main.set_tos_url("http://mysite.com/tos.html");
-    main.set_decline_option(main.DECLINE_OPTION.NO_THANK_YOU);
-    main.set_jobid_range(1, 1000);
+        main.start(ctx); // must be called after all main.set* calls
+        main.show_dialog(ctx, false); // dialog will be shown once
+    }
+    ```
 
-    main.set_choice_listener(new main.choice_listener() {
-        public void on_change(int choice) {
+    **Full V2 example:**
+
+    ```java
+    void startBrightSdk(Context ctx) {
+        Settings settings = new Settings(context);
+
+        settings.setAgreeBtn("Yes, sure!");
+        settings.setDisagreeBtn("No, thank you");
+        settings.setMinJobId(1);
+        settings.setMaxJobId(1000);
+
+        settings.setOnStatusChange(choice -> {
             switch (choice) {
-                case main.choice.PEER:
-                    set_bright_sdk_enabled(ctx);
+                case BrightApi.Choice.PEER:
+                    // User agreed
                     break;
-                case main.choice.NOT_PEER:
-                    start_subscription_process(ctx);
+                case BrightApi.Choice.NONE:
+                    // Consent not shown or no choice made
+                    break;
+                case BrightApi.Choice.NOT_PEER:
+                    // User declined
                     break;
             }
-        }
-    });
+        });
 
-    main.start(ctx); // must be called after all main.set* calls
-    main.show_dialog(ctx, false); // dialog will be shown once
-}
-```
+        // Init — consent screen shown automatically unless setSkipConsent(true)
+        BrightApi.init(context, settings);
+    }
+    ```
+  </Step>
 
-**Full V2 example:**
+  <Step title="API Documentation" titleSize="h3">
+    <Steps>
+      <Step title="BrightApi">
+        **Public Methods:**
 
-```java
-void startBrightSdk(Context ctx) {
-    Settings settings = new Settings(context);
+        | Method | Description |
+        | --- | --- |
+        | `static void init(Context context, Settings settings)` | Initializes the SDK. Call **once** in your first activity. Shows consent dialog automatically unless `setSkipConsent(true)` is set. |
+        | `static void showConsent(Activity activity)` | Displays the consent dialog. Use when a user tries to close an ad or re-enables Bright SDK from Settings. |
+        | `static void showConsent(Activity activity, Settings settings)` | Displays the consent dialog with a new settings object. |
+        | `static void optOut(Context context)` | Revokes the user's consent and sets `Choice.NOT_PEER`. Triggers `OnStatusChange` callback. |
+        | `static Boolean getConsentChoice(Context context)` | Returns `true` if user is peer, `false` if not peer, `null` if no choice has been made yet. |
+        | `static boolean isSvcProcess()` | Returns `true` if the current process is the SDK service process. |
+        | `static void setTrackingId(String trackingId)` | Adds a unique tracking ID for reports and debugging. Must be called **before**`BrightApi.init`. |
+        | `static void reportConsentShown(Context context)` | <Warning> Requires special permission. </Warning> Reports that a custom consent screen was shown. |
+        | `static void reportConsentBackPress(Context context)` | <Warning> Requires special permission. </Warning> Reports that the user pressed back without making a choice. |
+        | `static void reportConsentOptOut(Context context)` | <Warning> Requires special permission. </Warning> Reports that the user opted out via custom consent screen. |
+      </Step>
 
-    settings.setAgreeBtn("Yes, sure!");
-    settings.setDisagreeBtn("No, thank you");
-    settings.setMinJobId(1);
-    settings.setMaxJobId(1000);
+      <Step title="Settings">
+        **Constructor:**
 
-    settings.setOnStatusChange(choice -> {
-        switch (choice) {
-            case BrightApi.Choice.PEER:
-                // User agreed
-                break;
-            case BrightApi.Choice.NONE:
-                // Consent not shown or no choice made
-                break;
-            case BrightApi.Choice.NOT_PEER:
-                // User declined
-                break;
-        }
-    });
+        ```java
+        Settings(Context context)
+        ```
 
-    // Init — consent screen shown automatically unless setSkipConsent(true)
-    BrightApi.init(context, settings);
-}
-```
+        **Public Methods:**
 
-### API Documentation
+        | Method | Description |
+        | --- | --- |
+        | `String getAppId()` | Returns Application ID as defined in `ApplicationInfo.packageName` |
+        | `String getAppName()` | Returns app name as defined in `ApplicationInfo.loadLabel` |
+        | `void setSkipConsent(boolean skipConsent)` | Set `true` to prevent consent dialog from showing automatically |
+        | `void setLanguage(ConsentLanguage language)` | Override the device default language |
+        | `void setBenefit(String benefit)` | Prefix text for the consent dialog (e.g., "To use the app with no ads") |
+        | `void setAgreeBtn(String agreeBtn)` | Text for the agree button. Default text used if not set. |
+        | `void setDisagreeBtn(String disagreeBtn)` | Text for the disagree button. Default text used if not set. |
+        | `void setOnStatusChange(OnStatusChange onStatusChange)` | Register a callback for user choice changes |
+        | `void setMinJobId(int minJobId)` | Min job ID for JobScheduler. Default range: 1–1000 |
+        | `void setMaxJobId(int maxJobId)` | Max job ID for JobScheduler. Default range: 1–1000 |
+        | `void setCustomConsentSettings(CustomConsentSettings ccs)` | Apply custom consent screen settings |
+        | `void setShowAppIcon(boolean showAppIcon)` | Show the default app icon on the consent screen |
+        | `void setShowAppIcon(boolean showAppIcon, int appLogoResourceId)` | Show a custom image resource as the app icon |
+        | `void setShowAppIcon(boolean showAppIcon, byte[] imageBytes)` | Show a custom image (bytes) as the app icon |
+        | `void setOptOutInstructions(String optOutInstructions)` | Custom opt-out instructions text |
+        | `void setCampaignId(String campaignId)` | Set a campaign ID |
+        | `void setBackPressListener(Runnable backPressListener)` | Listener for back press on consent screen |
+      </Step>
 
-#### BrightApi
+      <Step title="CustomConsentSettings">
+        | Method | Description |
+        | --- | --- |
+        | `setConsentTitle(String)` | Set the consent screen title |
+        | `setAppTitleTextColor(String)` | App title text color |
+        | `setAppTitleTypeface(CustomTypeface)` | App title font |
+        | `setBodyBackgroundColor(String)` | Body background color |
+        | `setBodyBackgroundImageResource(int)` | Body background image (resource ID) |
+        | `setBodyBackgroundImageBytes(byte[])` | Body background image (bytes) |
+        | `setBodyBackgroundShadow(boolean)` | Enable/disable body background shadow |
+        | `setScreenBackgroundColor(String)` | Screen background color |
+        | `setScreenBackgroundImageResource(int)` | Screen background image (resource ID) |
+        | `setScreenBackgroundImageResource(int, boolean fillScreen)` | Screen background image with fill option |
+        | `setScreenBackgroundImageBytes(byte[])` | Screen background image (bytes) |
+        | `setScreenBackgroundImageBytes(byte[], boolean fillScreen)` | Screen background image (bytes) with fill option |
+        | `setConsentTextColor(String)` | Consent main text color |
+        | `setConsentTextTypeface(CustomTypeface)` | Consent main text font |
+        | `setAgreeButtonImageResource(int)` | Agree button image (resource ID) |
+        | `setDisagreeButtonImageResource(int)` | Disagree button image (resource ID) |
+        | `setAgreeButtonImageBytes(byte[])` | Agree button image (bytes) |
+        | `setDisagreeButtonImageBytes(byte[])` | Disagree button image (bytes) |
+        | `setAgreeButtonTextColor(String)` | Agree button text color |
+        | `setDisagreeButtonTextColor(String)` | Disagree button text color |
+        | `setAgreeButtonTypeface(CustomTypeface)` | Agree button font |
+        | `setDisagreeButtonTypeface(CustomTypeface)` | Disagree button font |
+        | `setConsentTextLinksColor(String)` | Consent text links color |
+        | `setAgreeButtonBackgroundColor(String)` | Agree button background color |
+        | `setDisagreeButtonBackgroundColor(String)` | Disagree button background color |
+        | `setPrivacyMessageTextColor(String)` | Privacy message text color |
+        | `setPrivacyMessageLinksColor(String)` | Privacy message links color |
+        | `setPrivacyMessageTextTypeface(CustomTypeface)` | Privacy message font |
+        | `setNetworkIconsColorFilter(String)` | Network icons color filter |
+        | `setNetworkIconsTextColor(String)` | Network icons text color |
+        | `setNetworkIconsTextTypeface(CustomTypeface)` | Network icons text font |
+        | `setHideNetworkIcons(boolean)` | Show/hide network icons |
+        | `setQrCodeColorFilter(String)` | QR code foreground color |
+        | `setQrCodeBackgroundColor(String)` | QR code background color |
+        | `setCustomTypeface(CustomTypeface)` | Apply font to all text elements (specific overrides take precedence) |
+        | `setTopIconColorFilter(String)` | Top icon color filter |
+        | `setHideConsentIcon(boolean)` | Show/hide the consent icon |
+      </Step>
 
-**Public Methods:**
+      <Step title="CustomTypeface">
+        **Constructors:**
 
-| Method | Description |
-| --- | --- |
-| `static void init(Context context, Settings settings)` | Initializes the SDK. Call **once** in your first activity. Shows consent dialog automatically unless `setSkipConsent(true)` is set. |
-| `static void showConsent(Activity activity)` | Displays the consent dialog. Use when a user tries to close an ad or re-enables Bright SDK from Settings. |
-| `static void showConsent(Activity activity, Settings settings)` | Displays the consent dialog with a new settings object. |
-| `static void optOut(Context context)` | Revokes the user's consent and sets `Choice.NOT_PEER`. Triggers `OnStatusChange` callback. |
-| `static Boolean getConsentChoice(Context context)` | Returns `true` if user is peer, `false` if not peer, `null` if no choice has been made yet. |
-| `static boolean isSvcProcess()` | Returns `true` if the current process is the SDK service process. |
-| `static void setTrackingId(String trackingId)` | Adds a unique tracking ID for reports and debugging. Must be called **before**`BrightApi.init`. |
-| `static void reportConsentShown(Context context)` | <Warning> Requires special permission. </Warning> Reports that a custom consent screen was shown. |
-| `static void reportConsentBackPress(Context context)` | <Warning> Requires special permission. </Warning> Reports that the user pressed back without making a choice. |
-| `static void reportConsentOptOut(Context context)` | <Warning> Requires special permission. </Warning> Reports that the user opted out via custom consent screen. |
+        ```java
+        CustomTypeface()
+        CustomTypeface(Typeface typeface)
+        CustomTypeface(CustomConsentSettings.CustomFontFamily fontFamily,
+                       CustomConsentSettings.CustomTextStyle textStyle)
+        ```
 
-#### Settings
+        **Methods:**
 
-**Constructor:**
+        | Method | Description |
+        | --- | --- |
+        | `void setTypeface(Typeface typeface)` | Set a `Typeface` object directly |
+        | `void setFontFamily(CustomConsentSettings.CustomFontFamily fontFamily)` | Set font family |
+        | `void setTextStyle(CustomConsentSettings.CustomTextStyle textStyle)` | Set text style |
+      </Step>
 
-```java
-Settings(Context context)
-```
+      <Step title="Choice">
+        | Value | Int | Description |
+        | --- | --- | --- |
+        | `Choice.NONE` | 0 | Consent screen not shown yet, or user hasn't made a choice |
+        | `Choice.PEER` | 1 | User agreed — reflect in settings so user can opt out |
+        | `Choice.NOT_PEER` | 4 | User declined — reflect in settings so user can opt in |
+      </Step>
 
-**Public Methods:**
+      <Step title="ConsentLanguage">
+        Supported values: `en`, `de`, `es`, `fr`, `it`, `ja`, `pt`, `ru`, `tr`
+      </Step>
 
-| Method | Description |
-| --- | --- |
-| `String getAppId()` | Returns Application ID as defined in `ApplicationInfo.packageName` |
-| `String getAppName()` | Returns app name as defined in `ApplicationInfo.loadLabel` |
-| `void setSkipConsent(boolean skipConsent)` | Set `true` to prevent consent dialog from showing automatically |
-| `void setLanguage(ConsentLanguage language)` | Override the device default language |
-| `void setBenefit(String benefit)` | Prefix text for the consent dialog (e.g., "To use the app with no ads") |
-| `void setAgreeBtn(String agreeBtn)` | Text for the agree button. Default text used if not set. |
-| `void setDisagreeBtn(String disagreeBtn)` | Text for the disagree button. Default text used if not set. |
-| `void setOnStatusChange(OnStatusChange onStatusChange)` | Register a callback for user choice changes |
-| `void setMinJobId(int minJobId)` | Min job ID for JobScheduler. Default range: 1–1000 |
-| `void setMaxJobId(int maxJobId)` | Max job ID for JobScheduler. Default range: 1–1000 |
-| `void setCustomConsentSettings(CustomConsentSettings ccs)` | Apply custom consent screen settings |
-| `void setShowAppIcon(boolean showAppIcon)` | Show the default app icon on the consent screen |
-| `void setShowAppIcon(boolean showAppIcon, int appLogoResourceId)` | Show a custom image resource as the app icon |
-| `void setShowAppIcon(boolean showAppIcon, byte[] imageBytes)` | Show a custom image (bytes) as the app icon |
-| `void setOptOutInstructions(String optOutInstructions)` | Custom opt-out instructions text |
-| `void setCampaignId(String campaignId)` | Set a campaign ID |
-| `void setBackPressListener(Runnable backPressListener)` | Listener for back press on consent screen |
+      <Step title="CustomFontFamily">
+        Supported values: `casual`, `cursive`, `monospace`, `sans_serif`, `sans_serif_black`, `sans_serif_light`, `sans_serif_medium`, `sans_serif_smallcaps`, `sans_serif_thin`, `sans_serif_condensed`, `sans_serif_condensed_light`, `sans_serif_condensed_medium`, `serif`, `serif_monospace`
+      </Step>
 
-#### CustomConsentSettings
-
-| Method | Description |
-| --- | --- |
-| `setConsentTitle(String)` | Set the consent screen title |
-| `setAppTitleTextColor(String)` | App title text color |
-| `setAppTitleTypeface(CustomTypeface)` | App title font |
-| `setBodyBackgroundColor(String)` | Body background color |
-| `setBodyBackgroundImageResource(int)` | Body background image (resource ID) |
-| `setBodyBackgroundImageBytes(byte[])` | Body background image (bytes) |
-| `setBodyBackgroundShadow(boolean)` | Enable/disable body background shadow |
-| `setScreenBackgroundColor(String)` | Screen background color |
-| `setScreenBackgroundImageResource(int)` | Screen background image (resource ID) |
-| `setScreenBackgroundImageResource(int, boolean fillScreen)` | Screen background image with fill option |
-| `setScreenBackgroundImageBytes(byte[])` | Screen background image (bytes) |
-| `setScreenBackgroundImageBytes(byte[], boolean fillScreen)` | Screen background image (bytes) with fill option |
-| `setConsentTextColor(String)` | Consent main text color |
-| `setConsentTextTypeface(CustomTypeface)` | Consent main text font |
-| `setAgreeButtonImageResource(int)` | Agree button image (resource ID) |
-| `setDisagreeButtonImageResource(int)` | Disagree button image (resource ID) |
-| `setAgreeButtonImageBytes(byte[])` | Agree button image (bytes) |
-| `setDisagreeButtonImageBytes(byte[])` | Disagree button image (bytes) |
-| `setAgreeButtonTextColor(String)` | Agree button text color |
-| `setDisagreeButtonTextColor(String)` | Disagree button text color |
-| `setAgreeButtonTypeface(CustomTypeface)` | Agree button font |
-| `setDisagreeButtonTypeface(CustomTypeface)` | Disagree button font |
-| `setConsentTextLinksColor(String)` | Consent text links color |
-| `setAgreeButtonBackgroundColor(String)` | Agree button background color |
-| `setDisagreeButtonBackgroundColor(String)` | Disagree button background color |
-| `setPrivacyMessageTextColor(String)` | Privacy message text color |
-| `setPrivacyMessageLinksColor(String)` | Privacy message links color |
-| `setPrivacyMessageTextTypeface(CustomTypeface)` | Privacy message font |
-| `setNetworkIconsColorFilter(String)` | Network icons color filter |
-| `setNetworkIconsTextColor(String)` | Network icons text color |
-| `setNetworkIconsTextTypeface(CustomTypeface)` | Network icons text font |
-| `setHideNetworkIcons(boolean)` | Show/hide network icons |
-| `setQrCodeColorFilter(String)` | QR code foreground color |
-| `setQrCodeBackgroundColor(String)` | QR code background color |
-| `setCustomTypeface(CustomTypeface)` | Apply font to all text elements (specific overrides take precedence) |
-| `setTopIconColorFilter(String)` | Top icon color filter |
-| `setHideConsentIcon(boolean)` | Show/hide the consent icon |
-
-#### CustomTypeface
-
-**Constructors:**
-
-```java
-CustomTypeface()
-CustomTypeface(Typeface typeface)
-CustomTypeface(CustomConsentSettings.CustomFontFamily fontFamily,
-               CustomConsentSettings.CustomTextStyle textStyle)
-```
-
-**Methods:**
-
-| Method | Description |
-| --- | --- |
-| `void setTypeface(Typeface typeface)` | Set a `Typeface` object directly |
-| `void setFontFamily(CustomConsentSettings.CustomFontFamily fontFamily)` | Set font family |
-| `void setTextStyle(CustomConsentSettings.CustomTextStyle textStyle)` | Set text style |
-
-#### Choice
-
-| Value | Int | Description |
-| --- | --- | --- |
-| `Choice.NONE` | 0 | Consent screen not shown yet, or user hasn't made a choice |
-| `Choice.PEER` | 1 | User agreed — reflect in settings so user can opt out |
-| `Choice.NOT_PEER` | 4 | User declined — reflect in settings so user can opt in |
-
-#### ConsentLanguage
-
-Supported values: `en`, `de`, `es`, `fr`, `it`, `ja`, `pt`, `ru`, `tr`
-
-#### CustomFontFamily
-
-Supported values: `casual`, `cursive`, `monospace`, `sans_serif`, `sans_serif_black`, `sans_serif_light`, `sans_serif_medium`, `sans_serif_smallcaps`, `sans_serif_thin`, `sans_serif_condensed`, `sans_serif_condensed_light`, `sans_serif_condensed_medium`, `serif`, `serif_monospace`
-
-#### CustomTextStyle
-
-Supported values: `bold`, `bold_italic`, `italic`, `normal`
+      <Step title="CustomTextStyle">
+        Supported values: `bold`, `bold_italic`, `italic`, `normal`
+      </Step>
+    </Steps>
+  </Step>
+</Steps>
