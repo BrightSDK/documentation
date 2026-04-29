@@ -25,6 +25,13 @@ Implementation is simple - there are 3 steps:
 </Info>
 
 <Steps>
+  <Step title="Important Notes" titleSize="h3">
+    - Users must **ALWAYS** decide if they want to **VOLUNTARILY** install EarnApp after seeing the offer and consent screen. Additionally, users should **ALWAYS** have a straightforward means to opt out of the installation process.
+    - Take care when implementing the offer screen and the opt-out mechanisms in a way which follows guidelines in this document.
+    - Follow consent screen implementation guidelines in order to return true value from user interaction. **DO NOT install anything on users' devices if they have not opted-in**.
+    - **Bright Data products do not do any user tracking of any kind**. You can read more about EarnApp and privacy in its [<u>FAQ</u>](https://help.earnapp.com/hc/en-us?_gl=1*1hf5rjl*_gcl_au*MTc3ODI5OTY1MS4xNzU2MjA4MDkxMVFDkGAB2a1RoLEAAYASACEgJnWfD_BwE).
+    - It's important to follow the guidelines in this document to avoid violation of our company's policy which may lead to termination of agreement.
+  </Step>
   <Step title="Register Your App in the Dashboard" titleSize="h3">
     <RegisterApp />
   </Step>
@@ -37,7 +44,6 @@ Implementation is simple - there are 3 steps:
        - User clicks **Agree.**
        - exe file downloads in the background.
        - EarnApp setup is launched and presents the Bright SDK consent screen **only after** your app installation is complete.
-
        <Note>
          For offer screen setup and technical integration, continue to [**Set Up Your Offer Screen**](#set-up-your-offer-screen) and [**Technical Integration**](#technical-integration).
        </Note>
@@ -66,25 +72,19 @@ Implementation is simple - there are 3 steps:
     />
 
     1. **Mandatory Text**
-
-        Optional offer by <a href="https://earnapp.com/"><img src="/integration-guides/image/earnapp_integration_3.png" alt="EarnApp" noZoom style={{height: "1em", width: "auto", display: "inline"}} /></a>
-
-        _When you click "Accept", you agree to install "EarnApp" and consent to its [Privacy Policy](#) and [EULA](#)._
-
-    2. **Buttons** 
-    
-        "Decline" / "Accept"
-        <Warning>
-          Make sure buttons return true value from user interaction ("Decline" = opt-out / "Accept" = opt-in). **DO NOT install anything on users' devices if they have not opted-in.**
-        </Warning>
-
+       Optional offer by <a href="https://earnapp.com/"><img src="/integration-guides/image/earnapp_integration_3.png" alt="EarnApp" noZoom style={{height: "1em", width: "auto", display: "inline"}} /></a>
+       _When you click "Accept", you agree to install "EarnApp" and consent to its [Privacy Policy](#) and [EULA](#)._
+    2. **Buttons**
+       "Decline" / "Accept"
+       <Warning>
+         Make sure buttons return true value from user interaction ("Decline" = opt-out / "Accept" = opt-in). **DO NOT install anything on users' devices if they have not opted-in.**
+       </Warning>
     3. **Required Links**
-
-        | Text | URL |
-        | --- | --- |
-        | EarnApp | [https://earnapp.com/](https://earnapp.com/) |
-        | EULA | [https://earnapp.com/user-agreement](https://earnapp.com/user-agreement) |
-        | Privacy Policy | [https://earnapp.com/privacy](https://earnapp.com/privacy) |
+       | Text | URL |
+       | --- | --- |
+       | EarnApp | [https://earnapp.com/](https://earnapp.com/) |
+       | EULA | [https://earnapp.com/user-agreement](https://earnapp.com/user-agreement) |
+       | Privacy Policy | [https://earnapp.com/privacy](https://earnapp.com/privacy) |
   </Step>
   <Step title="AV Guidelines" titleSize="h3">
     <Guidelines />
@@ -109,13 +109,11 @@ Implementation is simple - there are 3 steps:
   </Step>
   <Step title="Technical Integration" titleSize="h3">
     1. **Dynamically download** the bundler using the link present in your bundle page in the [<u>Bright SDK control panel.</u>](https://bright-sdk.com/cp/bundles)
-       
        <img
          src="/integration-guides/image/earnapp_integration_4.png"
          alt="Alt text"
          width="400"
        />
-
        **Download URL format:**
        ```text
        https://cdn.bright-sdk.com/static/BrightSDK-Bundler.exe?filename=earnapp-bundle-[your_bundle_code].exe
