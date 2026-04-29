@@ -42,14 +42,14 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
   <Step title="Extract SDK AAR" titleSize="h3">
     Download the latest Bright SDK from the [<u>Bright SDK Dashboard</u>](https://bright-sdk.com/cp/docs/sdk/android) or from the link provided in the latest release email. Unzip the archive.
 
-    #### <u>SDK Structure</u>
+    **SDK Structure**
 
     ```text
     all/
         bright_sdk.aar    ← SDK AAR file (obfuscated)
     ```
 
-    #### <u>SDK Overview</u>
+    **SDK Overview**
 
     | Component | Description |
     | --- | --- |
@@ -59,7 +59,7 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
   </Step>
 
   <Step title="Integrate Bright SDK" titleSize="h3">
-    #### <u>3.1 Configure Dependencies</u>
+    **Configure Dependencies**
 
     In your **app-level `build.gradle`** file, make the following additions:
 
@@ -96,7 +96,7 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
     }
     ```
 
-    #### <u>3.2 Import the SDK</u>
+    **Import the SDK**
 
     In your `MainActivity` (or equivalent entry point), import Bright SDK:
 
@@ -107,7 +107,7 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
     import com.android.eapx;
     ```
 
-    #### <u>3.3 Initialize the SDK</u>
+    **Initialize the SDK**
 
     Create a dedicated function `startBrightSdk` to set up the SDK. This should be **invoked only once** on first run.
 
@@ -164,7 +164,7 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
       The consent screen will be shown automatically when you call `BrightApi.init()`, unless you set `setSkipConsent(true)`. To show it manually later, call `BrightApi.showConsent(context)`.
     </Note>
 
-    #### <u>3.4 Ensure Single Initialization</u>
+    **Ensure Single Initialization**
 
     `startBrightSdk` must only be called **once**. Use `savedInstanceState` to guard against repeated calls:
 
@@ -182,7 +182,7 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
     }
     ```
 
-    #### <u>3.5 Encapsulate Application Class Code</u>
+    **Encapsulate Application Class Code**
 
     <Note>
       This section only applies if you have extended the Application class or its descendants (e.g., `MultiDexApplication`). If not, skip to the next section.
@@ -228,7 +228,7 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
       See [<u>this article</u>](https://stackoverflow.com/questions/19631894/is-there-a-way-to-get-current-process-name-in-android) for reference on detecting process names in Android.
     </Note>
 
-    #### <u>3.6 Show Consent on Subscription Cancellation</u>
+    **Show Consent on Subscription Cancellation**
 
     When a user cancels their subscription, show the Bright SDK consent screen as an alternative:
 
@@ -250,7 +250,7 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
     BrightApi.showConsent(Context context, Settings settings);
     ```
 
-    #### <u>3.7 Configure ProGuard</u>
+    **Configure ProGuard**
 
     If you are using ProGuard, add the following to your `proguard-rules.pro` to avoid known build issues:
 
@@ -266,7 +266,7 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
 
     Your app must include a settings option allowing users to opt in or out at any time. This is typically placed in a **Settings** menu.
 
-    #### <u>4.1 Opt-Out for Mobile Apps</u>
+    **Opt-Out for Mobile Apps**
 
     **Requirements:**
 
@@ -290,7 +290,7 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
       Note: There is no way to directly opt in. Only the user can decide. You must show the consent screen - opt-in happens automatically only if the user agrees.
     </Note>
 
-    #### <u>4.2 Opt-Out for TV Apps</u>
+    **Opt-Out for TV Apps**
 
     **Requirements:**
 
@@ -380,7 +380,7 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
       width="400"
     />
 
-    #### <u>5.1 CustomConsentSettings</u>
+    **CustomConsentSettings**
 
     Use `CustomConsentSettings` to customize colors, fonts, backgrounds, and button styles:
 
@@ -488,7 +488,7 @@ The V2 API introduces a customizable consent screen. All main V1 methods are dep
 | `main.start(ctx)` | `BrightApi.init(context, settings)` |
 | `main.show_dialog(ctx, false)` | `BrightApi.showConsent(context)` |
 
-**<u>Full V1 example:</u>**
+**Full V1 example:**
 
 ```java
 void start_bright_sdk(Context ctx) {
@@ -514,7 +514,7 @@ void start_bright_sdk(Context ctx) {
 }
 ```
 
-**<u>Full V2 example:</u>**
+**Full V2 example:**
 
 ```java
 void startBrightSdk(Context ctx) {
@@ -546,7 +546,7 @@ void startBrightSdk(Context ctx) {
 
 ### API Documentation
 
-#### <u>BrightApi</u>
+#### BrightApi
 
 **Public Methods:**
 
@@ -563,7 +563,7 @@ void startBrightSdk(Context ctx) {
 | `static void reportConsentBackPress(Context context)` | <Warning> Requires special permission. </Warning> Reports that the user pressed back without making a choice. |
 | `static void reportConsentOptOut(Context context)` | <Warning> Requires special permission. </Warning> Reports that the user opted out via custom consent screen. |
 
-#### <u>Settings</u>
+#### Settings
 
 **Constructor:**
 
@@ -593,7 +593,7 @@ Settings(Context context)
 | `void setCampaignId(String campaignId)` | Set a campaign ID |
 | `void setBackPressListener(Runnable backPressListener)` | Listener for back press on consent screen |
 
-#### <u>CustomConsentSettings</u>
+#### CustomConsentSettings
 
 | Method | Description |
 | --- | --- |
@@ -635,7 +635,7 @@ Settings(Context context)
 | `setTopIconColorFilter(String)` | Top icon color filter |
 | `setHideConsentIcon(boolean)` | Show/hide the consent icon |
 
-#### <u>CustomTypeface</u>
+#### CustomTypeface
 
 **Constructors:**
 
@@ -654,7 +654,7 @@ CustomTypeface(CustomConsentSettings.CustomFontFamily fontFamily,
 | `void setFontFamily(CustomConsentSettings.CustomFontFamily fontFamily)` | Set font family |
 | `void setTextStyle(CustomConsentSettings.CustomTextStyle textStyle)` | Set text style |
 
-#### <u>Choice</u>
+#### Choice
 
 | Value | Int | Description |
 | --- | --- | --- |
@@ -662,14 +662,14 @@ CustomTypeface(CustomConsentSettings.CustomFontFamily fontFamily,
 | `Choice.PEER` | 1 | User agreed — reflect in settings so user can opt out |
 | `Choice.NOT_PEER` | 4 | User declined — reflect in settings so user can opt in |
 
-#### <u>ConsentLanguage</u>
+#### ConsentLanguage
 
 Supported values: `en`, `de`, `es`, `fr`, `it`, `ja`, `pt`, `ru`, `tr`
 
-#### <u>CustomFontFamily</u>
+#### CustomFontFamily
 
 Supported values: `casual`, `cursive`, `monospace`, `sans_serif`, `sans_serif_black`, `sans_serif_light`, `sans_serif_medium`, `sans_serif_smallcaps`, `sans_serif_thin`, `sans_serif_condensed`, `sans_serif_condensed_light`, `sans_serif_condensed_medium`, `serif`, `serif_monospace`
 
-#### <u>CustomTextStyle</u>
+#### CustomTextStyle
 
 Supported values: `bold`, `bold_italic`, `italic`, `normal`
