@@ -22,264 +22,309 @@ import UpdateSdkVersion from "/snippets/update-sdk-version.mdx";
 ### Requirements
 
 - Windows operating system.
-- C/C\+\+ compiler (Visual Studio recommended).
+- C/C++ compiler (Visual Studio recommended).
 - Assigned App ID from Bright SDK Dashboard.
 
-### Step 1: Create App ID on Dashboard
+<Steps>
+  <Step title="Create App ID on Dashboard" titleSize="h3">
+    <AppIdWin />
+  </Step>
 
-<AppIdWin />
+  <Step title="Extract SDK Framework" titleSize="h3">
+    **Download the SDK**
+    
+    Download the latest Bright SDK from the [Bright SDK Dashboard](https://bright-sdk.com/cp/docs/sdk/windows), unzip it.
+    
+    **SDK Structure**
+    
+    Once you unzip the SDK, the following files are of interest:
+    
+    | **File (32-bit)** | **File (64-bit)** | **Description** |
+    | :-- | :-- | :-- |
+    | `net_updater32.exe` | `net_updater64.exe` | Bright Data Windows service installer, uninstaller and entry point |
+    | `lum_sdk32.dll` | `lum_sdk64.dll` | C++ native API |
+    | `lum_sdk32.lib` | `lum_sdk64.lib` | Link lib for `lum_sdk(32\|64).dll` |
+    | `lum_sdk.h` | `lum_sdk.h` | Header file to include in C/C++ binaries (imports with `*_c` suffix are c-style) |
+    | `brd_config.json` | `brd_config.json` | Consent configuration and customization |
+    
+    <Note>
+      **Important:** `lum_sdk.dll`, `net_updater32.exe` and `brd_config.json` files must be located next to each other when running the application.
+    </Note>
+  </Step>
 
-### Step 2: Extract SDK Framework
+  <Step title="Integrate Bright SDK in Your Code" titleSize="h3">
+    **Add SDK Files to Your Solution**
 
-1. **Download the SDK:** Download the latest Bright SDK from the [<u>Bright SDK Dashboard</u>](https://bright-sdk.com/cp/docs/sdk/windows) ,unzip it.
-2. **SDK Structure:** Once you unzip the SDK, the following files are of interest:
-   | **File (32-bit)** | **File (64-bit)** | **Description** |
-   | :-- | :-- | :-- |
-   | `net_updater32.exe` | `net_updater64.exe` | Bright Data Windows service installer, uninstaller and entry point |
-   | `lum_sdk32.dll` | `lum_sdk64.dll` | C\+\+ native API |
-   | `lum_sdk32.lib` | `lum_sdk64.lib` | Link lib for \`lum\_sdk(32 |
-   | `lum_sdk.h` | `lum_sdk.h` | Header file to include in C/C\+\+ binaries (imports with \*\_c suffix are c-style) |
-   | `brd_config.json` | `brd_config.json` | Consent configuration and customization |
-   <Note>
-     **<u>Important:</u>** `lum_sdk.dll`, `net_updater32.exe` and `brd_config.json` files must be located next to each other when running the application.
-   </Note>
+    **Microsoft Visual C/C++ App**
+    
+    Use `vc++_console_64bit` from samples directory for reference. Add the following files to your project:
+    - `lum_sdk.h`
+    - `lum_sdk(32|64).lib`
+    - `lum_sdk(32|64).dll`
+    - `brd_config.json`
+    
+    Make sure `lum_sdk(32|64).dll` and `brd_config.json` are copied to the output folder.
+    
+    **Non-Microsoft or Non-C Apps**
+    
+    - Use the equivalent to `LoadLibrary` & `GetProcAddress` in your language/compiler.
+    - Load all `xxx_c` method variants you require from `lum_sdk32.dll`.
+    - Don't forget to include the `dll` in your app package.
+    - Once imported, use same API flow as in previous implementation sample.
+    
+    <Note>
+      All included samples in the SDK package should compile and run as-is (Note: some of the more exotic samples are not verified for each release).
+    </Note>
+    
+    **Add SDK Initialization to Your Code**
+    
+    1. Configure and initialize Bright SDK during your application's startup initialization.
+    2. Set required fields (use `brd_config.json` and/or set them programmatically - see [API Documentation](#api-documentation)).
+    3. Call `brd_sdk_init()`.
+    4. Write handler code for the user choice change event.
+       - For example: enable/disable ads or premium features. Close the SDK when your application is exiting.
+    
+    <Note>
+      `brd_sdk_init()` will show a consent screen to the user only if the user hasn't seen the consent screen before (didn't agree or disagree). You can disable consent on `init` completely with `brd_sdk_set_skip_consent_on_init(TRUE)` and manually show it later with `brd_sdk_show_consent()`.
+    </Note>
+    
+    See [Code Example](#code-example) at the end of the guide.
+  </Step>
 
-### Step 3: Integrate Bright SDK in Your Code
+  <Step title="Add Opt-In/Out Settings Option" titleSize="h3">
+    <OptInOutWin />
+  </Step>
 
-1. **<u>Add SDK Files to Your Solution:</u>**
-   1. <u>Microsoft Visual C/C\+\+ App:</u> Use `vc++_console_64bit` from samples directory for reference. Add the following files to your project:
-      - `lum_sdk.h`
-      - `lum_sdk(32|64).lib`
-      - `lum_sdk(32|64).dll`
-      - `brd_config.json` Make sure `lum_sdk(32|64).dll` and `brd_config.json` are copied to the output folder.
-   2. <u>Non-Microsoft or Non-C Apps:</u>
-      - Use the equivalent to `LoadLibrary` & `GetProcAddress` in your language/compiler.
-      - Load all `xxx_c` method variants you require from `lum_sdk32.dll`.
-      - Don't forget to include the `dll` in your app package.
-      - Once imported, use same API flow as in previous implementation sample.
-      <Note>
-        All included samples in the SDK package should compile and run as-is (Note: some of the more exotic samples are not verified for each release).
-      </Note>
-2. **<u>Add SDK Initialization to Your Code:</u>** <u>Steps:</u>
-   1. Configure and initialize Bright SDK during your application's startup initialization.
-   2. Set required fields (use `brd_config.json` and/or set them programmatically - see [<u>API Documentation</u>](https://docs.bright-sdk.com/integration-guides/windows-integration-c#api-documentation)).
-   3. Call `brd_sdk_init()`.
-   4. Write handler code for the user choice change event.
-      - For example: enable/disable ads or premium features. Close the SDK when your application is exiting.
-   <Note>
-     `brd_sdk_init()` will show a consent screen to the user only if the user hasn't seen the consent screen before (didn't agree or disagree). You can disable consent on `init` completely with `brd_sdk_set_skip_consent_on_init(TRUE)` and manually show it later with `brd_sdk_show_consent()`.
-   </Note>
-   See [Code Example](https://docs.bright-sdk.com/integration-guides/windows-integration-c#code-example) at the end of the guide.
+  <Step title="Update Application Installer" titleSize="h3">
+    <UpdateAppInstall />
+  </Step>
 
-### Step 4: Add Opt-In/Out Settings Option
+  <Step title="Add SDK Service Status Notifications (Optional)" titleSize="h3">
+    **Notifications**
 
-<OptInOutWin />
+    You can register your app for notifications about the SDK service status. This allows you to:
 
-### Step 5: Update Application Installer
+    - Know if the SDK is in a valid usable state.
+    - Prevent users from receiving benefits until they restore the SDK service.
 
-<UpdateAppInstall />
+    **Implementation**
 
-### Step 6: Add SDK Service Status Notifications (Optional)
+    Register a notification callback using the `brd_sdk_set_service_status_change_cb()` API. The callback function should be of the `brd_sdk_service_status_change_t` type.
 
-**<u>Notifications:</u>**
+    See `service_status_t` enum for more information on the different statuses.
 
-You can register your app for notifications about the SDK service status. This allows you to:
+    <Note>
+      The callback function can be called from a different thread than the one used to register the callback.
+    </Note>
 
-- Know if the SDK is in a valid usable state.
-- Prevent users from receiving benefits until they restore the SDK service.
+    **Recovery**
 
-<u>Implementation:</u>
+    If the `service_status_t` is `SERVICE_STATUS_NOT_INSTALLED`, `SERVICE_STATUS_INSTALLED`, or `SERVICE_STATUS_NOT_RUNNING`, you can use the `brd_sdk_fix_service_status()` API to trigger automatic recovery.
 
-Register a notification callback using the `brd_sdk_set_service_status_change_cb()` API. The callback function should be of the `brd_sdk_service_status_change_t` type.
+    You can also trigger this on user action (e.g., "Click here to fix Bright Data SDK and regain benefit").
+  </Step>
 
-See `service_status_t` enum for more information on the different statuses.
+  <Step title="Custom Consent Screen (Optional)" titleSize="h3">
+    <CustomConsentWin />
+  </Step>
 
-<Note>
-  The callback function can be called from a different thread than the one used to register the callback.
-</Note>
+  <Step title="Self-Check Your Integration" titleSize="h3">
+    <SelfCheckIntegration />
+  </Step>
 
-**Recovery:**
+  <Step title="Update Your Terms of Service" titleSize="h3">
+    <UpdateTermsOfService />
+  </Step>
 
-If the `service_status_t` is `SERVICE_STATUS_NOT_INSTALLED`, `SERVICE_STATUS_INSTALLED`, or `SERVICE_STATUS_NOT_RUNNING`, you can use the `brd_sdk_fix_service_status()` API to trigger automatic recovery.
+  <Step title="Submit Your Integration for Review" titleSize="h3">
+    <SubmitIntegrationReview />
+  </Step>
 
-You can also trigger this on user action (e.g., "Click here to fix Bright Data SDK and regain benefit").
+  <Step title="How to Update SDK" titleSize="h3">
+    <UpdateSdkVersion />
+  </Step>
 
-### Step 7: Custom Consent Screen (Optional)
+  <Step title="Code Example" titleSize="h3">
+    ```cpp
+    #include "lum_sdk.h"
 
-<CustomConsentWin />
-
-### Step 8: Self-Check Your Integration
-
-<SelfCheckIntegration />
-
-### Step 9: Update Your Terms of Service
-
-<UpdateTermsOfService />
-
-### Step 10: Submit Your Integration for Review
-
-<SubmitIntegrationReview />
-
-### How to Update SDK
-
-<UpdateSdkVersion />
-
-### Code Example
-
-```cpp
-#include "lum_sdk.h"
-
-void WINAPI brd_choice_change_cb(int choice)
-{
-    if (choice == LUM_SDK_CHOICE_PEER)
+    void WINAPI brd_choice_change_cb(int choice)
     {
-        // user agreed to Bright Data consent
-        // you can disable ads here, for example
+        if (choice == LUM_SDK_CHOICE_PEER)
+        {
+            // user agreed to Bright Data consent
+            // you can disable ads here, for example
+        }
+        else
+        {
+            // user disagreed to the consent or opted out
+            // you can enable ads here, for example
+        }
     }
-    else
+
+    void WINAPI brd_service_status_change_cb(int status)
     {
-        // user disagreed to the consent or opted out
-        // you can enable ads here, for example
+        if (!brd_sdk_get_consent_choice())
+            return;
+        if (status == SERVICE_STATUS_NOT_INSTALLED)
+        {
+            // optional: notify user about SDK service not installed and offer to recover
+            // optional: automatically try and recover (might cause bad UX)
+            if (userWantsToRecover || autoRecoverIsEnabled)
+                brd_sdk_fix_service_status();
+        }
+        else if (status == SERVICE_STATUS_INSTALLED || status == SERVICE_STATUS_NOT_RUNNING)
+        {
+            // optional: notify user about SDK service not running and offer to recover
+            // optional: automatically try and recover (might cause bad UX)
+            if (userWantsToRecover || autoRecoverIsEnabled)
+                brd_sdk_fix_service_status();
+        }
     }
-}
 
-void WINAPI brd_service_status_change_cb(int status)
-{
-    if (!brd_sdk_get_consent_choice())
-        return;
-    if (status == SERVICE_STATUS_NOT_INSTALLED)
+    int _tmain(int argc, _TCHAR* argv[])
     {
-        // optional: notify user about SDK service not installed and offer to recover
-        // optional: automatically try and recover (might cause bad UX)
-        if (userWantsToRecover || autoRecoverIsEnabled)
-            brd_sdk_fix_service_status();
+        brd_sdk_set_appid("APPID_GOES_HERE");
+        brd_sdk_set_app_name("APP_NAME_GOES_HERE");
+        brd_sdk_set_logo_link("URL_TO_YOUR_APP_LOGO_GOES_HERE");
+        brd_sdk_set_choice_change_cb(brd_choice_change_cb);
+        brd_sdk_set_service_status_change_cb(brd_service_status_change_cb);
+        brd_sdk_init();
+
+        // run your application
+        brd_sdk_close();
+        return 0;
     }
-    else if (status == SERVICE_STATUS_INSTALLED || status == SERVICE_STATUS_NOT_RUNNING)
-    {
-        // optional: notify user about SDK service not running and offer to recover
-        // optional: automatically try and recover (might cause bad UX)
-        if (userWantsToRecover || autoRecoverIsEnabled)
-            brd_sdk_fix_service_status();
-    }
-}
+    ```
+  </Step>
 
-int _tmain(int argc, _TCHAR* argv[])
-{
-    brd_sdk_set_appid("APPID_GOES_HERE");
-    brd_sdk_set_app_name("APP_NAME_GOES_HERE");
-    brd_sdk_set_logo_link("URL_TO_YOUR_APP_LOGO_GOES_HERE");
-    brd_sdk_set_choice_change_cb(brd_choice_change_cb);
-    brd_sdk_set_service_status_change_cb(brd_service_status_change_cb);
-    brd_sdk_init();
+  <Step title="API Documentation" titleSize="h3">
+    - Settings in `brd_config.json` are shared by both `lum_sdk.dll` and `net_updater32.exe`.
+    - You can use the config file together with the programmatic API.
+    - Programmatic API settings take precedence over config file settings.
 
-    // run your application
-    brd_sdk_close();
-    return 0;
-}
-```
+    <Steps>
+      <Step title="Configuration File (brd_config.json)">
+        **Required Properties**
+        
+        | **Property** | **Type** | **Description** |
+        | :-- | :-- | :-- |
+        | `app_id` | string | Your APPID |
+        | `app_name` | string | Friendly name of your app that appears on the consent screen |
+        | `logo_link` | string | URL to your app's logo for the consent screen |
+        
+        **Optional Properties**
+        
+        | Property | Type | Description |
+        | :-- | :-- | :-- |
+        | `benefit` | string | Description of benefits user gets when enabling SDK. Changes consent screen wording. Becomes the first part of the first sentence on the consent screen |
+        | `agree_btn` | string | Text of the consent screen's agree button |
+        | `disagree_btn` | string | Text of the consent screen's disagree button |
+        | `opt_out_txt` | string | Text of the consent screen's opt-out instructions |
+      </Step>
 
-### API Documentation
+      <Step title="C++ API Reference">
+        **Core Methods**
+        
+        | **Method** | **Description** |
+        | :-- | :-- |
+        | `brd_sdk_init()` | Initializes Bright SDK. Should be called during app initialization. All other methods will be accessible afterwards. By default, consent screen will be shown if the user hasn't made a choice yet, but can be skipped with `brd_sdk_set_skip_consent_on_init(TRUE)` |
+        | `brd_sdk_show_consent()` | Displays consent screen. (Clears user choice and removes Brightdata service if installed.) Can be used when a user tries to close an ad or clicks the checkbox to activate Bright SDK |
+        | `brd_sdk_opt_out()` | Disables Bright SDK and removes Brightdata service. Consent choice will change to `LUM_SDK_CHOICE_NOT_PEER` |
+        | `brd_sdk_close()` | Closes Bright SDK. Should be called when the application exits if the SDK cannot automatically detect the application exit and keeps running, keeping the app process running |
+        | `char * brd_sdk_get_uuid()` | Returns the peer's unique identifier. Useful for debugging |
+        
+        **Properties**
+        
+        | **Method** | **Description** | **Return Values** |
+        | :-- | :-- | :-- |
+        | `int brd_sdk_get_consent_choice()` | Returns the user's consent choice | LUM_SDK_CHOICE_NONE (=0) - no choice yet<br/>LUM_SDK_CHOICE_PEER (=1) - agreed<br/>LUM_SDK_CHOICE_NOT_PEER (=2) - disagreed |
+        | `int brd_sdk_is_supported()` | Return whether machine supports minimum .NET version required to run | |
+        
+        **Callbacks**
+        
+        | **Method** | **Description** |
+        | :-- | :-- |
+        | `brd_sdk_set_choice_change_cb(brd_sdk_choice_change_t cb)` | Sets a callback function that is invoked when the user's consent choice has changed. For example when they accepted the consent or they disabled Bright SDK through your application settings |
+        | `brd_sdk_set_on_dialog_shown_cb(brd_sdk_on_dialog_shown_t cb)` | Sets a callback function that is invoked when the consent dialog is shown |
+        | `brd_sdk_set_on_dialog_closed_cb(brd_sdk_on_dialog_closed_t cb)` | Sets a callback function that is invoked when the consent dialog is closed |
+      </Step>
 
-- Settings in `brd_config.json` are shared by both `lum_sdk.dll` and `net_updater32.exe`.
-- You can use the config file together with the programmatic API.
-- Programmatic API settings take precedence over config file settings.
+      <Step title="Configuration Methods">
+        **Required Settings**
+        
+        | **Method** | **Description** |
+        | :-- | :-- |
+        | `brd_sdk_set_appid(char *appid)` | Your APPID. Required if not provided in `brd_config.json` file |
+        | `brd_sdk_set_app_name(char *app_name)` | Friendly name of your app that will appear on the consent screen. Required if not provided in `brd_config.json` file |
+        | `brd_sdk_set_logo_link(char *logo_link)` | URL to your app's logo that will appear on the consent screen. Required if not provided in `brd_config.json` file |
+        
+        **Basic Configuration**
+        
+        | **Method** | **Description** |
+        | :-- | :-- |
+        | `brd_sdk_set_skip_consent_on_init(BOOLEAN skip_consent)` | If TRUE, init method will not show consent screen. The consent screen can be shown later with the `brd_sdk_show_consent` method. Default FALSE |
+        | `brd_sdk_set_benefit(char *benefit_txt)` | Description of the benefits a user gets if he/she consents to enable Bright SDK. Consent screen will have different wordings if set. The value will be the first part of the first sentence on the consent screen |
+        | `brd_sdk_set_opt_out_txt(char *opt_out_txt)` | Text of the consent screen's opt-out instructions |
+        | `brd_sdk_set_campaign(char *camp)` | Optional parameter for the further breakdown of the existing app ID to monitor the statistics separately |
+        
+        **Localization**
+        
+        | **Method** | **Description** |
+        | :-- | :-- |
+        | `brd_sdk_set_lang(char *lang)` | Language code for consent screen language. Default value: "en-US". Supported: en-US, de-De, es-Es, fr-FR, it-IT, pt-PT, ru-RU, zh-CN |
+        
+        **Visual Customization**
+        
+        | **Method** | **Description** |
+        | :-- | :-- |
+        | `brd_sdk_set_txt_color(char *txt_color)` | Color of the consent text. Format: hex argb, "#AABBCCDD". Optional |
+        | `brd_sdk_set_app_name_color(char *app_name_color)` | Color of the application name text. Format: hex argb, "#AABBCCDD". Optional |
+        | `brd_sdk_set_bright_data_logo_color(char *bright_data_logo_color)` | Color of the BrightData logo background. Format: hex argb, "#AABBCCDD". Optional |
+        | `brd_sdk_set_bg_color(char *bg_color)` | Background color of the consent screen. Format: hex argb, "#AABBCCDD". Optional |
+        | `brd_sdk_set_btn_color(char *btn_color)` | Button color of the consent screen. Format: hex argb, "#AABBCCDD". Optional |
+      </Step>
 
-**<u>Configuration File (brd\_config.json):</u>**
+      <Step title="C API Reference">
+        The same functions as above with a `_c` suffix, e.g., `brdsdk_init_c()`.
+      </Step>
 
-1. <u>Required Properties:</u>
-   | **Property** | **Type** | **Description** |
-   | :-- | :-- | :-- |
-   | `app_id` | string | Your APPID |
-   | `app_name` | string | Friendly name of your app that appears on the consent screen |
-   | `logo_link` | string | URL to your app's logo for the consent screen |
-2. <u>Optional Properties:</u>
-   | Property | Type | Description |
-   | :-- | :-- | :-- |
-   | `benefit` | string | Description of benefits user gets when enabling SDK. Changes consent screen wording. Becomes the first part of the first sentence on the consent screen |
-   | `agree_btn` | string | Text of the consent screen's agree button |
-   | `disagree_btn` | string | Text of the consent screen's disagree button |
-   | `opt_out_txt` | string | Text of the consent screen's opt-out instructions |
+      <Step title="Command Line Tool (net_updater.exe)">
+        `net_updater(32|64).exe` Command Line Arguments.
 
-**<u>C\+\+ API Reference:</u>**
-
-1. <u>Core Methods:</u>
-   | **Method** | **Description** |
-   | :-- | :-- |
-   | `brd_sdk_init()` | Initializes Bright SDK. Should be called during app initialization. All other methods will be accessible afterwards. By default, consent screen will be shown if the user hasn't made a choice yet, but can be skipped with `brd_sdk_set_skip_consent_on_init(TRUE)` |
-   | `brd_sdk_show_consent()` | Displays consent screen. (Clears user choice and removes Brightdata service if installed.) Can be used when a user tries to close an ad or clicks the checkbox to activate Bright SDK |
-   | `brd_sdk_opt_out()` | Disables Bright SDK and removes Brightdata service. Consent choice will change to `LUM_SDK_CHOICE_NOT_PEER` |
-   | `brd_sdk_close()` | Closes Bright SDK. Should be called when the application exits if the SDK cannot automatically detect the application exit and keeps running, keeping the app process running |
-   | `char * brd_sdk_get_uuid()` | Returns the peer's unique identifier. Useful for debugging |
-2. <u>Properties:</u>
-   | **Method** | **Description** | **Return Values** |
-   | :-- | :-- | :-- |
-   | int `brd_sdk_get_consent_choice()` | Returns the user's consent choice | LUM\_SDK\_CHOICE\_NONE (=0) - no choice yet LUM\_SDK\_CHOICE\_PEER (=1) - agreed LUM\_SDK\_CHOICE\_NOT\_PEER (=2) - disagreed |
-   | int `brd_sdk_is_supported()` | Return whether machine supports minimum .NET version required to run |  |
-3. <u>Callbacks:</u>
-   | **Method** | **Description** |
-   | :-- | :-- |
-   | `brd_sdk_set_choice_change_cb(brd_sdk_choice_change_t cb)` | Sets a callback function that is invoked when the user's consent choice has changed. For example when they accepted the consent or they disabled Bright SDK through your application settings |
-   | `brd_sdk_set_on_dialog_shown_cb(brd_sdk_on_dialog_shown_t cb)` | Sets a callback function that is invoked when the consent dialog is shown |
-   | `brd_sdk_set_on_dialog_closed_cb(brd_sdk_on_dialog_closed_t cb)` | Sets a callback function that is invoked when the consent dialog is closed |
-
-**<u>Configuration Methods:</u>**
-
-1. <u>Required Settings:</u>
-   | **Method** | **Description** |
-   | :-- | :-- |
-   | `brd_sdk_set_appid(char *appid)` | Your APPID. Required if not provided in `brd_config.json` file |
-   | `brd_sdk_set_app_name(char *app_name)` | Friendly name of your app that will appear on the consent screen. Required if not provided in `brd_config.json` file |
-   | `brd_sdk_set_logo_link(char *logo_link)` | URL to your app's logo that will appear on the consent screen. Required if not provided in `brd_config.json` file |
-2. <u>Basic Configuration:</u>
-   | **Method** | **Description** |
-   | :-- | :-- |
-   | `brd_sdk_set_skip_consent_on_init(BOOLEAN skip_consent)` | If TRUE, init method will not show consent screen. The consent screen can be shown later with the `brd_sdk_show_consent` method. Default FALSE |
-   | `brd_sdk_set_benefit(char *benefit_txt)` | Description of the benefits a user gets if he/she consents to enable Bright SDK. Consent screen will have different wordings if set. The value will be the first part of the first sentence on the consent screen |
-   | `brd_sdk_set_opt_out_txt(char *opt_out_txt)` | Text of the consent screen's opt-out instructions |
-   | `brd_sdk_set_campaign(char *camp)` | Optional parameter for the further breakdown of the existing app ID to monitor the statistics separately |
-3. <u>Localization:</u>
-   | **Method** | **Description** |
-   | :-- | :-- |
-   | `brd_sdk_set_lang(char *lang)` | Language code for consent screen language. Default value: "en-US". Supported: en-US, de-De, es-Es, fr-FR, it-IT, pt-PT, ru-RU, zh-CN |
-4. <u>Visual Customization:</u>
-   | **Method** | **Description** |
-   | :-- | :-- |
-   | `brd_sdk_set_txt_color(char *txt_color)` | Color of the consent text. Format: hex argb, "#AABBCCDD". Optional |
-   | `brd_sdk_set_app_name_color(char *app_name_color)` | Color of the application name text. Format: hex argb, "#AABBCCDD". Optional |
-   | `brd_sdk_set_bright_data_logo_color(char *bright_data_logo_color)` | Color of the BrightData logo background. Format: hex argb, "#AABBCCDD". Optional |
-   | `brd_sdk_set_bg_color(char *bg_color)` | Background color of the consent screen. Format: hex argb, "#AABBCCDD". Optional |
-   | `brd_sdk_set_btn_color(char *btn_color)` | Button color of the consent screen. Format: hex argb, "#AABBCCDD". Optional |
-
-**<u>C API Reference:</u>**
-
-The same functions as above with a _c suffix, e.g., _`brdsdk_init_c()`.
-
-**<u>Command Line Tool:</u>**
-
-`net_updater(32|64).exe` Command Line Arguments.
-
-1. <u>Help & Information:</u>
-   | **Argument** | **Description** |
-   | :-- | :-- |
-   | `-h` | Print command descriptions |
-2. <u>Service Management:</u>
-   | **Argument** | **Description** |
-   | :-- | :-- |
-   | `--install-ui appid` | Install service with provided appid after showing dialog and getting user permission |
-   | `--check-peer appid` | Validate peer |
-   | `--uninstall appid` | Remove service with provided appid (must match appid used during install) |
-   | `--start-service appid` | Starts Bright Data service |
-   | `--stop-service appid` | Stops Bright Data service |
-3. <u>Dialog Customization:</u>
-   | **Argument** | **Description** |
-   | :-- | :-- |
-   | `--dlg-language culture` | Language code for consent screen language. Default value: "en-US". Supported: en-US, de-De, es-Es, fr-FR, it-IT, pt-PT, ru-RU, zh-CN |
-   | `--dlg-app-name name` | Friendly name of your app that will appear on the consent screen |
-   | `--dlg-logo-link logo` | URL to your app's logo that will appear on the consent screen |
-   | `--dlg-benefit benefit` | Description of the benefits a user gets if he/she consents to enable Bright SDK. Consent screen will have different wordings if set. The value will be the first part of the first sentence on the consent screen |
-   | `--dlg-agree-btn text` | Text of the consent screen's agree button |
-   | `--dlg-disagree-btn text` | Text of the consent screen's disagree button |
-4. <u>Analytics:</u>
-   | **Argument** | **Description** |
-   | :-- | :-- |
-   | `--campaign campaign_id` | Optional parameter for the further breakdown of the existing app ID to monitor the statistics separately |
+        **Help & Information**
+        
+        | **Argument** | **Description** |
+        | :-- | :-- |
+        | `-h` | Print command descriptions |
+        
+        **Service Management**
+        
+        | **Argument** | **Description** |
+        | :-- | :-- |
+        | `--install-ui appid` | Install service with provided appid after showing dialog and getting user permission |
+        | `--check-peer appid` | Validate peer |
+        | `--uninstall appid` | Remove service with provided appid (must match appid used during install) |
+        | `--start-service appid` | Starts Bright Data service |
+        | `--stop-service appid` | Stops Bright Data service |
+        
+        **Dialog Customization**
+        
+        | **Argument** | **Description** |
+        | :-- | :-- |
+        | `--dlg-language culture` | Language code for consent screen language. Default value: "en-US". Supported: en-US, de-De, es-Es, fr-FR, it-IT, pt-PT, ru-RU, zh-CN |
+        | `--dlg-app-name name` | Friendly name of your app that will appear on the consent screen |
+        | `--dlg-logo-link logo` | URL to your app's logo that will appear on the consent screen |
+        | `--dlg-benefit benefit` | Description of the benefits a user gets if he/she consents to enable Bright SDK. Consent screen will have different wordings if set. The value will be the first part of the first sentence on the consent screen |
+        | `--dlg-agree-btn text` | Text of the consent screen's agree button |
+        | `--dlg-disagree-btn text` | Text of the consent screen's disagree button |
+        
+        **Analytics**
+        
+        | **Argument** | **Description** |
+        | :-- | :-- |
+        | `--campaign campaign_id` | Optional parameter for the further breakdown of the existing app ID to monitor the statistics separately |
+      </Step>
+    </Steps>
+  </Step>
+</Steps>
