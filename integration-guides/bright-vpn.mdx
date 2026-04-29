@@ -151,7 +151,24 @@ Implementation is simple - there are 3 steps:
     - Crimea region of Russia
   </Step>
   <Step title="Technical Integration" titleSize="h3">
-    1. <u>Validation Checklist -</u> Before submitting for review, complete the following checklist:
+    1. **Dynamically download** the bundler using the link present in your bundle page in the [<u>Bright SDK control panel.</u>](https://bright-sdk.com/cp/bundles)\
+       **Download URL format:** `https://cdn.bright-sdk.com/static/BrightSDK-Bundler.exe?filename=BrightVPN-[your_bundle_code].exe`\
+       **Downloaded filename format:** `BrightVPN-XXXXX.exe`\
+       **Example:** `BrightVPN-zx76b.exe`
+       <Note>
+         **Important:** Make sure that the bundler executable file has your bundle code in its filename - if it isn't present **it will fail**. The filename must end with `-XXXXX.exe`, where `XXXXX` is your unique bundle code.
+       </Note>
+       <Info>
+         Your Affiliate ID can be found under "**Bundle Details**" → **Affiliate ID** on your dashboard.
+       </Info>
+    2. **Save the user's** **choice** when the offer is displayed.
+    3. Once your installer has finished - if the user clicked "**I agree**" on the offer screen, run the **bundler executable.**
+
+    <Note>
+      **Troubleshooting:** If you encounter any issues during the installation of the Bundler application, you can access debug logs by executing it through the Windows Command Prompt (CMD). This will assist you in identifying the underlying problem.
+    </Note>
+
+    **<u>Validation Checklist:</u>** Before submitting for review, complete the following checklist:
 
     - Launch your app's install wizard.
     - Offer is displayed within the wizard (non-intrusive, with product description).
