@@ -2,7 +2,9 @@
 title: "Custom Consent Screen Apple"
 ---
 
-Subject to Bright SDK approval. Please contact Bright SDK before implementing to get pre-approved.
+<Warning>
+  **Subject to Bright SDK approval.** Please contact Bright SDK before implementing to get pre-approved.
+</Warning>
 
 This is what it looks like on the default Bright SDK screen:
 
@@ -26,27 +28,31 @@ This is what it looks like on the default Bright SDK screen:
 
 </>}
 
-### Design Requirements
+**Design Requirements**
 
 Your custom consent screen must include the following mandatory elements:
 
-1. **Mandatory text:**
+**Mandatory text:**
 
-```
+```text
 "To [Benefit to user], please allow Web Indexing by Bright Data to use your device's free resources and IP address to download public web data from the Internet while you are using the app.
 None of your personal information is collected, except your IP address. Bright Data does not track you."
 ```
-```
+```text
 "Read Bright Data's Privacy Policy and End User License Agreement"
 ```
 
-2. Required links:
-   | Text | URL |
-   | --- | --- |
-   | Bright Data | https://brightdata.com/ |
-   | Privacy Policy | https://bright-sdk.com/privacy-policy |
-   | End User License Agreement | https://bright-sdk.com/eula |
-3. **Interactive element:** Tapping "_<u>public web data</u>_" must open a popup with additional information:
+**Required links:**
+
+| Text | URL |
+| --- | --- |
+| Bright Data | [https://brightdata.com/](https://brightdata.com/) |
+| Privacy Policy | [https://bright-sdk.com/privacy-policy](https://bright-sdk.com/privacy-policy) |
+| End User License Agreement | [https://bright-sdk.com/eula](https://bright-sdk.com/eula) |
+
+**Interactive element:** 
+
+Tapping "public web data" must open a popup with additional information:
 
 <img
      src="/snippets/image/iOS_Custom_Consent_Screen_3.png"
@@ -54,13 +60,18 @@ None of your personal information is collected, except your IP address. Bright D
      width="400"
    />
 
-4. **Translations:** If you wish to translate your screen, use only the [<u>provided official translations</u>](https://docs.google.com/spreadsheets/d/1G0Y1CY9emvfM9qlGC4o7wM-ypWqHbGo5Jxx8rT7DCVs/edit?gid=0#gid=0). Contact your partnership manager for any missing languages.
-5. **For tvOS:**
-   Replace links with: _"Scan the QR Code to learn more about Bright Data policy and ethical usage"._
-   Use your own branded QR code or a [<u>hosted</u>](https://media.bright-sdk.com/2023/09/qr-bright-sdk-faq.svg) version pointing to:\
-   [<u>https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing</u>](https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing)
+**Translations:** 
 
-### Examples of a possible custom consent screens
+If you wish to translate your screen, use only the [provided official translations](https://docs.google.com/spreadsheets/d/1G0Y1CY9emvfM9qlGC4o7wM-ypWqHbGo5Jxx8rT7DCVs/edit?gid=0#gid=0). Contact your partnership manager for any missing languages.
+
+**For tvOS:**
+
+Replace links with: _"Scan the QR Code to learn more about Bright Data policy and ethical usage"._
+
+Use your own branded QR code or a [hosted](https://media.bright-sdk.com/2023/09/qr-bright-sdk-faq.svg) version pointing to:\
+[https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing](https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing)
+
+**Examples of possible custom consent screens**
 
 <Columns cols={2}>
   <Column>
@@ -79,9 +90,9 @@ None of your personal information is collected, except your IP address. Bright D
   </Column>
 </Columns>
 
-### Integration Code
+**Integration Code**
 
-- Pass `skip_consent`: true in the SDK initializer to prevent the default consent screen from showing.
+- Pass `skip_consent: true` in the SDK initializer to prevent the default consent screen from showing.
 - The opt-in button (e.g., "I Agree") should call `external_opt_in()`.
 - The opt-out button (e.g., "I Disagree") should call `opt_out()`.
 - After presenting your custom screen, call `consent_shown()`.

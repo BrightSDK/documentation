@@ -2,511 +2,515 @@
 title: 'API Documentation Apple'
 ---
 
-## Part 1: Unity Plugin
+<Steps>
+  <Step title="Part 1: Unity Plugin" titleSize="h2">
+    <Steps>
+      <Step title="Class: BrdsdkBridge" titleSize="h3">
+        **Constants:**
 
-### Class: `BrdsdkBridge`
+        | Constant | Description |
+        | :--- | :--- |
+        | `CHOICE_NONE` | Consent screen has not yet been shown |
+        | `CHOICE_AGREED` | User accepted the consent screen |
+        | `CHOICE_DISAGREED` | User declined the consent screen |
 
-**Constants:**
+        **Methods:**
 
-| Constant | Description |
-| :--- | :--- |
-| `CHOICE_NONE` | Consent screen has not yet been shown |
-| `CHOICE_AGREED` | User accepted the consent screen |
-| `CHOICE_DISAGREED` | User declined the consent screen |
+        | Method | Returns | Description |
+        | :--- | :--- | :--- |
+        | `init(...)` | `void` | Initializes the SDK. Must be called at app startup. All other methods are accessible after successful initialization. |
+        | `opt_out()` | `void` | Disables Bright SDK (e.g. from Settings screen) |
+        | `enqueue_opt_out()` | `void` | Enqueues an opt-out action to be executed once the SDK is loaded and configured |
+        | `external_opt_in()` | `bool` | Opts in and starts the Bright SDK process if permitted. ⚠️ NOT allowed by default — always use `show_consent()` or consult Bright Data first. Returns `true` if permitted. |
+        | `enqueue_external_opt_in()` | `void` | Enqueues an opt-in action once SDK is loaded. Checks authorization status before and after enqueueing. |
+        | `show_consent(benefit, agree_btn, disagree_btn, language)` | `bool` | Shows the consent screen (e.g. when user toggles Settings switch to enable SDK) |
+        | `get_choice()` | `int` | Returns the user's current choice |
+        | `consent_shown()` | `bool` | Triggers post-actions when a custom consent screen is shown. Must be called when presenting a custom consent screen. Returns `false` if SDK authorization status is not Authorized. |
+        | `authorize_device()` | `AuthorizationStatus` | Checks SDK availability on the device. Required before showing a custom consent screen; optional otherwise. |
+        | `get_uuid()` | `string` | Returns the current SDK UUID, or `null` if SDK is not initialized |
+        | `set_on_sdk_ready_callback(callback)` | `void` | Sets a handler for when the SDK is configured and ready |
+        | `set_on_consent_presented_callback(callback)` | `void` | Sets a handler for when the consent screen is presented |
+        | `set_on_consent_closed_callback(callback)` | `void` | Sets a handler for when the consent screen is dismissed (via close, agree, or disagree) |
+      </Step>
 
-**Methods:**
+      <Step title="Method Details" titleSize="h3">
+        **`init()`**
+        Initializes the SDK. Must be called at app startup. All other methods are accessible after successful initialization. Consent screen is shown on first initialization by default - skip by setting `skip_consent: true`.
 
-| Method | Returns | Description |
-| :--- | :--- | :--- |
-| `init(...)` | `void` | Initializes the SDK. Must be called at app startup. All other methods are accessible after successful initialization. |
-| `opt_out()` | `void` | Disables Bright SDK (e.g. from Settings screen) |
-| `enqueue_opt_out()` | `void` | Enqueues an opt-out action to be executed once the SDK is loaded and configured |
-| `external_opt_in()` | `bool` | Opts in and starts the Bright SDK process if permitted. ⚠️ NOT allowed by default — always use `show_consent()` or consult Bright Data first. Returns `true` if permitted. |
-| `enqueue_external_opt_in()` | `void` | Enqueues an opt-in action once SDK is loaded. Checks authorization status before and after enqueueing. |
-| `show_consent(benefit, agree_btn, disagree_btn, language)` | `bool` | Shows the consent screen (e.g. when user toggles Settings switch to enable SDK) |
-| `get_choice()` | `int` | Returns the user's current choice |
-| `consent_shown()` | `bool` | Triggers post-actions when a custom consent screen is shown. Must be called when presenting a custom consent screen. Returns `false` if SDK authorization status is not Authorized. |
-| `authorize_device()` | `AuthorizationStatus` | Checks SDK availability on the device. Required before showing a custom consent screen; optional otherwise. |
-| `get_uuid()` | `string` | Returns the current SDK UUID, or `null` if SDK is not initialized |
-| `set_on_sdk_ready_callback(callback)` | `void` | Sets a handler for when the SDK is configured and ready |
-| `set_on_consent_presented_callback(callback)` | `void` | Sets a handler for when the consent screen is presented |
-| `set_on_consent_closed_callback(callback)` | `void` | Sets a handler for when the consent screen is dismissed (via close, agree, or disagree) |
+        ```csharp
+        static void init(
+            string benefit,
+            string agree_btn,
+            string disagree_btn,
+            string opt_out_instructions,
+            string appicon,
+            ChoiceCallback on_choice_callback,
+            bool skip_consent = false,
+            string language = null,
+            ConsentColors colors = null,
+            ConsentBackgroundImage background_image = null,
+            ConsentActionInfo opt_in_info = null,
+            ConsentActionInfo opt_out_info = null,
+            ConsentFontsInfo fonts = null,
+            string campaign = null
+        )
+        ```
 
-### Method Details
+        | Parameter | Type | Description |
+        | :--- | :--- | :--- |
+        | `benefit` | `string?` | Benefit text shown on the consent screen |
+        | `agree_btn` | `string` | "Agree" button text |
+        | `disagree_btn` | `string` | "Disagree" button text |
+        | `opt_out_instructions` | `string?` | Instructions for opting out |
+        | `appicon` | `string?` | xcassets name or path of the icon image |
+        | `on_choice_callback` | `ChoiceCallback` | Callback method reference |
+        | `skip_consent` | `bool` | Skip consent screen on init; show later via `show_consent` |
+        | `language` | `string?` | Preferred language (see supported values below) |
+        | `colors` | `ConsentColors?` | Consent screen colors |
+        | `background_image` | `ConsentBackgroundImage?`| Background images for consent screen |
+        | `opt_in_info` | `ConsentActionInfo?` | Opt-in button customization |
+        | `opt_out_info` | `ConsentActionInfo?` | Opt-out button customization |
+        | `fonts` | `ConsentFontsInfo?` | Font overrides for consent screen |
+        | `campaign` | `string?` | Campaign name |
 
-#### `init()`
-Initializes the SDK. Must be called at app startup. All other methods are accessible after successful initialization. Consent screen is shown on first initialization by default - skip by setting `skip_consent: true`.
+        **Supported language values:**
+        `ar_SA`, `de-DE`, `en-US`, `es-ES`, `fa-AF`, `fr-FR`, `he-IL`, `hi-IN`, `it-IT`, `ja-JP`, `ko-KR`, `ms-MY`, `nl-NL`, `pt-PT`, `ro-RO`, `ru-RU`, `th`, `tr-TR`, `vi-VN`, `zh-CN`, `zh-TW`
 
-```csharp
-static void init(
-    string benefit,
-    string agree_btn,
-    string disagree_btn,
-    string opt_out_instructions,
-    string appicon,
-    ChoiceCallback on_choice_callback,
-    bool skip_consent = false,
-    string language = null,
-    ConsentColors colors = null,
-    ConsentBackgroundImage background_image = null,
-    ConsentActionInfo opt_in_info = null,
-    ConsentActionInfo opt_out_info = null,
-    ConsentFontsInfo fonts = null,
-    string campaign = null
-)
-```
+        **`opt_out()`**
+        Disables Bright SDK (e.g. from Settings screen).
+        ```csharp
+        static void opt_out()
+        ```
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `benefit` | `string?` | Benefit text shown on the consent screen |
-| `agree_btn` | `string` | "Agree" button text |
-| `disagree_btn` | `string` | "Disagree" button text |
-| `opt_out_instructions` | `string?` | Instructions for opting out |
-| `appicon` | `string?` | xcassets name or path of the icon image |
-| `on_choice_callback` | `ChoiceCallback` | Callback method reference |
-| `skip_consent` | `bool` | Skip consent screen on init; show later via `show_consent` |
-| `language` | `string?` | Preferred language (see supported values below) |
-| `colors` | `ConsentColors?` | Consent screen colors |
-| `background_image` | `ConsentBackgroundImage?`| Background images for consent screen |
-| `opt_in_info` | `ConsentActionInfo?` | Opt-in button customization |
-| `opt_out_info` | `ConsentActionInfo?` | Opt-out button customization |
-| `fonts` | `ConsentFontsInfo?` | Font overrides for consent screen |
-| `campaign` | `string?` | Campaign name |
+        **`enqueue_opt_out()`**
+        Enqueues an opt-out action to be executed once the SDK is loaded and configured.
+        ```csharp
+        static void enqueue_opt_out()
+        ```
 
-**Supported language values:**
-`ar_SA`, `de-DE`, `en-US`, `es-ES`, `fa-AF`, `fr-FR`, `he-IL`, `hi-IN`, `it-IT`, `ja-JP`, `ko-KR`, `ms-MY`, `nl-NL`, `pt-PT`, `ro-RO`, `ru-RU`, `th`, `tr-TR`, `vi-VN`, `zh-CN`, `zh-TW`
+        **`external_opt_in()`**
+        Opts in and starts the Bright SDK process if permitted.
+        <Warning>
+          **NOT allowed by default.** Always use `show_consent()` or consult Bright Data first.
+        </Warning>
+        Returns `true` if the operation is permitted by the authorization device.
+        ```csharp
+        static bool external_opt_in()
+        ```
 
-#### `opt_out()`
-Disables Bright SDK (e.g. from Settings screen).
-```csharp
-static void opt_out()
-```
+        **`enqueue_external_opt_in()`**
+        Enqueues an opt-in action to be executed once the SDK is loaded and configured. Also checks authorization status before and after enqueueing.
+        ```csharp
+        static void enqueue_external_opt_in()
+        ```
 
-#### `enqueue_opt_out()`
-Enqueues an opt-out action to be executed once the SDK is loaded and configured.
-```csharp
-static void enqueue_opt_out()
-```
+        **`show_consent()`**
+        Shows the consent screen (e.g. when the user toggles the Settings switch to enable SDK).
+        ```csharp
+        static bool show_consent(string benefit, string agree_btn, string disagree_btn, string language)
+        ```
 
-#### `external_opt_in()`
-Opts in and starts the Bright SDK process if permitted.
-<Warning>
-  **NOT allowed by default.** Always use `show_consent()` or consult Bright Data first.
-</Warning>
-Returns `true` if the operation is permitted by the authorization device.
-```csharp
-static bool external_opt_in()
-```
+        **`get_choice()`**
+        Returns the user's current choice.
+        ```csharp
+        static int get_choice()
+        ```
 
-#### `enqueue_external_opt_in()`
-Enqueues an opt-in action to be executed once the SDK is loaded and configured. Also checks authorization status before and after enqueueing.
-```csharp
-static void enqueue_external_opt_in()
-```
+        **`consent_shown()`**
+        Triggers post-actions when a custom consent screen is shown. Must be called when presenting a custom consent screen. Returns `false` if SDK authorization status is not Authorized.
+        ```csharp
+        static bool consent_shown()
+        ```
 
-#### `show_consent()`
-Shows the consent screen (e.g. when the user toggles the Settings switch to enable SDK).
-```csharp
-static bool show_consent(string benefit, string agree_btn, string disagree_btn, string language)
-```
+        **`authorize_device()`**
+        Checks SDK availability on the device. Required before showing a custom consent screen; optional otherwise.
+        ```csharp
+        static BrdsdkBridge.AuthorizationStatus authorize_device()
+        ```
 
-#### `get_choice()`
-Returns the user's current choice.
-```csharp
-static int get_choice()
-```
+        **`get_uuid()`**
+        Returns the current SDK UUID, or `null` if SDK is not initialized.
+        ```csharp
+        static string get_uuid()
+        ```
 
-#### `consent_shown()`
-Triggers post-actions when a custom consent screen is shown. Must be called when presenting a custom consent screen. Returns `false` if SDK authorization status is not Authorized.
-```csharp
-static bool consent_shown()
-```
+        **`set_on_sdk_ready_callback()`**
+        Sets a handler for when the SDK is configured and ready.
+        ```csharp
+        static void set_on_sdk_ready_callback(EmptyCallback callback)
+        ```
 
-#### `authorize_device()`
-Checks SDK availability on the device. Required before showing a custom consent screen; optional otherwise.
-```csharp
-static BrdsdkBridge.AuthorizationStatus authorize_device()
-```
+        **`set_on_consent_presented_callback()`**
+        Sets a handler for when the consent screen is presented.
+        ```csharp
+        static void set_on_consent_presented_callback(EmptyCallback callback)
+        ```
 
-#### `get_uuid()`
-Returns the current SDK UUID, or `null` if SDK is not initialized.
-```csharp
-static string get_uuid()
-```
+        **`set_on_consent_closed_callback()`**
+        Sets a handler for when the consent screen is dismissed (via close, agree, or disagree).
+        ```csharp
+        static void set_on_consent_closed_callback(EmptyCallback callback)
+        ```
+      </Step>
 
-#### `set_on_sdk_ready_callback()`
-Sets a handler for when the SDK is configured and ready.
-```csharp
-static void set_on_sdk_ready_callback(EmptyCallback callback)
-```
+      <Step title="Enums & Classes (Unity)" titleSize="h3">
+        **Enum: `BrdsdkBridge.AuthorizationStatus`**
 
-#### `set_on_consent_presented_callback()`
-Sets a handler for when the consent screen is presented.
-```csharp
-static void set_on_consent_presented_callback(EmptyCallback callback)
-```
+        | Value | Description |
+        | :--- | :--- |
+        | `Authorized` | SDK can be used with either SDK's or custom consent screen |
+        | `SDKNotInitialized` | SDK has not been initialized |
+        | `ParentControlEnabled` | Parental controls are enabled — do not use SDK |
+        | `OnlySDKConsent` | Only the SDK's built-in consent screen may be used; `external_opt_in` is not allowed |
+        | `PlatformNotSupported` | Authorization method called on unsupported platform |
 
-#### `set_on_consent_closed_callback()`
-Sets a handler for when the consent screen is dismissed (via close, agree, or disagree).
-```csharp
-static void set_on_consent_closed_callback(EmptyCallback callback)
-```
+        **Class: `ConsentColors`**
 
-### Enums & Classes (Unity)
+        | Property | Type | Description |
+        | :--- | :--- | :--- |
+        | `backgroundColor` | `Int32` | Consent window background color |
+        | `titleColor` | `Int32` | Title text color |
+        | `consentMessageColor` | `Int32` | Main message text color |
+        | `consentLinksColor` | `Int32` | Main message link color |
+        | `privacyColor` | `Int32` | Privacy/license text color |
+        | `privacyLinksColor` | `Int32` | Privacy/license link color |
+        | `iconsForegroundColor` | `Int32` | Icon foreground color |
+        | `iconsBackgroundColor` | `Int32` | Icon background color |
 
-**Enum: `BrdsdkBridge.AuthorizationStatus`**
+        **Class: `ConsentBackgroundImage`**
 
-| Value | Description |
-| :--- | :--- |
-| `Authorized` | SDK can be used with either SDK's or custom consent screen |
-| `SDKNotInitialized` | SDK has not been initialized |
-| `ParentControlEnabled` | Parental controls are enabled — do not use SDK |
-| `OnlySDKConsent` | Only the SDK's built-in consent screen may be used; `external_opt_in` is not allowed |
-| `PlatformNotSupported` | Authorization method called on unsupported platform |
+        | Property | Type | Description |
+        | :--- | :--- | :--- |
+        | `portraitImage` | `String` | xcassets name or file path for portrait image |
+        | `landscapeImage` | `String?` | xcassets name or file path for landscape image. Falls back to portrait if null |
+        | `scaleMode` | `ConsentBackgroundImage.ScaleMode` | Scale mode for the image view |
 
-**Class: `ConsentColors`**
+        **Enum: `ConsentBackgroundImage.ScaleMode`**
 
-| Property | Type | Description |
-| :--- | :--- | :--- |
-| `backgroundColor` | `Int32` | Consent window background color |
-| `titleColor` | `Int32` | Title text color |
-| `consentMessageColor` | `Int32` | Main message text color |
-| `consentLinksColor` | `Int32` | Main message link color |
-| `privacyColor` | `Int32` | Privacy/license text color |
-| `privacyLinksColor` | `Int32` | Privacy/license link color |
-| `iconsForegroundColor` | `Int32` | Icon foreground color |
-| `iconsBackgroundColor` | `Int32` | Icon background color |
+        | Value | Description |
+        | :--- | :--- |
+        | `ScaleToFill` | Scales to fill, may change aspect ratio |
+        | `ScaleAspectFit` | Scales to fit, maintains aspect ratio, transparent areas remain |
+        | `ScaleAspectFill`| Scales to fill, maintains aspect ratio, may clip content |
 
-**Class: `ConsentBackgroundImage`**
+        **Class: `ConsentActionInfo`**
 
-| Property | Type | Description |
-| :--- | :--- | :--- |
-| `portraitImage` | `String` | xcassets name or file path for portrait image |
-| `landscapeImage` | `String?` | xcassets name or file path for landscape image. Falls back to portrait if null |
-| `scaleMode` | `ConsentBackgroundImage.ScaleMode` | Scale mode for the image view |
+        ```csharp
+        public ConsentActionInfo(
+            string _backgroundImage,
+            string _textImage,
+            Int32? _backgroundColor,
+            Int32? _textColor
+        )
+        ```
 
-**Enum: `ConsentBackgroundImage.ScaleMode`**
+        | Parameter | Type | Description |
+        | :--- | :--- | :--- |
+        | `_backgroundImage`| `string?` | Path or xcassets name for button background. Uses `backgroundColor` if null |
+        | `_textImage` | `string?` | Path or xcassets name for button title image. Uses `textColor` if null |
+        | `_backgroundColor`| `Int32?` | Button background color |
+        | `_textColor` | `Int32?` | Button text color |
 
-| Value | Description |
-| :--- | :--- |
-| `ScaleToFill` | Scales to fill, may change aspect ratio |
-| `ScaleAspectFit` | Scales to fit, maintains aspect ratio, transparent areas remain |
-| `ScaleAspectFill`| Scales to fill, maintains aspect ratio, may clip content |
+        **Class: `ConsentFontsInfo`**
+        <Warning>SDK has limitations for font sizes.</Warning>
 
-**Class: `ConsentActionInfo`**
+        | Property | Type | Description |
+        | :--- | :--- | :--- |
+        | `titleText` | `ConsentFont` | Font for consent title |
+        | `mainText` | `ConsentFont` | Font for main description |
+        | `licenseText` | `ConsentFont` | Font for license text |
+        | `iconsText` | `ConsentFont` | Font for under-icon texts |
+        | `buttonsText` | `ConsentFont` | Font for button texts |
 
-```csharp
-public ConsentActionInfo(
-    string _backgroundImage,
-    string _textImage,
-    Int32? _backgroundColor,
-    Int32? _textColor
-)
-```
+        **Class: `ConsentFontsInfo.ConsentFont`**
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `_backgroundImage`| `string?` | Path or xcassets name for button background. Uses `backgroundColor` if null |
-| `_textImage` | `string?` | Path or xcassets name for button title image. Uses `textColor` if null |
-| `_backgroundColor`| `Int32?` | Button background color |
-| `_textColor` | `Int32?` | Button text color |
+        ```csharp
+        public ConsentFont(string _nameOrPath, float _size)
+        ```
 
-**Class: `ConsentFontsInfo`**
-<Warning>SDK has limitations for font sizes.</Warning>
+        | Parameter | Type | Description |
+        | :--- | :--- | :--- |
+        | `_nameOrPath` | `string` | Registered font name or path to font file |
+        | `size` | `float` | Font size |
+      </Step>
+    </Steps>
+  </Step>
 
-| Property | Type | Description |
-| :--- | :--- | :--- |
-| `titleText` | `ConsentFont` | Font for consent title |
-| `mainText` | `ConsentFont` | Font for main description |
-| `licenseText` | `ConsentFont` | Font for license text |
-| `iconsText` | `ConsentFont` | Font for under-icon texts |
-| `buttonsText` | `ConsentFont` | Font for button texts |
+  <Step title="Part 2: Swift / Objective-C" titleSize="h2">
+    <Info>
+      The APIs are identical for Swift and Objective-C - they differ in syntax only. For Objective-C, the `init` call must be made on a `brd_api` instance: `[[brd_api alloc] init...]`
+    </Info>
 
-**Class: `ConsentFontsInfo.ConsentFont`**
+    <Steps>
+      <Step title="Class: brd_api" titleSize="h3">
+        **Properties:**
 
-```csharp
-public ConsentFont(string _nameOrPath, float _size)
-```
+        | Property | Type | Description |
+        | :--- | :--- | :--- |
+        | `onConsentPresented` | `(() -> Void)?` | Handler when consent screen is presented |
+        | `onConsentClosed` | `(() -> Void)?` | Handler when consent screen is dismissed |
+        | `onSDKReady` | `(() -> Void)?` | Handler when SDK is configured and ready |
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `_nameOrPath` | `string` | Registered font name or path to font file |
-| `size` | `float` | Font size |
+        **Methods:**
 
-<br />
+        | Method | Returns | Description |
+        | :--- | :--- | :--- |
+        | `init(...)` | — | Initializes the SDK. Throws `brd_api.api_error`. |
+        | `opt_out()` | `void` | Disables Bright SDK (e.g. from Settings screen) |
+        | `enqueue_opt_out()` | `void` | Enqueues opt-out to be executed once SDK is loaded and configured |
+        | `external_opt_in()` | `Bool` | Opts in and starts the Bright SDK process if permitted. ⚠️ NOT allowed by default — always use `show_consent()` or consult Bright Data first. Throws `brd_api.api_error`. |
+        | `enqueue_external_opt_in()` | `void` | Enqueues opt-in action once SDK is loaded. Checks authorization status before and after enqueueing. |
+        | `show_consent(_:benefit:agree_btn:disagree_btn:language:)` | `Bool` | Shows the consent screen. Returns `true` if SDK is initialized and child control is disabled. Result delivered via `on_choice_change` callback. |
+        | `get_choice()` | `Int` | Returns the user's current choice |
+        | `consent_shown()` | `Bool` | Triggers post-actions when a custom consent screen is shown. Returns `false` if authorization status is not authorized. |
+        | `authorizeDevice()` | `AuthorizationStatus` | Checks SDK availability. Required before showing a custom consent screen; optional otherwise. |
+        | `get_uuid()` | `String?` | Returns current SDK UUID, or `nil` if SDK is not initialized |
+      </Step>
 
-## Part 2: Swift / Objective-C
+      <Step title="Method Details" titleSize="h3">
+        **`init()`**
+        Initializes the SDK. Throws `brd_api.api_error`.
 
-<Info>
-  The APIs are identical for Swift and Objective-C - they differ in syntax only. For Objective-C, the `init` call must be made on a `brd_api` instance: `[[brd_api alloc] init...]`
-</Info>
+        ```swift
+        init(
+            benefit: String? = nil,
+            agree_btn: String? = nil,       // Default: "I Agree"
+            disagree_btn: String? = nil,    // Default: "I Disagree"
+            opt_out_instructions: String? = nil,
+            appicon: UIImage? = nil,
+            cwd _cwd: URL? = nil,
+            sys_app_id: String? = nil,
+            language: String? = nil,
+            colors: ColorSettings? = nil,
+            background_image: ConsentBackgroundImage? = nil,
+            opt_in_info: ConsentActionInfo? = nil,
+            opt_out_info: ConsentActionInfo? = nil,
+            fonts: ConsentFontsInfo? = nil,
+            skip_consent: Bool,
+            campaign: String?,
+            on_choice_change: ((Int)->Void)? = nil
+        ) throws
+        ```
 
-### Class: `brd_api`
+        | Parameter | Type | Description |
+        | :--- | :--- | :--- |
+        | `benefit` | `String?` | Benefit text prefix. Default: `"To support <app_name>"` |
+        | `agree_btn` | `String?` | "Agree" button text. Default: `"I Agree"` |
+        | `disagree_btn` | `String?` | "Disagree" button text. Default: `"I Disagree"` |
+        | `opt_out_instructions` | `String?` | Opt-out instructions text |
+        | `appicon` | `UIImage?` | Icon image for consent screen |
+        | `language` | `String?` | Preferred language (same values as Unity — see above) |
+        | `colors` | `ColorSettings?`| Color settings for consent screen |
+        | `background_image` | `ConsentBackgroundImage?` | Background images for consent screen |
+        | `opt_in_info` | `ConsentActionInfo?` | Opt-in button customization |
+        | `opt_out_info` | `ConsentActionInfo?` | Opt-out button customization |
+        | `fonts` | `ConsentFontsInfo?` | Font overrides |
+        | `skip_consent` | `Bool` | Skip consent on init; show later via `show_consent` |
+        | `campaign` | `String?` | Campaign name |
+        | `on_choice_change` | `((Int)->Void)?` | Callback for choice updates |
 
-**Properties:**
+        **`opt_out()`**
+        Disables Bright SDK (e.g. from Settings screen).
+        ```swift
+        static func opt_out()
+        ```
 
-| Property | Type | Description |
-| :--- | :--- | :--- |
-| `onConsentPresented` | `(() -> Void)?` | Handler when consent screen is presented |
-| `onConsentClosed` | `(() -> Void)?` | Handler when consent screen is dismissed |
-| `onSDKReady` | `(() -> Void)?` | Handler when SDK is configured and ready |
+        **`enqueue_opt_out()`**
+        Enqueues opt-out to be executed once the SDK is loaded and configured.
+        ```swift
+        static func enqueue_opt_out()
+        ```
 
-**Methods:**
+        **`external_opt_in()`**
+        Opts in and starts the Bright SDK process if permitted. 
+        <Warning>
+          **NOT allowed by default.** Always use `show_consent()` or consult Bright Data first.
+        </Warning>
+        Returns `true` if permitted. Throws `brd_api.api_error`.
+        ```swift
+        public static func external_opt_in() throws
+        ```
 
-| Method | Returns | Description |
-| :--- | :--- | :--- |
-| `init(...)` | — | Initializes the SDK. Throws `brd_api.api_error`. |
-| `opt_out()` | `void` | Disables Bright SDK (e.g. from Settings screen) |
-| `enqueue_opt_out()` | `void` | Enqueues opt-out to be executed once SDK is loaded and configured |
-| `external_opt_in()` | `Bool` | Opts in and starts the Bright SDK process if permitted. ⚠️ NOT allowed by default — always use `show_consent()` or consult Bright Data first. Throws `brd_api.api_error`. |
-| `enqueue_external_opt_in()` | `void` | Enqueues opt-in action once SDK is loaded. Checks authorization status before and after enqueueing. |
-| `show_consent(_:benefit:agree_btn:disagree_btn:language:)` | `Bool` | Shows the consent screen. Returns `true` if SDK is initialized and child control is disabled. Result delivered via `on_choice_change` callback. |
-| `get_choice()` | `Int` | Returns the user's current choice |
-| `consent_shown()` | `Bool` | Triggers post-actions when a custom consent screen is shown. Returns `false` if authorization status is not authorized. |
-| `authorizeDevice()` | `AuthorizationStatus` | Checks SDK availability. Required before showing a custom consent screen; optional otherwise. |
-| `get_uuid()` | `String?` | Returns current SDK UUID, or `nil` if SDK is not initialized |
+        **`enqueue_external_opt_in()`**
+        Enqueues opt-in action once the SDK is loaded. Checks authorization status before and after enqueueing.
+        ```swift
+        static func enqueue_external_opt_in()
+        ```
 
-### Method Details
+        **`show_consent()`**
+        Shows the consent screen (e.g. when user activates the Settings toggle). Returns `true` if SDK is initialized and child control is disabled. Result delivered via `on_choice_change` callback.
+        ```swift
+        static func show_consent(_ parent: UIViewController?, benefit: String?,
+                                 agree_btn: String?, disagree_btn: String?, language: String?) -> Bool
+        ```
 
-#### `init()`
-Initializes the SDK. Throws `brd_api.api_error`.
+        **`get_choice()`**
+        Returns the user's current choice.
+        ```swift
+        static func get_choice() -> Int
+        ```
 
-```swift
-init(
-    benefit: String? = nil,
-    agree_btn: String? = nil,       // Default: "I Agree"
-    disagree_btn: String? = nil,    // Default: "I Disagree"
-    opt_out_instructions: String? = nil,
-    appicon: UIImage? = nil,
-    cwd _cwd: URL? = nil,
-    sys_app_id: String? = nil,
-    language: String? = nil,
-    colors: ColorSettings? = nil,
-    background_image: ConsentBackgroundImage? = nil,
-    opt_in_info: ConsentActionInfo? = nil,
-    opt_out_info: ConsentActionInfo? = nil,
-    fonts: ConsentFontsInfo? = nil,
-    skip_consent: Bool,
-    campaign: String?,
-    on_choice_change: ((Int)->Void)? = nil
-) throws
-```
+        **`consent_shown()`**
+        Triggers post-actions when a custom consent screen is shown. Must be called when presenting a custom consent screen. Returns `false` if authorization status is not authorized.
+        ```swift
+        static func consent_shown() -> Bool
+        ```
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `benefit` | `String?` | Benefit text prefix. Default: `"To support <app_name>"` |
-| `agree_btn` | `String?` | "Agree" button text. Default: `"I Agree"` |
-| `disagree_btn` | `String?` | "Disagree" button text. Default: `"I Disagree"` |
-| `opt_out_instructions` | `String?` | Opt-out instructions text |
-| `appicon` | `UIImage?` | Icon image for consent screen |
-| `language` | `String?` | Preferred language (same values as Unity — see above) |
-| `colors` | `ColorSettings?`| Color settings for consent screen |
-| `background_image` | `ConsentBackgroundImage?` | Background images for consent screen |
-| `opt_in_info` | `ConsentActionInfo?` | Opt-in button customization |
-| `opt_out_info` | `ConsentActionInfo?` | Opt-out button customization |
-| `fonts` | `ConsentFontsInfo?` | Font overrides |
-| `skip_consent` | `Bool` | Skip consent on init; show later via `show_consent` |
-| `campaign` | `String?` | Campaign name |
-| `on_choice_change` | `((Int)->Void)?` | Callback for choice updates |
+        **`authorizeDevice()`**
+        Checks SDK availability. Required before showing a custom consent screen; optional otherwise.
+        ```swift
+        static func authorizeDevice() -> AuthorizationStatus
+        ```
 
-#### `opt_out()`
-Disables Bright SDK (e.g. from Settings screen).
-```swift
-static func opt_out()
-```
+        **Usage example:**
+        ```swift
+        let authStatus = brd_api.authorizeDevice()
 
-#### `enqueue_opt_out()`
-Enqueues opt-out to be executed once the SDK is loaded and configured.
-```swift
-static func enqueue_opt_out()
-```
-
-#### `external_opt_in()`
-Opts in and starts the Bright SDK process if permitted. 
-<Warning>
-  **NOT allowed by default.** Always use `show_consent()` or consult Bright Data first.
-</Warning>
-Returns `true` if permitted. Throws `brd_api.api_error`.
-```swift
-public static func external_opt_in() throws
-```
-
-#### `enqueue_external_opt_in()`
-Enqueues opt-in action once the SDK is loaded. Checks authorization status before and after enqueueing.
-```swift
-static func enqueue_external_opt_in()
-```
-
-#### `show_consent()`
-Shows the consent screen (e.g. when user activates the Settings toggle). Returns `true` if SDK is initialized and child control is disabled. Result delivered via `on_choice_change` callback.
-```swift
-static func show_consent(_ parent: UIViewController?, benefit: String?,
-                         agree_btn: String?, disagree_btn: String?, language: String?) -> Bool
-```
-
-#### `get_choice()`
-Returns the user's current choice.
-```swift
-static func get_choice() -> Int
-```
-
-#### `consent_shown()`
-Triggers post-actions when a custom consent screen is shown. Must be called when presenting a custom consent screen. Returns `false` if authorization status is not authorized.
-```swift
-static func consent_shown() -> Bool
-```
-
-#### `authorizeDevice()`
-Checks SDK availability. Required before showing a custom consent screen; optional otherwise.
-```swift
-static func authorizeDevice() -> AuthorizationStatus
-```
-
-**Usage example:**
-```swift
-let authStatus = brd_api.authorizeDevice()
-
-switch authStatus {
-    case .sdkNotInitialized:     break // initialize SDK first
-    case .parentControlEnabled:  break // do not use SDK
-    case .authorized:
-        if Feature.customConsent {
-            // show your own consent screen
-        } else {
-            fallthrough // show SDK's consent screen
+        switch authStatus {
+            case .sdkNotInitialized:     break // initialize SDK first
+            case .parentControlEnabled:  break // do not use SDK
+            case .authorized:
+                if Feature.customConsent {
+                    // show your own consent screen
+                } else {
+                    fallthrough // show SDK's consent screen
+                }
         }
-}
-```
+        ```
 
-#### `get_uuid()`
-Returns current SDK UUID, or `nil` if SDK is not initialized.
-```swift
-static func get_uuid() -> String?
-```
+        **`get_uuid()`**
+        Returns current SDK UUID, or `nil` if SDK is not initialized.
+        ```swift
+        static func get_uuid() -> String?
+        ```
+      </Step>
 
-### Enums & Classes (Swift / Obj-C)
+      <Step title="Enums & Classes (Swift / Obj-C)" titleSize="h3">
+        **Enum: `Choice`**
 
-**Enum: `Choice`**
+        | Value | Description |
+        | :--- | :--- |
+        | `none` | Consent screen has not yet been shown |
+        | `peer` | User accepted the consent screen |
+        | `notPeer` | User declined the consent screen |
 
-| Value | Description |
-| :--- | :--- |
-| `none` | Consent screen has not yet been shown |
-| `peer` | User accepted the consent screen |
-| `notPeer` | User declined the consent screen |
+        **Enum: `brd_api.AuthorizationStatus`**
 
-**Enum: `brd_api.AuthorizationStatus`**
+        | Value | Description |
+        | :--- | :--- |
+        | `Authorized` | SDK can be used with either SDK's or custom consent screen |
+        | `SDKNotInitialized` | SDK has not been initialized |
+        | `ParentControlEnabled` | Parental controls are enabled - do not use SDK |
+        | `PlatformNotSupported` | Authorization method called on unsupported platform |
 
-| Value | Description |
-| :--- | :--- |
-| `Authorized` | SDK can be used with either SDK's or custom consent screen |
-| `SDKNotInitialized` | SDK has not been initialized |
-| `ParentControlEnabled` | Parental controls are enabled - do not use SDK |
-| `PlatformNotSupported` | Authorization method called on unsupported platform |
+        **Enum: `brd_api.api_error`**
 
-**Enum: `brd_api.api_error`**
+        | Case | Description |
+        | :--- | :--- |
+        | `init_error(String)` | Non-categorized initialization error |
+        | `opt_in_not_allowed` | Calling `*opt_in` is not allowed — use SDK's consent screen instead |
+        | `sdk_not_initialized` | Method called before SDK was initialized |
+        | `enabled_parent_control` | Parental controls enabled — do not use SDK |
 
-| Case | Description |
-| :--- | :--- |
-| `init_error(String)` | Non-categorized initialization error |
-| `opt_in_not_allowed` | Calling `*opt_in` is not allowed — use SDK's consent screen instead |
-| `sdk_not_initialized` | Method called before SDK was initialized |
-| `enabled_parent_control` | Parental controls enabled — do not use SDK |
+        **Class: `ConsentBackgroundImage`**
 
-**Class: `ConsentBackgroundImage`**
+        | Property | Type | Description |
+        | :--- | :--- | :--- |
+        | `portraitImage` | `UIImage` | Image for portrait orientation |
+        | `landscapeImage` | `UIImage` | Image for landscape orientation |
+        | `scaleMode` | `UIView.ContentMode` | Scale mode for image view |
 
-| Property | Type | Description |
-| :--- | :--- | :--- |
-| `portraitImage` | `UIImage` | Image for portrait orientation |
-| `landscapeImage` | `UIImage` | Image for landscape orientation |
-| `scaleMode` | `UIView.ContentMode` | Scale mode for image view |
+        **Constructors:**
+        ```swift
+        // With UIImage instances:
+        init(portrait: UIImage, landscape: UIImage? = nil, scaleMode: UIView.ContentMode = .scaleAspectFill)
 
-**Constructors:**
-```swift
-// With UIImage instances:
-init(portrait: UIImage, landscape: UIImage? = nil, scaleMode: UIView.ContentMode = .scaleAspectFill)
+        // With xcassets names:
+        init?(portraitName: String, landscapeName: String? = nil, scaleMode: UIView.ContentMode = .scaleAspectFill, in bundle: Bundle = .main)
+        ```
 
-// With xcassets names:
-init?(portraitName: String, landscapeName: String? = nil, scaleMode: UIView.ContentMode = .scaleAspectFill, in bundle: Bundle = .main)
-```
+        | Parameter | Type | Description |
+        | :--- | :--- | :--- |
+        | `portrait` / `portraitName` | `UIImage` / `String` | Portrait image or xcassets name |
+        | `landscape` / `landscapeName` | `UIImage?` / `String?`| Landscape image or xcassets name. Falls back to portrait if nil |
+        | `scaleMode` | `UIView.ContentMode` | Scale mode. Use `.scaleAspectFit` or `.scaleAspectFill` |
+        | `bundle` | `Bundle` | Bundle containing xcassets |
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `portrait` / `portraitName` | `UIImage` / `String` | Portrait image or xcassets name |
-| `landscape` / `landscapeName` | `UIImage?` / `String?`| Landscape image or xcassets name. Falls back to portrait if nil |
-| `scaleMode` | `UIView.ContentMode` | Scale mode. Use `.scaleAspectFit` or `.scaleAspectFill` |
-| `bundle` | `Bundle` | Bundle containing xcassets |
+        **Class: `ConsentActionInfo`**
 
-**Class: `ConsentActionInfo`**
+        | Property | Type | Description |
+        | :--- | :--- | :--- |
+        | `backgroundImage` | `UIImage?` | Button background image. Uses background color if nil |
+        | `textImage` | `UIImage?` | Button title image. Uses title text if nil |
+        | `backgroundColor` | `UIColor?` | Background color. Falls back to `ColorSettings.button_color` if nil |
+        | `textColor` | `UIColor?` | Text color. Falls back to `ColorSettings.button_color` if nil |
 
-| Property | Type | Description |
-| :--- | :--- | :--- |
-| `backgroundImage` | `UIImage?` | Button background image. Uses background color if nil |
-| `textImage` | `UIImage?` | Button title image. Uses title text if nil |
-| `backgroundColor` | `UIColor?` | Background color. Falls back to `ColorSettings.button_color` if nil |
-| `textColor` | `UIColor?` | Text color. Falls back to `ColorSettings.button_color` if nil |
+        **Constructors:**
+        ```swift
+        // With UIImage instances:
+        init(backgroundImage: UIImage? = nil, textImage: UIImage? = nil, backgroundColor: UIColor? = nil, textColor: UIColor? = nil)
 
-**Constructors:**
-```swift
-// With UIImage instances:
-init(backgroundImage: UIImage? = nil, textImage: UIImage? = nil, backgroundColor: UIColor? = nil, textColor: UIColor? = nil)
+        // With xcassets names:
+        init(backgroundName: String?, textName: String? = nil, in bundle: Bundle = .main)
+        ```
 
-// With xcassets names:
-init(backgroundName: String?, textName: String? = nil, in bundle: Bundle = .main)
-```
+        **Class: `ColorSettings`**
 
-**Class: `ColorSettings`**
+        | Property | Type | Description |
+        | :--- | :--- | :--- |
+        | `background_color` | `UIColor?` | Consent window background color |
+        | `title_color` | `UIColor?` | Title text color |
+        | `consent_text_color` | `UIColor?` | Main message text color |
+        | `consent_links_color` | `UIColor?` | Main message link color |
+        | `privacy_text_color` | `UIColor?` | Privacy/license text color |
+        | `privacy_links_color` | `UIColor?` | Privacy/license link color |
+        | `qr_foreground_color` | `UIColor?` | QR code foreground color *(tvOS only)* |
+        | `qr_background_color` | `UIColor?` | QR code background color *(tvOS only)* |
+        | `icons_foreground_color`| `UIColor?` | Icon foreground color |
+        | `icons_background_color`| `UIColor?` | Icon background color |
 
-| Property | Type | Description |
-| :--- | :--- | :--- |
-| `background_color` | `UIColor?` | Consent window background color |
-| `title_color` | `UIColor?` | Title text color |
-| `consent_text_color` | `UIColor?` | Main message text color |
-| `consent_links_color` | `UIColor?` | Main message link color |
-| `privacy_text_color` | `UIColor?` | Privacy/license text color |
-| `privacy_links_color` | `UIColor?` | Privacy/license link color |
-| `qr_foreground_color` | `UIColor?` | QR code foreground color *(tvOS only)* |
-| `qr_background_color` | `UIColor?` | QR code background color *(tvOS only)* |
-| `icons_foreground_color`| `UIColor?` | Icon foreground color |
-| `icons_background_color`| `UIColor?` | Icon background color |
+        **Constructor:**
+        ```swift
+        init(background_color: UIColor? = nil, title_color: UIColor? = nil,
+             consent_text_color: UIColor? = nil, consent_links_color: UIColor? = nil,
+             privacy_text_color: UIColor? = nil, privacy_links_color: UIColor? = nil,
+             qr_foreground_color: UIColor? = nil, qr_background_color: UIColor? = nil,
+             icons_foreground_color: UIColor? = nil, icons_background_color: UIColor? = nil)
+        ```
 
-**Constructor:**
-```swift
-init(background_color: UIColor? = nil, title_color: UIColor? = nil,
-     consent_text_color: UIColor? = nil, consent_links_color: UIColor? = nil,
-     privacy_text_color: UIColor? = nil, privacy_links_color: UIColor? = nil,
-     qr_foreground_color: UIColor? = nil, qr_background_color: UIColor? = nil,
-     icons_foreground_color: UIColor? = nil, icons_background_color: UIColor? = nil)
-```
+        **Class: `ConsentFontsInfo`**
+        <Warning>SDK has limitations for font sizes.</Warning>
 
-**Class: `ConsentFontsInfo`**
-<Warning>SDK has limitations for font sizes.</Warning>
+        | Property | Type | Description |
+        | :--- | :--- | :--- |
+        | `titleText` | `UIFont?` | Font for consent title |
+        | `mainText` | `UIFont?` | Font for main descriptions |
+        | `licenseText` | `UIFont?` | Font for license text |
+        | `iconsText` | `UIFont?` | Font for under-icon texts |
+        | `buttonsText` | `UIFont?` | Font for button texts |
 
-| Property | Type | Description |
-| :--- | :--- | :--- |
-| `titleText` | `UIFont?` | Font for consent title |
-| `mainText` | `UIFont?` | Font for main descriptions |
-| `licenseText` | `UIFont?` | Font for license text |
-| `iconsText` | `UIFont?` | Font for under-icon texts |
-| `buttonsText` | `UIFont?` | Font for button texts |
+        **Constructor:**
+        ```swift
+        init(titleText: UIFont? = nil, mainText: UIFont? = nil,
+             licenseText: UIFont? = nil, iconsText: UIFont? = nil,
+             buttonsText: UIFont? = nil)
+        ```
 
-**Constructor:**
-```swift
-init(titleText: UIFont? = nil, mainText: UIFont? = nil,
-     licenseText: UIFont? = nil, iconsText: UIFont? = nil,
-     buttonsText: UIFont? = nil)
-```
+        **Instance Methods** *(all return `Self` for chaining; all warn on invalid font; all subject to SDK size limits):*
 
-**Instance Methods** *(all return `Self` for chaining; all warn on invalid font; all subject to SDK size limits):*
+        | Method | Description |
+        | :--- | :--- |
+        | `setTitleText(withNameOrPath:size:)` | Override title font by name or file path |
+        | `setMainText(withNameOrPath:size:)` | Override main text font by name or file path |
+        | `setLicenseText(withNameOrPath:size:)` | Override license text font by name or file path |
+        | `setIconsText(withNameOrPath:size:)` | Override under-icons text font by name or file path |
+        | `setButtonsText(withNameOrPath:size:)` | Override buttons font by name or file path |
 
-| Method | Description |
-| :--- | :--- |
-| `setTitleText(withNameOrPath:size:)` | Override title font by name or file path |
-| `setMainText(withNameOrPath:size:)` | Override main text font by name or file path |
-| `setLicenseText(withNameOrPath:size:)` | Override license text font by name or file path |
-| `setIconsText(withNameOrPath:size:)` | Override under-icons text font by name or file path |
-| `setButtonsText(withNameOrPath:size:)` | Override buttons font by name or file path |
-
-**Method signature:**
-```swift
-func set<Element>Text(withNameOrPath nameOrPath: String, size: CGFloat) -> Self
-```
+        **Method signature:**
+        ```swift
+        func set<Element>Text(withNameOrPath nameOrPath: String, size: CGFloat) -> Self
+        ```
+      </Step>
+    </Steps>
+  </Step>
+</Steps>
