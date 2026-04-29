@@ -16,420 +16,552 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
 - Unity Editor (latest recommended).
 - Android build support installed in Unity.
 
-### Important Notes
+<Steps>
+  <Step title="Important Notes" titleSize="h3">
+    - Users must **always** voluntarily decide to opt in after seeing the consent screen, and must **always** have an easy way to opt out.
+    - Bright Data reviews SDK integration after initial release and regularly thereafter. **Your account will be terminated if you violate the guidelines in this document**.
+    - Bright Data recommends offering value in exchange for opting in (e.g., fewer ads, bonus coins, premium features). However, simply asking for user support is also acceptable.
+    - **Do not upload your APK with Bright SDK to the Google Play Store without prior approval.**
+  </Step>
 
-- Users must **always** voluntarily decide to opt in after seeing the consent screen, and must **always** have an easy way to opt out.
-- Bright Data reviews SDK integration after initial release and regularly thereafter. **Your account will be terminated if you violate the guidelines in this document**.
-- Bright Data recommends offering value in exchange for opting in (e.g., fewer ads, bonus coins, premium features). However, simply asking for user support is also acceptable.
-- **Do not upload your APK with Bright SDK to the Google Play Store without prior approval.**
+  <Step title="Add the Android AAR File" titleSize="h3">
+    1. In the **Assets** folder, create a sub-folder named `Plugins` and inside it a sub-folder named `Android`:
+       ```text
+       Assets > Plugins > Android
+       ```
+    2. Drag the `bright_sdk.aar` file into the `Android` folder
 
-### Step 1: Add the Android AAR File
+    <img
+      src="/integration-guides/image/unity_integration_guide_1.png"
+      alt="Alt text"
+      width="400"
+    />
+  </Step>
 
-1. In the **Assets** folder, create a sub-folder named `Plugins` and inside it a sub-folder named `Android`:
-   ```text
-   Assets > Plugins > Android
-   ```
-2. Drag the `bright_sdk.aar` file into the `Android` folder
+  <Step title="Add Main Gradle and Gradle Properties Files" titleSize="h3">
+    Enable the following options in Unity:
 
-<img
-  src="/integration-guides/image/unity_integration_guide_1.png"
-  alt="Alt text"
-  width="400"
-/>
+    - **Editor → Player → Publishing Settings → Build → Custom Main Gradle Template**
+    - **Editor → Player → Publishing Settings → Build → Custom Gradle Properties Template**
 
-### Step 2: Add Main Gradle and Gradle Properties Files
+    This will create the following files in `Assets > Plugins > Android`:
 
-Enable the following options in Unity:
+    - `mainTemplate.gradle`
+    - `gradleTemplate.properties`
 
-- **Editor → Player → Publishing Settings → Build → Custom Main Gradle Template**
-- **Editor → Player → Publishing Settings → Build → Custom Gradle Properties Template**
+    <img
+      src="/integration-guides/image/unity_integration_guide_3.png"
+      alt="Alt text"
+      width="400"
+    />
+  </Step>
 
-This will create the following files in `Assets > Plugins > Android`:
+  <Step title="Update Dependencies in mainTemplate" titleSize="h3">
+    Add the following dependencies to the `dependencies` section of `mainTemplate.gradle`:
 
-- `mainTemplate.gradle`
-- `gradleTemplate.properties`
-
-<img
-  src="/integration-guides/image/unity_integration_guide_3.png"
-  alt="Alt text"
-  width="400"
-/>
-
-### Step 3: Update Dependencies in mainTemplate
-
-Add the following dependencies to the `dependencies` section of `mainTemplate.gradle`:
-
-```groovy mainTemplate.gradle
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.aar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core:1.9.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.multidex:multidex:2.0.1'
-}
-```
-
-### Step 4: Update gradleTemplate
-
-Add the following to `gradleTemplate.properties`:
-
-```properties gradleTemplate.properties
-android.useAndroidX=true
-android.enableJetifier=true
-```
-
-### Step 5: Implement ChoiceListener Interface
-
-Create a `ChoiceListener` class to handle the user's consent choice callback:
-
-```csharp C#
-class ChoiceListener : AndroidJavaProxy
-{
-    public ChoiceListener() : base("com.android.eapx.Settings$OnStatusChange") { }
-
-    void onChange(int choice)
-    {
-        // Callback with the user's choice:
-        // 1 - user agreed
-        // 4 - user declined
+    ```groovy
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.aar'])
+        implementation 'androidx.appcompat:appcompat:1.1.0'
+        implementation 'androidx.core:core:1.9.0'
+        implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+        implementation 'androidx.multidex:multidex:2.0.1'
     }
-}
-```
+    ```
+  </Step>
 
-### Step 6: Instantiate Necessary Objects
+  <Step title="Update gradleTemplate" titleSize="h3">
+    Add the following to `gradleTemplate.properties`:
 
-```csharp
-AndroidJavaClass unityPlayerClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+    ```properties
+    android.useAndroidX=true
+    android.enableJetifier=true
+    ```
+  </Step>
 
-// Important when testing: currentActivity is only available on a device/emulator,
-// not inside the Unity Editor
-AndroidJavaObject currentActivity = unityPlayerClass.GetStatic<AndroidJavaObject>("currentActivity");
+  <Step title="Implement ChoiceListener Interface" titleSize="h3">
+    Create a `ChoiceListener` class to handle the user's consent choice callback:
 
-// Use the full package name - update if you have a dedicated package name
-AndroidJavaObject brightApi = new AndroidJavaObject("com.android.eapx.BrightApi");
+    ```csharp
+    class ChoiceListener : AndroidJavaProxy
+    {
+        public ChoiceListener() : base("com.android.eapx.Settings$OnStatusChange") { }
 
-// Create a settings object
-AndroidJavaObject settings = new AndroidJavaObject("com.android.eapx.Settings", currentActivity);
-```
+        void onChange(int choice)
+        {
+            // Callback with the user's choice:
+            // 1 - user agreed
+            // 4 - user declined
+        }
+    }
+    ```
+  </Step>
 
-### Step 7: Set the Behavior of the SDK
+  <Step title="Instantiate Necessary Objects" titleSize="h3">
+    ```csharp
+    AndroidJavaClass unityPlayerClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
 
-```csharp
-// Refer to the API documentation for all available settings
+    // Important when testing: currentActivity is only available on a device/emulator,
+    // not inside the Unity Editor
+    AndroidJavaObject currentActivity = unityPlayerClass.GetStatic<AndroidJavaObject>("currentActivity");
 
-// Benefit text appears at the start of the consent text
-settings.Call("setBenefit", "To get free daily tokens");
+    // Use the full package name - update if you have a dedicated package name
+    AndroidJavaObject brightApi = new AndroidJavaObject("com.android.eapx.BrightApi");
 
-// Set button texts (defaults will be used if not set)
-settings.Call("setAgreeBtn", "Yes, sure!");
-settings.Call("setDisagreeBtn", "No, thanks!");
+    // Create a settings object
+    AndroidJavaObject settings = new AndroidJavaObject("com.android.eapx.Settings", currentActivity);
+    ```
+  </Step>
 
-// Prevent the consent screen from showing automatically
-settings.Call("setSkipConsent", true);
+  <Step title="Set the Behavior of the SDK" titleSize="h3">
+    ```csharp
+    // Refer to the API documentation for all available settings
 
-// Register the ChoiceListener callback
-ChoiceListener choiceListener = new ChoiceListener();
-settings.Call("setOnStatusChange", choiceListener);
-```
+    // Benefit text appears at the start of the consent text
+    settings.Call("setBenefit", "To get free daily tokens");
 
-### Step 8: Consent Dialog Customization (optional)
+    // Set button texts (defaults will be used if not set)
+    settings.Call("setAgreeBtn", "Yes, sure!");
+    settings.Call("setDisagreeBtn", "No, thanks!");
 
-While the standard Bright SDK consent screen is always available, we **highly encourage customization** to match your app's look & feel - this typically leads to higher conversion rates.
+    // Prevent the consent screen from showing automatically
+    settings.Call("setSkipConsent", true);
 
-There are two customization options:
+    // Register the ChoiceListener callback
+    ChoiceListener choiceListener = new ChoiceListener();
+    settings.Call("setOnStatusChange", choiceListener);
+    ```
+  </Step>
 
-| Option | Description |
-| --- | --- |
-| `CustomConsentSettings` | Modify the built-in Bright SDK consent screen |
-| External consent screen | Build your own consent UI entirely - see [Step 12](#step-12) |
+  <Step title="Consent Dialog Customization (optional)" titleSize="h3">
+    While the standard Bright SDK consent screen is always available, we **highly encourage customization** to match your app's look & feel - this typically leads to higher conversion rates.
 
-#### 8.1 CustomConsentSettings
+    There are two customization options:
 
-<Note>
-  See the full list of available `CustomConsentSettings` properties in the [API Documentation](#).
-</Note>
+    | Option | Description |
+    | --- | --- |
+    | `CustomConsentSettings` | Modify the built-in Bright SDK consent screen |
+    | External consent screen | Build your own consent UI entirely - see [External Consent Screen (optional)](#external-consent-screen-optional) |
 
-```csharp
-AndroidJavaObject customConsentSettings = new AndroidJavaObject("com.android.eapx.CustomConsentSettings");
+    **CustomConsentSettings**
 
-// Colors
-customConsentSettings.Call("setConsentTextColor", "#FFFFFF");
-customConsentSettings.Call("setAgreeButtonBackgroundColor", "#d0510c");
-customConsentSettings.Call("setDisagreeButtonTextColor", "#FFFFFF");
-customConsentSettings.Call("setConsentTextLinksColor", "#FFFFFF");
-customConsentSettings.Call("setAppTitleTextColor", "#facd00");
-customConsentSettings.Call("setHideNetworkIcons", true);
-customConsentSettings.Call("setPrivacyMessageLinksColor", "#facd00");
-customConsentSettings.Call("setPrivacyMessageTextColor", "#ffffff");
+    <Note>
+      See the full list of available `CustomConsentSettings` properties in the [API Documentation](#api-documentation).
+    </Note>
 
-// Font - using system font family and style
-AndroidJavaClass consentFont = new AndroidJavaClass("com.android.eapx.CustomConsentSettings$CustomFontFamily");
-AndroidJavaObject consentFontEnumValue = consentFont.GetStatic<AndroidJavaObject>("monospace");
+    ```csharp
+    AndroidJavaObject customConsentSettings = new AndroidJavaObject("com.android.eapx.CustomConsentSettings");
 
-AndroidJavaClass consentFontStyle = new AndroidJavaClass("com.android.eapx.CustomConsentSettings$CustomTextStyle");
-AndroidJavaObject consentFontStyleEnumValue = consentFontStyle.GetStatic<AndroidJavaObject>("italic");
+    // Colors
+    customConsentSettings.Call("setConsentTextColor", "#FFFFFF");
+    customConsentSettings.Call("setAgreeButtonBackgroundColor", "#d0510c");
+    customConsentSettings.Call("setDisagreeButtonTextColor", "#FFFFFF");
+    customConsentSettings.Call("setConsentTextLinksColor", "#FFFFFF");
+    customConsentSettings.Call("setAppTitleTextColor", "#facd00");
+    customConsentSettings.Call("setHideNetworkIcons", true);
+    customConsentSettings.Call("setPrivacyMessageLinksColor", "#facd00");
+    customConsentSettings.Call("setPrivacyMessageTextColor", "#ffffff");
 
-AndroidJavaObject customTypeface = new AndroidJavaObject("com.android.eapx.CustomTypeface");
-customTypeface.Call("setFontFamily", consentFontEnumValue);
-customTypeface.Call("setTextStyle", consentFontStyleEnumValue);
-customConsentSettings.Call("setCustomTypeface", customTypeface);
+    // Font - using system font family and style
+    AndroidJavaClass consentFont = new AndroidJavaClass("com.android.eapx.CustomConsentSettings$CustomFontFamily");
+    AndroidJavaObject consentFontEnumValue = consentFont.GetStatic<AndroidJavaObject>("monospace");
 
-// Apply customConsentSettings to the SDK settings
-settings.Call("setCustomConsentSettings", customConsentSettings);
-```
+    AndroidJavaClass consentFontStyle = new AndroidJavaClass("com.android.eapx.CustomConsentSettings$CustomTextStyle");
+    AndroidJavaObject consentFontStyleEnumValue = consentFontStyle.GetStatic<AndroidJavaObject>("italic");
 
-#### 8.2 Custom Images
+    AndroidJavaObject customTypeface = new AndroidJavaObject("com.android.eapx.CustomTypeface");
+    customTypeface.Call("setFontFamily", consentFontEnumValue);
+    customTypeface.Call("setTextStyle", consentFontStyleEnumValue);
+    customConsentSettings.Call("setCustomTypeface", customTypeface);
 
-To use custom images in the consent screen, copy them to the `StreamingAssets` folder of the app.
-
-<Info>
-  On Android, images in `StreamingAssets` are not directly accessible - they must be loaded via a local web request.
-</Info>
-
-The following example loads custom images for the consent icon, background, and buttons:
-
-```csharp
-public static string CUSTOM_CONSENT_BACKGROUND_IMAGE      = "background_image";
-public static string CUSTOM_CONSENT_ICON_IMAGE            = "icon_image";
-public static string CUSTOM_CONSENT_AGREE_BUTTON_IMAGE    = "agree_button_image";
-public static string CUSTOM_CONSENT_DISAGREE_BUTTON_IMAGE = "disagree_button_image";
-
-void setCustomConsent()
-{
-    customConsentSettings = new AndroidJavaObject("com.android.eapx.CustomConsentSettings");
-    Dictionary<string, StreamingAsset> imagesDictionary = createImagesDictionary();
+    // Apply customConsentSettings to the SDK settings
     settings.Call("setCustomConsentSettings", customConsentSettings);
-    StartCoroutine(LoadFiles(imagesDictionary));
-}
+    ```
 
-Dictionary<string, StreamingAsset> createImagesDictionary()
-{
-    string backgroundImagePath     = System.IO.Path.Combine(Application.streamingAssetsPath, "your_background_image.png");
-    string iconImagePath           = System.IO.Path.Combine(Application.streamingAssetsPath, "your_icon.jpg");
-    string agreeButtonImagePath    = System.IO.Path.Combine(Application.streamingAssetsPath, "agree_button.png");
-    string disagreeButtonImagePath = System.IO.Path.Combine(Application.streamingAssetsPath, "disagree_button.png");
+    **Custom Images**
 
-    Dictionary<string, StreamingAsset> imagesDictionary = new Dictionary<string, StreamingAsset>();
-    imagesDictionary.Add(CUSTOM_CONSENT_ICON_IMAGE,            new StreamingAsset(iconImagePath, iconImageBytes));
-    imagesDictionary.Add(CUSTOM_CONSENT_BACKGROUND_IMAGE,      new StreamingAsset(backgroundImagePath, backgroundImageBytes));
-    imagesDictionary.Add(CUSTOM_CONSENT_AGREE_BUTTON_IMAGE,    new StreamingAsset(agreeButtonImagePath, agreeButtonImageBytes));
-    imagesDictionary.Add(CUSTOM_CONSENT_DISAGREE_BUTTON_IMAGE, new StreamingAsset(disagreeButtonImagePath, disagreeButtonImageBytes));
-    return imagesDictionary;
-}
+    To use custom images in the consent screen, copy them to the `StreamingAssets` folder of the app.
 
-IEnumerator LoadFiles(Dictionary<string, StreamingAsset> imagesDictionary)
-{
-    List<StreamingAsset> imagesList = new List<StreamingAsset>(imagesDictionary.Values);
-    StreamingAsset streamingAsset;
+    <Info>
+      On Android, images in `StreamingAssets` are not directly accessible - they must be loaded via a local web request.
+    </Info>
 
-    for (int i = 0; i < imagesList.Count; i++)
+    The following example loads custom images for the consent icon, background, and buttons:
+
+    ```csharp
+    public static string CUSTOM_CONSENT_BACKGROUND_IMAGE      = "background_image";
+    public static string CUSTOM_CONSENT_ICON_IMAGE            = "icon_image";
+    public static string CUSTOM_CONSENT_AGREE_BUTTON_IMAGE    = "agree_button_image";
+    public static string CUSTOM_CONSENT_DISAGREE_BUTTON_IMAGE = "disagree_button_image";
+
+    void setCustomConsent()
     {
-        streamingAsset = imagesList[i];
-        WWW www = new(streamingAsset.Url);
-        yield return www;
-        streamingAsset.ImageBytes = www.bytes;
+        customConsentSettings = new AndroidJavaObject("com.android.eapx.CustomConsentSettings");
+        Dictionary<string, StreamingAsset> imagesDictionary = createImagesDictionary();
+        settings.Call("setCustomConsentSettings", customConsentSettings);
+        StartCoroutine(LoadFiles(imagesDictionary));
     }
-    updateConsentImages(imagesDictionary);
+
+    Dictionary<string, StreamingAsset> createImagesDictionary()
+    {
+        string backgroundImagePath     = System.IO.Path.Combine(Application.streamingAssetsPath, "your_background_image.png");
+        string iconImagePath           = System.IO.Path.Combine(Application.streamingAssetsPath, "your_icon.jpg");
+        string agreeButtonImagePath    = System.IO.Path.Combine(Application.streamingAssetsPath, "agree_button.png");
+        string disagreeButtonImagePath = System.IO.Path.Combine(Application.streamingAssetsPath, "disagree_button.png");
+
+        Dictionary<string, StreamingAsset> imagesDictionary = new Dictionary<string, StreamingAsset>();
+        imagesDictionary.Add(CUSTOM_CONSENT_ICON_IMAGE,            new StreamingAsset(iconImagePath, iconImageBytes));
+        imagesDictionary.Add(CUSTOM_CONSENT_BACKGROUND_IMAGE,      new StreamingAsset(backgroundImagePath, backgroundImageBytes));
+        imagesDictionary.Add(CUSTOM_CONSENT_AGREE_BUTTON_IMAGE,    new StreamingAsset(agreeButtonImagePath, agreeButtonImageBytes));
+        imagesDictionary.Add(CUSTOM_CONSENT_DISAGREE_BUTTON_IMAGE, new StreamingAsset(disagreeButtonImagePath, disagreeButtonImageBytes));
+        return imagesDictionary;
+    }
+
+    IEnumerator LoadFiles(Dictionary<string, StreamingAsset> imagesDictionary)
+    {
+        List<StreamingAsset> imagesList = new List<StreamingAsset>(imagesDictionary.Values);
+        StreamingAsset streamingAsset;
+
+        for (int i = 0; i < imagesList.Count; i++)
+        {
+            streamingAsset = imagesList[i];
+            WWW www = new(streamingAsset.Url);
+            yield return www;
+            streamingAsset.ImageBytes = www.bytes;
+        }
+        updateConsentImages(imagesDictionary);
+        brightApi.CallStatic("init", currentActivity, settings);
+    }
+
+    private void updateConsentImages(Dictionary<string, StreamingAsset> imagesDictionary)
+    {
+        customConsentSettings.Call("setBodyBackgroundImageBytes",
+            imagesDictionary[CUSTOM_CONSENT_BACKGROUND_IMAGE].ImageBytes);
+        customConsentSettings.Call("setAgreeButtonImageBytes",
+            imagesDictionary[CUSTOM_CONSENT_AGREE_BUTTON_IMAGE].ImageBytes);
+        customConsentSettings.Call("setDisagreeButtonImageBytes",
+            imagesDictionary[CUSTOM_CONSENT_DISAGREE_BUTTON_IMAGE].ImageBytes);
+        settings.Call("setShowAppIcon", true,
+            imagesDictionary[CUSTOM_CONSENT_ICON_IMAGE].ImageBytes);
+    }
+
+    public class StreamingAsset
+    {
+        public StreamingAsset(string url, byte[] imageBytes)
+        {
+            this.Url = url;
+            this.ImageBytes = imageBytes;
+        }
+        public string Url;
+        public byte[] ImageBytes;
+    }
+    ```
+
+    **Unity Editor Customization Example**
+
+    The following is a complete end-to-end example of setting up the custom consent screen using Unity's editor-exposed fields, which is the recommended approach for designer-friendly customization.
+
+    <img
+      src="/integration-guides/image/unity_integration_guide_4.png"
+      alt="Alt text"
+      width="400"
+    />
+
+    **1 - Define variables in your initializer script**
+
+    In the script that initializes Bright Data, define variables for images, button images, icon, and text colors:
+
+    ```csharp
+    // Exposed Sprite references - editable in the Unity Editor
+    [SerializeField] private Sprite _backgroundImage;
+    [SerializeField] private Sprite _buttonImage;
+    [SerializeField] private Sprite _iconImage;
+
+    // Exposed Colors - editable in the Unity Editor
+    [SerializeField] private Color _descriptionTextColor = Color.white;
+    [SerializeField] private Color _linksColor           = Color.white;
+    [SerializeField] private Color _titleColor           = Color.white;
+    [SerializeField] private Color _footerTextColor      = Color.white;
+    [SerializeField] private Color _footerLinksColor     = Color.white;
+
+    // Internal variables - store images and colors in Bright SDK-compatible formats
+    private byte[] _backgroundImageBytes;
+    private byte[] _buttonImageBytes;
+    private byte[] _iconImageBytes;
+    private string _descriptionTextHex;
+    private string _linksHex;
+    private string _titleHex;
+    private string _footerTextHex;
+    private string _footerLinksHex;
+    ```
+
+    <img
+      src="/integration-guides/image/unity_integration_guide_5.png"
+      alt="Alt text"
+      width="400"
+    />
+
+    <Warning>
+      Images must have **"Read/Write"** enabled in their Unity import settings, otherwise they cannot be converted to byte arrays.
+    </Warning>
+
+    <img
+      src="/integration-guides/image/unity_integration_guide_6.png"
+      alt="Alt text"
+      width="400"
+    />
+
+    **2 - Convert images and colors in Awake()**
+
+    In the `Awake()` function, convert Sprites and Colors to the formats required by Bright SDK:
+
+    ```csharp
+    private void Awake()
+    {
+        // Convert Sprites to PNG byte arrays
+        if (_backgroundImage) _backgroundImageBytes = _backgroundImage.texture.EncodeToPNG();
+        if (_buttonImage)     _buttonImageBytes     = _buttonImage.texture.EncodeToPNG();
+        if (_iconImage)       _iconImageBytes       = _iconImage.texture.EncodeToPNG();
+
+        // Convert Colors to hex strings
+        _descriptionTextHex = "#" + ColorUtility.ToHtmlStringRGB(_descriptionTextColor);
+        _linksHex           = "#" + ColorUtility.ToHtmlStringRGB(_linksColor);
+        _titleHex           = "#" + ColorUtility.ToHtmlStringRGB(_titleColor);
+        _footerTextHex      = "#" + ColorUtility.ToHtmlStringRGB(_footerTextColor);
+        _footerLinksHex     = "#" + ColorUtility.ToHtmlStringRGB(_footerLinksColor);
+    }
+    ```
+
+    **3 - Apply custom consent settings before init()**
+
+    Before calling `brightApi.CallStatic("init", ...)`, configure and apply the `CustomConsentSettings`:
+
+    ```csharp
+    AndroidJavaObject customConsentSettings = new AndroidJavaObject("com.android.eapx.CustomConsentSettings");
+
+    // Text colors
+    customConsentSettings.Call("setAppTitleTextColor",        _titleHex);
+    customConsentSettings.Call("setConsentTextColor",         _descriptionTextHex);
+    customConsentSettings.Call("setConsentTextLinksColor",    _linksHex);
+    customConsentSettings.Call("setPrivacyMessageTextColor",  _footerTextHex);
+    customConsentSettings.Call("setPrivacyMessageLinksColor", _footerLinksHex);
+
+    // Button colors
+    customConsentSettings.Call("setAgreeButtonBackgroundColor", "#5b13a8");
+    customConsentSettings.Call("setDisagreeButtonTextColor",    "#3D7FFC");
+
+    // Hide network icons
+    customConsentSettings.Call("setHideNetworkIcons", true);
+
+    // Images (only set if available)
+    if (_backgroundImageBytes != null)
+        customConsentSettings.Call("setBodyBackgroundImageBytes", _backgroundImageBytes);
+    if (_buttonImageBytes != null)
+        customConsentSettings.Call("setAgreeButtonImageBytes", _buttonImageBytes);
+    if (_buttonImageBytes != null)
+        customConsentSettings.Call("setDisagreeButtonImageBytes", _buttonImageBytes);
+
+    // App icon
+    if (_iconImageBytes != null)
+        settings.Call("setShowAppIcon", true, _iconImageBytes);
+
+    // Apply to SDK settings
+    settings.Call("setCustomConsentSettings", customConsentSettings);
+    ```
+  </Step>
+
+  <Step title="Initialize the SDK" titleSize="h3">
+    ```csharp
     brightApi.CallStatic("init", currentActivity, settings);
-}
+    ```
+  </Step>
 
-private void updateConsentImages(Dictionary<string, StreamingAsset> imagesDictionary)
-{
-    customConsentSettings.Call("setBodyBackgroundImageBytes",
-        imagesDictionary[CUSTOM_CONSENT_BACKGROUND_IMAGE].ImageBytes);
-    customConsentSettings.Call("setAgreeButtonImageBytes",
-        imagesDictionary[CUSTOM_CONSENT_AGREE_BUTTON_IMAGE].ImageBytes);
-    customConsentSettings.Call("setDisagreeButtonImageBytes",
-        imagesDictionary[CUSTOM_CONSENT_DISAGREE_BUTTON_IMAGE].ImageBytes);
-    settings.Call("setShowAppIcon", true,
-        imagesDictionary[CUSTOM_CONSENT_ICON_IMAGE].ImageBytes);
-}
+  <Step title="Show the Consent Screen" titleSize="h3">
+    ```csharp
+    // Show consent screen with current settings:
+    brightApi.CallStatic("showConsent", currentActivity);
 
-public class StreamingAsset
-{
-    public StreamingAsset(string url, byte[] imageBytes)
-    {
-        this.Url = url;
-        this.ImageBytes = imageBytes;
-    }
-    public string Url;
-    public byte[] ImageBytes;
-}
-```
+    // If you need to update settings after init, pass the updated settings object:
+    brightApi.CallStatic("showConsent", currentActivity, settings);
+    ```
+  </Step>
 
-#### 8.3 Unity Editor Customization Example
+  <Step title="Add Opt-In/Out Settings Option" titleSize="h3">
+    <OptInOut />
+  </Step>
 
-The following is a complete end-to-end example of setting up the custom consent screen using Unity's editor-exposed fields, which is the recommended approach for designer-friendly customization.
+  <Step title="External Consent Screen (optional)" titleSize="h3">
+    <CustomConsent platform="unity" />
+  </Step>
 
-<img
-  src="/integration-guides/image/unity_integration_guide_4.png"
-  alt="Alt text"
-  width="400"
-/>
+  <Step title="How to Update the SDK" titleSize="h3">
+    1. Delete `bright_sdk.aar` from Assets \> Plugins \> Android.
+    2. Copy the new `bright_sdk.aar` file to Assets \> Plugins \> Android.
+  </Step>
 
-##### Step 1 - Define variables in your initializer script
+  <Step title="Migrating from API V1 to V2" titleSize="h3">
+    The V2 API introduces new capabilities and a customizable consent screen. All main V1 methods are deprecated and replaced by `BrightApi` methods.
 
-In the script that initializes Bright Data, define variables for images, button images, icon, and text colors:
+    **Instantiate `BrightApi` (V1 → V2):**
 
-```csharp
-// Exposed Sprite references - editable in the Unity Editor
-[SerializeField] private Sprite _backgroundImage;
-[SerializeField] private Sprite _buttonImage;
-[SerializeField] private Sprite _iconImage;
+    ```csharp
+    // V1:
+    AndroidJavaObject brightApi = new AndroidJavaObject("com.android.eapx.main");
 
-// Exposed Colors - editable in the Unity Editor
-[SerializeField] private Color _descriptionTextColor = Color.white;
-[SerializeField] private Color _linksColor           = Color.white;
-[SerializeField] private Color _titleColor           = Color.white;
-[SerializeField] private Color _footerTextColor      = Color.white;
-[SerializeField] private Color _footerLinksColor     = Color.white;
+    // V2:
+    AndroidJavaObject brightApi = new AndroidJavaObject("com.android.eapx.BrightApi");
+    ```
 
-// Internal variables - store images and colors in Bright SDK-compatible formats
-private byte[] _backgroundImageBytes;
-private byte[] _buttonImageBytes;
-private byte[] _iconImageBytes;
-private string _descriptionTextHex;
-private string _linksHex;
-private string _titleHex;
-private string _footerTextHex;
-private string _footerLinksHex;
-```
+    **Initialize with Settings object:**
 
-<img
-  src="/integration-guides/image/unity_integration_guide_5.png"
-  alt="Alt text"
-  width="400"
-/>
+    ```csharp
+    // Instantiate a Settings object
+    AndroidJavaObject settings = new AndroidJavaObject("com.android.eapx.Settings", currentActivity);
 
-<Warning>
-  Images must have **"Read/Write"** enabled in their Unity import settings, otherwise they cannot be converted to byte arrays.
-</Warning>
+    // Initialize the SDK (must be called after all settings are configured)
+    brightApi.CallStatic("init", currentActivity, settings);
+    ```
 
-<img
-  src="/integration-guides/image/unity_integration_guide_6.png"
-  alt="Alt text"
-  width="400"
-/>
+    <Tip>
+      The consent screen will be displayed automatically after `init`, unless you explicitly call `settings.Call("setSkipConsent", true)`.
+    </Tip>
 
-##### Step 2 - Convert images and colors in Awake()
+    **Show the consent screen manually:**
 
-In the `Awake()` function, convert Sprites and Colors to the formats required by Bright SDK:
+    ```csharp
+    brightApi.CallStatic("showConsent", currentActivity);
+    ```
+  </Step>
 
-```csharp
-private void Awake()
-{
-    // Convert Sprites to PNG byte arrays
-    if (_backgroundImage) _backgroundImageBytes = _backgroundImage.texture.EncodeToPNG();
-    if (_buttonImage)     _buttonImageBytes     = _buttonImage.texture.EncodeToPNG();
-    if (_iconImage)       _iconImageBytes       = _iconImage.texture.EncodeToPNG();
+  <Step title="API Documentation" titleSize="h3">
+    <Steps>
+      <Step title="BrightApi">
+        **Public Methods:**
 
-    // Convert Colors to hex strings
-    _descriptionTextHex = "#" + ColorUtility.ToHtmlStringRGB(_descriptionTextColor);
-    _linksHex           = "#" + ColorUtility.ToHtmlStringRGB(_linksColor);
-    _titleHex           = "#" + ColorUtility.ToHtmlStringRGB(_titleColor);
-    _footerTextHex      = "#" + ColorUtility.ToHtmlStringRGB(_footerTextColor);
-    _footerLinksHex     = "#" + ColorUtility.ToHtmlStringRGB(_footerLinksColor);
-}
-```
+        | Method | Description |
+        | --- | --- |
+        | `static void init(Context context, Settings settings)` | Initializes the SDK. Call **once** in your first activity. Shows consent dialog automatically unless `setSkipConsent(true)` is set. |
+        | `static void showConsent(Activity activity)` | Displays the consent dialog. Use when a user tries to close an ad or re-enables Bright SDK from Settings. |
+        | `static void showConsent(Activity activity, Settings settings)` | Displays the consent dialog with a new settings object. |
+        | `static void optOut(Context context)` | Revokes the user's consent and sets `Choice.NOT_PEER`. Triggers `OnStatusChange` callback. |
+        | `static Boolean getConsentChoice(Context context)` | Returns `true` if user is peer, `false` if not peer, `null` if no choice has been made yet. |
+        | `static boolean isSvcProcess()` | Returns `true` if the current process is the SDK service process. |
+        | `static void setTrackingId(String trackingId)` | Adds a unique tracking ID for reports and debugging. Must be called **before**`BrightApi.init`. |
+        | `static void reportConsentShown(Context context)` | <Warning> Requires special permission. </Warning> Reports that a custom consent screen was shown. |
+        | `static void reportConsentBackPress(Context context)` | <Warning> Requires special permission. </Warning> Reports that the user pressed back without making a choice. |
+        | `static void reportConsentOptOut(Context context)` | <Warning> Requires special permission. </Warning> Reports that the user opted out via custom consent screen. |
+      </Step>
 
-##### Step 3 - Apply custom consent settings before init()
+      <Step title="Settings">
+        **Constructor:**
 
-Before calling `brightApi.CallStatic("init", ...)`, configure and apply the `CustomConsentSettings`:
+        ```java
+        Settings(Context context)
+        ```
 
-```csharp
-AndroidJavaObject customConsentSettings = new AndroidJavaObject("com.android.eapx.CustomConsentSettings");
+        **Public Methods:**
 
-// Text colors
-customConsentSettings.Call("setAppTitleTextColor",        _titleHex);
-customConsentSettings.Call("setConsentTextColor",         _descriptionTextHex);
-customConsentSettings.Call("setConsentTextLinksColor",    _linksHex);
-customConsentSettings.Call("setPrivacyMessageTextColor",  _footerTextHex);
-customConsentSettings.Call("setPrivacyMessageLinksColor", _footerLinksHex);
+        | Method | Description |
+        | --- | --- |
+        | `String getAppId()` | Returns Application ID as defined in `ApplicationInfo.packageName` |
+        | `String getAppName()` | Returns app name as defined in `ApplicationInfo.loadLabel` |
+        | `void setSkipConsent(boolean skipConsent)` | Set `true` to prevent consent dialog from showing automatically |
+        | `void setLanguage(ConsentLanguage language)` | Override the device default language |
+        | `void setBenefit(String benefit)` | Prefix text for the consent dialog (e.g., "To use the app with no ads") |
+        | `void setAgreeBtn(String agreeBtn)` | Text for the agree button. Default text used if not set. |
+        | `void setDisagreeBtn(String disagreeBtn)` | Text for the disagree button. Default text used if not set. |
+        | `void setOnStatusChange(OnStatusChange onStatusChange)` | Register a callback for user choice changes |
+        | `void setMinJobId(int minJobId)` | Min job ID for JobScheduler. Default range: 1–1000 |
+        | `void setMaxJobId(int maxJobId)` | Max job ID for JobScheduler. Default range: 1–1000 |
+        | `void setCustomConsentSettings(CustomConsentSettings ccs)` | Apply custom consent screen settings |
+        | `void setShowAppIcon(boolean showAppIcon)` | Show the default app icon on the consent screen |
+        | `void setShowAppIcon(boolean showAppIcon, int appLogoResourceId)` | Show a custom image resource as the app icon |
+        | `void setShowAppIcon(boolean showAppIcon, byte[] imageBytes)` | Show a custom image (bytes) as the app icon |
+        | `void setOptOutInstructions(String optOutInstructions)` | Custom opt-out instructions text |
+        | `void setCampaignId(String campaignId)` | Set a campaign ID |
+        | `void setBackPressListener(Runnable backPressListener)` | Listener for back press on consent screen |
+      </Step>
 
-// Button colors
-customConsentSettings.Call("setAgreeButtonBackgroundColor", "#5b13a8");
-customConsentSettings.Call("setDisagreeButtonTextColor",    "#3D7FFC");
+      <Step title="CustomConsentSettings">
+        | Method | Description |
+        | --- | --- |
+        | `setConsentTitle(String)` | Set the consent screen title |
+        | `setAppTitleTextColor(String)` | App title text color |
+        | `setAppTitleTypeface(CustomTypeface)` | App title font |
+        | `setBodyBackgroundColor(String)` | Body background color |
+        | `setBodyBackgroundImageResource(int)` | Body background image (resource ID) |
+        | `setBodyBackgroundImageBytes(byte[])` | Body background image (bytes) |
+        | `setBodyBackgroundShadow(boolean)` | Enable/disable body background shadow |
+        | `setScreenBackgroundColor(String)` | Screen background color |
+        | `setScreenBackgroundImageResource(int)` | Screen background image (resource ID) |
+        | `setScreenBackgroundImageResource(int, boolean fillScreen)` | Screen background image with fill option |
+        | `setScreenBackgroundImageBytes(byte[])` | Screen background image (bytes) |
+        | `setScreenBackgroundImageBytes(byte[], boolean fillScreen)` | Screen background image (bytes) with fill option |
+        | `setConsentTextColor(String)` | Consent main text color |
+        | `setConsentTextTypeface(CustomTypeface)` | Consent main text font |
+        | `setAgreeButtonImageResource(int)` | Agree button image (resource ID) |
+        | `setDisagreeButtonImageResource(int)` | Disagree button image (resource ID) |
+        | `setAgreeButtonImageBytes(byte[])` | Agree button image (bytes) |
+        | `setDisagreeButtonImageBytes(byte[])` | Disagree button image (bytes) |
+        | `setAgreeButtonTextColor(String)` | Agree button text color |
+        | `setDisagreeButtonTextColor(String)` | Disagree button text color |
+        | `setAgreeButtonTypeface(CustomTypeface)` | Agree button font |
+        | `setDisagreeButtonTypeface(CustomTypeface)` | Disagree button font |
+        | `setConsentTextLinksColor(String)` | Consent text links color |
+        | `setAgreeButtonBackgroundColor(String)` | Agree button background color |
+        | `setDisagreeButtonBackgroundColor(String)` | Disagree button background color |
+        | `setPrivacyMessageTextColor(String)` | Privacy message text color |
+        | `setPrivacyMessageLinksColor(String)` | Privacy message links color |
+        | `setPrivacyMessageTextTypeface(CustomTypeface)` | Privacy message font |
+        | `setNetworkIconsColorFilter(String)` | Network icons color filter |
+        | `setNetworkIconsTextColor(String)` | Network icons text color |
+        | `setNetworkIconsTextTypeface(CustomTypeface)` | Network icons text font |
+        | `setHideNetworkIcons(boolean)` | Show/hide network icons |
+        | `setQrCodeColorFilter(String)` | QR code foreground color |
+        | `setQrCodeBackgroundColor(String)` | QR code background color |
+        | `setCustomTypeface(CustomTypeface)` | Apply font to all text elements (specific overrides take precedence) |
+        | `setTopIconColorFilter(String)` | Top icon color filter |
+        | `setHideConsentIcon(boolean)` | Show/hide the consent icon |
+      </Step>
 
-// Hide network icons
-customConsentSettings.Call("setHideNetworkIcons", true);
+      <Step title="CustomTypeface">
+        **Constructors:**
 
-// Images (only set if available)
-if (_backgroundImageBytes != null)
-    customConsentSettings.Call("setBodyBackgroundImageBytes", _backgroundImageBytes);
-if (_buttonImageBytes != null)
-    customConsentSettings.Call("setAgreeButtonImageBytes", _buttonImageBytes);
-if (_buttonImageBytes != null)
-    customConsentSettings.Call("setDisagreeButtonImageBytes", _buttonImageBytes);
+        ```java
+        CustomTypeface()
+        CustomTypeface(Typeface typeface)
+        CustomTypeface(CustomConsentSettings.CustomFontFamily fontFamily,
+                       CustomConsentSettings.CustomTextStyle textStyle)
+        ```
 
-// App icon
-if (_iconImageBytes != null)
-    settings.Call("setShowAppIcon", true, _iconImageBytes);
+        **Methods:**
 
-// Apply to SDK settings
-settings.Call("setCustomConsentSettings", customConsentSettings);
-```
+        | Method | Description |
+        | --- | --- |
+        | `void setTypeface(Typeface typeface)` | Set a `Typeface` object directly |
+        | `void setFontFamily(CustomConsentSettings.CustomFontFamily fontFamily)` | Set font family |
+        | `void setTextStyle(CustomConsentSettings.CustomTextStyle textStyle)` | Set text style |
+      </Step>
 
-### Step 9: Initialize the SDK
+      <Step title="Choice">
+        | Value | Int | Description |
+        | --- | --- | --- |
+        | `Choice.NONE` | 0 | Consent screen not shown yet, or user hasn't made a choice |
+        | `Choice.PEER` | 1 | User agreed — reflect in settings so user can opt out |
+        | `Choice.NOT_PEER` | 4 | User declined — reflect in settings so user can opt in |
+      </Step>
 
-```csharp
-brightApi.CallStatic("init", currentActivity, settings);
-```
+      <Step title="ConsentLanguage">
+        Supported values: `en`, `de`, `es`, `fr`, `it`, `ja`, `pt`, `ru`, `tr`
+      </Step>
 
-### Step 10: Show the Consent Screen
+      <Step title="CustomFontFamily">
+        Supported values: `casual`, `cursive`, `monospace`, `sans_serif`, `sans_serif_black`, `sans_serif_light`, `sans_serif_medium`, `sans_serif_smallcaps`, `sans_serif_thin`, `sans_serif_condensed`, `sans_serif_condensed_light`, `sans_serif_condensed_medium`, `serif`, `serif_monospace`
+      </Step>
 
-```csharp
-// Show consent screen with current settings:
-brightApi.CallStatic("showConsent", currentActivity);
-
-// If you need to update settings after init, pass the updated settings object:
-brightApi.CallStatic("showConsent", currentActivity, settings);
-```
-
-### Step 11: Add Opt-In/Out Settings Option
-
-<OptInOut />
-
-### Step 12: External Consent Screen (optional)
-
-<CustomConsent platform="unity" />
-
-### How to Update the SDK
-
-1. Delete `bright_sdk.aar` from Assets \> Plugins \> Android.
-2. Copy the new `bright_sdk.aar` file to Assets \> Plugins \> Android.
-
-### Migrating from API V1 to V2
-
-The V2 API introduces new capabilities and a customizable consent screen. All main V1 methods are deprecated and replaced by `BrightApi` methods.
-
-**Instantiate `BrightApi` (V1 → V2):**
-
-```csharp
-// V1:
-AndroidJavaObject brightApi = new AndroidJavaObject("com.android.eapx.main");
-
-// V2:
-AndroidJavaObject brightApi = new AndroidJavaObject("com.android.eapx.BrightApi");
-```
-
-**Initialize with Settings object:**
-
-```csharp
-// Instantiate a Settings object
-AndroidJavaObject settings = new AndroidJavaObject("com.android.eapx.Settings", currentActivity);
-
-// Initialize the SDK (must be called after all settings are configured)
-brightApi.CallStatic("init", currentActivity, settings);
-```
-
-<Tip>
-  The consent screen will be displayed automatically after `init`, unless you explicitly call `settings.Call("setSkipConsent", true)`.
-</Tip>
-
-**Show the consent screen manually:**
-
-```csharp
-brightApi.CallStatic("showConsent", currentActivity);
-```
-
-### API Documentation
+      <Step title="CustomTextStyle">
+        Supported values: `bold`, `bold_italic`, `italic`, `normal`
+      </Step>
+    </Steps>
+  </Step>
+</Steps>
