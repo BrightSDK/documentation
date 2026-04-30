@@ -1,69 +1,186 @@
 ---
-title: 'Compliance, Privacy & Security'
+title: "Compliance, Privacy & Security"
 ---
 
 <AccordionGroup>
   <Accordion title="Are there any country restrictions for Bright SDK?">
-    Answer here.
+    Yes. Bright SDK does not operate in the following countries:
+
+    - Iran
+    - Lebanon
+    - Syria
+    - North Korea
+    - Cuba
+    - Palestine
+    - Sudan
+    - Crimea
+    - Russia
+    - Belarus
+    - Luhansk People's Republic and Donetsk People's Republic
+
+    Any installation of app with Bright SDK, regardless of whether the end user saw our offer screen or opted in to it, will not be counted, used or monetized in any way.
   </Accordion>
+
   <Accordion title="Is Bright SDK COPPA compliant?">
-    Answer here.
+    Bright SDK is a tool that integrates with various applications, and as such is not the direct operator of the apps utilizing it. However, we take compliance with COPPA (Children's Online Privacy Protection Rule) and other applicable privacy laws very seriously. While it is the responsibility of the app developers to ensure their apps comply with COPPA, we make our best efforts to support compliance by providing features and functionality that assist developers in meeting their obligations.
+
+    Specifically, our SDK does not collect any type of personal information (except IP address) and does not display any content to the user. It is designed to include tools and settings that enable app developers to manage data collection in a manner that is consistent with COPPA guidelines. We also offer resources and guidance to app developers on how to configure the SDK in a way that respects users' privacy, particularly with regard to children under 13 years of age.
+
+    While we strive to ensure our SDK can be used in a compliant manner, the final responsibility for COPPA compliance lies with the app developers who integrate our SDK. We encourage all app developers using our technology to consult their legal advisors to ensure that their specific implementation meets COPPA requirements.
   </Accordion>
+
   <Accordion title="What does the user agree to?">
-    Answer here.
+    **We believe in full transparency.** The user needs to understand what they are agreeing to. That is why the user is presented with a simple 1-screen offer, and not just a long text EULA that is hard to read or understand.
   </Accordion>
+
   <Accordion title="Do I have to display the opt-in screen? Can I modify it?">
-    Answer here.
+    Yes, you must display the consent screen. Bright Data believes in total transparency, and that users should always decide if they want to opt-in. The Bright SDK will not work if your code does not display the consent screen.
+
+    Please note that you can modify certain elements in the consent screen’s main texts, layout or graphics as detailed [here](https://help.bright-sdk.com/hc/en-us/articles/20371192143889-Customization-of-Consent-Dialog). Moreover, you are able to specify specific items (e.g. the name of your app, text to display on the buttons etc). Check out the SDK documentation for specifics. 
   </Accordion>
+
   <Accordion title="What value can I offer to my users in exchange to opting in?">
-    Answer here.
+    Here are a few examples:
+
+    - Seeing fewer ads (e.g. remove banners from a game session).
+    - An alternative to seeing a reward ad (e.g. for getting a hint in a game) etc.
+    - You may also simply ask for the user’s support of your app.
+
+    Some more example can be seen in our [best practices guide](https://bright-sdk.com/blog/best-practices-for-maximizing-revenue).
   </Accordion>
+
   <Accordion title="Can the user opt-out after opting-in?">
-    Answer here.
+    **Yes!** The user can opt-out anytime. You need to add a menu entry to where the user can disable BrightSDK.
   </Accordion>
+
   <Accordion title="Does Bright Data see my user's personal data?">
-    Answer here.
+    **No. We don’t want your user’s data.** Bright Data uses only the Internet connection. We don’t see, collect or send any personal data, ever. Bright Data is compliant with the GDPR and CCPA.
   </Accordion>
+
   <Accordion title="Do websites see my user's personal data?">
-    Answer here.
+    **No! **When data is downloaded from a website, it does not contain any information about the user. To the website it looks like a totally new, anonymous user that is not logged in coming from the user’s IP address.
   </Accordion>
+
   <Accordion title="Is Bright SDK GDPR/CCPA compliant?">
-    Answer here.
+    **Yes!** Bright Data is fully committed to complying with all relevant data protection legal requirements, including the new EU data protection regulatory framework – the General Data Protection Regulation [(“GDPR”)](https://brightdata.com/trustcenter/gdpr) and the California Consumer Privacy Act of 2018 (“CCPA”).
+
+    As an enthusiastic advocate of internet security and privacy, Bright Data understands the importance of providing data subjects with greater control on their privacy and data. Therefore, we have taken considerable efforts to ensure that our privacy practices comply with data protection laws, including the GDPR and CCPA, and the industry’s best practices regarding, among other things, respecting data subjects’ requests to exercise their rights.
+
+    We are constantly examining applicable legal developments as well as the relevant provisions of the GDPR and CCPA in order to develop tools for our customers’ privacy-compliant use of our services.
   </Accordion>
+
   <Accordion title="Is the Bright SDK secure according to industry standards?">
-    Answer here.
+    Yes. Bright SDK has been developed under the strictest security guidelines and is constantly monitored accordingly.\
+    [Click](https://docs.google.com/spreadsheets/d/1iuWmD6t4maCcMXXtIFodwdOIZO_vXRwGpNKq3C_J0hA/) for a detailed view of the SDK compliance with security industry standards by leading organizations.
   </Accordion>
+
   <Accordion title="Why does Kaspersky display a warning?">
-    Answer here.
+    Kaspersky detects the general type of technology used by the Bright SDK to collect web data, which is called proxy. \
+    \
+    But they also say very clearly that this it is NOT a virus. You can see specifically that Kaspersky, in their knowledge base, writes “If a user has installed such a program on his/her computer, or if it was installed by a system administrator, then it does not pose any threat.”\
+    \
+    Find more info on [Kaspersky site](https://encyclopedia.kaspersky.com/knowledge/server-proxy/).
   </Accordion>
+
   <Accordion title="How often should I update Bright SDK?">
-    Answer here.
+    The Bright SDK R&D team works tirelessly to improve and optimize its performance. We strongly recommend integrating the latest version and keeping it regularly updated.
+
+    We notify our partners about every new release through our monthly newsletter, and for critical updates, we send separate email notifications.
+
+    At a minimum, every app should be updated with the latest SDK version once per quarter. Please note that updating the SDK does not require our compliance review and can be published directly through the relevant app store, as explained [here](https://docs.bright-sdk.com/help-center/app-submission-and-review).
   </Accordion>
+
   <Accordion title="What does Bright SDK do?">
-    Answer here.
+    Bright SDK indexes information that is available on public websites. This information is freely available to any user, without a login or password, and is downloaded anonymously. Bright SDK is one of the tools that enables Bright Data to collect public web data.
+
+    You can think of it this way: Bright Data automates the process that any human can do. For example, a company can put 100 employees to work 24/7 to record prices of product on a website, browsing individual URLs using a browser, reading the information they see on the screen, and manually fill large tables. Or they can just use Bright Data to do it automatically and at scale.
+
+    For avoidance of doubt, here is a partial list of things that Bright SDK does NOT do. Bright SDK :
+
+    - Does NOT use user’s credentials or information when downloading public web data from a website. 
+    - Does NOT collect any personal information regarding the user. Bright SDK complies with GDPR and CCPA.
+    - Does NOT track the user in any way. Bright SDK does not have a notion of ‘user’. For example, if a user opts-in to the Bright SDK offer in an app, then uninstalls the app, reinstalls the same app and opts-in again, Bright SDK doesn’t know it was the same user.
+    - Does NOT change content on websites (e.g. leave reviews, upvote). Web indexing is totally passive process.
+    - Does NOT allow sending emails (port 25 is blocked) and can NOT be used to send spam. Bright SDK only uses port 80 and 443, to download traffic over HTTP and HTTPS. 
+    - Does NOT harm the website’s response time to users. Bright Data uses real-time monitoring to ensure web indexing does not impact the website and stops indexing if needed.
+
+    See this video for further illustration.
+
+    <iframe className="w-full aspect-video rounded-xl" src="https://www.youtube.com/embed/IqUTuzCOs4I" title="How Public Web Data has Helped Create the new 'Modern Day Mystery Shopper" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
   </Accordion>
+
   <Accordion title="What is the Bright SDK opt-in screen? What does it say?">
-    Answer here.
+    Bright Data believes in transparency and strong [ethics](https://brightdata.com/ethical).
+
+    We think that users rarely read the fine print in a long text agreement, and that many users blindly click ‘accept’. And we don’t like that. We believe users should make informed decisions.
+
+    For this reason, we decided to display a dedicated opt-in screen that will be simple and easy to understand. Of course, the full legal text is available for users who want to go deeper. Here is the consent screen, explained in detail – click the image to see the full size:
+
+    <img
+      src="/help-center/image/What is the Bright SDK opt-in screen What does it say.png"
+      alt="Alt text"
+      width="400"
+    />
   </Accordion>
+
   <Accordion title="Can I decide when to show the consent screen?">
-    Answer here.
+    Yes – you know your app best, so you can choose the best time to show it. Here are a few examples of possible times to display it:\\
+
+    1. If you are using the Bright SDK to replace ads:
+       - On launch: ask the user ‘do you want to remove ads for free’?
+       - After showing a few ads: ‘tired of ads? Remove them for free’
+    2. If you are using the Bright SDK for additional revenue on top of ads:
+       - When you detect the user is happy and it is a good time to ask for their support
+       - On launch ‘the app is free, help me keeping it free – if you accept the offer on the next page I will get paid’
+
+    Remember that you can offer the Bright SDK several times during the app’s lifetime and/or user’s journey inside a session. \
+    Note that monetization will NOT start until the user has opted-in on the consent screen.
   </Accordion>
+
   <Accordion title="What are the guidelines to implementing the consent screen?">
-    Answer here.
+    Take care when implementing the consent screen and the opt-out mechanisms, please make sure:
+
+    1) Users must ALWAYS decide if they want to VOLUNTARILY opt-in after seeing the consent screen.\
+    2) ALWAYS have an easy way to opt out.\
+    3) Bright Data recommends offering some value to the user in exchange for opting-in.\
+    [\<Read more here\>](https://earnapp.com/developer/faq#what-value-can-i-offer-to-my-users-in-exchange-to-opting-in)\
+    4) DO NOT suggest BrightSDK as an alternative to paying for subscription via the AppStore. This is in violation of AppStore’s policy.
+
+    Note: Bright Data reviews BrightSDK implementation after initial release and regularly thereafter.\
+    Your account will be terminated if you violate the SDK implementation guidelines.
   </Accordion>
+
   <Accordion title="What if my users decide to decline the BrightSDK offer?">
-    Answer here.
+    **No problem! **The user can decline when the BrightSDK screen appears, and then we suggest you offer them the ad-supported or premium version of your app. Keep in mind that the user may also opt-out at any point from the settings menu.
   </Accordion>
+
   <Accordion title="Does Bright SDK use cookies?">
-    Answer here.
+    **No.**
   </Accordion>
+
   <Accordion title="Do Bright Data's customers see my user's personal data?">
-    Answer here.
+    **No! **Bright Data customers send requests to Bright Data’s Secure Cloud. The request is then sent via your user’s device to the public website, and goes back to the customer via the Secure Cloud. The customer does not know where the response came from – **not even your user’s IP address**. They just know it came from country XYZ.
   </Accordion>
+
   <Accordion title="Is Bright SDK directed towards children under 13?">
-    Answer here.
+    No, Bright SDK is not directed towards children under 13. Bright Data implemented several steps to limit Bright SDK to children under 13, including the following:  
+
+    Apps owned and operated by Bright Data are published on app stores with an age rating of 13\+. This means that if a platform supports parental controls for app downloads and the parental controls were enabled in the device, Bright Data’s apps will not even be displayed in the relevant app store to children under 13. 
+
+    We advertise our owned and operated apps. Where possible, we ask our advertising partners not to show our ads to users under the age of 13. 
+
+    On platforms that have parental control, and Bright Data is able to identify that the user is defined in the age 0-12 years, the Bright SDK will not be available.
+
+    To be clear, Bright SDK does not collect, use or disclose any personal information from its users and does not track user activity in any way. You can see further details and information in our [privacy policy](https://brightdata.com/legal/sdk-privacy) and [FAQ](https://bright-sdk.com/users).
   </Accordion>
+
   <Accordion title="Why does AVAST/AVG show a message about Bright SDK?">
-    Answer here.
+    Certain versions of Avast and AVG may display a message saying that a Bright SDK partner app is “Potentially Unwanted Application (PUA)”. This is a general warning message to ensure that you, the user, chose to download these apps. Obviously you did, otherwise you wouldn’t be here!
+
+    To be 100% clear, this does not mean in any way that Bright SDK is malicious or harmful to your computer!
+
+    In fact, it is compliant with all of Avast’s guidelines and many other leading antivirus companies ([click to learn more](https://docs.google.com/spreadsheets/d/1J4w-20ba6ZtpKaWo4YXL27_YE0byFfCO_ZNZnmbspwk/edit#gid=386861895)), which means that it meets their standards for quality, security, and performance.
+
+    Therefore, we can assure you are in good hands! [Visit our trust center](https://brightdata.com/trustcenter) to learn more.
   </Accordion>
 </AccordionGroup>
