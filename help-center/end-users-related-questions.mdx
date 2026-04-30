@@ -1,27 +1,39 @@
 ---
-title: 'End-Users Related Questions'
+title: "End-Users Related Questions"
 ---
 
 <AccordionGroup>
   <Accordion title="Will Bright Data slow my user's Internet or affect any of their other apps?">
-    Answer here.
+    **No.** The service is engineered to be non-intrusive. It works silently in the background, only using small “packets” of your users' unused connection that wouldn’t be used otherwise. We’ve implemented continuous system monitoring to ensure that our background tasks always yield to their streaming, gaming, or browsing. Because the service is designed to stay within strict, safe thresholds, it will not  materially adversely affect their device or network’s behavior or performance.
   </Accordion>
+
   <Accordion title="Does Bright SDK use any space on my user's hard drive?">
-    Answer here.
+    **No, **Bright SDK does not use any space on your hard disk.
   </Accordion>
+
   <Accordion title="Does Bright SDK use the CPU for Crypto mining?">
-    Answer here.
+    **No. **CPU is only used when Bright SDK sends traffic, which happens only when the device resources are available, so the user never feels it.
   </Accordion>
+
   <Accordion title="Does Bright SDK use the device's GPU in any way?">
-    Answer here.
+    No. Only minimal CPU resources, as explained in [**_How much CPU does Bright SDK use?_**](https://docs.bright-sdk.com/help-center/end-users-related-questions#how-much-cpu-does-bright-sdk-use)
   </Accordion>
+
   <Accordion title="Do my users accumulate cookies from random sites?">
-    Answer here.
+    **No.** Nothing is left on your user’s device.
   </Accordion>
+
   <Accordion title="How much CPU does Bright SDK use?">
-    Answer here.
+    **Very little.** 
+
+    Upon your users' explicit consent, our service utilizes a small portion of their outbound bandwidth for data transfer. To maintain their network’s integrity, we employ automated safeguards that prevent the consumption of excessive data. Our “Fair-Usage” algorithm ensures that the service remains a background process that does not compete with the system resources. We actively monitor all traffic to ensure our usage remains well below levels that would impact their connection’s stability or the functionality of other installed software.
+
+    **Your users will never see 100% CPU or experience any slowdown in apps!**
   </Accordion>
+
   <Accordion title="Can a user have more than 1 app with Bright SDK on the same device?">
-    Answer here.
+    Short answer: Yes. Although the probability of that scenario is not too high.
+
+    [See this article](https://docs.bright-sdk.com/help-center/payment-information#how-am-i-paid-in-case-more-than-one-sdk-is-running-on-the-same-device) to understand the payment terms of such case.
   </Accordion>
 </AccordionGroup>
