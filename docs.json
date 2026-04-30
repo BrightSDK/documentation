@@ -75,23 +75,38 @@
               "help-center/FAQ",
               {
                 "group": "About us",
-                "pages": []
+                "pages": [
+                  "help-center/general-introduction",
+                  "help-center/compliance-privacy-and-security"
+                ]
               },
               {
                 "group": "Technical Implementation",
-                "pages": []
+                "pages": [
+                  "help-center/end-users-related-questions",
+                  "help-center/general-implementation-questions",
+                  "help-center/app-submission-and-review"
+                ]
               },
               {
                 "group": "Business & Payment Terms",
-                "pages": []
+                "pages": [
+                  "help-center/business-opportunity",
+                  "help-center/payment-information"
+                ]
               },
               {
                 "group": "Partner Program",
-                "pages": []
+                "pages": [
+                  "help-center/bright-sdk-dashboard",
+                  "help-center/bright-sdk-partner-program-information"
+                ]
               },
               {
                 "group": "Bright Video",
-                "pages": []
+                "pages": [
+                  "help-center/bright-video"
+                ]
               }
             ]
           }
