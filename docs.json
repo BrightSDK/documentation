@@ -102,12 +102,7 @@
                   "help-center/bright-sdk-partner-program-information"
                 ]
               },
-              {
-                "group": "Bright Video",
-                "pages": [
-                  "help-center/bright-video"
-                ]
-              }
+              "help-center/bright-video"
             ]
           }
         ]
