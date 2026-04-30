@@ -26,14 +26,16 @@
                 "group": "Tizen",
                 "pages": [
                   "integration-guides/tizen-integration",
-                  "integration-guides/how-to-upload-apps-to-the-samsung-store"
+                  "integration-guides/how-to-upload-apps-to-the-samsung-store",
+                  "integration-guides/faq-tizen"
                 ]
               },
               {
                 "group": "Windows",
                 "pages": [
                   "integration-guides/windows-integration-net",
-                  "integration-guides/windows-integration-c"
+                  "integration-guides/windows-integration-c",
+                  "integration-guides/faq-win"
                 ]
               },
               {
@@ -41,21 +43,24 @@
                 "pages": [
                   "integration-guides/webos-integration",
                   "integration-guides/how-to-upload-apps-to-the-lg-store",
-                  "integration-guides/LG-WebOS-SDK"
+                  "integration-guides/LG-WebOS-SDK",
+                  "integration-guides/faq-webos"
                 ]
               },
               {
                 "group": "iOS",
                 "pages": [
                   "integration-guides/ios-tvos",
-                  "integration-guides/mac-os"
+                  "integration-guides/mac-os",
+                  "integration-guides/faq-ios"
                 ]
               },
               {
                 "group": "Android",
                 "pages": [
                   "integration-guides/android-sdk",
-                  "integration-guides/unity-sdk"
+                  "integration-guides/unity-sdk",
+                  "integration-guides/faq-android"
                 ]
               },
               {
@@ -64,7 +69,8 @@
                   "integration-guides/hola-vpn",
                   "integration-guides/bright-vpn",
                   "integration-guides/earn-app",
-                  "integration-guides/reward-gum"
+                  "integration-guides/reward-gum",
+                  "integration-guides/faq-bundle"
                 ]
               }
             ]
@@ -72,7 +78,6 @@
           {
             "group": "Help Center",
             "pages": [
-              "help-center/FAQ",
               {
                 "group": "About us",
                 "pages": [
