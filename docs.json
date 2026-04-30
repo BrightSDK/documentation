@@ -70,10 +70,29 @@
             ]
           },
           {
-            "group": "Technical Implementation",
+            "group": "Help Center",
             "pages": [
               "technical-implementation/FAQ",
-              "technical-implementation/troubleshooting"
+              {
+                "group": "About us",
+                "pages": []
+              },
+              {
+                "group": "Technical Implementation",
+                "pages": []
+              },
+              {
+                "group": "Business & Payment Terms",
+                "pages": []
+              },
+              {
+                "group": "Partner Program",
+                "pages": []
+              },
+              {
+                "group": "Bright Video",
+                "pages": []
+              }
             ]
           }
         ]
