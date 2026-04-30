@@ -72,7 +72,7 @@
           {
             "group": "Help Center",
             "pages": [
-              "technical-implementation/FAQ",
+              "help-center/FAQ",
               {
                 "group": "About us",
                 "pages": []
