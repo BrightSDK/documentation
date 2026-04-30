@@ -1,36 +1,89 @@
 ---
-title: 'General Implementation Questions'
+title: "General Implementation Questions"
 ---
 
 <AccordionGroup>
   <Accordion title="Is there a Bright SDK version for Minecraft or Minecraft MODs?">
-    Answer here.
+    **No.** Bright SDK does not support Minecraft nor Minecraft MODs.
   </Accordion>
+
   <Accordion title="Can I offer different value to different users?">
-    Answer here.
+    **Yes!**
+
+    It can be a good strategy that will also influence your revenue positively. You might want to offer higher value to users based on their geo location, in accordance to the daily rates in our agreement.
+
+    For example, if your value offer to all users is 1000 points, or 1 extra character, you might offer 2000 points/2 extra characters to users in a country where your daily rates are higher.
+
+    To implement the above, all you need is to identify the user by country or other characteristics of your choice, and modify the benefit text depending on the offer you provide them with.
+
+    Remember to apply this benefit after the user give their consent.
   </Accordion>
+
   <Accordion title="What are the supported platforms?">
-    Answer here.
+    Currently you can use Bright SDK to monetize apps that run on:
+
+    - Windows 
+    - Mac
+    - Android
+    - SmartTVs (LG, Samsung, Roku, Apple TV)
+    - iOS
+
+    Bright SDK supports Android native apps written in Java and Kotlin, and also cross-platform development frameworks such as Unity, Flutter and Xamarin.\
+    For Unity integration help, refer to [Unity Android SDK Integration Guide](https://docs.bright-sdk.com/integration-guides/unity-sdk).\
+    You can use Kotlin for integration, but we don’t have a separate integration guide for that. Nevertheless, we will be happy to help with such integration, and if you have additional questions, we will add them to the guide.
+
+    The Universal Render Pipeline (URP), made by Unity, is also supported by Bright SDK
+
+    We will contact all our developers when new platforms become available.
   </Accordion>
+
   <Accordion title="When exactly does resource sharing start?">
-    Answer here.
+    Only after the user clicks “I Agree” on the consent screen.
   </Accordion>
+
   <Accordion title="Is there any ongoing maintenance work after implementation?">
-    Answer here.
+    **No.**
   </Accordion>
+
   <Accordion title="What is an AppID?">
-    Answer here.
+    By AppID we mean the unique identifier that is associated per each one of your apps, on Bright SDK dashboard.  Once you add a new app, as explained [here](https://docs.bright-sdk.com/help-center/bright-sdk-dashboard#how-do-i-create-a-new-appid), it generates a unique AppID, that will be used to count every active device and ensure it is associated with your account, and that you are being paid for it.
+
+    This AppID is used as part of your implementation for Windows and Roku. To learn more, follow the corresponding integration guide.\
+    AppID is not used explicitly when integrating iOS/tvOS, Android and WebOS. Instead, it is based on your app's ID in the relevant app store.
   </Accordion>
+
   <Accordion title="Can I design my own consent (offer) screen?">
-    Answer here.
+    Yes!
+
+    We encourage our partners to design and implement their own consent screen, that has the same look and feel as the rest of their apps. Our integration guides include important guidelines for such cases, such as mandatory text that has to be presented to users, to maintain high level of transparency. That is why we review and approve each case before publishing.
+
+    If you prefer, you are also welcome to use our built-in template consent screen, in which you can edit some dynamic parts with your own text and add your app logo.
+
+    More information can be found in our integration guides.
   </Accordion>
+
   <Accordion title="How do I implement Bright SDK?">
-    Answer here.
+    Implementation is fairly simple. Basically, you decide when to show the Bright SDK screen, and if the user accepts, you modify the app behavior (e.g. not display ads; unlock some premium features).
+
+    You also need to add an easy way for the user to opt out, for example in your app’s settings menu.
+
+    Please [contact us](https://earnapp.com/developer/#form) to receive the implementation guide for your app’s platform(s).
   </Accordion>
+
   <Accordion title="How long does the implementation take?">
-    Answer here.
+    A few hours.\
+    Realistically 1-2 days including testing.
   </Accordion>
+
   <Accordion title="What Should I pay attention to during implementation?">
-    Answer here.
+    Essentially, all the necessary information is outlined in our integration guides for each operating system (OS). However, we highly recommend watching our guided tour video. It highlights critical elements to pay attention to, ensuring a faster review process and transparent communication with your users.
+
+    <iframe
+  className="w-full aspect-video rounded-xl"
+  src="https://www.youtube.com/embed/kQCmca0FHyw"
+  title="Bright SDK Implementation - Guided tour"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe>
   </Accordion>
 </AccordionGroup>
