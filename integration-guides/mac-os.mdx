@@ -8,7 +8,7 @@ import { OptInOut } from "/snippets/add-opt-in-out-apple.jsx";
 import ConsentDialogCustom from "/snippets/consent-dialog-customization-ios.mdx";
 import { CustomConsentWindows } from "/snippets/custom-consent-windows.jsx";
 import AppPerformance from "/snippets/app-performance.mdx";
-import tos from "/snippets/terms-of-service-apple.mdx";
+import { tos } from "/snippets/terms-of-service-apple.jsx";
 import { SubmitIntegrationReview } from "/snippets/submit-integration-review.jsx";
 import UpdateSDK from "/snippets/update-sdk-version-apple.mdx";
 import API from "/snippets/api-documentation-apple.mdx";
@@ -218,7 +218,7 @@ import API from "/snippets/api-documentation-apple.mdx";
   </Step>
 
   <Step title="Submit Your Integration for Review" titleSize="h3">
-    <SubmitIntegrationReview />
+    <SubmitIntegrationReview platform="macos" />
   </Step>
 
   <Step title="How to Update the SDK" titleSize="h3">
