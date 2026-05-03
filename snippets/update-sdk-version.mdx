@@ -7,8 +7,14 @@ Download the latest SDK from our website and follow these steps:
 1. **Standard Update Process**
    - Replace `brd_api.js` with the newer version.
    - Delete the existing service directory and replace it with the new version.
-   - **WebOs:** [see](https://docs.bright-sdk.com/integration-guides/webos-integration#how-to-update-sdk).
-   - **Tizen:** [see](https://docs.bright-sdk.com/integration-guides/tizen-integration#how-to-update-sdk).
+   
+{(user.content?.platform === "webos" || user.content?.platform === "tizen") && (
+  <>
+    - **WebOs:** [see](https://docs.bright-sdk.com/integration-guides/webos-integration#how-to-update-sdk).
+    - **Tizen:** [see](https://docs.bright-sdk.com/integration-guides/tizen-integration#how-to-update-sdk).
+  </>
+)}
+
 2. **Hosted Web App Considerations**
    Important: if your app is [<u>Hosted Web App</u>](https://webostv.developer.lge.com/develop/getting-started/web-app-types) maintain SDK file version consistency across all components.
    Since `brd_api.js` is typically hosted on your web server, ensure backward compatibility with previous app versions before submitting to LG.
