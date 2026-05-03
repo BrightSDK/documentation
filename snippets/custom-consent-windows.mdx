@@ -102,7 +102,7 @@ Example:
 
 </>}
 
-{platform === "macos" && <>
+{props.platform === "macos" && <>
 
 - Pass skip_consent: true (or equivalent) in the SDK initializer to prevent the default consent screen from showing.
 - The opt-in button (e.g., "I Agree") should call `external_opt_in()`.

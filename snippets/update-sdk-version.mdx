@@ -8,7 +8,7 @@ Download the latest SDK from our website and follow these steps:
    - Replace `brd_api.js` with the newer version.
    - Delete the existing service directory and replace it with the new version.
    
-{(user.content?.platform === "webos" || user.content?.platform === "tizen") && (
+{(props.platform === "webos" || props.platform === "tizen") && (
   <>
     - **WebOs:** [see](https://docs.bright-sdk.com/integration-guides/webos-integration#how-to-update-sdk).
     - **Tizen:** [see](https://docs.bright-sdk.com/integration-guides/tizen-integration#how-to-update-sdk).
