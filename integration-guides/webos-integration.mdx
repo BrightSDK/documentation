@@ -9,8 +9,8 @@ import CustomConsent from "/snippets/custom-consent-screen.mdx";
 import AppPerformance from "/snippets/app-performance.mdx";
 import SelfCheckIntegration from "/snippets/self-check-integration.mdx";
 import UpdateTermsOfService from "/snippets/update-terms-of-service.mdx";
-import SubmitIntegrationReview from "/snippets/submit-integration-review.mdx";
-import UpdateSdkVersion from "/snippets/update-sdk-version.mdx";
+import { SubmitIntegrationReview } from "/snippets/submit-integration-review.jsx";
+import { UpdateSdkVersion } from "/snippets/update-sdk-version.jsx";
 import ApiDocumentation from "/snippets/api-documentation.mdx";
 
 ### Requirements
@@ -199,7 +199,7 @@ import ApiDocumentation from "/snippets/api-documentation.mdx";
   </Step>
 
   <Step title="Submit your integration for review" titleSize="h3">
-    <SubmitIntegrationReview />
+    <SubmitIntegrationReview platform="webos" />
   </Step>
 
   <Step title="How to Update SDK" titleSize="h3">

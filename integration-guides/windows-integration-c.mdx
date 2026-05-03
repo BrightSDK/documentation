@@ -8,12 +8,12 @@ import IntegrationWin from "/snippets/win-integration-methods.mdx";
 import AppIdWin from "/snippets/create-app-id-windows.mdx";
 import OptInOutWin from "/snippets/add-opt-in-out-windows.mdx";
 import UpdateAppInstall from "/snippets/update-application-installer-windows.mdx";
-import CustomConsentWin from "/snippets/custom-consent-windows.mdx";
+import { CustomConsentWindows } from "/snippets/custom-consent-windows.jsx";
 import AppPerformance from "/snippets/app-performance.mdx";
 import SelfCheckIntegration from "/snippets/self-check-integration.mdx";
 import UpdateTermsOfService from "/snippets/update-terms-of-service.mdx";
-import SubmitIntegrationReview from "/snippets/submit-integration-review.mdx";
-import UpdateSdkVersion from "/snippets/update-sdk-version.mdx";
+import { SubmitIntegrationReview } from "/snippets/submit-integration-review.jsx";
+import { UpdateSdkVersion } from "/snippets/update-sdk-version.jsx";
 
 ### Integration Methods
 
@@ -125,7 +125,7 @@ import UpdateSdkVersion from "/snippets/update-sdk-version.mdx";
   </Step>
 
   <Step title="Custom Consent Screen (Optional)" titleSize="h3">
-    <CustomConsentWin />
+    <CustomConsentWindows platform="win" />
   </Step>
 
   <Step title="Self-Check Your Integration" titleSize="h3">

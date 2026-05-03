@@ -6,10 +6,10 @@ sidebarTitle: "MacOS SDK"
 
 import { OptInOut } from "/snippets/add-opt-in-out-apple.jsx";
 import ConsentDialogCustom from "/snippets/consent-dialog-customization-ios.mdx";
-import CustomConsent from "/snippets/custom-consent-windows.mdx";
+import { CustomConsentWindows } from "/snippets/custom-consent-windows.jsx";
 import AppPerformance from "/snippets/app-performance.mdx";
 import tos from "/snippets/terms-of-service-apple.mdx";
-import SubmitIntegrationReview from "/snippets/submit-integration-review.mdx";
+import { SubmitIntegrationReview } from "/snippets/submit-integration-review.jsx";
 import UpdateSDK from "/snippets/update-sdk-version-apple.mdx";
 import API from "/snippets/api-documentation-apple.mdx";
 
@@ -187,7 +187,7 @@ import API from "/snippets/api-documentation-apple.mdx";
   </Step>
 
   <Step title="Custom Consent Screen (optional)" titleSize="h3">
-    <CustomConsent platform="macos" />
+    <CustomConsentWindows platform="macos" />
   </Step>
 
   <Step title="App Performance" titleSize="h3">
