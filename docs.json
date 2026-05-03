@@ -59,8 +59,7 @@
                 "group": "Android",
                 "pages": [
                   "integration-guides/android-sdk",
-                  "integration-guides/unity-sdk",
-                  "integration-guides/faq-android"
+                  "integration-guides/unity-sdk"
                 ]
               },
               {
@@ -69,8 +68,7 @@
                   "integration-guides/hola-vpn",
                   "integration-guides/bright-vpn",
                   "integration-guides/earn-app",
-                  "integration-guides/reward-gum",
-                  "integration-guides/faq-bundle"
+                  "integration-guides/reward-gum"
                 ]
               }
             ]

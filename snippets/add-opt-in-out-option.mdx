@@ -13,7 +13,7 @@ Regardless of the user's initial choice, you must add an option for users to opt
    1. <u>Add a switch labeled "Web Indexing" -</u> Must clearly reflect current status (opted-in or opted-out).
       - `brd_api.get_status().consent === true` → checked/on.
       - `brd_api.get_status().consent === false` → unchecked/off.
-   2. <u>Add value text below the switch -</u> Emphasize the benefits users get when opting in. ([see examples](https://docs.bright-sdk.com/integration-guides/tizen-integration#:~:text=Value%20Text%20Examples%3A))
+   2. <u>Add value text below the switch -</u> Emphasize the benefits users get when opting in. ([see examples](#:~:text=Value%20Text%20Examples%3A))
    3. Include a way to give more information
       - Best practice: Include a QR code linking to: [<u>https://brightdata.com/sdk/information?is\_tv=1</u>](https://brightdata.com/sdk/information?is_tv=1)
       - Accompany with text: "**Scan the QR Code to learn more about web indexing by Bright Data**".
@@ -28,6 +28,7 @@ Regardless of the user's initial choice, you must add an option for users to opt
    5. Behavior
       - Turning OFF → call `brd_api.opt_out()`.
       - Turning ON → call `brd_api.show_consent()` (user action should open consent).
+
    **Examples of opted-in and opted-out scenarios:**
    <Columns cols={2}>
      <Card img="/integration-guides/image/opt-it-off-1.png">
@@ -39,6 +40,7 @@ Regardless of the user's initial choice, you must add an option for users to opt
      <Card img="/integration-guides/image/opt-it-on-2.png">
      </Card>
    </Columns>
+
    **Value Text Examples:**
    | When opted-out: | When opted-in: |
    | --- | --- |
@@ -54,6 +56,7 @@ Regardless of the user's initial choice, you must add an option for users to opt
    | Switch without value text | ❌ Missing text emphasizing value to users |
    | Switch without status indicator | ❌ Switch should clearly show current opt-in/opt-out status |
    | No "Learn More" option | ❌ Missing link/QR code to information page |
+   
    **Optional: Confirmation Dialogs -** You may add pop-up/confirmation dialogs to:
    - <u>Discourage opt-out:</u> "If you disable Web Indexing, you will start seeing ads. Do you want to see ads?"
    - <u>Confirm opt-out:</u> "You have successfully disabled Web Indexing. You may enable it again anytime from the settings menu."
