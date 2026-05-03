@@ -79,7 +79,7 @@ Example:
 
 **<u>Integration Code:</u>**
 
-{platform === "win" && <>
+{props.platform === "win" && <>
 1. **Skip Default Consent Screen - **Pass `SkipConsent = true` in the SDK's initialization method to prevent showing the default consent screen.
 2. **Track Consent Screen Display - **When your external consent screen is displayed, call `NotifyShowConsent()` method.
 3. **Handle User Response**
