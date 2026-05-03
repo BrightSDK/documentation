@@ -9,126 +9,101 @@ title: "Add Opt-In/Out Option"
 Regardless of the user's initial choice, you must add an option for users to opt-in/out at any time. This is usually placed in the settings menu.
 
 1. **Adding Opt-In/Out to Your Existing Settings Menu**
-
    **Requirements:**
    1. <u>Add a switch labeled "Web Indexing" -</u> Must clearly reflect current status (opted-in or opted-out).
       - `brd_api.get_status().consent === true` → checked/on.
       - `brd_api.get_status().consent === false` → unchecked/off.
-   2. <u>Add value text below the switch -</u> Emphasize the benefits users get when opting in.
+   2. <u>Add value text below the switch -</u> Emphasize the benefits users get when opting in. ([see examples](https://docs.bright-sdk.com/integration-guides/tizen-integration#:~:text=Value%20Text%20Examples%3A))
    3. Include a way to give more information
-      - Best practice: Include a QR code linking to: [<u>https://brightdata.com/sdk/information?is_tv=1</u>](https://brightdata.com/sdk/information?is_tv=1)
+      - Best practice: Include a QR code linking to: [<u>https://brightdata.com/sdk/information?is\_tv=1</u>](https://brightdata.com/sdk/information?is_tv=1)
       - Accompany with text: "**Scan the QR Code to learn more about web indexing by Bright Data**".
       - You can use:
         1. Your own branded QR code.
         2. [<u>This QR code (SVG)</u>](https://drive.google.com/file/d/1d1KCJIrc8L_5mQJFfOU3Bt5f4PadnImg/view?usp=sharing)<u>.</u>
         3. Hosted version: [<u>https://media.bright-sdk.com/2023/09/qr-bright-sdk-faq.svg</u>](https://media.bright-sdk.com/2023/09/qr-bright-sdk-faq.svg)
-   1. UX Guidelines
+   4. UX Guidelines
       - You're free to choose the UX (radio button, switch, etc.).
       - The opt-out option must be clearly labeled.
       - Users must be able to freely opt-out.
-   2. Behavior
+   5. Behavior
       - Turning OFF → call `brd_api.opt_out()`.
       - Turning ON → call `brd_api.show_consent()` (user action should open consent).
-
    **Examples of opted-in and opted-out scenarios:**
-
    <Columns cols={2}>
      <Card img="/integration-guides/image/opt-it-off-1.png">
-       
      </Card>
      <Card img="/integration-guides/image/opt-it-off-2.png">
-       
      </Card>
      <Card img="/integration-guides/image/opt-it-on-1.png">
-       
      </Card>
      <Card img="/integration-guides/image/opt-it-on-2.png">
-       
      </Card>
    </Columns>
    **Value Text Examples:**
-
-   | When opted-out:                  | When opted-in:                          |
-   | -------------------------------- | --------------------------------------- |
-   | Enable to see fewer ads          | When enabled you see fewer ads          |
-   | Enable to get 100 extra coins    | When enabled you get 100 extra coins    |
+   | When opted-out: | When opted-in: |
+   | --- | --- |
+   | Enable to see fewer ads | When enabled you see fewer ads |
+   | Enable to get 100 extra coins | When enabled you get 100 extra coins |
    | Enable to enjoy premium features | When enabled you enjoy premium features |
-   | Enable to get 2 free cars        | When enabled you get 2 free cars        |
-   | Enable to unlock more levels     | When enabled you unlock more levels     |
-
+   | Enable to get 2 free cars | When enabled you get 2 free cars |
+   | Enable to unlock more levels | When enabled you unlock more levels |
    **Common Mistakes to Avoid:**
-
-   | Example                         | Issue                                                      |
-   | ------------------------------- | ---------------------------------------------------------- |
-   | Label: "Bright SDK"             | ❌ Label should be "Web Indexing", not "Bright/Bright SDK"  |
-   | Switch without value text       | ❌ Missing text emphasizing value to users                  |
+   | Example | Issue |
+   | --- | --- |
+   | Label: "Bright SDK" | ❌ Label should be "Web Indexing", not "Bright/Bright SDK" |
+   | Switch without value text | ❌ Missing text emphasizing value to users |
    | Switch without status indicator | ❌ Switch should clearly show current opt-in/opt-out status |
-   | No "Learn More" option          | ❌ Missing link/QR code to information page                 |
-
+   | No "Learn More" option | ❌ Missing link/QR code to information page |
    **Optional: Confirmation Dialogs -** You may add pop-up/confirmation dialogs to:
    - <u>Discourage opt-out:</u> "If you disable Web Indexing, you will start seeing ads. Do you want to see ads?"
    - <u>Confirm opt-out:</u> "You have successfully disabled Web Indexing. You may enable it again anytime from the settings menu."
-
    <Note>
      **You are** responsible for the text and design. These will be **reviewed** before publishing.
    </Note>
-1. **If You Don't Have a Settings Menu**
-
+2. **If You Don't Have a Settings Menu**
    You can use the ready-to-use simple opt-out UI.
    1. **How It Works:**
       - Set `simple_opt_out` in your settings.
-      - Users can opt-out by pressing [5] on the remote control.
+      - Users can opt-out by pressing \[5\] on the remote control.
       - This reopens the consent screen.
       - If user opts out, consent screen will reappear after several app restarts (see `repeat_consent`).
       - <u>Default:</u> Consent screen shows after 3 restarts when using `simple_opt_out`.
    2. **Visual Indicator:**
-
       After the user closes the consent screen, a small notification appears in the bottom left corner:
       - Hidden after 10 seconds.
       - Displayed every time the app starts (except the first time).
    3. **Custom Button Text:**
-
       You can customize button text on the consent screen by passing an object to `simple_opt_out`.
-
       Example:
-
       ```markdown
         {
           agree_btn: 'Keep Ad-Free’,
           disagree_btn: 'ADS',
         }
       ```
-
       These settings accept the same values as `settings.agree_btn` and `settings.disagree_btn`. If not overridden, they inherit from the initial consent screen. With custom text, the consent screen looks like:
-
       <img
         src="/integration-guides/image/consent_screen.png"
         alt="Alt text"
         width="400"
       />
-
       <Info>
         **Button Conflicts** - When using "simple opt-out":
-        - Don't use button [5] - reserved for displaying consent screen.
-        - When consent screen is displayed, [left], [right], and [ok] buttons are used.
+        - Don't use button \[5\] - reserved for displaying consent screen.
+        - When consent screen is displayed, \[left\], \[right\], and \[ok\] buttons are used.
         - Disable these buttons or stop processing their input while consent screen is visible.
       </Info>
-2. **Consent Dialog Customization (Optional)**
-
+3. **Consent Dialog Customization (Optional)**
    You can customize the consent dialog by setting additional parameters in the `api_settings` object passed to `init()`.
-
    Customizable fields:
-
    <img
-        src="/integration-guides/image/consent_screen_customization.png"
-        alt="Alt text"
-        width="400"
+     src="/integration-guides/image/consent_screen_customization.png"
+     alt="Alt text"
+     width="400"
    />
-
    Default appearance (when optional parameters are skipped):
-
    <img
-        src="/integration-guides/image/consent_screen_default.png"
-        alt="Alt text"
-        width="400"
+     src="/integration-guides/image/consent_screen_default.png"
+     alt="Alt text"
+     width="400"
    />

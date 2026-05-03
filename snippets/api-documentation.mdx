@@ -1,21 +1,20 @@
 ---
-title: 'API documentation (TV)'
+title: "API documentation (TV)"
 ---
 
 <Steps>
   <Step title="Methods">
     | Method | Parameters | Description |
-    | :--- | :--- | :--- |
+    | :-- | :-- | :-- |
     | `brd_api.init()` | `settings`, `callbacks` | Initializes the API. Must be called at app startup. All other methods are accessible only after successful initialization. Consent screen is shown on first initialization by default - skip by setting `skip_consent: true` in settings. |
     | `brd_api.show_consent()` | `callbacks` | Displays the consent screen on user action. Use when a user tries to close an ad or clicks a checkbox to activate Bright SDK. |
-    | `brd_api.external_opt_in()` | `callbacks` | Call this after the user agrees on your own custom consent screen. [See Custom Consent Screen (optional)](#) for more details. |
+    | `brd_api.external_opt_in()` | `callbacks` | Call this after the user agrees on your own custom consent screen. [See Custom Consent Screen (optional)](https://docs.bright-sdk.com/integration-guides/tizen-integration#custom-consent-screen-optional) for more details. |
     | `brd_api.opt_out()` | `callbacks` | Disables Bright SDK. |
     | `brd_api.get_status()` | — | Returns the current `status` object. |
   </Step>
-
   <Step title="Status Object">
     | Property | Type | Description |
-    | :--- | :--- | :--- |
+    | :-- | :-- | :-- |
     | `consent` | `bool` | Current SDK status |
     | `ver` | `string` | Current SDK version (e.g. `"1.285.476"`) |
     | `tracking_id` | `string` | The app's tracking ID - can be set via `brd_api.init` |
@@ -23,17 +22,16 @@ title: 'API documentation (TV)'
     **`consent` possible values:**
 
     | Value | Meaning |
-    | :--- | :--- |
+    | :-- | :-- |
     | `true` | SDK is enabled and working |
     | `false` | SDK is disabled and disconnected |
     | `null` | User has not passed the consent screen yet |
   </Step>
-
   <Step title="Settings Object">
     **General**
 
     | Property | Type | Required | Description |
-    | :--- | :--- | :---: | :--- |
+    | :-- | :-- | :-: | :-- |
     | `app_name` | `string` | ✅ | Your app name — shown on the consent screen |
     | `app_logo` | `string` | ✅ | Path to your app logo — shown on the consent screen |
     | `tracking_id` | `string` | ❌ | Unique tracking ID for reports and debugging |
@@ -44,11 +42,12 @@ title: 'API documentation (TV)'
     **Consent Repeat Behavior**
 
     | Property | Type | Description |
-    | :--- | :--- | :--- |
-    | `simple_opt_out` | `boolean` or `object` | Allows users to opt out by pressing **[5]** — this reopens the consent screen. If opted out, the consent screen will reappear after several app restarts (see `repeat_consent`). You can pass an object to redefine the consent button text. (see 4.2 If You Don't Have a Settings Menu) |
+    | :-- | :-- | :-- |
+    | `simple_opt_out` | `boolean` or `object` | Allows users to opt out by pressing **\[5\]** — this reopens the consent screen. If opted out, the consent screen will reappear after several app restarts (see `repeat_consent`). You can pass an object to redefine the consent button text. (see 4.2 If You Don't Have a Settings Menu) |
     | `repeat_consent` | `integer` (≥ 3) | Shows the consent screen again after the specified number of app restarts. Only active when `simple_opt_out` is `true`. |
 
     **`simple_opt_out` object example:**
+
     ```javascript
     {
         agree_btn: 'Keep Ad-Free',
@@ -58,23 +57,23 @@ title: 'API documentation (TV)'
 
     **Consent Screen Buttons**
 
-    **`agree_btn` (string/enum)**
-    Sets the **agree** button text. Default: `I_AGREE`
+    **`agree_btn` (string/enum)** Sets the **agree** button text. Default: `I_AGREE`
 
     | Value | Button Text |
-    | :--- | :--- |
+    | :-- | :-- |
     | `I_AGREE` | I Agree |
     | `REMOVE_ADS` | Remove Ads |
     | `PREMIUM_VER` | Premium version |
     | `FREE_APP` | Get the app for free |
 
-    <Tip>You can also pass any custom string - if it doesn't match an enum value, it will be displayed as-is.</Tip>
+    <Tip>
+      You can also pass any custom string - if it doesn't match an enum value, it will be displayed as-is.
+    </Tip>
 
-    **`disagree_btn` (string/enum)**
-    Sets the **disagree** button text. Default: `Keep Ads`
+    **`disagree_btn` (string/enum)** Sets the **disagree** button text. Default: `Keep Ads`
 
     | Value | Button Text |
-    | :--- | :--- |
+    | :-- | :-- |
     | `I_DISAGREE` | I Disagree |
     | `ADS` | I prefer to see ads |
     | `LIMITED` | I prefer limited use |
@@ -82,39 +81,41 @@ title: 'API documentation (TV)'
     | `NOT_AGREE` | I Don't Agree |
     | `NO_THANK_YOU` | No, Thank You |
 
-    <Tip>You can also pass any custom string - if it doesn't match an enum value, it will be displayed as-is.</Tip>
+    <Tip>
+      You can also pass any custom string - if it doesn't match an enum value, it will be displayed as-is.
+    </Tip>
 
     **Callbacks (in Settings)**
 
     | Property | Type | Description |
-    | :--- | :--- | :--- |
+    | :-- | :-- | :-- |
     | `on_status_change` | `function` | Called every time the consent status changes |
     | `on_dialog_shown` | `function` | Called when the consent dialog is shown |
     | `on_dialog_closed` | `function` | Called when the consent dialog is closed |
   </Step>
-
   <Step title="Style Object">
     Use the `style` property to customize the visual appearance of the consent screen.
 
     **Background**
 
     | Property | Type | Description |
-    | :--- | :--- | :--- |
+    | :-- | :-- | :-- |
     | `custom_background_image` | `false` or `string` | Path to a background image for the consent screen |
     | `custom_background_color` | `string` | CSS `background-color` value. Set to `'none'` for transparent with background image |
 
     **Buttons**
 
     | Property | Type | Description |
-    | :--- | :--- | :--- |
+    | :-- | :-- | :-- |
     | `agree_btn_styles` | `string` | CSS styles for the agree button |
     | `disagree_btn_styles` | `string` | CSS styles for the disagree button |
     | `agree_btn_focus_styles` | `string` | CSS styles for the agree button on focus |
     | `disagree_btn_focus_styles` | `string` | CSS styles for the disagree button on focus |
     | `custom_background_button_color` | `string` | CSS `background-color` for buttons |
-    | `custom_focus_background_button_color`| `string` | CSS `background-color` for buttons on focus |
+    | `custom_focus_background_button_color` | `string` | CSS `background-color` for buttons on focus |
 
     **Button style example:**
+
     ```css
     background-image: url(accept_button.jpg);
     border: 3px solid black;
@@ -124,31 +125,30 @@ title: 'API documentation (TV)'
     **Typography**
 
     | Property | Type | Description |
-    | :--- | :--- | :--- |
+    | :-- | :-- | :-- |
     | `custom_font_family` | `string` | CSS `font-family` value |
     | `custom_font_size` | `string` | CSS `font-size` for general text (e.g. `'1.2vw'`) |
     | `custom_title_font_size` | `string` | CSS `font-size` for the title |
-    | `custom_bottom_text_font_size`| `string` | CSS `font-size` for bottom text |
+    | `custom_bottom_text_font_size` | `string` | CSS `font-size` for bottom text |
     | `custom_button_font_size` | `string` | CSS `font-size` for button text |
     | `custom_text_color` | `string` | CSS `color` for general text |
     | `custom_text_button_color` | `string` | CSS `color` for button text |
-    | `custom_focus_text_button_color`| `string` | CSS `color` for button text on focus |
+    | `custom_focus_text_button_color` | `string` | CSS `color` for button text on focus |
 
     **Icons & QR Code**
 
     | Property | Type | Description |
-    | :--- | :--- | :--- |
+    | :-- | :-- | :-- |
     | `custom_icon_color` | `string` | Icon image color |
     | `custom_qr_code_color` | `string` | QR code foreground color |
-    | `custom_qr_code_bg_color`| `string` | QR code background color |
+    | `custom_qr_code_bg_color` | `string` | QR code background color |
     | `shadow` | `boolean` | Enables shadow on the consent popup |
   </Step>
-
   <Step title="Callbacks Object">
     The `callbacks` object can be passed to any method that accepts it.
 
     | Property | Type | Description |
-    | :--- | :--- | :--- |
+    | :-- | :-- | :-- |
     | `on_success` | `function` | Called when the method completes successfully |
     | `on_failure` | `function` | Called when an error occurs |
   </Step>
