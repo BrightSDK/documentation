@@ -1,27 +1,277 @@
 ---
-title: 'Bright SDK Dashboard'
+title: "Bright SDK Dashboard"
 ---
 
 <AccordionGroup>
   <Accordion title="Does Bright SDK dashboard offer reports API?">
-    Answer here.
+    Yes, we currently offer a reporting API , which allows you to integrate the revenue data into your own workflow and internal BI systems, perform automated analytics, etc.
+
+    See the full guide below for details.
+
+    # Bright SDK Public API
+
+    ## Prerequisites
+
+    1. Get API access from your Bright SDK manager.
+    2. Create an API key at your company profile page (this can be done by the company admin user).
+
+    ## Base API Endpoint
+
+    ```text
+    https://bright-sdk.com/api
+    ```
+
+    ## Authorization
+
+    Provide an `api-key` header with the value of your given API key.
+
+    **Example:**
+
+    ```javascript
+    const request_headers = {
+      // ...
+      "api-key": "z4lokwymtiueehzimrdgogvpucrbzhmz",
+    };
+    ```
+
+    ## Methods
+
+    ### Apps List
+
+    **`GET /apps`**
+
+    **Return value:**
+
+    | Field | Type |
+    | :-- | :-- |
+    | `name` | string |
+    | `os` | string |
+    | `uuid` | string |
+
+    **Example output:**
+
+    ```json
+    [
+      {
+        "name": "App name I",
+        "os": "ios",
+        "appid": "ios_app_name_1",
+        "uuid": "udf9fdfwpxvucvj3"
+      }, 
+      {
+        "name": "App name II",
+        "os": "ios",
+        "appid": "ios_app_name_2",
+        "uuid": "ucf2fdfwsxducvj1"
+      }
+    ]
+    ```
+
+    ### Revenue Report
+
+    **`GET /reports/basic`**
+
+    **Params:**
+
+    | Name | Type | Example |
+    | :-- | :-- | :-- |
+    | `app_uuid` | string (optional) | `ucf2fdfwsxducvj1` |
+    | `month` | string (optional) | `2023-10` |
+    | `date` | string (optional) | `2023-10-30` |
+
+    **Example request:**
+
+    ```text
+    https://bright-sdk.com/api/reports/basic?app_uuid=ucf2fdfwsxducvj1&month=2023-10
+    ```
+
+    **Example output:**
+
+    ```json
+    [
+      {"ymd": "2023-12-01", "earnings": 5, "peers": 230},
+      {"ymd": "2023-12-02", "earnings": 8, "peers": 460},
+      {"ymd": "2023-12-03", "earnings": 3, "peers": 450}
+    ]
+    ```
+
+    **Possible error answers:**
+
+    ```json
+    {"error": "Invalid date"}
+    ```
+
+    ### Revenue Report by Country
+
+    **`GET /reports/basic/by_country`**
+
+    **Params:**
+
+    | Name | Type | Example |
+    | :-- | :-- | :-- |
+    | `app_uuid` | string (optional) | `ucf2fdfwsxducvj1` |
+    | `month` | string (optional) | `2023-10` |
+    | `date` | string (optional) | `2023-10-30` |
+
+    **Example request:**
+
+    ```text
+    https://bright-sdk.com/api/reports/basic/by_country?app_uuid=ucf2fdfwsxducvj1&month=2023-10
+    ```
+
+    **Example output:**
+
+    ```json
+    [
+      {
+        "ymd": "2023-12-01", 
+        "records": [
+          {"earnings": 161.5, "peers": 48940, "country": "vn"},
+          {"earnings": 120.5, "peers": 31000, "country": "us"}
+        ]
+      },
+      {
+        "ymd": "2023-12-02", 
+        "records": [
+          {"earnings": 141.5, "peers": 42940, "country": "de"},
+          {"earnings": 110.5, "peers": 29000, "country": "us"}
+        ]
+      },
+      {
+        "ymd": "2023-12-03", 
+        "records": [
+          {"earnings": 121.5, "peers": 38940, "country": "kr"},
+          {"earnings": 100.5, "peers": 11000, "country": "us"}
+        ]
+      }
+    ]
+    ```
+
+    **Possible error answers:**
+
+    ```json
+    {"error": "Invalid date"}
+    ```
+
+    ### Revenue Report by Campaign
+
+    **`GET /reports/basic/by_campaign`**
+
+    **Params:**
+
+    | Name | Type | Example |
+    | :-- | :-- | :-- |
+    | `app_uuid` | string (optional) | `ucf2fdfwsxducvj1` |
+    | `month` | string (optional) | `2023-10` |
+    | `date` | string (optional) | `2023-10-30` |
+
+    **Example request:**
+
+    ```text
+    https://bright-sdk.com/api/reports/basic/by_campaign?app_uuid=ucf2fdfwsxducvj1&month=2023-10
+    ```
+
+    **Example output:**
+
+    ```json
+    [
+      {
+        "ymd": "2023-12-01", 
+        "records": [
+          {"earnings": 161.5, "peers": 48940, "campaign": "promo"},
+          {"earnings": 120.5, "peers": 31000, "campaign": "promo2"}
+        ]
+      },
+      {
+        "ymd": "2023-12-02", 
+        "records": [
+          {"earnings": 141.5, "peers": 42940, "campaign": "promo"},
+          {"earnings": 110.5, "peers": 29000, "campaign": "promo2"}
+        ]
+      },
+      {
+        "ymd": "2023-12-03", 
+        "records": [
+          {"earnings": 121.5, "peers": 38940, "campaign": "promo2"},
+          {"earnings": 100.5, "peers": 11000, "campaign": "promo"}
+        ]
+      }
+    ]
+    ```
   </Accordion>
+
   <Accordion title="How do I create a new appID?">
-    Answer here.
+    In our dashboard, under the “apps” section click on “Add app”. In the following screen, choose the appropriate OS, and complete the fields below. You will then see your unique appID, which should be implemented in our app, and will serve as the identifier for any active device attached to your app.
+
+    See the short video guide: 
   </Accordion>
+
   <Accordion title="How can I analyze the funnel performance of my apps?">
-    Answer here.
+    In our dashboard, under the “reports” section, you will see “Funnel analysis”.
+
+    <img
+      src="/help-center/image/how-can-I-analyze-the-funnel-performance-of-my-apps.JPG"
+      alt="Alt text"
+      width="400"
+    />
+
+    This tool can help you identify users behavior during the install and opt-in process, and take action to maximize conversions. The report includes three main events, all per a selected range of dates: Intalls, consent screen display and opt-in.
+
+    Learn more in [this blog post](https://bright-sdk.com/blog/optimize-your-business-results-a-guide-to-bright-sdk-analysis-tools).
   </Accordion>
+
   <Accordion title="How can I add/remove more users to my Bright SDK account?">
-    Answer here.
+    In order to let more users from your organization access the dashboard with all the knowledge and tools that it includes, please follow the next steps:
+
+    1. Log in to Bright SDK dashboard (admin user or one who has users management privileges).
+    2. Under "company profile" section, you will see "Users" title, that lists all users associated with your partner account.
+
+    <img
+      src="/help-center/image/add-remove more users to my Bright SDK account-1.JPG"
+      alt="Alt text"
+      width="400"
+    />
+
+    3. Click "Invite" in order to add a new user. The user will receive an invitation email that asks them to complete their registration (one-time only).
+
+    <img
+      src="/help-center/image/add-remove more users to my Bright SDK account-2.JPG"
+      alt="Alt text"
+      width="400"
+    />
+
+    4. Next to each user, click "Manage" in order to manage their privileges. This is where you decide which parts of the dashboard they can access, and whether it is to view or edit.
+
+    <img
+      src="/help-center/image/add-remove more users to my Bright SDK account-3.JPG"
+      alt="Alt text"
+      width="400"
+    />
   </Accordion>
+
   <Accordion title="How do I access Bright SDK dashboard?">
-    Answer here.
+    Once you register to Bright SDK [<u>here</u>](https://brightdata.com/sdk/cp/dashboard?cp_signup=1), you have access to our dashboard. One of our partnership managers will contact you to discuss partnership opportunities and get you started.
   </Accordion>
+
   <Accordion title="How do I see my revenue report?">
-    Answer here.
+    In our dashboard, under the “reports” section, you will see “Revenue” (screenshot below).
+
+    <img
+      src="/help-center/image/revenue report.jpg"
+      alt="Alt text"
+      width="400"
+    />
+
+    The report include detailed calculations on a daily basis, showing amount of active devices multiplied by your daily rate. By clicking on each date you can see the breakdown per user’s country.
   </Accordion>
+
   <Accordion title="How do I edit the billing email?">
-    Answer here.
+    The billing email address is used for any communication around payment. Mainly for sharing the monthly invoice and payment information. It can be modified by going to  **settings -\> company profile -\> contacts**.
+
+    <img
+      src="/help-center/image/billing.jpg"
+      alt="Alt text"
+      width="400"
+    />
   </Accordion>
 </AccordionGroup>
