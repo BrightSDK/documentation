@@ -4,70 +4,105 @@ title: "FAQ"
 
 <AccordionGroup>
   <Accordion title="Does Bright SDK comply with Apple's third-party SDK requirements?">
-    Add answer here.
+    Yes Bright SDK is fully compliant with the policy, as published [here](https://developer.apple.com/support/third-party-SDK-requirements/).
+
+    Bright sdk contains privacy manifest and has code signing by Bright Data's account. This has been implemented in SDK version 1.454.734.
   </Accordion>
 
   <Accordion title="How does Bright SDK impact my App store privacy settings?">
-    Add answer here.
+    BrightSDK does not collect any personal information, except for the user's IP address. BrightSDK knows that a certain IP exists but not who owns it, or any other information. In addition, BrightSDK monitors and collects depersonalized performance metrics, network usage by SDK to analyze and improve performance.
+
+    You can see actual information of privacy usage by SDK (Apple related) in the privacy manifest file located in the SDK framework bundle.
+
+    It is quite likely that your current privacy settings already cover what Bright Data collects (for example: if you have ads in your app). If not, please adjust your privacy settings to be at a minimum as follows:
+
+    [settings.jpg](https://help.bright-sdk.com/hc/en-us/article_attachments/21411671515793)
+
+    <img
+      src="/integration-guides/image/privacy_report.png"
+      alt="Alt text"
+      width="400"
+    />
   </Accordion>
 
   <Accordion title="Does Bright SDK run in the background on iOS/tvOS devices?">
-    Add answer here.
+    **No**, Bright SDK only runs when the application is visible on screen. App Store guidelines do not allow background processes and Bright SDK carefully follows iOS developer guidelines. See [here](https://developer.apple.com/app-store/review/guidelines/#2.5.4).
   </Accordion>
 
   <Accordion title="Does Bright SDK collect any personal information? Is it impacted by Apple's “App Tracking Transparency” (ATT)?">
-    Add answer here.
+    No personal information is collected, except the user’s IP address. Bright Data does not know anything about the user and does not do any tracking. Specifically, to be clear, BrightData does not leave cookies on the phone, DOES NOT record, store or send the user’s IDFA. We just know that, for example, an iPhone 12 with IP of 94.23.64.123 exists – nothing more.
+
+    Because the Bright SDK does not track the user in any way, it is of course not impacted by App Tracking Transparency. There is no need to ask for ATT permissions.
+
+    In fact, Bright SDK is probably the most privacy-aware monetization solution on the market.
   </Accordion>
 
   <Accordion title="May I offer Premium/subscription to my users in exchange for opting in?">
-    Add answer here.
+    **No**. DO NOT suggest BrightSDK as an alternative to paying for subscription via the AppStore.\
+    This is in violation of AppStore’s policy.
   </Accordion>
 
   <Accordion title="My game is developed in Unity. Does Bright offer an SDK for Unity?">
-    Add answer here.
+    Yes, in fact **Bright SDK is a [Unity Verified Solution](https://unity.com/partners/verified-solutions)!** You can find it on the [Unity asset store](https://assetstore.unity.com/packages/add-ons/bright-sdk-for-ios-238602).
   </Accordion>
 
   <Accordion title="I have many apps on iOS. Which ones will generate the highest revenue for me?">
-    Add answer here.
+    First, you are welcome to implement the Bright SDK in all of your apps. In terms of highest revenue potential, we suggest implementing the SDK on apps that have highest DAU. Adding to that, and since iOS SDK cannot work in the background (due to OS restrictions), we would also start with apps with the longest session length.
   </Accordion>
 
   <Accordion title='Is Bright SDK a "Third Party Proxy"?'>
-    Add answer here.
+    **No.**
+
+    No third parties are allowed to use Bright SDK for iOS. Only Bright Data creates each requests that goes through Bright SDK to specific websites., Technically Bright SDK only accepts requests from authenticated Bright Data servers.  This gives Bright Data full control so we know what websites are indexed at all times.
+
+    A closed list of websites is indexed in order to keep Bright Data’s large datasets up to date. You can see the type of data collected and the websites the information is collected from in the [datasets page](https://brightdata.com/products/datasets).
   </Accordion>
 
   <Accordion title="Does Bright SDK work if parental controls are enabled?">
-    Add answer here.
+    Starting from Version 1.385.451, Bright SDK checks if parental controls are set on the iOS device. If parental controls are enabled, the Bright SDK consent screen will **NOT** be displayed to the user, which of course means Bright SDK will not be active on the device.
+
+    This is by design, in order to ensure informed consent. Contact your Bright SDK team if you have any additional questions.
+
+    If you did not update your Bright SDK to version 1.385.451 or newer, please do so ASAP as support for previous versions will be discontinued in the near future.
   </Accordion>
 
   <Accordion title="Do I need to remove any existing SDKs I already implemented?">
-    Add answer here.
+    **No.** BrightSDK can work side by side with other SDKs (e.g. AdMob, IronSource etc.).
   </Accordion>
 
   <Accordion title="Can I use iOS SDK to replace ads in my app?">
-    Add answer here.
+    Usually, developers use the Bright SDK  in conjunction with ads, but if you prefer to have an ad-free app, you can use Bright SDK on its own.
   </Accordion>
 
   <Accordion title="Can I use iOS SDK in addition to my existing ads? What is the “donation” model?">
-    Add answer here.
+    Absolutely. In the “donation model” use case, you are effectively asking your user to support you (for example: “Help keep my app free. If you accept the offer on the next screen, I will be paid”). Users may decide to opt-in if they love your app and want to support you, and if they do you will enjoy **additional revenue** on top of your current earnings from ads.
   </Accordion>
 
   <Accordion title="What iOS versions does the SDK support?">
-    Add answer here.
+    The SDK supports iOS 13 and above.
   </Accordion>
 
   <Accordion title="How do I implement the iOS SDK?">
-    Add answer here.
+    All you need can be found in [this integration guide](https://docs.bright-sdk.com/integration-guides/ios-tvos).
   </Accordion>
 
   <Accordion title="Can I see some examples of real iOS apps implementation?">
-    Add answer here.
+    Sure! Please see them here:
+
+    - [<u>App Monetization with Bright SDK - iOS Integration</u>](https://www.youtube.com/watch?v=1a9HLrwvUO4&t=15s)
+    - [<u>Guided tour video</u>](https://www.youtube.com/watch?v=kQCmca0FHyw)
   </Accordion>
 
   <Accordion title="Which iOS devices support Bright SDK?">
-    Add answer here.
+    The minimum iOS version is iOS 13. See list of compatible devices [here](https://support.apple.com/en-us/HT209051).
+
+    For MacOS it is High Sierra (10.13)\+\
+    [https://support.apple.com/kb/sp765?locale=en\_US](https://support.apple.com/kb/sp765?locale=en_US) 
   </Accordion>
 
   <Accordion title="Does Bright SDK support react native integration for iOS?">
-    Add answer here.
+    **Yes**, just like any other native module integration.
+
+    See [this article](https://absyz.com/how-to-add-an-ios-native-framework-in-react-native-project/) for more information.
   </Accordion>
 </AccordionGroup>
