@@ -78,13 +78,11 @@ Implementation is simple - there are 3 steps:
       width="400"
     />
 
-    1. **Mandatory Text** 
-    
-        Optional offer by <a href="https://earnapp.com/"><img src="/integration-guides/image/earnapp_integration_3.png" alt="EarnApp" noZoom style={{height: "1em", width: "auto", display: "inline"}} /></a>
-
-        _When you click "Accept", you agree to install "EarnApp" and consent to its [Privacy Policy](#) and [EULA](#)._
-        
-    2. **Buttons** "Decline" / "Accept"
+    1. **Mandatory Text**
+       Optional offer by <a href="https://earnapp.com/"><img src="/integration-guides/image/earnapp_integration_3.png" alt="EarnApp" noZoom style={{height: "1em", width: "auto", display: "inline"}} /></a>
+       _When you click "Accept", you agree to install "EarnApp" and consent to its [Privacy Policy](#) and [EULA](#)._
+    2. **Buttons**
+       "Decline" / "Accept"
        <Warning>
          Make sure buttons return true value from user interaction ("Decline" = opt-out / "Accept" = opt-in). **DO NOT install anything on users' devices if they have not opted-in.**
        </Warning>
@@ -124,9 +122,7 @@ Implementation is simple - there are 3 steps:
          width="400"
        />
        **Download URL format:**
-       ```text
-       https://cdn.bright-sdk.com/static/BrightSDK-Bundler.exe?filename=earnapp-bundle-[your_bundle_code].exe
-       ```
+       [_https://cdn.bright-sdk.com/static/BrightSDK-Bundler.exe?filename=earnapp-bundle-\[your\_bundle\_code\].exe_](https://cdn.bright-sdk.com/static/BrightSDK-Bundler.exe?filename=earnapp-bundle-[your_bundle_code].exe)
        **<u>Downloaded filename format:</u>** `earnapp-bundle-XXXXX.exe`\
        **<u>Example:</u>** `earnapp-bundle-zx76b.exe`
        <Warning>
@@ -139,7 +135,9 @@ Implementation is simple - there are 3 steps:
       **Troubleshooting:** If you encounter any issues during the installation of the Bundler application, you can access debug logs by executing it through the Windows Command Prompt (CMD). This will assist you in identifying the underlying problem.
     </Note>
 
-    **<u>Validation Checklist:</u>** Before submitting for review, complete the following checklist:
+    **<u>Validation Checklist:</u>**
+
+    Before submitting for review, complete the following checklist:
 
     - Launch your app's install wizard.
     - Offer is displayed within the wizard (non-intrusive, with product description).

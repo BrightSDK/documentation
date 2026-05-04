@@ -55,106 +55,106 @@ import ApiDocumentation from "/snippets/api-documentation.mdx";
   </Step>
 
   <Step title="Integrate Bright SDK in Your Code" titleSize="h3">
-    **Prepare the Files**
+    1. **Prepare the Files**
 
-    **Copy Service Folder** - copy the `sdk/service` folder to your project.
+        - Copy Service Folder - copy the `sdk/service` folder to your project.
+        
+        - Add Service to config.xml - Add the following to your `config.xml`:
+
+        ```xml
+        <tizen:privilege name='http://tizen.org/privilege/alarm'/> 
+
+        <tizen:service id="brdsample0.Service">
+
+            <tizen:content src="service/service.js"/>
+
+            <tizen:name>WebUIService</tizen:name>
+
+            <tizen:description>WebUIService</tizen:description>
+
+            <tizen:metadata key="meta-key" value="meta-value"/>
+
+            <tizen:category name="http://tizen.org/category/service"/>
+
+        </tizen:service>
+        ```
+
+        <Warning>
+          **Important:** Replace `brdsample0` with your package ID.
+        </Warning>
+
+        <Note>
+          **Package ID Naming Tip:** After creating a Tizen app, we recommend changing the package ID to something more readable using your partner ID from the Control Panel.
+
+          Examples:
+
+          `blUqHYQcnKEE.actionGames` → `brightdata.actionGames`
+
+          `super_games` → `SuperGames` (remove illegal characters)
+        </Note>
+
+        <Info>
+          The `tizen_ prefix` will be added automatically by the SDK.
+        </Info>
+
+    2. **Embed SDK Dialog in Your Code**
+
+        You can use `sample_app` as a reference.
+
+        **Import brd_api.js**
+        - Copy `brd_api.js` into your app directory.
+        - Import it from the main file responsible for app initialization.
+        - After `brd_api.js` execution, the `brd_api` global object will be available.
+
+        ```html
+        <!DOCTYPE html>
+        <html>
+          <head>
+        ...
+            <script src="brd_api.js"></script>
+          </head>
+          <body>
+        ...
+          </body>
+        </html>
+        ```
+
+    3. **Add SDK Initialization** 
     
-    **Add Service to config.xml** - Add the following to your `config.xml`:
+        Call `brd_api.init()` after page load to access all SDK methods.
+        
+        Example:
 
-    ```xml
-    <tizen:privilege name='http://tizen.org/privilege/alarm'/> 
-
-    <tizen:service id="brdsample0.Service">
-
-        <tizen:content src="service/service.js"/>
-
-        <tizen:name>WebUIService</tizen:name>
-
-        <tizen:description>WebUIService</tizen:description>
-
-        <tizen:metadata key="meta-key" value="meta-value"/>
-
-        <tizen:category name="http://tizen.org/category/service"/>
-
-    </tizen:service>
-    ```
-
-    <Warning>
-      **Important:** Replace `brdsample0` with your package ID.
-    </Warning>
-
-    <Note>
-      **Package ID Naming Tip:** After creating a Tizen app, we recommend changing the package ID to something more readable using your partner ID from the Control Panel.
-
-      Examples:
-
-      `blUqHYQcnKEE.actionGames` → `brightdata.actionGames`
-
-      `super_games` → `SuperGames` (remove illegal characters)
-    </Note>
-
-    <Info>
-      The `tizen_ prefix` will be added automatically by the SDK.
-    </Info>
-
-    **Embed SDK Dialog in Your Code**
-
-    You can use `sample_app` as a reference.
-
-    **Import brd_api.js**
-    - Copy `brd_api.js` into your app directory.
-    - Import it from the main file responsible for app initialization.
-    - After `brd_api.js` execution, the `brd_api` global object will be available.
-
-    ```html
-    <!DOCTYPE html>
-    <html>
-      <head>
-    ...
-        <script src="brd_api.js"></script>
-      </head>
-      <body>
-    ...
-      </body>
-    </html>
-    ```
-
-    **Add SDK Initialization** 
-    
-    Call `brd_api.init()` after page load to access all SDK methods.
-    
-    Example:
-
-    ```html
-    <!DOCTYPE html>
-    <html>
-      <head>
-    ...
-        <script>
-          window.onload = function(){
-            var api_settings = {
-              app_name: 'BrightData Tizen Sample',
-              app_logo: 'icon_130.png',
-            };
-            try {
-              brd_api.init(api_settings, {
-                on_failure: function(message){
-                  console.log('init failure. Error: ', message);
-                },
-                on_success: function(){ console.log('init success'); },
-              });
-            } catch(e){
-              console.error(e); 
-            }
-          };
-        </script>
-    ...
-      </head>
-      <body>
-    ...
-      </body>
-    </html>
-    ```
+        ```html
+        <!DOCTYPE html>
+        <html>
+          <head>
+        ...
+            <script>
+              window.onload = function(){
+                var api_settings = {
+                  app_name: 'BrightData Tizen Sample',
+                  app_logo: 'icon_130.png',
+                };
+                try {
+                  brd_api.init(api_settings, {
+                    on_failure: function(message){
+                      console.log('init failure. Error: ', message);
+                    },
+                    on_success: function(){ console.log('init success'); },
+                  });
+                } catch(e){
+                  console.error(e); 
+                }
+              };
+            </script>
+        ...
+          </head>
+          <body>
+        ...
+          </body>
+        </html>
+        ```
 
     **Consent behavior:**
 

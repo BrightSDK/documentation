@@ -36,36 +36,42 @@ Implementation is simple - there are 3 steps:
   <Step title="Register Your App in the Dashboard" titleSize="h3">
     <RegisterApp />
   </Step>
-    <Step title="Choose Your Offer Type" titleSize="h3">
+  <Step title="Choose Your Offer Type" titleSize="h3">
     #### Scenario 1 – Installation Wizard Offer
+
     Offer your users the benefits of Hola VPN by adding a screen to your install wizard.
-    
+
     - Promotional offer is shown within product installation wizard (start with offer screen setup and then implement exe file).
+
     <Note>
       Make sure Hola VPN offer screen does not interrupt the user's expected flow. Ideally it should show AFTER your install wizard process is complete. Otherwise, you need to have the user's permission to view optional offers before showing it.
     </Note>
+
     - User clicks **Agree.**
     - exe file downloads in the background.
     - Hola VPN setup is launched only after your app installation is complete and presents the Bright SDK consent screen.
+
     <Tip>
       For offer screen setup and technical integration, continue to [**Set Up Your Offer Screen**](#set-up-your-offer-screen) and [**Technical Integration**](#technical-integration).
     </Tip>
 
     #### Scenario 2 – Uninstall Webpage Offer
+
     Earn revenue from users who choose to uninstall your product by presenting a Hola VPN install offer on your product's uninstall page.
-    
+
     <img
       src="/integration-guides/image/holavpn_integration_1.png"
       alt="Alt text"
       width="400"
     />
-    
+
     - User uninstalls your app and is redirected to an uninstall page on your website.
     - A short message alongside an offer banner is shown. Get your dedicated custom link under "**Bundle Details**" on your dashboard app page and implement it onto CTA. Contact [support@hola.org](mailto:support@hola.org) for further assistance.
     - exe file downloads → Hola VPN is installed.
     - Hola VPN is launched and presents Bright SDK consent screen.
-    
+
     **Implementation instructions:**
+
     - Go to [**Monetized Bundles**](https://bright-sdk.com/cp/bundles) → **Add Bundle** → Choose "**Uninstall Page Offer**" → Press "**Create**".
     - In "**Bundle Details**", confirm Offer Type shows "**Uninstall Page Offer**" → copy download URL to implement onto your CTA.
       <img
@@ -75,14 +81,16 @@ Implementation is simple - there are 3 steps:
       />
 
     #### Scenario 3 – Successful Install Page
+
     Earn revenue from users who successfully installed your product by presenting a Hola VPN install offer on your product's successful installation page.
-    
+
     - Once your app is fully installed - direct your user to a welcome/successful install page on your website.
     - A short message alongside an offer banner is shown. Get your dedicated custom link under "**Bundle Details**" on your dashboard app page and implement it onto CTA. Contact [support@hola.org](mailto:support@hola.org) for further assistance.
     - exe file downloads → Hola VPN is installed.
     - Hola VPN is launched and presents Bright SDK consent screen.
-    
+
     **Implementation instructions:**
+
     - Go to [**Monetized Bundles**](https://bright-sdk.com/cp/bundles) → **Add Bundle** → Choose "**Successful Installation Page Offer**" → Press "**Create**".
     - In "**Bundle Details**", confirm Offer Type shows "**Successful Installation Page Offer**" → copy download URL to implement onto your CTA.
       <img
@@ -92,14 +100,16 @@ Implementation is simple - there are 3 steps:
       />
 
     #### Scenario 4 – Ad Campaign
+
     Create an ad campaign offering to install Hola VPN - get paid for every install you bring!
-    
+
     - Once your app is fully installed - direct your user to a welcome/successful install page.
     - A short message alongside an offer banner is shown. Get your dedicated custom link under "**Bundle Details**" on your dashboard app page and implement it onto CTA. Contact [support@hola.org](mailto:support@hola.org) for further assistance.
     - exe file downloads → Hola VPN is installed.
     - Hola VPN is launched and presents Bright SDK consent screen.
-    
+
     **Implementation instructions:**
+
     - Go to [**Monetized Bundles**](https://bright-sdk.com/cp/bundles) → **Add Bundle** → Choose "**Ad Campaign**" → Press "**Create**".
     - In "**Bundle Details**", confirm Offer Type shows "**AdCampaign**" → copy download URL to implement onto your campaign.
       <img
@@ -109,21 +119,25 @@ Implementation is simple - there are 3 steps:
       />
 
     #### Scenario 5 – In-App Offer
+
     Present a Hola VPN install (banner/popup, etc.) within your app.
-    
+
     - An offer is presented within the app screen.
     - User clicks offer.
     - exe file downloads → Hola VPN is installed.
     - Hola VPN is launched and presents Bright SDK consent screen.
+
     <Warning>
       **Important!** Four principles to keep in mind when presenting in-app offers:
+
       1. **No means no:** If the user has already explicitly declined an offer in the app or during its install, the app can't show it again.
       2. **Uninterrupted experience:** The app can't present offers in the middle of any tasks the user has initiated (i.e. starting/stopping the app). You may present offers when the app is idle, or after the app completes a task and the user knows it's complete.
       3. **User is in control:** There needs to be a way in the settings to disable the offers.
       4. **Display:** To avoid detection as Adware by AVs - show offers within the app, not as separate pop-ups.
     </Warning>
-    
+
     **Implementation instructions:**
+
     - Go to [**Monetized Bundles**](https://bright-sdk.com/cp/bundles) → **Add Bundle** → Choose "**In-App Offer**" → Press "**Create**".
     - In "**Bundle Details**", confirm Offer Type shows "**In-App Offer**" → copy download URL to implement onto your offer.
       <img
@@ -133,12 +147,14 @@ Implementation is simple - there are 3 steps:
       />
 
     #### Scenario 6 – Preinstalled App
+
     Install Hola VPN on products you distribute (refurbished products, device manufacturers, OEM, etc.).
-    
+
     - Download the following file: [https://cdn4.hola.org/static/Hola-Setup-Standalone-x64-Latest.exe](https://cdn4.hola.org/static/Hola-Setup-Standalone-x64-Latest.exe)
     - Proceed with one of the following options:
-    
+
     **Option A - Install manually on each device**
+
     - Run the installer with the following flags via Windows CMD:
       ```bash
       Hola-Setup-Standalone-x64-[version_number].exe --silent --no-run-uis --no-run-svc --affiliate [your_affiliate_id]
@@ -146,17 +162,18 @@ Implementation is simple - there are 3 steps:
       <Note>
         Affiliate ID value can be found in your bundles page — each bundle configuration has a unique ID value.
       </Note>
-      
+
     **Option B - Windows image deployment**
+
     - Open a Windows image in image audit mode.
     - Run the installer with the same flags as Option A via Windows CMD.
     - Place a shortcut to the Hola app in the **Windows Startup folder** so it launches on startup.
     - Install the same image on different devices.
-    
+
     <Warning>
       In this scenario it is crucial that you do not launch the app after installing it. The end-user should be the one to launch the app for the first time.
     </Warning>
-    
+
     <Note>
       For the preinstalled app scenario, you can disregard all other instructions that come after this section.
     </Note>
@@ -181,7 +198,7 @@ Implementation is simple - there are 3 steps:
     - You may implement the [Hola VPN offer screen](https://drive.google.com/file/d/1UcIGX9I04Ss0U31kFKlP3EGUoGkjIyHv/view) onto your wizard (make sure to include all the links provided below).
     - Available [with buttons](https://drive.google.com/file/d/1k-WBbNTCMmyWu9UGwC95acUtD09bu4iv/view) or [without buttons](https://drive.google.com/file/d/1u891EyM9yPD0XzBsfRchaUuuYjuXLziV/view) (so you can use the ones in your Wizard) - make sure buttons return true value from user interaction.
     - In case you want to design your own Hola VPN offer, please read below.
-    - In the [**<u>Assets</u>**](#assets) section you may find all the imagery needed.
+    - In the [**<u>Assets</u>**](https://hola.org/static/press_kit/press_kit.zip) section you may find all the imagery needed.
 
     <img
       src="/integration-guides/image/holavpn_integration_7.png"
@@ -191,12 +208,10 @@ Implementation is simple - there are 3 steps:
 
     1. **Mandatory Text**
        Optional offer by <a href="https://holavpn.com/"><img src="/integration-guides/image/holavpn_integration_8.png" alt="Hola" noZoom style={{height: "1em", width: "auto", display: "inline"}} /></a>
-       **Access worldwide content with Hola VPN!**
-       **Install Hola VPN to enjoy:**
+       **Access worldwide content with Hola VPN!** **Install Hola VPN to enjoy:**
        - Unrestricted access to the content you like.
        - \+190 locations available 24/7.
-       - Ultra-fast and stable connection.
-       **Hola VPN provides you with free VPN** in return for allowing Bright SDK to occasionally use your device's free resources and IP address. When you click "Accept", you agree to install "Hola VPN" and consent to its [Privacy Policy](#) and [EULA](#).
+       - Ultra-fast and stable connection. **Hola VPN provides you with free VPN** in return for allowing Bright SDK to occasionally use your device's free resources and IP address. When you click "Accept", you agree to install "Hola VPN" and consent to its [Privacy Policy](#) and [EULA](#).
     2. **Buttons**
        "Decline" / "Accept"
        <Warning>
@@ -209,8 +224,7 @@ Implementation is simple - there are 3 steps:
        | EULA | [https://hola.org/legal/sla](https://hola.org/legal/sla) |
        | Privacy Policy | [https://hola.org/legal/privacy](https://hola.org/legal/privacy) |
        | Bright Data | [http://brightdata.com](http://brightdata.com) |
-    4. **Translations**
-       The offer screen is available in multiple languages. [<u>Follow this link to access translations of the offer</u>](https://docs.google.com/spreadsheets/d/1jYfHXIpKtctj5OjdfkiEpNq9Nn9wclQqe3UOhWTRIPg/edit#gid=2012268662).
+    4. **Translations** The offer screen is available in multiple languages. [<u>Follow this link to access translations of the offer</u>](https://docs.google.com/spreadsheets/d/1jYfHXIpKtctj5OjdfkiEpNq9Nn9wclQqe3UOhWTRIPg/edit#gid=2012268662).
   </Step>
   <Step title="AV Guidelines" titleSize="h3">
     <Guidelines />

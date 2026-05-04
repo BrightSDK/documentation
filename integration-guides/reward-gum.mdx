@@ -36,22 +36,25 @@ Implementation is simple - there are 3 steps:
   <Step title="Register Your App in the Dashboard" titleSize="h3">
     <RegisterApp />
   </Step>
-    <Step title="Choose Your Offer Type" titleSize="h3">
+  <Step title="Choose Your Offer Type" titleSize="h3">
     <Note>
       More offers coming soon.
     </Note>
-    
+
     #### Scenario 1 – Installation Wizard Offer
+
     Offer your users the benefits of RewardGUM by adding a screen to your install wizard.
-    
+
     - Promotional offer is shown within product installation wizard (start with offer screen setup and then implement exe file).
+
     <Warning>
       Make sure RewardGUM offer screen does not interrupt the user's expected flow. Ideally it should show AFTER your install wizard process is complete. Otherwise, you need to have the user's permission to view optional offers before showing it.
     </Warning>
+
     - User clicks **Agree**.
     - exe file downloads in the background.
     - RewardGUM setup is launched and presents the Bright SDK consent screen **only after** your app installation is complete.
-    
+
     <Note>
       For offer screen setup and technical integration, continue to [**Set Up Your Offer Screen**](#set-up-your-offer-screen) and [**Technical Integration**](#technical-integration).
     </Note>
@@ -65,27 +68,19 @@ Implementation is simple - there are 3 steps:
 
     - You may implement the [RewardGUM offer screen](https://drive.google.com/file/d/1vcbR12rMGVHN-uzXxdHxCG6E1yRtKkjA/view) onto your wizard (make sure to include all the links provided below).
     - In case you want to design your own RewardGUM offer, please read below.
-    - In the **Assets** section you may find all the imagery needed.
+    - In the [**Assets**](https://drive.google.com/drive/folders/1YtNCEJKdHTCPnJzKuC0nngWgZXN4Y4S0) section you may find all the imagery needed.
       <img
         src="/integration-guides/image/rgum_integration_1.png"
         alt="Alt text"
         width="400"
       />
 
-    1. **Mandatory Text**
-    
-        Optional offer by <a href="https://rewardgum.com/"><img src="/integration-guides/image/rgum_integration_2.png" alt="RewardGUM" noZoom style={{height: "1em", width: "auto", display: "inline"}} /></a>
-
+    1. **Mandatory Text** Optional offer by <a href="https://rewardgum.com/"><img src="/integration-guides/image/rgum_integration_2.png" alt="RewardGUM" noZoom style={{height: "1em", width: "auto", display: "inline"}} /></a>
         _When you click "Accept", you agree to install "RewardGUM" and consent to its Privacy Policy and EULA._
-        
-    2. **Buttons**
-    
-        "Decline" / "Accept"
-
+    2. **Buttons** "Decline" / "Accept"
        <Warning>
          Make sure buttons return true value from user interaction ("Decline" = opt-out / "Accept" = opt-in). **DO NOT install anything on users' devices if they have not opted-in.**
        </Warning>
-
     3. **Required Links**
        | Text | URL |
        | --- | --- |
@@ -134,7 +129,9 @@ Implementation is simple - there are 3 steps:
       **Troubleshooting:** If you encounter any issues during the installation of the Bundler application, you can access debug logs by executing it through the Windows Command Prompt (CMD). This will assist you in identifying the underlying problem.
     </Note>
 
-    **<u>Validation Checklist:</u>** Before submitting for review, complete the following checklist:
+    **<u>Validation Checklist:</u>**
+
+    Before submitting for review, complete the following checklist:
 
     - Launch your app's install wizard.
     - Offer is displayed within the wizard (non-intrusive, with product description).
