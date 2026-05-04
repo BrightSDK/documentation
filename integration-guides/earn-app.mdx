@@ -36,18 +36,21 @@ Implementation is simple - there are 3 steps:
   <Step title="Register Your App in the Dashboard" titleSize="h3">
     <RegisterApp />
   </Step>
-    <Step title="Choose Your Offer Type" titleSize="h3">
+  <Step title="Choose Your Offer Type" titleSize="h3">
     #### Scenario 1 – Installation Wizard Offer
+
     Offer your users the benefits of EarnApp by adding a screen to your install wizard.
-    
+
     - Promotional offer is shown within product installation wizard (start with offer screen setup and then implement exe file).
+
     <Warning>
       Make sure EarnApp offer screen does not interrupt the user's expected flow. Ideally it should show **AFTER** your install wizard process is complete. Otherwise, you need to have the user's permission to view optional offers before showing it.
     </Warning>
+
     - User clicks **Agree.**
     - exe file downloads in the background.
     - EarnApp setup is launched and presents the Bright SDK consent screen **only after** your app installation is complete.
-    
+
     <Note>
       For offer screen setup and technical integration, continue to [**Set Up Your Offer Screen**](#set-up-your-offer-screen) and [**Technical Integration**](#technical-integration).
     </Note>
@@ -57,11 +60,11 @@ Implementation is simple - there are 3 steps:
       **Important!** Please follow the guidelines below to assure compliance with our policies. If you violate the guidelines, Bright Data reserves the right to terminate your account.
     </Warning>
 
-    **Optional:** You may design the opt-in any way you choose (we recommend the design to be as close as possible to your installation wizard). However, the [EarnApp offer screen](#) must always include an opt-in consent screen with the mandatory text below.
+    **Optional:** You may design the opt-in any way you choose (we recommend the design to be as close as possible to your installation wizard). However, the [EarnApp offer screen](https://drive.google.com/file/d/1rgXzXvkiVLRQ2it3mSZLX8R6vwCYXUq_/view) must always include an opt-in consent screen with the mandatory text below.
 
-    - You may implement the [EarnApp offer screen](#) onto your wizard (make sure to include all the links provided below).
+    - You may implement the [EarnApp offer screen](https://drive.google.com/file/d/1rgXzXvkiVLRQ2it3mSZLX8R6vwCYXUq_/view) onto your wizard (make sure to include all the links provided below).
     - In case you want to design your own EarnApp offer, please read below.
-    - In the [**Assets**](#assets) section you may find all the imagery needed.
+    - In the [**Assets**](https://drive.google.com/drive/folders/1qPW40HZITGKO71udwxKz1XxbW0RbwL5S) section you may find all the imagery needed.
 
     <img
       src="/integration-guides/image/earnapp_integration_1.png"
@@ -75,11 +78,13 @@ Implementation is simple - there are 3 steps:
       width="400"
     />
 
-    1. **Mandatory Text**
-       Optional offer by <a href="https://earnapp.com/"><img src="/integration-guides/image/earnapp_integration_3.png" alt="EarnApp" noZoom style={{height: "1em", width: "auto", display: "inline"}} /></a>
-       _When you click "Accept", you agree to install "EarnApp" and consent to its [Privacy Policy](#) and [EULA](#)._
-    2. **Buttons**
-       "Decline" / "Accept"
+    1. **Mandatory Text** 
+    
+    Optional offer by <a href="https://earnapp.com/"><img src="/integration-guides/image/earnapp_integration_3.png" alt="EarnApp" noZoom style={{height: "1em", width: "auto", display: "inline"}} /></a>
+
+        _When you click "Accept", you agree to install "EarnApp" and consent to its [Privacy Policy](#) and [EULA](#)._
+        
+    2. **Buttons** "Decline" / "Accept"
        <Warning>
          Make sure buttons return true value from user interaction ("Decline" = opt-out / "Accept" = opt-in). **DO NOT install anything on users' devices if they have not opted-in.**
        </Warning>

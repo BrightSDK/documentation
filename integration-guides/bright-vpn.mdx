@@ -36,19 +36,21 @@ Implementation is simple - there are 3 steps:
   <Step title="Register Your App in the Dashboard" titleSize="h3">
     <RegisterApp />
   </Step>
-    <Step title="Choose Your Offer Type" titleSize="h3">
-
+  <Step title="Choose Your Offer Type" titleSize="h3">
     #### Scenario 1 – Installation Wizard Offer
 
     Offer your users the benefits of Bright VPN by adding a screen to your install wizard.
-    
+
     - Promotional offer is shown within product installation wizard (start with offer screen setup and then implement exe file).
+
     <Warning>
       Make sure Bright VPN offer screen does not interrupt the user's expected flow. Ideally it should show AFTER your install wizard process is complete. Otherwise, you need to have the user's permission to view optional offers before showing it.
     </Warning>
+
     - User clicks **Agree**.
     - exe file downloads in the background.
     - Bright VPN setup is launched and presents the Bright SDK consent screen **only after** your app installation is complete.
+
     <Note>
       For offer screen setup and technical integration, continue to [**Set Up Your Offer Screen**](#set-up-your-offer-screen) and [**Technical Integration**](#technical-integration).
     </Note>
@@ -56,19 +58,20 @@ Implementation is simple - there are 3 steps:
     #### Scenario 2 – Uninstall Webpage Offer
 
     Earn revenue from users who choose to uninstall your product by presenting a Bright VPN install offer on your product's uninstall page.
-    
+
     <img
       src="/integration-guides/image/bvpn_integration_1.png"
       alt="Alt text"
       width="400"
     />
-    
+
     - User uninstalls your app and is redirected to an uninstall page on your website.
     - A short message alongside an offer banner is shown. Get your dedicated custom link under "Bundle Details" on your dashboard app page and implement it onto CTA. Contact [info@brightvpn.com](mailto:info@brightvpn.com) for further assistance.
     - exe file downloads → Bright VPN is installed.
     - Bright VPN is launched and presents Bright SDK consent screen.
-    
+
     **Implementation instructions:**
+
     - Go to [**Monetized Bundles**](https://bright-sdk.com/cp/bundles) → **Add Bundle** → Choose "**Uninstall Page Offer**" → Press "**Create**".
     - In "**Bundle Details**", confirm Offer Type shows "**Uninstall Page Offer**" → copy download URL to implement onto your CTA.
       <img
@@ -80,13 +83,14 @@ Implementation is simple - there are 3 steps:
     #### Scenario 3 – Successful Install Page
 
     Earn revenue from users who successfully installed your product by presenting a Bright VPN install offer on your product's successful installation page.
-    
+
     - Once your app is fully installed - direct your user to a welcome/successful install page on your website.
     - A short message alongside an offer banner is shown (like Scenario 2 mockup). Get your dedicated custom link under "Bundle Details" on your dashboard app page and implement it onto CTA. Contact [info@brightvpn.com](mailto:info@brightvpn.com) for further assistance.
     - exe file downloads → Bright VPN is installed.
     - Bright VPN is launched and presents Bright SDK consent screen.
-    
+
     **Implementation instructions:**
+
     - Go to [**Monetized Bundles**](https://bright-sdk.com/cp/bundles) → **Add Bundle** → Choose "**Successful Installation Page Offer**" → Press "**Create**".
     - In "**BundleDetails**", confirm Offer Type shows "**Successful Installation Page Offer**" → copy download URL to implement onto your CTA.
       <img
@@ -98,13 +102,14 @@ Implementation is simple - there are 3 steps:
     #### Scenario 4 – Ad Campaign
 
     Create an ad campaign offering to install Bright VPN - get paid for every install you bring!
-    
+
     - Once your app is fully installed - direct your user to a welcome/successful install page on your website.
     - A short message alongside an offer banner is shown (like Scenario 2 mockup). Get your dedicated custom link under "**Bundle Details**" on your dashboard app page and implement it onto CTA. Contact [info@brightvpn.com](mailto:info@brightvpn.com) for further assistance.
     - exe file downloads → Bright VPN is installed.
     - Bright VPN is launched and presents Bright SDK consent screen.
-    
+
     **Implementation instructions:**
+
     - Go to [**Monetized Bundles**](https://bright-sdk.com/cp/bundles) → **Add Bundle** → Choose "**Ad Campaign**" → Press "**Create**".
     - In "**BundleDetails**", confirm Offer Type shows "**AdCampaign**" → copy download URL to implement onto your campaign.
       <img
@@ -116,30 +121,35 @@ Implementation is simple - there are 3 steps:
     #### Scenario 5 – In-App Offer
 
     Present a Bright VPN install (banner/popup, etc.) within your app.
-    
+
     - An offer is presented within the app screen.
     - User clicks offer.
     - exe file downloads → Bright VPN is installed.
     - Bright VPN is launched and presents Bright SDK consent screen.
+
     <Warning>
       **Important!** Four principles to keep in mind when presenting in-app offers:
+
       1. **No means no:** If the user has already explicitly declined an offer in the app or during its install, the app can't show it again.
       2. **Uninterrupted experience:** The app can't present offers in the middle of any tasks the user has initiated (i.e. starting/stopping the app). You may present offers when the app is idle, or after the app completes a task and the user knows it's complete.
       3. **User is in control:** There needs to be a way in the settings to disable the offers.
       4. **Display:** To avoid detection as Adware by AVs — show offers within the app, not as separate pop-ups.
     </Warning>
+
     <Warning>
       Make sure in-app offers are not interrupting the user's overall experience. Display the offer inline or as a small popup/ad. Avoid full-screen interstitials that interrupt the user flow.
     </Warning>
-    
+
     **In-App Offer content requirements:**
-    - **Description:** Clear and short - *"Free Premium VPN for secure Browsing!"*.
+
+    - **Description:** Clear and short - _"Free Premium VPN for secure Browsing!"_.
     - **Buttons:** Must include an "**Install**" or "**Accept**" button. If using a popup/ad, also include a "**Decline**" or "**No Thanks**" button.
     - **Links:**
       - Privacy Policy: [https://brightvpn.com/legal/privacy](https://brightvpn.com/legal/privacy).
       - EULA: [https://brightvpn.com/legal/sla](https://brightvpn.com/legal/sla).
-    
+
     **Implementation instructions:**
+
     - Go to [**Monetized Bundles**](https://bright-sdk.com/cp/bundles) → **Add Bundle** → Choose "**In-App Offer**" → Press "**Create**".
     - In "**Bundle Details**", confirm Offer Type shows "**In-App Offer**" → copy download URL to implement onto your offer.
       <img
@@ -149,10 +159,11 @@ Implementation is simple - there are 3 steps:
       />
 
     #### Scenario 6 – Preinstalled App
-    
+
     Install Bright VPN on products you distribute (refurbished products, device manufacturers, OEM, etc.).
-    
+
     - [Contact us](mailto:sdk@bright-sdk.com) for more information.
+
     <Note>
       For the preinstalled app scenario, you can disregard all other instructions that come after this section.
     </Note>
@@ -184,29 +195,33 @@ Implementation is simple - there are 3 steps:
     - In case you want to design your own Bright VPN offer, please read below.
     - In the [Assets](#assets) section you may find all the imagery needed.
 
-    1. **Mandatory Text**
-    
-        Optional offer by <a href="https://brightvpn.com/"><img src="/integration-guides/image/bvpn_integration_8.png" alt="Bright" noZoom style={{height: "1em", width: "auto", display: "inline"}} /></a>
-    
-        _Bright VPN provides you with free premium VPN in return for allowing Bright SDK to occasionally use your device's free resources and IP address. When you click "Accept", you agree to install "Bright VPN" and consent to its Privacy Policy and EULA._
+    1. **Mandatory Text** Optional offer by <a href="https://brightvpn.com/"><img src="/integration-guides/image/bvpn_integration_8.png" alt="Bright" noZoom style={{height: "1em", width: "auto", display: "inline"}} /></a>
+        **_Protect your device with FREE Premium VPN!_**\
+       **_Install Bright VPN to enjoy:_** _Safer on public Wi-Fi (travel, shop, work)_ _Change your location_ _Protect privacy & increase security_ _100% FREE. For life!_ **_Bright VPN provides you with free premium VPN_**\_ in return for allowing Bright SDK to occasionally use your device's free resources and IP address. When you click "Accept", you agree to install "Bright VPN" and consent to its Privacy Policy and EULA.\_
        <img
          src="/integration-guides/image/bvpn_integration_9.png"
          alt="Alt text"
          width="400"
        />
-    2. **Buttons**
-    
-        "Decline" / "Accept"
-        <Warning>
-          Make sure buttons return true value from user interaction ("Decline" = opt-out / "Accept" = opt-in). **DO NOT install anything on users' devices if they have not opted-in.**
-        </Warning>
+    2. **Buttons** "Decline" / "Accept"
+       <Warning>
+         Make sure buttons return true value from user interaction ("Decline" = opt-out / "Accept" = opt-in). **DO NOT install anything on users' devices if they have not opted-in.**
+       </Warning>
     3. **Required Links**
        | Text | URL |
        | --- | --- |
        | Bright VPN | [https://brightvpn.com/](https://brightvpn.com/) |
        | EULA | [https://brightvpn.com/legal/sla](https://brightvpn.com/legal/sla) |
        | Privacy Policy | [https://brightvpn.com/legal/privacy](https://brightvpn.com/legal/privacy) |
-    4. **Translations**  The offer screen is available in multiple languages. [<u>Get translations here</u>](https://docs.google.com/spreadsheets/d/1G0Y1CY9emvfM9qlGC4o7wM-ypWqHbGo5Jxx8rT7DCVs/edit?gid=1123111497#gid=1123111497) / [<u>Download the offer screen design in all languages here</u>](https://drive.google.com/drive/folders/1boSsNqjq1GQjjp5kljJS9wZKLCMuzUxB).
+    4. **Translations**
+       The offer screen is available in multiple languages.
+       [<u>Get translations here</u>](https://docs.google.com/spreadsheets/d/1G0Y1CY9emvfM9qlGC4o7wM-ypWqHbGo5Jxx8rT7DCVs/edit?gid=1123111497#gid=1123111497)<u>.</u>
+       [<u>Download the offer screen design in all languages here</u>](https://drive.google.com/drive/folders/1boSsNqjq1GQjjp5kljJS9wZKLCMuzUxB).
+       <img
+         src="/integration-guides/image/translations.png"
+         alt="Alt text"
+         width="400"
+       />
   </Step>
   <Step title="AV Guidelines" titleSize="h3">
     <Guidelines />
@@ -241,13 +256,11 @@ Implementation is simple - there are 3 steps:
        <Info>
          Your Affiliate ID can be found under "**Bundle Details**" → **Affiliate ID** on your dashboard.
        </Info>
-
        <img
          src="/integration-guides/image/bvpn_integration_11.png"
          alt="Alt text"
          width="400"
        />
-
     2. **Save the user's** **choice** when the offer is displayed.
     3. Once your installer has finished - if the user clicked "**I agree**" on the offer screen, run the **bundler executable.**
 
