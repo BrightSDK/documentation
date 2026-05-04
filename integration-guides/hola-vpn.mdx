@@ -24,14 +24,15 @@ Implementation is simple - there are 3 steps:
   **Bright Data must review your application before you start distributing your app with a bundle offer.**
 </Info>
 
+### Important Notes
+
+- Users must **ALWAYS** decide if they want to **VOLUNTARILY** install Hola VPN after seeing the offer and consent screen. Additionally, users should **ALWAYS** have a straightforward means to opt out of the installation process.
+- Take care when implementing the offer screen and the opt-out mechanisms in a way which follows guidelines in this document.
+- Follow consent screen implementation guidelines in order to return true value from user interaction. **DO NOT install anything on users' devices if they have not opted-in.**
+- Bright Data products do not do any user tracking of any kind. You can read more about Hola VPN and privacy in the [Privacy Policy](https://hola.org/legal/privacy).
+- It's important to follow the guidelines in this document to avoid violation of our company's policy which may lead to termination of agreement.
+
 <Steps>
-  <Step title="Important Notes" titleSize="h3">
-    - Users must **ALWAYS** decide if they want to **VOLUNTARILY** install Hola VPN after seeing the offer and consent screen. Additionally, users should **ALWAYS** have a straightforward means to opt out of the installation process.
-    - Take care when implementing the offer screen and the opt-out mechanisms in a way which follows guidelines in this document.
-    - Follow consent screen implementation guidelines in order to return true value from user interaction. **DO NOT install anything on users' devices if they have not opted-in.**
-    - Bright Data products do not do any user tracking of any kind. You can read more about Hola VPN and privacy in the [Privacy Policy](#).
-    - It's important to follow the guidelines in this document to avoid violation of our company's policy which may lead to termination of agreement.
-  </Step>
   <Step title="Register Your App in the Dashboard" titleSize="h3">
     <RegisterApp />
   </Step>
