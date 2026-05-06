@@ -36,8 +36,7 @@
                 "pages": [
                   "integration-guides/windows-integration-net",
                   "integration-guides/windows-integration-c",
-                  "integration-guides/faq-win",
-                  "integration-guides/overview-win"
+                  "integration-guides/faq-win"
                 ]
               },
               {
