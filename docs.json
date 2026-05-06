@@ -24,6 +24,7 @@
             "pages": [
               {
                 "group": "Tizen",
+                "root": "integration-guides/overview-tizen",
                 "pages": [
                   "integration-guides/tizen-integration",
                   "integration-guides/how-to-upload-apps-to-the-samsung-store",
@@ -41,6 +42,7 @@
               },
               {
                 "group": "webOS",
+                "root": "integration-guides/overview-webos",
                 "pages": [
                   "integration-guides/webos-integration",
                   "integration-guides/how-to-upload-apps-to-the-lg-store",
@@ -50,6 +52,7 @@
               },
               {
                 "group": "iOS",
+                "root": "integration-guides/overview-ios",
                 "pages": [
                   "integration-guides/ios-tvos",
                   "integration-guides/mac-os",
@@ -58,6 +61,7 @@
               },
               {
                 "group": "Android",
+                "root": "integration-guides/overview-android",
                 "pages": [
                   "integration-guides/android-sdk",
                   "integration-guides/unity-sdk"
@@ -65,6 +69,7 @@
               },
               {
                 "group": "Bundle",
+                "root": "integration-guides/overview-bundle",
                 "pages": [
                   "integration-guides/hola-vpn",
                   "integration-guides/bright-vpn",
