@@ -1,4 +1,4 @@
-export const tos = ({ platform }) => (
+export const Tos = ({ platform }) => (
   <>
     <p><strong>App Store Privacy Settings</strong></p>
 
