@@ -1,4 +1,4 @@
-export const CustomConsentWindows = ({ platform }) => (
+export const CustomConsentWin = ({ platform }) => (
   <>
     <Warning>
       <strong>Subject to Bright SDK approval</strong>, you can create and use your own consent screen with Bright SDK. Please follow the following guidelines.

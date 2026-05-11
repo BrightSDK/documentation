@@ -221,7 +221,7 @@ import API from "/snippets/api-documentation-apple.mdx";
 
         Bright SDK must show a consent screen right after the app is launched. Your app must initialize the main screen first, show the consent screen, and only then pass control to other functions/screens.
 
-        1. Embed the framework - follow the **Embedding the Framework in Xcode** steps above.
+        1. Embed the framework - follow the [**Embedding the Framework in Xcode**](#embedding-the-framework-in-xcode) steps above.
         2. Open `SampleAppApp.swift` from `sample_tvos_xcode` and implement similar SDK initialization logic in your app.
         3. Open `SettingsView.swift` from `sample_tvos_xcode` and implement the settings screen similarly:
            - Web Indexing section should have Enable and Disable buttons.
@@ -236,7 +236,7 @@ import API from "/snippets/api-documentation-apple.mdx";
 
         **Reference sample:** `unity_sample_app_2020.2.5`, `unity_admob_sample_app`.
 
-        Use this path if you want to integrate Bright SDK entirely at the Unity level without modifying Xcode. If you prefer to integrate at the Xcode level instead, skip to **Integration in Xcode (Unity)**. Do not follow both - choose one.
+        Use this path if you want to integrate Bright SDK entirely at the Unity level without modifying Xcode. If you prefer to integrate at the Xcode level instead, skip to [**Integration in Xcode (Unity)**](#integration-in-xcode-unity). Do not follow both - choose one.
 
         <Warning>
           _If you have other 3rd-party frameworks that need to initialize before your game launches, integrating via the Unity plugin ensures the correct user flow: Bright SDK consent screen → 3rd party initialization → game launch._
