@@ -39,7 +39,6 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
   <Step title="Create App ID on Dashboard" titleSize="h3">
     If you haven't done this yet, log in to [<u>your dashboard</u>](https://bright-sdk.com/cp/apps) and create your app ID first.
   </Step>
-
   <Step title="Extract SDK AAR" titleSize="h3">
     Download the latest Bright SDK from the [<u>Bright SDK Dashboard</u>](https://bright-sdk.com/cp/docs/sdk/android) or from the link provided in the latest release email. Unzip the archive.
 
@@ -58,7 +57,6 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
 
     Copy `bright_sdk.aar` into your project's `/libs` directory.
   </Step>
-
   <Step title="Integrate Bright SDK" titleSize="h3">
     **Configure Dependencies**
 
@@ -114,28 +112,28 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
 
     ```java
     void startBrightSdk(Context context) {
-
+    
         // Create a Settings object
         Settings settings = new Settings(context);
-
+    
         // Set the language for the consent screen
         // If not set, the device's default language will be used
         settings.setLanguage(Settings.ConsentLanguage.en);
-
+    
         // Set to true to prevent the consent screen from showing automatically
         settings.setSkipConsent(true);
-
+    
         // Benefit text appears at the start of the consent text
         settings.setBenefit("To play for free");
-
+    
         // Set button texts (defaults will be used if not set)
         settings.setAgreeBtn("YES, NO ADS!");
         settings.setDisagreeBtn("SHOW ME ADS");
-
+    
         // If you are using JobScheduler, set job id range to avoid collisions
         settings.setMinJobId(1);
         settings.setMaxJobId(1000);
-
+    
         // Handle user selection
         settings.setOnStatusChange(choice -> {
             switch (choice) {
@@ -152,10 +150,10 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
                     break;
             }
         });
-
+    
         // Initialize the SDK
         BrightApi.init(this, settings);
-
+    
         // Show the consent dialog
         BrightApi.showConsent(this);
     }
@@ -174,11 +172,11 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+    
         // Ensure startBrightSdk is called only on first run
         if (savedInstanceState != null)
             return;
-
+    
         startBrightSdk(this);
     }
     ```
@@ -198,10 +196,10 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
         @Override
         public void onCreate() {
             super.onCreate();
-
+    
             if (BrightApi.isSvcProcess())
                 return;
-
+    
             // rest of your application code
         }
     }
@@ -212,15 +210,15 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
     ```java
     public void onCreate() {
         super.onCreate();
-
+    
         String processName = this.getProcessName();
-
+    
         if (processName != null
                 && (processName.endsWith("srvh")
                 || processName.endsWith("srvj"))) {
             return;
         }
-
+    
         // rest of your application code
     }
     ```
@@ -246,7 +244,7 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
     ```java
     // Show with existing settings:
     BrightApi.showConsent(Context context);
-
+    
     // Show with updated settings:
     BrightApi.showConsent(Context context, Settings settings);
     ```
@@ -259,7 +257,6 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
     -dontnote brdat.sdk.**
     ```
   </Step>
-
   <Step title="Add Opt-In/Out Settings Option" titleSize="h3">
     <Warning>
       Read and implement this section carefully. **The user must always be able to opt out of Bright SDK after giving their initial consent.**
@@ -272,7 +269,7 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
     **Requirements:**
 
     - Add a toggle/switch labeled **"Web Indexing"** that clearly reflects the current status (opted in or out).
-    - Below the switch, add text emphasizing the value users receive when opting in.
+    - Below the switch, add text emphasizing the value users receive when opting in ([see examples](#add-opt-in/out-settings-option)).
     - Include a **Learn more** link that opens: [https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing](https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing).
 
     **Implementation:**
@@ -330,26 +327,26 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
     **Mobile:**
 
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-      <img src="/integration-guides/image/android_integration_guide_2.png" alt="Alt text 1" width="400" />
+  <img src="/integration-guides/image/android_integration_guide_2.png" alt="Alt text 1" width="400" />
 
-      <img src="/integration-guides/image/android_integration_guide_3.png" alt="Alt text 2" width="400" />
+  <img src="/integration-guides/image/android_integration_guide_3.png" alt="Alt text 2" width="400" />
 
-      <img src="/integration-guides/image/android_integration_guide_4.png" alt="Alt text 3" width="400" />
+  <img src="/integration-guides/image/android_integration_guide_4.png" alt="Alt text 3" width="400" />
 
-      <img src="/integration-guides/image/android_integration_guide_5.png" alt="Alt text 4" width="400" />
-    </div>
+  <img src="/integration-guides/image/android_integration_guide_5.png" alt="Alt text 4" width="400" />
+</div>
 
     **TV:**
 
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-      <img src="/integration-guides/image/android_integration_guide_6.png" alt="Alt text 1" width="400" />
+  <img src="/integration-guides/image/android_integration_guide_6.png" alt="Alt text 1" width="400" />
 
-      <img src="/integration-guides/image/android_integration_guide_7.png" alt="Alt text 2" width="400" />
+  <img src="/integration-guides/image/android_integration_guide_7.png" alt="Alt text 2" width="400" />
 
-      <img src="/integration-guides/image/android_integration_guide_8.png" alt="Alt text 3" width="400" />
+  <img src="/integration-guides/image/android_integration_guide_8.png" alt="Alt text 3" width="400" />
 
-      <img src="/integration-guides/image/android_integration_guide_9.png" alt="Alt text 4" width="400" />
-    </div>
+  <img src="/integration-guides/image/android_integration_guide_9.png" alt="Alt text 4" width="400" />
+</div>
 
     **Common mistakes to avoid:**
 
@@ -360,7 +357,6 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
     | No "Learn more" link / QR code | Required — must link to the URL above |
     | Switch doesn't reflect current state | Switch must always show the true current status |
   </Step>
-
   <Step title="Consent Dialog Customization" titleSize="h3">
     While the standard Bright SDK consent screen is always available, we **highly encourage customization** to match your app's look & feel - this typically leads to higher conversion rates.
 
@@ -388,34 +384,34 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+    
         CustomConsentSettings customConsentSettings = new CustomConsentSettings();
-
+    
         // Title color
         customConsentSettings.setAppTitleTextColor("#facd00");
-
+    
         // Custom background image
         customConsentSettings.setBodyBackgroundImageResource(R.drawable.your_custom_background);
-
+    
         // Or use a background color instead
         customConsentSettings.setBodyBackgroundColor("#D5E6FF");
-
+    
         // Custom font using system fonts
         CustomTypeface customTypeface = new CustomTypeface();
         customTypeface.setFontFamily(CustomConsentSettings.CustomFontFamily.cursive);
         customTypeface.setTextStyle(CustomConsentSettings.CustomTextStyle.bold);
-
+    
         // Or using a premade Typeface object
         Typeface typeface = ResourcesCompat.getFont(this, R.font.pretendo);
         customTypeface.setTypeface(typeface);
-
+    
         // Apply to a specific element
         customConsentSettings.setConsentTextTypeface(customTypeface);
-
+    
         // Or apply to all text elements at once
         // (specific element settings always take precedence)
         customConsentSettings.setCustomTypeface(customTypeface);
-
+    
         // Other customizations
         customConsentSettings.setTopIconColorFilter("#00ADB5");
         customConsentSettings.setNetworkIconsColorFilter("#00ADB5");
@@ -425,7 +421,7 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
         customConsentSettings.setPrivacyMessageLinksColor("#00ADB5");
         customConsentSettings.setAgreeButtonImageResource(R.drawable.your_custom_button);
         customConsentSettings.setDisagreeButtonImageResource(R.drawable.your_custom_button);
-
+    
         settings.setCustomConsentSettings(customConsentSettings);
         BrightApi.showConsent(this, settings);
     }
@@ -433,15 +429,12 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
 
     See the full list of available `CustomConsentSettings` properties in the [API Documentation](#api-documentation).
   </Step>
-
   <Step title="External Consent Screen (optional)" titleSize="h3">
     <CustomConsent platform="android" />
   </Step>
-
   <Step title="App Performance" titleSize="h3">
     <AppPerformance />
   </Step>
-
   <Step title="Verify Your Integration" titleSize="h3">
     1. Compile and run your application on a device or emulator
     2. Click **I Agree** in the SDK consent dialog
@@ -460,19 +453,15 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
 
     If this line appears, the integration is complete. If not, ensure you are not suppressing application output, then contact support.
   </Step>
-
   <Step title="Update Your Terms of Service" titleSize="h3">
     <UpdateTermsOfService />
   </Step>
-
   <Step title="Submit Your Integration for Review" titleSize="h3">
     <SubmitIntegrationReview platform="android" />
   </Step>
-
   <Step title="How to Update the SDK" titleSize="h3">
     <UpdateSDK />
   </Step>
-
   <Step title="Migrating from API V1 to V2" titleSize="h3">
     The V2 API introduces a customizable consent screen. All main V1 methods are deprecated and replaced by `BrightApi`.
 
@@ -492,7 +481,7 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
         main.set_tos_url("http://mysite.com/tos.html");
         main.set_decline_option(main.DECLINE_OPTION.NO_THANK_YOU);
         main.set_jobid_range(1, 1000);
-
+    
         main.set_choice_listener(new main.choice_listener() {
             public void on_change(int choice) {
                 switch (choice) {
@@ -505,7 +494,7 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
                 }
             }
         });
-
+    
         main.start(ctx); // must be called after all main.set* calls
         main.show_dialog(ctx, false); // dialog will be shown once
     }
@@ -516,12 +505,12 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
     ```java
     void startBrightSdk(Context ctx) {
         Settings settings = new Settings(context);
-
+    
         settings.setAgreeBtn("Yes, sure!");
         settings.setDisagreeBtn("No, thank you");
         settings.setMinJobId(1);
         settings.setMaxJobId(1000);
-
+    
         settings.setOnStatusChange(choice -> {
             switch (choice) {
                 case BrightApi.Choice.PEER:
@@ -535,13 +524,12 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
                     break;
             }
         });
-
+    
         // Init — consent screen shown automatically unless setSkipConsent(true)
         BrightApi.init(context, settings);
     }
     ```
   </Step>
-
   <Step title="API Documentation" titleSize="h3">
     <Steps>
       <Step title="BrightApi">
@@ -556,11 +544,10 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
         | `static Boolean getConsentChoice(Context context)` | Returns `true` if user is peer, `false` if not peer, `null` if no choice has been made yet. |
         | `static boolean isSvcProcess()` | Returns `true` if the current process is the SDK service process. |
         | `static void setTrackingId(String trackingId)` | Adds a unique tracking ID for reports and debugging. Must be called **before**`BrightApi.init`. |
-        | `static void reportConsentShown(Context context)` | <Warning> Requires special permission. </Warning> Reports that a custom consent screen was shown. |
-        | `static void reportConsentBackPress(Context context)` | <Warning> Requires special permission. </Warning> Reports that the user pressed back without making a choice. |
-        | `static void reportConsentOptOut(Context context)` | <Warning> Requires special permission. </Warning> Reports that the user opted out via custom consent screen. |
+        | `static void reportConsentShown(Context context)` | <Warning>    Requires special permission.  </Warning>  Reports that a custom consent screen was shown. |
+        | `static void reportConsentBackPress(Context context)` | <Warning>    Requires special permission.  </Warning>  Reports that the user pressed back without making a choice. |
+        | `static void reportConsentOptOut(Context context)` | <Warning>    Requires special permission.  </Warning>  Reports that the user opted out via custom consent screen. |
       </Step>
-
       <Step title="Settings">
         **Constructor:**
 
@@ -590,7 +577,6 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
         | `void setCampaignId(String campaignId)` | Set a campaign ID |
         | `void setBackPressListener(Runnable backPressListener)` | Listener for back press on consent screen |
       </Step>
-
       <Step title="CustomConsentSettings">
         | Method | Description |
         | --- | --- |
@@ -632,7 +618,6 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
         | `setTopIconColorFilter(String)` | Top icon color filter |
         | `setHideConsentIcon(boolean)` | Show/hide the consent icon |
       </Step>
-
       <Step title="CustomTypeface">
         **Constructors:**
 
@@ -651,7 +636,6 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
         | `void setFontFamily(CustomConsentSettings.CustomFontFamily fontFamily)` | Set font family |
         | `void setTextStyle(CustomConsentSettings.CustomTextStyle textStyle)` | Set text style |
       </Step>
-
       <Step title="Choice">
         | Value | Int | Description |
         | --- | --- | --- |
@@ -659,15 +643,12 @@ Bright SDK supports Android native apps written in **Java** and **Kotlin**, and 
         | `Choice.PEER` | 1 | User agreed — reflect in settings so user can opt out |
         | `Choice.NOT_PEER` | 4 | User declined — reflect in settings so user can opt in |
       </Step>
-
       <Step title="ConsentLanguage">
         Supported values: `en`, `de`, `es`, `fr`, `it`, `ja`, `pt`, `ru`, `tr`
       </Step>
-
       <Step title="CustomFontFamily">
         Supported values: `casual`, `cursive`, `monospace`, `sans_serif`, `sans_serif_black`, `sans_serif_light`, `sans_serif_medium`, `sans_serif_smallcaps`, `sans_serif_thin`, `sans_serif_condensed`, `sans_serif_condensed_light`, `sans_serif_condensed_medium`, `serif`, `serif_monospace`
       </Step>
-
       <Step title="CustomTextStyle">
         Supported values: `bold`, `bold_italic`, `italic`, `normal`
       </Step>

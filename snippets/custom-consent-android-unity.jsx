@@ -8,9 +8,7 @@ export const CustomConsent = ({ platform }) => (
     <p>Your custom consent screen must include the following mandatory elements:</p>
 
     <p><strong><u>Mandatory text:</u></strong></p>
-    <blockquote>
-      "To [Benefit to user], please allow Web Indexing by Bright Data to use your device's free resources and IP address to download public web data from the Internet. None of your personal information is collected, except your IP address. Bright Data does not track you."
-    </blockquote>
+    <pre><code className="language-text">{`"To [Benefit to user], please allow Web Indexing by Bright Data to use your device's free resources and IP address to download public web data from the Internet. None of your personal information is collected, except your IP address. Bright Data does not track you."`}</code></pre>
 
     <p><strong><u>Required links:</u></strong></p>
     <table>
