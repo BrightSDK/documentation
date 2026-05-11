@@ -35,13 +35,16 @@ export const SubmitIntegrationReview = ({ platform }) => (
           </li>
           <li>
             <strong>Store submission</strong> — You will be notified by email once your app is approved for release. The app status in the dashboard will also be changed to "Approved".
-            
-            <p>Guides to help you through the store review:</p>
-            <ul>
-              <li><a href="https://docs.bright-sdk.com/integration-guides/how-to-upload-apps-to-the-lg-store">LG</a></li>
-              <li><a href="https://docs.bright-sdk.com/integration-guides/how-to-upload-apps-to-the-samsung-store">Samsung</a></li>
-            </ul>
-            
+            {platform !== "ios" && platform !== "macos" && platform !== "android" && (
+              <>
+                <p>Guides to help you through the store review:</p>
+                <ul>
+                  <li><a href="https://docs.bright-sdk.com/integration-guides/how-to-upload-apps-to-the-lg-store">LG</a></li>
+                  <li><a href="https://docs.bright-sdk.com/integration-guides/how-to-upload-apps-to-the-samsung-store">Samsung</a></li>
+                </ul>
+              </>
+            )}
+
             <p>Review Resources:</p>
             <ul>
               <li>Watch our <a href="https://www.youtube.com/watch?v=kQCmca0FHyw">guided tour video</a> for critical submission tips.</li>
