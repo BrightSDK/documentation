@@ -72,7 +72,10 @@ None of your personal information is collected, except your IP address. Bright D
 
     <p><strong>For tvOS:</strong></p>
     <p>Replace links with:</p>
-    <pre><code>Scan the QR Code to learn more about Bright Data policy and ethical usage</code></pre>
+    <CodeGroup>
+    ```text
+    Scan the QR Code to learn more about Bright Data policy and ethical usage```
+    
     <p>
       Use your own branded QR code or a <a href="https://media.bright-sdk.com/2023/09/qr-bright-sdk-faq.svg">hosted</a> version pointing to:<br />
       <a href="https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing">https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing</a>
