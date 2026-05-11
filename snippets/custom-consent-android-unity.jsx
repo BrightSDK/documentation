@@ -34,8 +34,10 @@ export const CustomConsent = ({ platform }) => (
       </tbody>
     </table>
 
-    <p><strong>For Android TV:</strong> Replace links with:<br />
-    <em>"Scan the QR Code to learn more about web indexing by Bright Data."</em></p>
+    <p><strong>For Android TV:</strong>
+    <p>Replace links with:</p>
+    
+    <pre><code className="language-text">{`Scan the QR Code to learn more about Bright Data policy and ethical usage`}</code></pre>
 
     <p>Use your own branded QR code or a hosted version pointing to: <a href="https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing">https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing</a></p>
 
