@@ -34,7 +34,7 @@ export const CustomConsent = ({ platform }) => (
       </tbody>
     </table>
 
-    <p><strong>For Android TV:</strong>
+    <p><strong>For Android TV:</strong></p>
     <p>Replace links with:</p>
     
     <pre><code className="language-text">{`Scan the QR Code to learn more about Bright Data policy and ethical usage`}</code></pre>
