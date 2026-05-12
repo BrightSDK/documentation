@@ -31,11 +31,10 @@ import UpdateSDK from "/snippets/update-sdk-version-windows.mdx";
   <Step title="Create App ID on Dashboard" titleSize="h3">
     <AppIdWin />
   </Step>
-
   <Step title="Extract SDK Framework" titleSize="h3">
     **Download the SDK**
 
-    Download the latest Bright SDK from the [<u>Bright SDK Dashboard</u>](https://bright-sdk.com/cp/docs/sdk/windows), unzip it.
+    Download the latest Bright SDK from the [Bright SDK Dashboard](https://bright-sdk.com/cp/docs/sdk/windows), unzip it.
 
     **SDK Structure**
 
@@ -50,22 +49,23 @@ import UpdateSDK from "/snippets/update-sdk-version-windows.mdx";
       **Important:** `lum_sdk.dll`, `net_updater32.exe` and `brd_config.json` files must be located next to each other when running the application.
     </Note>
   </Step>
-
   <Step title="Integrate Bright SDK in Your Code" titleSize="h3">
     **Add SDK Files to Your Solution**
 
     **Build-time Dependencies**
+
     1. Copy the following files to any location inside your repository:
        - `lum_sdk.dll`
        - `lum_sdk.xml`
     2. Add them to your source control.
     3. Add reference from your main project to `lum_sdk.dll` (Copy Local = true).
-    
+
     <Note>
       `lum_sdk.xml` is for Visual Studio to display documentation of the API and must be located next to the referenced `lum_sdk.dll`. It is not needed at runtime.
     </Note>
 
     **Run-time Dependencies**
+
     1. Copy the following files to the root of your main project:
        - `net_updater32.exe`
        - `brd_config.json`
@@ -80,7 +80,7 @@ import UpdateSDK from "/snippets/update-sdk-version-windows.mdx";
        - Set required fields now and you can customize the consent screen later.
     3. Use `brd_config.json` and/or set them programmatically (see [API Documentation](#api-documentation)).
     4. Write handler code for the user choice changed event.
-       - *For example:* enable/disable ads or premium features.
+       - _For example:_ enable/disable ads or premium features.
     5. Close the SDK when your application is exiting.
 
     <Note>
@@ -89,24 +89,21 @@ import UpdateSDK from "/snippets/update-sdk-version-windows.mdx";
 
     See [Code Example](#code-example) and use `cs_winform_anycpu` and `cs_wpf_anycpu` from samples directory for reference.
   </Step>
-
   <Step title="Add Opt-In/Out Settings Option" titleSize="h3">
     <OptInOutWin />
   </Step>
-
   <Step title="Update Application Installer" titleSize="h3">
     <UpdateAppInstall />
   </Step>
-
   <Step title="Add SDK Service Status Notifications (Optional)" titleSize="h3">
     **Notifications**
 
     You can register your app for notifications about the SDK service status. This allows you to:
+
     - Know if the SDK is in a valid usable state.
     - Prevent users from receiving benefits until they restore the SDK service.
 
-    **Implementation:**
-    Add delegate for the `BrightData.Api.ServiceStatusChanged` event, the handler for the event is an EventHandler that receives the `BrightData.Api.ServiceStatusChangedEventArgs` as event data.
+    **Implementation:** Add delegate for the `BrightData.Api.ServiceStatusChanged` event, the handler for the event is an EventHandler that receives the `BrightData.Api.ServiceStatusChangedEventArgs` as event data.
 
     See `ServiceStatus` enum for more information on the different status.
 
@@ -120,11 +117,9 @@ import UpdateSDK from "/snippets/update-sdk-version-windows.mdx";
 
     You can also trigger this on user action (e.g., "Click here to fix Bright Data SDK and regain benefit").
   </Step>
-
   <Step title="Custom Consent Screen (optional)" titleSize="h3">
     <CustomConsentWin platform="win" />
   </Step>
-
   <Step title="Self-Check Your Integration" titleSize="h3">
     **Testing Mode**
 
@@ -135,28 +130,26 @@ import UpdateSDK from "/snippets/update-sdk-version-windows.mdx";
     While testing, you can:
 
     **Option 1: Opt-out through settings**
+
     - Remove Bright Data service by opting out through your application settings.
     - Delete the `luminati` folder (or your entire output folder).
     - This resets your consent choice.
     - Consent screen will display next time you run the application.
 
     **Option 2: Uninstall via command**
+
     - Execute `net_updater32.exe --uninstall APPID` in your output folder.
     - This deletes all SDK files.
   </Step>
-
   <Step title="Update Your Terms of Service" titleSize="h3">
     <UpdateTermsOfService />
   </Step>
-
   <Step title="Submit your integration for review" titleSize="h3">
     <SubmitIntegrationReview />
   </Step>
-
   <Step title="How to Update SDK" titleSize="h3">
     <UpdateSDK />
   </Step>
-
   <Step title="Code Example" titleSize="h3">
     **Main Application Form:**
 
@@ -183,7 +176,7 @@ import UpdateSDK from "/snippets/update-sdk-version-windows.mdx";
       {
         if (!_brightSdk.ConsentChoice)
           return;
-
+    
         if (e.Status == BrightData.Api.ServiceStatus.NotInstalled)
         {
           // optional: notify user about SDK service not installed and offer to recover
@@ -248,7 +241,6 @@ import UpdateSDK from "/snippets/update-sdk-version-windows.mdx";
     }
     ```
   </Step>
-
   <Step title="API Documentation" titleSize="h3">
     - Settings in `brd_config.json` are shared by both `lum_sdk.dll` and `net_updater32.exe`.
     - You can use the config file together with the programmatic API.
@@ -273,7 +265,6 @@ import UpdateSDK from "/snippets/update-sdk-version-windows.mdx";
         | `disagree_btn` | string | Text of the consent screen's disagree button |
         | `opt_out_txt` | string | Text of the consent screen's opt-out instructions |
       </Step>
-
       <Step title=".NET API Reference">
         **Methods**
 
@@ -300,6 +291,7 @@ import UpdateSDK from "/snippets/update-sdk-version-windows.mdx";
         | `event BrightData.Api.ConsentDialogClosed` | Occurs when the consent dialog is closed |
 
         **Event Example**
+
         ```csharp
         _brightSdk.ConsentChoiceChanged += (sender, e) => 
         {
@@ -310,7 +302,6 @@ import UpdateSDK from "/snippets/update-sdk-version-windows.mdx";
         };
         ```
       </Step>
-
       <Step title="Settings Class">
         `class BrightData.Api.Settings`
 
@@ -354,7 +345,6 @@ import UpdateSDK from "/snippets/update-sdk-version-windows.mdx";
         | :-- | :-- | :-- | :-- |
         | `Language` | string | "en-US" | Language code for consent screen. Supported: en-US, de-De, es-Es, fr-FR, it-IT, pt-PT, ru-RU, zh-CN |
       </Step>
-
       <Step title="Command Line Tool (net_updater32.exe)">
         **Help & Information**
 
@@ -388,6 +378,7 @@ import UpdateSDK from "/snippets/update-sdk-version-windows.mdx";
         | `--campaign <campaign_id>` | Optional parameter for statistics breakdown by campaign |
 
         **Command Examples**
+
         ```bash
         # Install with dialog
         net_updater32.exe --install-ui myapp.example.com

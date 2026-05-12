@@ -4,6 +4,7 @@ description: "This guide is for developers who want to monetize Unity applicatio
 sidebarTitle: "Unity SDK"
 noindex: true
 ---
+
 import OptInOut from "/snippets/add-opt-in-out-unity.mdx";
 import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
 
@@ -13,7 +14,7 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
 
 ### Requirements
 
-- [<u>Latest</u>](https://bright-sdk.com/cp/docs/sdk/android) Bright SDK AAR for Android.
+- [Latest](https://bright-sdk.com/cp/docs/sdk/android) Bright SDK AAR for Android.
 - Unity Editor (latest recommended).
 - Android build support installed in Unity.
 
@@ -38,7 +39,6 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
       width="400"
     />
   </Step>
-
   <Step title="Add Main Gradle and Gradle Properties Files" titleSize="h3">
     Enable the following options in Unity:
 
@@ -56,7 +56,6 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
       width="400"
     />
   </Step>
-
   <Step title="Update Dependencies in mainTemplate" titleSize="h3">
     Add the following dependencies to the `dependencies` section of `mainTemplate.gradle`:
 
@@ -70,7 +69,6 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
     }
     ```
   </Step>
-
   <Step title="Update gradleTemplate" titleSize="h3">
     Add the following to `gradleTemplate.properties`:
 
@@ -79,7 +77,6 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
     android.enableJetifier=true
     ```
   </Step>
-
   <Step title="Implement ChoiceListener Interface" titleSize="h3">
     Create a `ChoiceListener` class to handle the user's consent choice callback:
 
@@ -87,7 +84,7 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
     class ChoiceListener : AndroidJavaProxy
     {
         public ChoiceListener() : base("com.android.eapx.Settings$OnStatusChange") { }
-
+    
         void onChange(int choice)
         {
             // Callback with the user's choice:
@@ -97,43 +94,40 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
     }
     ```
   </Step>
-
   <Step title="Instantiate Necessary Objects" titleSize="h3">
     ```csharp
     AndroidJavaClass unityPlayerClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-
+    
     // Important when testing: currentActivity is only available on a device/emulator,
     // not inside the Unity Editor
     AndroidJavaObject currentActivity = unityPlayerClass.GetStatic<AndroidJavaObject>("currentActivity");
-
+    
     // Use the full package name - update if you have a dedicated package name
     AndroidJavaObject brightApi = new AndroidJavaObject("com.android.eapx.BrightApi");
-
+    
     // Create a settings object
     AndroidJavaObject settings = new AndroidJavaObject("com.android.eapx.Settings", currentActivity);
     ```
   </Step>
-
   <Step title="Set the Behavior of the SDK" titleSize="h3">
     ```csharp
     // Refer to the API documentation for all available settings
-
+    
     // Benefit text appears at the start of the consent text
     settings.Call("setBenefit", "To get free daily tokens");
-
+    
     // Set button texts (defaults will be used if not set)
     settings.Call("setAgreeBtn", "Yes, sure!");
     settings.Call("setDisagreeBtn", "No, thanks!");
-
+    
     // Prevent the consent screen from showing automatically
     settings.Call("setSkipConsent", true);
-
+    
     // Register the ChoiceListener callback
     ChoiceListener choiceListener = new ChoiceListener();
     settings.Call("setOnStatusChange", choiceListener);
     ```
   </Step>
-
   <Step title="Consent Dialog Customization (optional)" titleSize="h3">
     While the standard Bright SDK consent screen is always available, we **highly encourage customization** to match your app's look & feel - this typically leads to higher conversion rates.
 
@@ -152,7 +146,7 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
 
     ```csharp
     AndroidJavaObject customConsentSettings = new AndroidJavaObject("com.android.eapx.CustomConsentSettings");
-
+    
     // Colors
     customConsentSettings.Call("setConsentTextColor", "#FFFFFF");
     customConsentSettings.Call("setAgreeButtonBackgroundColor", "#d0510c");
@@ -162,19 +156,19 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
     customConsentSettings.Call("setHideNetworkIcons", true);
     customConsentSettings.Call("setPrivacyMessageLinksColor", "#facd00");
     customConsentSettings.Call("setPrivacyMessageTextColor", "#ffffff");
-
+    
     // Font - using system font family and style
     AndroidJavaClass consentFont = new AndroidJavaClass("com.android.eapx.CustomConsentSettings$CustomFontFamily");
     AndroidJavaObject consentFontEnumValue = consentFont.GetStatic<AndroidJavaObject>("monospace");
-
+    
     AndroidJavaClass consentFontStyle = new AndroidJavaClass("com.android.eapx.CustomConsentSettings$CustomTextStyle");
     AndroidJavaObject consentFontStyleEnumValue = consentFontStyle.GetStatic<AndroidJavaObject>("italic");
-
+    
     AndroidJavaObject customTypeface = new AndroidJavaObject("com.android.eapx.CustomTypeface");
     customTypeface.Call("setFontFamily", consentFontEnumValue);
     customTypeface.Call("setTextStyle", consentFontStyleEnumValue);
     customConsentSettings.Call("setCustomTypeface", customTypeface);
-
+    
     // Apply customConsentSettings to the SDK settings
     settings.Call("setCustomConsentSettings", customConsentSettings);
     ```
@@ -194,7 +188,7 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
     public static string CUSTOM_CONSENT_ICON_IMAGE            = "icon_image";
     public static string CUSTOM_CONSENT_AGREE_BUTTON_IMAGE    = "agree_button_image";
     public static string CUSTOM_CONSENT_DISAGREE_BUTTON_IMAGE = "disagree_button_image";
-
+    
     void setCustomConsent()
     {
         customConsentSettings = new AndroidJavaObject("com.android.eapx.CustomConsentSettings");
@@ -202,14 +196,14 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
         settings.Call("setCustomConsentSettings", customConsentSettings);
         StartCoroutine(LoadFiles(imagesDictionary));
     }
-
+    
     Dictionary<string, StreamingAsset> createImagesDictionary()
     {
         string backgroundImagePath     = System.IO.Path.Combine(Application.streamingAssetsPath, "your_background_image.png");
         string iconImagePath           = System.IO.Path.Combine(Application.streamingAssetsPath, "your_icon.jpg");
         string agreeButtonImagePath    = System.IO.Path.Combine(Application.streamingAssetsPath, "agree_button.png");
         string disagreeButtonImagePath = System.IO.Path.Combine(Application.streamingAssetsPath, "disagree_button.png");
-
+    
         Dictionary<string, StreamingAsset> imagesDictionary = new Dictionary<string, StreamingAsset>();
         imagesDictionary.Add(CUSTOM_CONSENT_ICON_IMAGE,            new StreamingAsset(iconImagePath, iconImageBytes));
         imagesDictionary.Add(CUSTOM_CONSENT_BACKGROUND_IMAGE,      new StreamingAsset(backgroundImagePath, backgroundImageBytes));
@@ -217,12 +211,12 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
         imagesDictionary.Add(CUSTOM_CONSENT_DISAGREE_BUTTON_IMAGE, new StreamingAsset(disagreeButtonImagePath, disagreeButtonImageBytes));
         return imagesDictionary;
     }
-
+    
     IEnumerator LoadFiles(Dictionary<string, StreamingAsset> imagesDictionary)
     {
         List<StreamingAsset> imagesList = new List<StreamingAsset>(imagesDictionary.Values);
         StreamingAsset streamingAsset;
-
+    
         for (int i = 0; i < imagesList.Count; i++)
         {
             streamingAsset = imagesList[i];
@@ -233,7 +227,7 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
         updateConsentImages(imagesDictionary);
         brightApi.CallStatic("init", currentActivity, settings);
     }
-
+    
     private void updateConsentImages(Dictionary<string, StreamingAsset> imagesDictionary)
     {
         customConsentSettings.Call("setBodyBackgroundImageBytes",
@@ -245,7 +239,7 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
         settings.Call("setShowAppIcon", true,
             imagesDictionary[CUSTOM_CONSENT_ICON_IMAGE].ImageBytes);
     }
-
+    
     public class StreamingAsset
     {
         public StreamingAsset(string url, byte[] imageBytes)
@@ -277,14 +271,14 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
     [SerializeField] private Sprite _backgroundImage;
     [SerializeField] private Sprite _buttonImage;
     [SerializeField] private Sprite _iconImage;
-
+    
     // Exposed Colors - editable in the Unity Editor
     [SerializeField] private Color _descriptionTextColor = Color.white;
     [SerializeField] private Color _linksColor           = Color.white;
     [SerializeField] private Color _titleColor           = Color.white;
     [SerializeField] private Color _footerTextColor      = Color.white;
     [SerializeField] private Color _footerLinksColor     = Color.white;
-
+    
     // Internal variables - store images and colors in Bright SDK-compatible formats
     private byte[] _backgroundImageBytes;
     private byte[] _buttonImageBytes;
@@ -323,7 +317,7 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
         if (_backgroundImage) _backgroundImageBytes = _backgroundImage.texture.EncodeToPNG();
         if (_buttonImage)     _buttonImageBytes     = _buttonImage.texture.EncodeToPNG();
         if (_iconImage)       _iconImageBytes       = _iconImage.texture.EncodeToPNG();
-
+    
         // Convert Colors to hex strings
         _descriptionTextHex = "#" + ColorUtility.ToHtmlStringRGB(_descriptionTextColor);
         _linksHex           = "#" + ColorUtility.ToHtmlStringRGB(_linksColor);
@@ -339,21 +333,21 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
 
     ```csharp
     AndroidJavaObject customConsentSettings = new AndroidJavaObject("com.android.eapx.CustomConsentSettings");
-
+    
     // Text colors
     customConsentSettings.Call("setAppTitleTextColor",        _titleHex);
     customConsentSettings.Call("setConsentTextColor",         _descriptionTextHex);
     customConsentSettings.Call("setConsentTextLinksColor",    _linksHex);
     customConsentSettings.Call("setPrivacyMessageTextColor",  _footerTextHex);
     customConsentSettings.Call("setPrivacyMessageLinksColor", _footerLinksHex);
-
+    
     // Button colors
     customConsentSettings.Call("setAgreeButtonBackgroundColor", "#5b13a8");
     customConsentSettings.Call("setDisagreeButtonTextColor",    "#3D7FFC");
-
+    
     // Hide network icons
     customConsentSettings.Call("setHideNetworkIcons", true);
-
+    
     // Images (only set if available)
     if (_backgroundImageBytes != null)
         customConsentSettings.Call("setBodyBackgroundImageBytes", _backgroundImageBytes);
@@ -361,45 +355,39 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
         customConsentSettings.Call("setAgreeButtonImageBytes", _buttonImageBytes);
     if (_buttonImageBytes != null)
         customConsentSettings.Call("setDisagreeButtonImageBytes", _buttonImageBytes);
-
+    
     // App icon
     if (_iconImageBytes != null)
         settings.Call("setShowAppIcon", true, _iconImageBytes);
-
+    
     // Apply to SDK settings
     settings.Call("setCustomConsentSettings", customConsentSettings);
     ```
   </Step>
-
   <Step title="Initialize the SDK" titleSize="h3">
     ```csharp
     brightApi.CallStatic("init", currentActivity, settings);
     ```
   </Step>
-
   <Step title="Show the Consent Screen" titleSize="h3">
     ```csharp
     // Show consent screen with current settings:
     brightApi.CallStatic("showConsent", currentActivity);
-
+    
     // If you need to update settings after init, pass the updated settings object:
     brightApi.CallStatic("showConsent", currentActivity, settings);
     ```
   </Step>
-
   <Step title="Add Opt-In/Out Settings Option" titleSize="h3">
     <OptInOut />
   </Step>
-
   <Step title="External Consent Screen (optional)" titleSize="h3">
     <CustomConsent platform="unity" />
   </Step>
-
   <Step title="How to Update the SDK" titleSize="h3">
     1. Delete `bright_sdk.aar` from Assets \> Plugins \> Android.
     2. Copy the new `bright_sdk.aar` file to Assets \> Plugins \> Android.
   </Step>
-
   <Step title="Migrating from API V1 to V2" titleSize="h3">
     The V2 API introduces new capabilities and a customizable consent screen. All main V1 methods are deprecated and replaced by `BrightApi` methods.
 
@@ -408,7 +396,7 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
     ```csharp
     // V1:
     AndroidJavaObject brightApi = new AndroidJavaObject("com.android.eapx.main");
-
+    
     // V2:
     AndroidJavaObject brightApi = new AndroidJavaObject("com.android.eapx.BrightApi");
     ```
@@ -418,7 +406,7 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
     ```csharp
     // Instantiate a Settings object
     AndroidJavaObject settings = new AndroidJavaObject("com.android.eapx.Settings", currentActivity);
-
+    
     // Initialize the SDK (must be called after all settings are configured)
     brightApi.CallStatic("init", currentActivity, settings);
     ```
@@ -433,7 +421,6 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
     brightApi.CallStatic("showConsent", currentActivity);
     ```
   </Step>
-
   <Step title="API Documentation" titleSize="h3">
     <Steps>
       <Step title="BrightApi">
@@ -448,11 +435,10 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
         | `static Boolean getConsentChoice(Context context)` | Returns `true` if user is peer, `false` if not peer, `null` if no choice has been made yet. |
         | `static boolean isSvcProcess()` | Returns `true` if the current process is the SDK service process. |
         | `static void setTrackingId(String trackingId)` | Adds a unique tracking ID for reports and debugging. Must be called **before**`BrightApi.init`. |
-        | `static void reportConsentShown(Context context)` | <Warning> Requires special permission. </Warning> Reports that a custom consent screen was shown. |
-        | `static void reportConsentBackPress(Context context)` | <Warning> Requires special permission. </Warning> Reports that the user pressed back without making a choice. |
-        | `static void reportConsentOptOut(Context context)` | <Warning> Requires special permission. </Warning> Reports that the user opted out via custom consent screen. |
+        | `static void reportConsentShown(Context context)` | <Warning>    Requires special permission.  </Warning>  Reports that a custom consent screen was shown. |
+        | `static void reportConsentBackPress(Context context)` | <Warning>    Requires special permission.  </Warning>  Reports that the user pressed back without making a choice. |
+        | `static void reportConsentOptOut(Context context)` | <Warning>    Requires special permission.  </Warning>  Reports that the user opted out via custom consent screen. |
       </Step>
-
       <Step title="Settings">
         **Constructor:**
 
@@ -482,7 +468,6 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
         | `void setCampaignId(String campaignId)` | Set a campaign ID |
         | `void setBackPressListener(Runnable backPressListener)` | Listener for back press on consent screen |
       </Step>
-
       <Step title="CustomConsentSettings">
         | Method | Description |
         | --- | --- |
@@ -524,7 +509,6 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
         | `setTopIconColorFilter(String)` | Top icon color filter |
         | `setHideConsentIcon(boolean)` | Show/hide the consent icon |
       </Step>
-
       <Step title="CustomTypeface">
         **Constructors:**
 
@@ -543,7 +527,6 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
         | `void setFontFamily(CustomConsentSettings.CustomFontFamily fontFamily)` | Set font family |
         | `void setTextStyle(CustomConsentSettings.CustomTextStyle textStyle)` | Set text style |
       </Step>
-
       <Step title="Choice">
         | Value | Int | Description |
         | --- | --- | --- |
@@ -551,15 +534,12 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
         | `Choice.PEER` | 1 | User agreed — reflect in settings so user can opt out |
         | `Choice.NOT_PEER` | 4 | User declined — reflect in settings so user can opt in |
       </Step>
-
       <Step title="ConsentLanguage">
         Supported values: `en`, `de`, `es`, `fr`, `it`, `ja`, `pt`, `ru`, `tr`
       </Step>
-
       <Step title="CustomFontFamily">
         Supported values: `casual`, `cursive`, `monospace`, `sans_serif`, `sans_serif_black`, `sans_serif_light`, `sans_serif_medium`, `sans_serif_smallcaps`, `sans_serif_thin`, `sans_serif_condensed`, `sans_serif_condensed_light`, `sans_serif_condensed_medium`, `serif`, `serif_monospace`
       </Step>
-
       <Step title="CustomTextStyle">
         Supported values: `bold`, `bold_italic`, `italic`, `normal`
       </Step>

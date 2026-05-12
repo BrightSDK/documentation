@@ -11,7 +11,7 @@ import GetCertified from "/snippets/bundles-get-your-app-certified.mdx";
 import Report_Payment from "/snippets/bundles-report-payment-details.mdx";
 import FinalReview from "/snippets/bundles-final-review.mdx";
 
-Integrating [<u>Bright VPN</u>](https://brightvpn.com/) is the first step toward earning revenue. Once you've released your app bundle you can start earning per install!
+Integrating [Bright VPN](https://brightvpn.com/) is the first step toward earning revenue. Once you've released your app bundle you can start earning per install!
 
 This document provides a step-by-step walkthrough for seamlessly incorporating Bright Data products into your application.
 
@@ -30,7 +30,7 @@ Implementation is simple - there are 3 steps:
 - Users must **ALWAYS** decide if they want to **VOLUNTARILY** install EarnApp after seeing the offer and consent screen. Additionally, users should **ALWAYS** have a straightforward means to opt out of the installation process.
 - Take care when implementing the offer screen and the opt-out mechanisms in a way which follows guidelines in this document.
 - Follow consent screen implementation guidelines in order to return true value from user interaction. **DO NOT install anything on users' devices if they have not opted-in**.
-- **Bright Data products do not do any user tracking of any kind**. You can read more about EarnApp and privacy in its [<u>FAQ</u>](https://brightvpn.com/faq).
+- **Bright Data products do not do any user tracking of any kind**. You can read more about EarnApp and privacy in its [FAQ](https://brightvpn.com/faq).
 - It's important to follow the guidelines in this document to avoid violation of our company's policy which may lead to termination of agreement.
 
 <Steps>
@@ -197,35 +197,26 @@ Implementation is simple - there are 3 steps:
     - In the [Assets](#assets) section you may find all the imagery needed.
 
     1. **Mandatory Text**
-
        Optional offer by <a href="https://brightvpn.com/"><img src="/integration-guides/image/bvpn_integration_8.png" alt="Bright" noZoom style={{height: "1em", width: "auto", display: "inline"}} /></a>
-
-       **_Protect your device with FREE Premium VPN!_**
-       **_Install Bright VPN to enjoy:_** _Safer on public Wi-Fi (travel, shop, work)_ _Change your location_ _Protect privacy & increase security_ _100% FREE. For life!_
-
+       **_Protect your device with FREE Premium VPN!_** **_Install Bright VPN to enjoy:_** _Safer on public Wi-Fi (travel, shop, work)_ _Change your location_ _Protect privacy & increase security_ _100% FREE. For life!_
        **_Bright VPN provides you with free premium VPN_** in return for allowing Bright SDK to occasionally use your device's free resources and IP address. When you click "Accept", you agree to install "Bright VPN" and consent to its [Privacy Policy](https://brightvpn.com/legal/privacy) and [EULA](https://brightvpn.com/legal/sla).
-
        <img
          src="/integration-guides/image/bvpn_integration_9.png"
          alt="Alt text"
          width="400"
        />
-
     2. **Buttons**
-
        "Decline" / "Accept"
-
        <Warning>
          Make sure buttons return true value from user interaction ("Decline" = opt-out / "Accept" = opt-in). **DO NOT install anything on users' devices if they have not opted-in.**
        </Warning>
-       
     3. **Required Links**
        | Text | URL |
        | --- | --- |
        | Bright VPN | [https://brightvpn.com/](https://brightvpn.com/) |
        | EULA | [https://brightvpn.com/legal/sla](https://brightvpn.com/legal/sla) |
        | Privacy Policy | [https://brightvpn.com/legal/privacy](https://brightvpn.com/legal/privacy) |
-    4. **Translations** The offer screen is available in multiple languages. [<u>Get translations here</u>](https://docs.google.com/spreadsheets/d/1G0Y1CY9emvfM9qlGC4o7wM-ypWqHbGo5Jxx8rT7DCVs/edit?gid=1123111497#gid=1123111497)<u>.</u> [<u>Download the offer screen design in all languages here</u>](https://drive.google.com/drive/folders/1boSsNqjq1GQjjp5kljJS9wZKLCMuzUxB).
+    4. **Translations** The offer screen is available in multiple languages. [Get translations here](https://docs.google.com/spreadsheets/d/1G0Y1CY9emvfM9qlGC4o7wM-ypWqHbGo5Jxx8rT7DCVs/edit?gid=1123111497#gid=1123111497). [Download the offer screen design in all languages here](https://drive.google.com/drive/folders/1boSsNqjq1GQjjp5kljJS9wZKLCMuzUxB).
        <img
          src="/integration-guides/image/translations.png"
          alt="Alt text"
@@ -236,8 +227,8 @@ Implementation is simple - there are 3 steps:
     <Guidelines />
   </Step>
   <Step title="Assets" titleSize="h3">
-    - Press Kit: [<u>Drive folder link</u>](https://drive.google.com/drive/folders/1et9wqt4uWKelzk7ihCxj4pfCXUfUggY9)<u>.</u>
-    - Translations: [<u>Get translations here</u>](https://docs.google.com/spreadsheets/d/1G0Y1CY9emvfM9qlGC4o7wM-ypWqHbGo5Jxx8rT7DCVs/edit?gid=1123111497#gid=1123111497) / [<u>Download offer screen design in all languages here</u>](https://drive.google.com/drive/folders/1boSsNqjq1GQjjp5kljJS9wZKLCMuzUxB)<u>.</u>
+    - Press Kit: [Drive folder link](https://drive.google.com/drive/folders/1et9wqt4uWKelzk7ihCxj4pfCXUfUggY9).
+    - Translations: [Get translations here](https://docs.google.com/spreadsheets/d/1G0Y1CY9emvfM9qlGC4o7wM-ypWqHbGo5Jxx8rT7DCVs/edit?gid=1123111497#gid=1123111497) / [Download offer screen design in all languages here](https://drive.google.com/drive/folders/1boSsNqjq1GQjjp5kljJS9wZKLCMuzUxB).
   </Step>
   <Step title="Restricted Countries" titleSize="h3">
     **Important Note before integrating:** Due to local restrictions, Bright VPN should not be offered in the following countries and/or regions. Please make sure you **disable the offer** for:
@@ -255,7 +246,7 @@ Implementation is simple - there are 3 steps:
     - Crimea region of Russia
   </Step>
   <Step title="Technical Integration" titleSize="h3">
-    1. **Dynamically download** the bundler using the link present in your bundle page in the [<u>Bright SDK control panel.</u>](https://bright-sdk.com/cp/bundles)\
+    1. **Dynamically download** the bundler using the link present in your bundle page in the [Bright SDK control panel.](https://bright-sdk.com/cp/bundles)\
        **Download URL format:** `https://cdn.bright-sdk.com/static/BrightSDK-Bundler.exe?filename=BrightVPN-[your_bundle_code].exe`\
        **Downloaded filename format:** `BrightVPN-XXXXX.exe`\
        **Example:** `BrightVPN-zx76b.exe`
@@ -284,8 +275,8 @@ Implementation is simple - there are 3 steps:
     - Launch your app's install wizard.
     - Offer is displayed within the wizard (non-intrusive, with product description).
     - Privacy Policy and EULA links are visible and clickable:
-      - Privacy Policy: [<u>https://brightvpn.com/legal/privacy</u>](https://brightvpn.com/legal/privacy)<u>.</u>
-      - EULA: [<u>https://brightvpn.com/legal/sla</u>](https://brightvpn.com/legal/sla)<u>.</u>
+      - Privacy Policy: [https://brightvpn.com/legal/privacy](https://brightvpn.com/legal/privacy).
+      - EULA: [https://brightvpn.com/legal/sla](https://brightvpn.com/legal/sla).
     - Click "Install" / "Accept" to proceed.
     - Your app's install wizard completes successfully.
     - Bright VPN installer launches automatically.

@@ -11,7 +11,7 @@ import GetCertified from "/snippets/bundles-get-your-app-certified.mdx";
 import Report_Payment from "/snippets/bundles-report-payment-details.mdx";
 import FinalReview from "/snippets/bundles-final-review.mdx";
 
-Integrating [<u>Hola VPN</u>](https://hola.org/) is the first step toward earning revenue. Once you've released your app with Hola VPN you can start earning per install!
+Integrating [Hola VPN](https://hola.org/) is the first step toward earning revenue. Once you've released your app with Hola VPN you can start earning per install!
 
 This document provides a step-by-step walkthrough for seamlessly incorporating Bright Data products into your application.
 
@@ -199,7 +199,7 @@ Implementation is simple - there are 3 steps:
     - You may implement the [Hola VPN offer screen](https://drive.google.com/file/d/1UcIGX9I04Ss0U31kFKlP3EGUoGkjIyHv/view) onto your wizard (make sure to include all the links provided below).
     - Available [with buttons](https://drive.google.com/file/d/1k-WBbNTCMmyWu9UGwC95acUtD09bu4iv/view) or [without buttons](https://drive.google.com/file/d/1u891EyM9yPD0XzBsfRchaUuuYjuXLziV/view) (so you can use the ones in your Wizard) - make sure buttons return true value from user interaction.
     - In case you want to design your own Hola VPN offer, please read below.
-    - In the [**<u>Assets</u>**](https://hola.org/static/press_kit/press_kit.zip) section you may find all the imagery needed.
+    - In the [**Assets**](https://hola.org/static/press_kit/press_kit.zip) section you may find all the imagery needed.
 
     <img
       src="/integration-guides/image/holavpn_integration_7.png"
@@ -208,20 +208,14 @@ Implementation is simple - there are 3 steps:
     />
 
     1. **Mandatory Text**
-
        Optional offer by <a href="https://holavpn.com/"><img src="/integration-guides/image/holavpn_integration_8.png" alt="Hola" noZoom style={{height: "1em", width: "auto", display: "inline"}} /></a>
-
        **Access worldwide content with Hola VPN!**
-
        **Install Hola VPN to enjoy:**
        - Unrestricted access to the content you like.
        - \+190 locations available 24/7.
        - Ultra-fast and stable connection.
-
        **Hola VPN provides you with free VPN** in return for allowing Bright SDK to occasionally use your device's free resources and IP address. When you click "Accept", you agree to install "Hola VPN" and consent to its [Privacy Policy](https://hola.org/legal/privacy) and [EULA](https://hola.org/legal/sla).
-       
     2. **Buttons**
-
        "Decline" / "Accept"
        <Warning>
          Make sure buttons return true value from user interaction ("Decline" = opt-out / "Accept" = opt-in). **DO NOT install anything on users' devices if they have not opted-in.**
@@ -233,13 +227,13 @@ Implementation is simple - there are 3 steps:
        | EULA | [https://hola.org/legal/sla](https://hola.org/legal/sla) |
        | Privacy Policy | [https://hola.org/legal/privacy](https://hola.org/legal/privacy) |
        | Bright Data | [http://brightdata.com](http://brightdata.com) |
-    4. **Translations** The offer screen is available in multiple languages. [<u>Follow this link to access translations of the offer</u>](https://docs.google.com/spreadsheets/d/1jYfHXIpKtctj5OjdfkiEpNq9Nn9wclQqe3UOhWTRIPg/edit#gid=2012268662).
+    4. **Translations** The offer screen is available in multiple languages. [Follow this link to access translations of the offer](https://docs.google.com/spreadsheets/d/1jYfHXIpKtctj5OjdfkiEpNq9Nn9wclQqe3UOhWTRIPg/edit#gid=2012268662).
   </Step>
   <Step title="AV Guidelines" titleSize="h3">
     <Guidelines />
   </Step>
   <Step title="Assets" titleSize="h3">
-    - Press Kit: [<u>Download the press kit</u>](https://hola.org/static/press_kit/press_kit.zip)<u>.</u>
+    - Press Kit: [Download the press kit](https://hola.org/static/press_kit/press_kit.zip).
   </Step>
   <Step title="Restricted Countries" titleSize="h3">
     **Important Note before integrating:** Due to local restrictions, Hola VPN should not be offered in the following countries and/or regions. Please make sure you **disable the offer for**:

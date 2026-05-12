@@ -11,7 +11,7 @@ import GetCertified from "/snippets/bundles-get-your-app-certified.mdx";
 import Report_Payment from "/snippets/bundles-report-payment-details.mdx";
 import FinalReview from "/snippets/bundles-final-review.mdx";
 
-Integrating [<u>RewardGUM</u>](https://rewardgum.com/) is the first step toward earning revenue. Once you've released your app bundle you can start earning per install!
+Integrating [RewardGUM](https://rewardgum.com/) is the first step toward earning revenue. Once you've released your app bundle you can start earning per install!
 
 This document provides a step-by-step walkthrough for seamlessly incorporating Bright Data products into your application.
 
@@ -77,32 +77,25 @@ Implementation is simple - there are 3 steps:
       />
 
     1. **Mandatory Text**
-
-        Optional offer by <a href="https://rewardgum.com/"><img src="/integration-guides/image/rgum_integration_2.png" alt="RewardGUM" noZoom style={{height: "1em", width: "auto", display: "inline"}} /></a>
-
-        When you click "Accept", you agree to install "RewardGUM" and consent to its [Privacy Policy](https://rewardgum.com/privacy/) and [EULA](https://rewardgum.com/user-agreement/).
-   
+       Optional offer by <a href="https://rewardgum.com/"><img src="/integration-guides/image/rgum_integration_2.png" alt="RewardGUM" noZoom style={{height: "1em", width: "auto", display: "inline"}} /></a>
+       When you click "Accept", you agree to install "RewardGUM" and consent to its [Privacy Policy](https://rewardgum.com/privacy/) and [EULA](https://rewardgum.com/user-agreement/).
     2. **Buttons**
-
-        "Decline" / "Accept"
-        <Warning>
-          Make sure buttons return true value from user interaction ("Decline" = opt-out / "Accept" = opt-in). **DO NOT install anything on users' devices if they have not opted-in.**
-        </Warning>
-
+       "Decline" / "Accept"
+       <Warning>
+         Make sure buttons return true value from user interaction ("Decline" = opt-out / "Accept" = opt-in). **DO NOT install anything on users' devices if they have not opted-in.**
+       </Warning>
     3. **Required Links**
-
-        | Text | URL |
-        | --- | --- |
-        | RewardGUM | [https://rewardgum.com/](https://rewardgum.com/) |
-        | EULA | [https://rewardgum.com/user-agreement](https://rewardgum.com/user-agreement) |
-        | Privacy Policy | [https://rewardgum.com/privacy](https://rewardgum.com/privacy) |
-
+       | Text | URL |
+       | --- | --- |
+       | RewardGUM | [https://rewardgum.com/](https://rewardgum.com/) |
+       | EULA | [https://rewardgum.com/user-agreement](https://rewardgum.com/user-agreement) |
+       | Privacy Policy | [https://rewardgum.com/privacy](https://rewardgum.com/privacy) |
   </Step>
   <Step title="AV Guidelines" titleSize="h3">
     <Guidelines />
   </Step>
   <Step title="Assets" titleSize="h3">
-    - Drive folder: [<u>Link</u>](https://drive.google.com/drive/folders/1YtNCEJKdHTCPnJzKuC0nngWgZXN4Y4S0)<u>.</u>
+    - Drive folder: [Link](https://drive.google.com/drive/folders/1YtNCEJKdHTCPnJzKuC0nngWgZXN4Y4S0).
   </Step>
   <Step title="Restricted Countries" titleSize="h3">
     **Important Note before integrating:** Due to local restrictions, RewardGUM should not be offered in the following countries and/or regions. Please make sure you **disable the offer** for:
@@ -146,8 +139,8 @@ Implementation is simple - there are 3 steps:
     - Launch your app's install wizard.
     - Offer is displayed within the wizard (non-intrusive, with product description).
     - Privacy Policy and EULA links are visible and clickable:
-      - EULA: [<u>https://rewardgum.com/user-agreement</u>](https://rewardgum.com/user-agreement)
-      - Privacy Policy: [<u>https://rewardgum.com/privacy</u>](https://rewardgum.com/privacy)
+      - EULA: [https://rewardgum.com/user-agreement](https://rewardgum.com/user-agreement)
+      - Privacy Policy: [https://rewardgum.com/privacy](https://rewardgum.com/privacy)
     - Click "Install" / "Accept" to proceed.
     - Your app's install wizard completes successfully.
     - RewardGUM installer launches automatically.

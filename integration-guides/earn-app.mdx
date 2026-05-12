@@ -11,7 +11,7 @@ import GetCertified from "/snippets/bundles-get-your-app-certified.mdx";
 import Report_Payment from "/snippets/bundles-report-payment-details.mdx";
 import FinalReview from "/snippets/bundles-final-review.mdx";
 
-Integrating [<u>EarnApp</u>](https://earnapp.com/) is the first step toward earning revenue. Once you've released your app bundle you can start earning per install!
+Integrating [EarnApp](https://earnapp.com/) is the first step toward earning revenue. Once you've released your app bundle you can start earning per install!
 
 This document provides a step-by-step walkthrough for seamlessly incorporating Bright Data products into your application.
 
@@ -30,7 +30,7 @@ Implementation is simple - there are 3 steps:
 - Users must **ALWAYS** decide if they want to **VOLUNTARILY** install EarnApp after seeing the offer and consent screen. Additionally, users should **ALWAYS** have a straightforward means to opt out of the installation process.
 - Take care when implementing the offer screen and the opt-out mechanisms in a way which follows guidelines in this document.
 - Follow consent screen implementation guidelines in order to return true value from user interaction. **DO NOT install anything on users' devices if they have not opted-in**.
-- **Bright Data products do not do any user tracking of any kind**. You can read more about EarnApp and privacy in its [<u>FAQ</u>](https://help.earnapp.com/hc/en-us?_gl=1*1hf5rjl*_gcl_au*MTc3ODI5OTY1MS4xNzU2MjA4MDkxMVFDkGAB2a1RoLEAAYASACEgJnWfD_BwE).
+- **Bright Data products do not do any user tracking of any kind**. You can read more about EarnApp and privacy in its [FAQ](https://help.earnapp.com/hc/en-us?_gl=1*1hf5rjl*_gcl_au*MTc3ODI5OTY1MS4xNzU2MjA4MDkxMVFDkGAB2a1RoLEAAYASACEgJnWfD_BwE).
 - It's important to follow the guidelines in this document to avoid violation of our company's policy which may lead to termination of agreement.
 
 <Steps>
@@ -79,33 +79,24 @@ Implementation is simple - there are 3 steps:
       width="400"
     />
 
-    1. **Mandatory Text**
-
-        Optional offer by <a href="https://earnapp.com/"><img src="/integration-guides/image/earnapp_integration_3.png" alt="EarnApp" noZoom style={{height: "1em", width: "auto", display: "inline"}} /></a>
-
+    1. **Mandatory Text** Optional offer by <a href="https://earnapp.com/"><img src="/integration-guides/image/earnapp_integration_3.png" alt="EarnApp" noZoom style={{height: "1em", width: "auto", display: "inline"}} /></a>
         When you click "Accept", you agree to install "EarnApp" and consent to its [Privacy Policy](https://earnapp.com/privacy) and [EULA](https://earnapp.com/user-agreement).
-   
-    2. **Buttons**
-
-        "Decline" / "Accept"
-        <Warning>
-          Make sure buttons return true value from user interaction ("Decline" = opt-out / "Accept" = opt-in). **DO NOT install anything on users' devices if they have not opted-in.**
-        </Warning>
-
+    2. **Buttons** "Decline" / "Accept"
+       <Warning>
+         Make sure buttons return true value from user interaction ("Decline" = opt-out / "Accept" = opt-in). **DO NOT install anything on users' devices if they have not opted-in.**
+       </Warning>
     3. **Required Links**
-
-        | Text | URL |
-        | --- | --- |
-        | EarnApp | [https://earnapp.com/](https://earnapp.com/) |
-        | EULA | [https://earnapp.com/user-agreement](https://earnapp.com/user-agreement) |
-        | Privacy Policy | [https://earnapp.com/privacy](https://earnapp.com/privacy) |
-
+       | Text | URL |
+       | --- | --- |
+       | EarnApp | [https://earnapp.com/](https://earnapp.com/) |
+       | EULA | [https://earnapp.com/user-agreement](https://earnapp.com/user-agreement) |
+       | Privacy Policy | [https://earnapp.com/privacy](https://earnapp.com/privacy) |
   </Step>
   <Step title="AV Guidelines" titleSize="h3">
     <Guidelines />
   </Step>
   <Step title="Assets" titleSize="h3">
-    - Drive folder: [<u>Link</u>](https://drive.google.com/drive/folders/1qPW40HZITGKO71udwxKz1XxbW0RbwL5S)<u>.</u>
+    - Drive folder: [Link](https://drive.google.com/drive/folders/1qPW40HZITGKO71udwxKz1XxbW0RbwL5S).
   </Step>
   <Step title="Restricted Countries" titleSize="h3">
     **Important Note before integrating:** Due to local restrictions, EarnApp should not be offered in the following countries and/or regions. Please make sure you **disable the offer for**:
@@ -123,13 +114,14 @@ Implementation is simple - there are 3 steps:
     - Crimea region of Russia
   </Step>
   <Step title="Technical Integration" titleSize="h3">
-    1. **Dynamically download** the bundler using the link present in your bundle page in the [<u>Bright SDK control panel.</u>](https://bright-sdk.com/cp/bundles)
+    1. **Dynamically download** the bundler using the link present in your bundle page in the [Bright SDK control panel.](https://bright-sdk.com/cp/bundles)
        <img
          src="/integration-guides/image/earnapp_integration_4.png"
          alt="Alt text"
          width="400"
        />
-       **Download URL format:** [_https://cdn.bright-sdk.com/static/BrightSDK-Bundler.exe?filename=earnapp-bundle-\[your\_bundle\_code\].exe_](https://cdn.bright-sdk.com/static/BrightSDK-Bundler.exe?filename=earnapp-bundle-[your_bundle_code].exe) **<u>Downloaded filename format:</u>** `earnapp-bundle-XXXXX.exe`\
+       **Download URL format:** [_https://cdn.bright-sdk.com/static/BrightSDK-Bundler.exe?filename=earnapp-bundle-\[your\_bundle\_code\].exe_](https://cdn.bright-sdk.com/static/BrightSDK-Bundler.exe?filename=earnapp-bundle-[your_bundle_code].exe)
+       **<u>Downloaded filename format:</u>** `earnapp-bundle-XXXXX.exe`\
        **<u>Example:</u>** `earnapp-bundle-zx76b.exe`
        <Warning>
          **Important:** Make sure that the bundler executable file has your bundle code in its filename - if it isn't present **it will fail**. The filename must end with `-XXXXX.exe`, where `XXXXX` is your unique bundle code.
@@ -148,8 +140,8 @@ Implementation is simple - there are 3 steps:
     - Launch your app's install wizard.
     - Offer is displayed within the wizard (non-intrusive, with product description).
     - Privacy Policy and EULA links are visible and clickable:
-      - Privacy Policy: [<u>https://earnapp.com/privacy</u>](https://earnapp.com/privacy)
-      - EULA: [<u>https://earnapp.com/user-agreement</u>](https://earnapp.com/user-agreement)
+      - Privacy Policy: [https://earnapp.com/privacy](https://earnapp.com/privacy)
+      - EULA: [https://earnapp.com/user-agreement](https://earnapp.com/user-agreement)
     - Click "Install" / "Accept" to proceed.
     - Your app's install wizard completes successfully.
     - EarnApp installer launches automatically.
