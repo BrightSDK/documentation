@@ -44,7 +44,11 @@ export const CustomConsent = ({ platform }) => (
     <p><strong><u>Interactive element:</u></strong></p>
     <ul>
       <li>Tapping "public web data" must open a popup with additional information.
-      <img src="/snippets/image/android_unity_consent.png" alt="Popup example" width="400" />
+      <pre><code className="language-markdown">{`"Bright Data does not track you.Your IP address WILL be used for cases such as: 
+      Support academic research 
+      Help brands track sites selling fake products 
+      Collect public web data like product prices and reviews 
+      Aggregate travel information like flights and hotel prices "`}</code></pre>
       </li>
     </ul>
 

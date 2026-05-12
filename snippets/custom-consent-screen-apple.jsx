@@ -61,11 +61,11 @@ None of your personal information is collected, except your IP address. Bright D
     <p><strong>Interactive element:</strong></p>
     <p>Tapping "public web data" must open a popup with additional information:</p>
 
-    <img
-      src="/snippets/image/iOS_Custom_Consent_Screen_3.png"
-      alt="Alt text"
-      width="400"
-    />
+    <pre><code className="language-markdown">{`"Bright Data does not track you.Your IP address WILL be used for cases such as: 
+    Support academic research 
+    Help brands track sites selling fake products 
+    Collect public web data like product prices and reviews 
+    Aggregate travel information like flights and hotel prices "`}</code></pre>
 
     <p><strong>Translations:</strong></p>
     <p>If you wish to translate your screen, use only the <a href="https://docs.google.com/spreadsheets/d/1G0Y1CY9emvfM9qlGC4o7wM-ypWqHbGo5Jxx8rT7DCVs/edit?gid=0#gid=0">provided official translations</a>. Contact your partnership manager for any missing languages.</p>
