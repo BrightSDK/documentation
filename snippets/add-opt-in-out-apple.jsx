@@ -9,7 +9,7 @@ export const OptInOut = ({ platform }) => (
     <p><strong><u>Requirements:</u></strong></p>
     <ul>
       <li>Add a toggle/switch labeled "Web Indexing" that clearly reflects the current status (opted in or out).</li>
-      <li>Below the switch, add text emphasizing the value users receive when opting in. (see <a href="https://docs.bright-sdk.com/integration-guides/ios-tvos#integration-in-xcode-ios-%E2%80%93-objective-c">examples</a>)</li>
+      <li>Below the switch, add text emphasizing the value users receive when opting in. (<a href="https://docs.bright-sdk.com/integration-guides/ios-tvos#add-opt-in/out-settings-option:~:text=Value%20text%20suggestions%3A">see examples</a>)</li>
       
       <li>Include a "Learn more" link that opens: <a href="https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing"><u>https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing</u></a>.</li>
     </ul>
