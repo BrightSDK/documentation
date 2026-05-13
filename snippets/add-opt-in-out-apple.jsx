@@ -11,7 +11,7 @@ export const OptInOut = ({ platform }) => (
       <li>Add a toggle/switch labeled "Web Indexing" that clearly reflects the current status (opted in or out).</li>
       <li>Below the switch, add text emphasizing the value users receive when opting in. (<a href="h#add-opt-in/out-settings-option:~:text=Value%20text%20suggestions%3A">see examples</a>)</li>
       
-      <li>Include a "Learn more" link that opens: <a href="https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing"><u>https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing</u></a>.</li>
+      <li>Include a "Learn more" link that opens: <a href="https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing">https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing</a>.</li>
     </ul>
 
     {platform === "ios" && (
