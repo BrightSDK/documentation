@@ -12,12 +12,10 @@ Regardless of the user's initial choice, you must add an option for users to opt
 
 **Requirements:**
 
-1. **Add a switch labeled "Web Indexing"**
-   Must clearly reflect current status (opted-in or opted-out).
+1. **Add a switch labeled "Web Indexing"** Must clearly reflect current status (opted-in or opted-out).
    - `brd_api.get_status().consent === true` → checked/on.
    - `brd_api.get_status().consent === false` → unchecked/off.
-2. **Add value text below the switch**
-   Emphasize the benefits users get when opting in. ([see examples](#:~:text=Value%20Text%20Examples%3A))
+2. **Add value text below the switch** Emphasize the benefits users get when opting in. ([see examples](#:~:text=Value%20Text%20Examples%3A))
 3. **Include a way to give more information**
    - Best practice: Include a QR code linking to: [https://brightdata.com/sdk/information?is\_tv=1](https://brightdata.com/sdk/information?is_tv=1)
    - Accompany with text: "**Scan the QR Code to learn more about web indexing by Bright Data**".
@@ -32,6 +30,7 @@ Regardless of the user's initial choice, you must add an option for users to opt
 5. **Behavior**
    - Turning OFF → call `brd_api.opt_out()`.
    - Turning ON → call `brd_api.show_consent()` (user action should open consent).
+   - Every time the user toggles Web Indexing **ON**, the consent screen must reappear — even if the user has previously opted in.
 
 **Examples of opted-in and opted-out scenarios:**
 
@@ -90,8 +89,7 @@ You can use the ready-to-use simple opt-out UI.
 2. **Visual Indicator:** After the user closes the consent screen, a small notification appears in the bottom left corner:
    - Hidden after 10 seconds.
    - Displayed every time the app starts (except the first time).
-3. **Custom Button Text:** You can customize button text on the consent screen by passing an object to `simple_opt_out`.
-   Example:
+3. **Custom Button Text:** You can customize button text on the consent screen by passing an object to `simple_opt_out`. Example:
    ```javascript
    {
      agree_btn: 'Keep Ad-Free',

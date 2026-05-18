@@ -13,6 +13,9 @@ export const OptInOut = ({ platform }) => (
       
       <li>Include a "Learn more" link that opens: <a href="https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing">https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing</a>.</li>
     </ul>
+    <Note>
+  Every time the user toggles Web Indexing <strong>ON</strong>, the consent screen must reappear — regardless of any previous opt-in.
+</Note>
 
     {platform === "ios" && (
       <>
