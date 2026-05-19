@@ -1,7 +1,3 @@
----
-title: "Self Check Integration"
----
-
 Complete this verification checklist to ensure your integration works correctly before submitting for review.
 
 **Test Checklist:**
@@ -24,3 +20,11 @@ Complete this verification checklist to ensure your integration works correctly 
    - `get_status()->consent` returns `false`.
 8. Test 8: Checkbox state matches `get_status()->consent` value.
    - Must call `init()` and `get_status()` before displaying checkbox.
+
+<Note>
+  **If the SDK isn't initializing / peer not connecting:**
+
+  1. Verify the correct App ID is used, confirm the SDK service is running.
+  2. Check there aren't multiple SDK apps running from the same IP — that can interfere.
+  3. If nothing helps, check with our team.
+</Note>
