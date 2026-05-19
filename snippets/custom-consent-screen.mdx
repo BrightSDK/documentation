@@ -1,8 +1,11 @@
 Subject to Bright SDK approval, you can create and use your own consent screen with Bright SDK. Please follow the following guidelines.
 
 1. **Design Requirements**
+
    Your custom consent screen must comply with the following requirements:
+
    1. **Mandatory Text**
+
       Your screen must include the following text exactly as written:
       ```markdown
       To [Benefit to user], please allow Web Indexing by Bright Data to use your device's free resources and IP address to download public web data from the Internet.
@@ -11,6 +14,7 @@ Subject to Bright SDK approval, you can create and use your own consent screen w
       Scan the QR Code to learn more about Bright Data policy and ethical usage.
       ```
    2. **QR Code**
+
       Include a QR code linking to: [https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing](https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing). You can use your own branded QR code or hosted version, as long as it directs to this URL.
       Example Custom Screens:
       <img
@@ -23,17 +27,22 @@ Subject to Bright SDK approval, you can create and use your own consent screen w
         alt="Alt text"
         width="400"
       />
+
 2. **Localization**
+
    If you wish to translate your consent screen into other languages:
    1. Find pre-approved translations for common languages [here](https://docs.google.com/spreadsheets/d/1G0Y1CY9emvfM9qlGC4o7wM-ypWqHbGo5Jxx8rT7DCVs/edit#gid=0).
    2. If you need a language not listed, contact your partnership manager.
    3. Use only the provided translations precisely, no additions or omissions allowed.
+
 3. **Integration Code**
+
    1. **Skip Default Consent Screen** Pass `skip_consent: true` in the SDK's initialization method to prevent showing the default consent screen.
    2. **Track Consent Screen Display** When your external consent screen is displayed, call `brd_api.consent_shown()`, this ensures statistics are correctly recorded.
    3. **Handle User Response:**
       - The opt-in button (e.g. "I Agree”) should call `brd_api.external_opt_in()` method.
       - The opt-out button (e.g. "I Disagree”) should call `brd_api.opt_out()` method.
+
 4. **Implementation Checklist**
    - Mandatory text included verbatim.
    - QR code linking to correct URL.
