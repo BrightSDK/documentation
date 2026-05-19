@@ -7,7 +7,7 @@ noindex: true
 
 import { OptInOut } from "/snippets/add-opt-in-out-apple.jsx";
 import ConsentDialogCustom from "/snippets/consent-dialog-customization-ios.mdx";
-import { CustomConsentWindows } from "/snippets/custom-consent-windows.jsx";
+import { CustomConsentApple } from "/snippets/custom-consent-screen-apple.jsx";
 import AppPerformance from "/snippets/app-performance.mdx";
 import { Tos } from "/snippets/terms-of-service-apple.jsx";
 import { SubmitIntegrationReview } from "/snippets/submit-integration-review.jsx";
@@ -93,7 +93,6 @@ import API from "/snippets/api-documentation-apple.mdx";
        - Set **Destination** to `Wrapper`.
        - Set **Subpath** to `Contents/Library/LoginItems`.
        - Add `net_updater` to this phase.
-       
        <img
          src="/integration-guides/image/macos_integrate_bright_SDK_4.png"
          alt="Alt text"
@@ -184,7 +183,7 @@ import API from "/snippets/api-documentation-apple.mdx";
     <OptInOut platform="macos" />
   </Step>
   <Step title="Custom Consent Screen (optional)" titleSize="h3">
-    <CustomConsentWindows platform="macos" />
+    <CustomConsentApple platform="macos" />
   </Step>
   <Step title="App Performance" titleSize="h3">
     <AppPerformance />
@@ -209,6 +208,7 @@ import API from "/snippets/api-documentation-apple.mdx";
 
     <Note>
       **If the SDK isn't initializing / peer not connecting:**
+
       1. Verify the correct App ID is used, confirm the SDK service is running.
       2. Check there aren't multiple SDK apps running from the same IP — that can interfere.
       3. If nothing helps, check with our team.
