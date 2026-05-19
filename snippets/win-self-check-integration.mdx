@@ -1,7 +1,3 @@
----
-title: "Self Check Integration"
----
-
 **Testing Mode**
 
 You may set `BrightData.Api.Settings.TestMode = true` while developing. This way the BrightData service will not be installed when you accept the consent screen, making it easier to develop.
@@ -15,11 +11,18 @@ While testing, you can:
    - Delete the `luminati` folder (or your entire output folder).
    - This resets your consent choice.
    - Consent screen will display next time you run the application.
-
 2. **Uninstall via command**
    - Execute `net_updater32.exe --uninstall APPID` in your output folder.
    - This deletes all SDK files.
 
 <Note>
   Self-check using an emulator/simulator is not yet supported. Currently, self-check can only be performed on a real device.
+</Note>
+
+<Note>
+  **If the SDK isn't initializing / peer not connecting:**
+
+  1. Verify the correct App ID is used, confirm the SDK service is running.
+  2. Check there aren't multiple SDK apps running from the same IP — that can interfere.
+  3. If nothing helps, check with our team.
 </Note>

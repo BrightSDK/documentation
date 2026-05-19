@@ -22,6 +22,14 @@ export const SubmitIntegrationReview = ({ platform }) => (
               <li>Install the app on the test device and follow the instructions.</li>
               <li>If the self-check passed successfully, submit it for review!</li>
             </ul>
+            <Note>
+              <strong>If the SDK isn't initializing / peer not connecting:</strong>
+              <ol>
+                <li>Verify the correct App ID is used, confirm the SDK service is running.</li>
+                <li>Check there aren't multiple SDK apps running from the same IP — that can interfere.</li>
+                <li>If nothing helps, check with our team.</li>
+              </ol>
+            </Note>
           </li>
           <li>
             <strong>Submit for review via Dashboard</strong>
