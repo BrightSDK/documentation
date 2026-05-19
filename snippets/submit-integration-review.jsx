@@ -13,6 +13,9 @@ export const SubmitIntegrationReview = ({ platform }) => (
       </li>
       <li>
         <strong>Submission Process</strong>
+        <Note>
+          Self-check using an emulator/simulator is not yet supported. Currently, self-check can only be performed on a real device.
+        </Note>
         <ol>
           <li>
             <strong>Run Self-Check (takes a few minutes)</strong> — Complete the self-check verification to identify potential issues before submission:
@@ -99,8 +102,5 @@ export const SubmitIntegrationReview = ({ platform }) => (
     <Info>
       We will review each app up to 3 times. 3 rejections or failure to meet minimum quality standards may result in final rejection.
     </Info>
-    <Note>
-      Self-check using an emulator/simulator is not yet supported. Currently, self-check can only be performed on a real device.
-    </Note>
   </>
 );
