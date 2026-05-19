@@ -31,7 +31,6 @@ import API from "/snippets/api-documentation-apple.mdx";
   <Step title="Create App ID on Dashboard" titleSize="h3">
     If you haven't done this yet, log in to [your dashboard](https://bright-sdk.com/cp/apps) and create your app ID first.
   </Step>
-
   <Step title="Extract SDK Framework" titleSize="h3">
     Download the latest Bright SDK from the Bright SDK Dashboard or from the link provided in the latest release email. Unzip the archive.
 
@@ -57,7 +56,6 @@ import API from "/snippets/api-documentation-apple.mdx";
       Before using `brdsdk.framework` and `net_updater.app`, additional Xcode project configuration steps are required — see **Project Setup**.
     </Warning>
   </Step>
-
   <Step title="Integrate Bright SDK" titleSize="h3">
     **Project Setup**
 
@@ -147,15 +145,15 @@ import API from "/snippets/api-documentation-apple.mdx";
     ```swift
     @NSApplicationMain
     class AppDelegate: NSObject, NSApplicationDelegate {
-
+    
         var sdk: brd_api?
-
+    
         func applicationDidFinishLaunching(_ aNotification: Notification) {
             // ...
             try? start_bright_sdk()
             // ...
         }
-
+    
         func start_bright_sdk() throws {
             sdk = try brd_api(campaign: nil,
                              on_choice_change: { [weak self] new_choice in
@@ -174,27 +172,23 @@ import API from "/snippets/api-documentation-apple.mdx";
             })
             show_bright_sdk()
         }
-
+    
         func show_bright_sdk() {
             sdk?.show_consent(force: true, on_choice: { _ in })
         }
     }
     ```
   </Step>
-
   <Step title="Add Opt-In/Out Settings Option" titleSize="h3">
     <OptInOut platform="macos" />
   </Step>
-
   <Step title="Custom Consent Screen (optional)" titleSize="h3">
     <CustomConsentWindows platform="macos" />
   </Step>
-
   <Step title="App Performance" titleSize="h3">
     <AppPerformance />
   </Step>
-
-  <Step title="Verify Your Integration" titleSize="h3">
+    <Step title="Verify Your Integration" titleSize="h3">
     Before submitting, verify that the SDK is running correctly on your device:
 
     1. Compile and run your app, then click **"I Agree"** in the SDK consent dialog.
@@ -219,19 +213,15 @@ import API from "/snippets/api-documentation-apple.mdx";
       3. If nothing helps, check with our team.
     </Note>
   </Step>
-
   <Step title="Update Your Terms of Service" titleSize="h3">
     <Tos />
   </Step>
-
   <Step title="Submit Your Integration for Review" titleSize="h3">
     <SubmitIntegrationReview platform="macos" />
   </Step>
-
   <Step title="How to Update the SDK" titleSize="h3">
-    <UpdateSDK platform="macos" />
+    <UpdateSDK />
   </Step>
-
   <Step title="API Documentation" titleSize="h3">
     To be updated
   </Step>
