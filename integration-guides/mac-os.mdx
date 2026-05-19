@@ -93,6 +93,7 @@ import API from "/snippets/api-documentation-apple.mdx";
        - Set **Destination** to `Wrapper`.
        - Set **Subpath** to `Contents/Library/LoginItems`.
        - Add `net_updater` to this phase.
+
        <img
          src="/integration-guides/image/macos_integrate_bright_SDK_4.png"
          alt="Alt text"
@@ -192,11 +193,13 @@ import API from "/snippets/api-documentation-apple.mdx";
     Before submitting, verify that the SDK is running correctly on your device:
 
     1. Compile and run your app, then click **"I Agree"** in the SDK consent dialog.
+    
     2. Open a terminal and run:
        ```shell
        ps -ef | grep [n]et_
        ```
        You should see 1 process running from inside your app directory: `net_updater`.
+       
     3. Navigate to:
        ```text
        /Users/{USER}/Library/Group Containers/<team_id>.com.brdsdk.shared
