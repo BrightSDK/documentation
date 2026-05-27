@@ -6,7 +6,7 @@ noindex: true
 ---
 
 import OptInOut from "/snippets/add-opt-in-out-option.mdx";
-import CustomConsent from "/snippets/custom-consent-screen.mdx";
+import CustomConsent from "/snippets/consent-dialog-customization.mdx";
 import AppPerformance from "/snippets/app-performance.mdx";
 import SelfCheckIntegration from "/snippets/self-check-integration.mdx";
 import UpdateTermsOfService from "/snippets/update-terms-of-service.mdx";
@@ -72,17 +72,12 @@ import ApiDocumentation from "/snippets/api-documentation.mdx";
          **Important:** Replace `brdsample0` with your package ID.
        </Warning>
        <Note>
-         **Package ID Naming Tip:** After creating a Tizen app, we recommend changing the package ID to something more readable using your partner ID from the Control Panel.
-         Examples:
-         `blUqHYQcnKEE.actionGames` → `brightdata.actionGames`
-         `super_games` → `SuperGames` (remove illegal characters)
+         **Package ID Naming Tip:** After creating a Tizen app, we recommend changing the package ID to something more readable using your partner ID from the Control Panel. Examples: `blUqHYQcnKEE.actionGames` → `brightdata.actionGames` `super_games` → `SuperGames` (remove illegal characters)
        </Note>
        <Info>
          The `tizen_ prefix` will be added automatically by the SDK.
        </Info>
-    2. **Embed SDK Dialog in Your Code**
-       You can use `sample_app` as a reference.
-       **Import brd\_api.js**
+    2. **Embed SDK Dialog in Your Code** You can use `sample_app` as a reference. **Import brd\_api.js**
        - Copy `brd_api.js` into your app directory.
        - Import it from the main file responsible for app initialization.
        - After `brd_api.js` execution, the `brd_api` global object will be available.
@@ -98,9 +93,7 @@ import ApiDocumentation from "/snippets/api-documentation.mdx";
          </body>
        </html>
        ```
-    3. **Add SDK Initialization**
-       Call `brd_api.init()` after page load to access all SDK methods.
-       Example:
+    3. **Add SDK Initialization** Call `brd_api.init()` after page load to access all SDK methods. Example:
        ```html
        <!DOCTYPE html>
        <html>
@@ -144,7 +137,7 @@ import ApiDocumentation from "/snippets/api-documentation.mdx";
   <Step title="Add Opt-In/Out Settings Option" titleSize="h3">
     <OptInOut />
   </Step>
-  <Step title="Custom Consent Screen (optional)" titleSize="h3">
+  <Step title="Consent Dialog Customization" titleSize="h3">
     <CustomConsent />
   </Step>
   <Step title="App Performance" titleSize="h3">
