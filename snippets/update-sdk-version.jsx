@@ -3,10 +3,14 @@ export const UpdateSdkVersion = ({ platform }) => {
     ? "https://github.com/BrightSDK/bright-sdk-integration/blob/main/example/tizen/README.md"
     : "https://github.com/BrightSDK/bright-sdk-integration/blob/main/example/webos/README.md";
 
+  const dashboardLink = platform === 'tizen'
+    ? "https://bright-sdk.com/cp/docs/sdk/tizen"
+    : "https://bright-sdk.com/cp/docs/sdk/webos";
+
   return (
     <>
       <p>
-        When a new version of Bright SDK is released, use the <a href={integrationLink} target="_blank" rel="noopener noreferrer">bright-sdk-integration</a> CLI tool to update your SDK files automatically.
+        When a new version of Bright SDK is released, use the <a href={integrationLink} target="_blank" rel="noopener noreferrer"><code>bright-sdk-integration</code></a> CLI tool to update your SDK files automatically.
       </p>
       <p>
         The tool will download the latest SDK, replace the existing files in your app, and keep your <code>brd_sdk.config.json</code> up to date - without touching your app code.
@@ -51,7 +55,7 @@ export const UpdateSdkVersion = ({ platform }) => {
 
           {platform !== 'tizen' ? (
             <ol>
-              <li><strong>Download</strong> the latest Bright SDK zip from the <a href="https://bright-sdk.com/cp/apps">Bright SDK Dashboard</a>.</li>
+              <li><strong>Download</strong> the latest Bright SDK zip from the <a href={dashboardLink}>Bright SDK Dashboard</a>.</li>
               <li>
                 <strong>Unzip</strong> and replace the following files in your project:
                 <ul>
@@ -68,7 +72,7 @@ export const UpdateSdkVersion = ({ platform }) => {
             </ol>
           ) : (
             <ol>
-              <li><strong>Download</strong> the latest Bright SDK zip from the <a href="https://bright-sdk.com/cp/apps">Bright SDK Dashboard</a>.</li>
+              <li><strong>Download</strong> the latest Bright SDK zip from the <a href={dashboardLink}>Bright SDK Dashboard</a>.</li>
               <li>Replace <code>brd_api.js</code> with the newer version.</li>
               <li>Delete the <code>service</code> directory and replace it with the newer version.</li>
               <li><strong>Copy Service Folder:</strong> copy <code>sdk/service</code> folder to your project.</li>
