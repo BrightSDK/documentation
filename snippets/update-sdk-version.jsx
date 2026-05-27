@@ -21,7 +21,7 @@ export const UpdateSdkVersion = ({ platform }) => {
       </Note>
 
       <AccordionGroup>
-        <Accordion title="Option A - Using the Integration Tool (Recommended)">
+        <Accordion title={<span>Option A - Using the Integration Tool <Badge color="green" size="sm">Recommended</Badge></span>}>
           <p>
             If you already have a <code>brd_sdk.config.json</code> in your project (generated during the initial integration), run:
           </p>
