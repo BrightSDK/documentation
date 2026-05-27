@@ -19,7 +19,7 @@ export const UpdateSdkVersion = ({ platform }) => {
       <AccordionGroup>
         <Accordion title="Option A - Using the Integration Tool (Recommended)">
           <p>
-            If you already have a <code>brd_sdk.config.json</code> in your project (generated during the initial integration), run:
+            If you already have a brd_sdk.config.json in your project (generated during the initial integration), run:
           </p>
           <pre><code>bright-sdk-integration /path/to/your/app/brd_sdk.config.json</code></pre>
 
