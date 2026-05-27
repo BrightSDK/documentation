@@ -5,21 +5,6 @@ sidebarTitle: ".NET"
 noindex: true
 ---
 
-import IntegrationWin from "/snippets/win-integration-methods.mdx";
-import AppIdWin from "/snippets/create-app-id-windows.mdx";
-import OptInOutWin from "/snippets/add-opt-in-out-windows.mdx";
-import UpdateAppInstall from "/snippets/update-application-installer-windows.mdx";
-import { CustomConsentWin } from "/snippets/custom-consent-windows.jsx";
-import AppPerformance from "/snippets/app-performance.mdx";
-import SelfCheckIntegration from "/snippets/win-self-check-integration.mdx";
-import UpdateTermsOfService from "/snippets/update-terms-of-service.mdx";
-import { SubmitIntegrationReview } from "/snippets/submit-integration-review.jsx";
-import UpdateSDK from "/snippets/update-sdk-version-windows.mdx";
-
-### Integration Methods
-
-<IntegrationWin />
-
 ### Requirements
 
 - Windows operating system.
@@ -246,8 +231,8 @@ import UpdateSDK from "/snippets/update-sdk-version-windows.mdx";
     - You can use the config file together with the programmatic API.
     - Programmatic API settings take precedence over config file settings.
 
-    <Steps>
-      <Step title="Configuration File (brd_config.json)">
+    <AccordionGroup>
+      <Accordion title="Configuration File (brd_config.json)">
         **Required Properties**
 
         | **Property** | **Type** | **Description** |
@@ -264,8 +249,9 @@ import UpdateSDK from "/snippets/update-sdk-version-windows.mdx";
         | `agree_btn` | string | Text of the consent screen's agree button |
         | `disagree_btn` | string | Text of the consent screen's disagree button |
         | `opt_out_txt` | string | Text of the consent screen's opt-out instructions |
-      </Step>
-      <Step title=".NET API Reference">
+      </Accordion>
+
+      <Accordion title=".NET API Reference">
         **Methods**
 
         | **Method** | **Description** |
@@ -301,8 +287,9 @@ import UpdateSDK from "/snippets/update-sdk-version-windows.mdx";
                 // User opted out
         };
         ```
-      </Step>
-      <Step title="Settings Class">
+      </Accordion>
+
+      <Accordion title="Settings Class">
         `class BrightData.Api.Settings`
 
         **Required Properties**
@@ -344,8 +331,9 @@ import UpdateSDK from "/snippets/update-sdk-version-windows.mdx";
         | **Property** | **Type** | **Default** | **Description** |
         | :-- | :-- | :-- | :-- |
         | `Language` | string | "en-US" | Language code for consent screen. Supported: en-US, de-De, es-Es, fr-FR, it-IT, pt-PT, ru-RU, zh-CN |
-      </Step>
-      <Step title="Command Line Tool (net_updater32.exe)">
+      </Accordion>
+
+      <Accordion title="Command Line Tool (net_updater32.exe)">
         **Help & Information**
 
         | **Argument** | **Description** |
@@ -390,7 +378,7 @@ import UpdateSDK from "/snippets/update-sdk-version-windows.mdx";
         net_updater32.exe --start-service myapp.example.com
         net_updater32.exe --stop-service myapp.example.com
         ```
-      </Step>
-    </Steps>
+      </Accordion>
+    </AccordionGroup>
   </Step>
 </Steps>
