@@ -9,8 +9,6 @@ export const SubmitIntegrationReview = ({ platform }) => (
       <li>User value proposition.</li>
     </ul>
 
-    <br />
-
     <ol>
       <li>
         <strong>Submission Process</strong>
