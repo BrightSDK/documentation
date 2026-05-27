@@ -1,9 +1,5 @@
----
-title: "API documentation (TV)"
----
-
-<Steps>
-  <Step title="Methods">
+<AccordionGroup>
+  <Accordion title="Methods">
     | Method | Parameters | Description |
     | :-- | :-- | :-- |
     | `brd_api.init()` | `settings`, `callbacks` | Initializes the API. Must be called at app startup. All other methods are accessible only after successful initialization. Consent screen is shown on first initialization by default - skip by setting `skip_consent: true` in settings. |
@@ -11,8 +7,9 @@ title: "API documentation (TV)"
     | `brd_api.external_opt_in()` | `callbacks` | Call this after the user agrees on your own custom consent screen. [See Custom Consent Screen (optional)](https://docs.bright-sdk.com/integration-guides/tizen-integration#custom-consent-screen-optional) for more details. |
     | `brd_api.opt_out()` | `callbacks` | Disables Bright SDK. |
     | `brd_api.get_status()` | — | Returns the current `status` object. |
-  </Step>
-  <Step title="Status Object">
+  </Accordion>
+
+  <Accordion title="Status Object">
     | Property | Type | Description |
     | :-- | :-- | :-- |
     | `consent` | `bool` | Current SDK status |
@@ -26,8 +23,9 @@ title: "API documentation (TV)"
     | `true` | SDK is enabled and working |
     | `false` | SDK is disabled and disconnected |
     | `null` | User has not passed the consent screen yet |
-  </Step>
-  <Step title="Settings Object">
+  </Accordion>
+
+  <Accordion title="Settings Object">
     **General**
 
     | Property | Type | Required | Description |
@@ -92,8 +90,9 @@ title: "API documentation (TV)"
     | `on_status_change` | `function` | Called every time the consent status changes |
     | `on_dialog_shown` | `function` | Called when the consent dialog is shown |
     | `on_dialog_closed` | `function` | Called when the consent dialog is closed |
-  </Step>
-  <Step title="Style Object">
+  </Accordion>
+
+  <Accordion title="Style Object">
     Use the `style` property to customize the visual appearance of the consent screen.
 
     **Background**
@@ -143,13 +142,14 @@ title: "API documentation (TV)"
     | `custom_qr_code_color` | `string` | QR code foreground color |
     | `custom_qr_code_bg_color` | `string` | QR code background color |
     | `shadow` | `boolean` | Enables shadow on the consent popup |
-  </Step>
-  <Step title="Callbacks Object">
+  </Accordion>
+
+  <Accordion title="Callbacks Object">
     The `callbacks` object can be passed to any method that accepts it.
 
     | Property | Type | Description |
     | :-- | :-- | :-- |
     | `on_success` | `function` | Called when the method completes successfully |
     | `on_failure` | `function` | Called when an error occurs |
-  </Step>
-</Steps>
+  </Accordion>
+</AccordionGroup>
