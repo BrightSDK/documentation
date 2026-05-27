@@ -10,7 +10,7 @@ export const UpdateSdkVersion = ({ platform }) => {
   return (
     <>
       <p>
-        When a new version of Bright SDK is released, use the <a href={integrationLink} target="_blank" rel="noopener noreferrer"><code>bright-sdk-integration</code></a> CLI tool to update your SDK files automatically.
+        When a new version of Bright SDK is released, use the <a href={integrationLink} target="_blank" rel="noopener noreferrer">bright-sdk-integration</a> CLI tool to update your SDK files automatically.
       </p>
       <p>
         The tool will download the latest SDK, replace the existing files in your app, and keep your <code>brd_sdk.config.json</code> up to date - without touching your app code.
