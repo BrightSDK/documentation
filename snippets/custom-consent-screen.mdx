@@ -4,7 +4,7 @@ The consent screen is the foundation of trust between your app and its users. Ma
   <Accordion title="Custom Consent Screen">
     Subject to Bright SDK approval, you can create and use your own consent screen with Bright SDK. Please follow the following guidelines.
 
-    1. **Design Requirements** 
+    1. **Design Requirements**
        Your custom consent screen must comply with the following requirements:
        1. **Mandatory Text**
           Your screen must include the following text exactly as written:
@@ -15,7 +15,8 @@ The consent screen is the foundation of trust between your app and its users. Ma
           Scan the QR Code to learn more about Bright Data policy and ethical usage.
           ```
        2. **QR Code**
-          Include a QR code linking to: [https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing](https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing). You can use your own branded QR code or hosted version, as long as it directs to this URL. Example Custom Screens:
+          Include a QR code linking to: [https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing](https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing). You can use your own branded QR code or hosted version, as long as it directs to this URL.
+          Example Custom Screens:
           <br />
           <img
             src="/integration-guides/image/custom_consent_screen1.png"
@@ -48,6 +49,24 @@ The consent screen is the foundation of trust between your app and its users. Ma
   </Accordion>
 
   <Accordion title="Customize the Default Consent Dialog (optional)">
-    {/* Add your customization content here */}
+    You can customize the consent dialog by setting additional parameters in the `api_settings` object passed to `init()`.
+
+    Customizable fields:
+
+    <img
+      src="integration-guides/image/consent_screen_customization.png"
+      alt="Alt text"
+      width="400"
+    />
+
+    Default appearance (when optional parameters are skipped):
+
+    <img
+      src="integration-guides/image/consent_screen_default.png"
+      alt="Alt text"
+      width="400"
+    />
+
+    See [API Documentation](#api-documentation) for all customization options.
   </Accordion>
 </AccordionGroup>
