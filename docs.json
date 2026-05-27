@@ -144,7 +144,8 @@
      "perplexity",
      "mcp",
      "cursor",
-     "vscode"
+    "vscode",
+    "grok"
    ]
   },
   "footer": {
