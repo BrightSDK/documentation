@@ -29,7 +29,8 @@
                   "integration-guides/tizen-integration",
                   "integration-guides/how-to-upload-apps-to-the-samsung-store",
                   "integration-guides/faq-tizen"
-                ]
+                ],
+                "expanded": false
               },
               {
                 "group": "Windows",
@@ -38,7 +39,8 @@
                   "integration-guides/windows-integration-net",
                   "integration-guides/windows-integration-c",
                   "integration-guides/faq-win"
-                ]
+                ],
+                "expanded": false
               },
               {
                 "group": "webOS",
@@ -48,7 +50,8 @@
                   "integration-guides/how-to-upload-apps-to-the-lg-store",
                   "integration-guides/LG-WebOS-SDK",
                   "integration-guides/faq-webos"
-                ]
+                ],
+                "expanded": false
               },
               {
                 "group": "iOS",
@@ -57,7 +60,8 @@
                   "integration-guides/ios-tvos",
                   "integration-guides/mac-os",
                   "integration-guides/faq-ios"
-                ]
+                ],
+                "expanded": false
               },
               {
                 "group": "Android",
@@ -65,7 +69,8 @@
                 "pages": [
                   "integration-guides/android-sdk",
                   "integration-guides/unity-sdk"
-                ]
+                ],
+                "expanded": false
               },
               {
                 "group": "Bundle",
@@ -75,7 +80,8 @@
                   "integration-guides/bright-vpn",
                   "integration-guides/earn-app",
                   "integration-guides/reward-gum"
-                ]
+                ],
+                "expanded": false
               }
             ]
           },
