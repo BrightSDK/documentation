@@ -26,8 +26,8 @@ export const UpdateSdkVersion = ({ platform }) => (
         </p>
         <p>Example:</p>
         <ul>
-          <li><strong>Current version:</strong> <a href="http://www.mywebsite.com/myapp">www.mywebsite.com/myapp</a> (keep old <code>brd_api.js</code> here).</li>
-          <li><strong>Updated version:</strong> <a href="http://www.mywebsite.com/myapp/v2">www.mywebsite.com/myapp/v2</a> (use new <code>brd_api.js</code>).</li>
+          <li><strong>Current version:</strong> <a>www.mywebsite.com/myapp</a> (keep old <code>brd_api.js</code> here).</li>
+          <li><strong>Updated version:</strong> <a>www.mywebsite.com/myapp/v2</a> (use new <code>brd_api.js</code>).</li>
         </ul>
         <p>This approach allows older app installations to continue functioning while new versions use the updated SDK.</p>
       </li>
