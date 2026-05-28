@@ -31,97 +31,155 @@ import ApiDocumentation from "/snippets/api-documentation.mdx";
       - Correct: `com.gamesix.nice`
     </Note>
   </Step>
-  <Step title="Extract SDK Framework" titleSize="h3">
-    Download the latest Bright SDK from the [Bright SDK Dashboard](https://bright-sdk.com/cp/docs/sdk/webos), unzip it.
+  <Step title="Install SDK Files" titleSize="h3">
+    You can set up the Bright SDK in your webOS app in two ways:
 
-    **SDK Structure:**
+    - [**Using the Bright SDK integration CLI tool (Recommended)**](https://github.com/BrightSDK/bright-sdk-integration) - automatically downloads the SDK, copies the required files into your app directory, and injects the script tags into `index.html`.
+    - **Manually** - Download the SDK from the dashboard, copy the files yourself, and add the script tags manually.
 
-    <Tree>
-      <Tree.Folder name="sample_app" />
-      <Tree.Folder name="iframe_sample_app" />
-      <Tree.Folder name="sdk" defaultOpen>
-        <Tree.Folder name="consent" defaultOpen>
-          <Tree.File name="brd_api.js" />
-        </Tree.Folder>
-        <Tree.Folder name="service" defaultOpen>
-          <Tree.Folder name="peer_node" />
-          <Tree.Folder name="util" />
-          <Tree.File name="index.js" />
-          <Tree.File name="package.json" />
-          <Tree.File name="services.json" />
-        </Tree.Folder>
-      </Tree.Folder>
-    </Tree>
+    Either way, you will still need to configure your app/service identifiers and add the SDK initialization code to your app.
 
-    **SDK Overview:**
+    <AccordionGroup>
+      <Accordion title="Option A - Using the Integration Tool (Recommended)">
+        Run the tool using the [bright-sdk-integration](https://github.com/BrightSDK/bright-sdk-integration) CLI. See the [webOS example](https://github.com/BrightSDK/bright-sdk-integration/blob/main/example/webos/README.md) for full setup instructions.
 
-    - **sample\_app** - A standard webOS app architecture example. Can also be used as a reference for Hosted Web Apps.
-    - **iframe\_sample\_app** - Example for apps where the UI is rendered inside an iFrame.
-    - **SDK Integration Components:**
-      1. **service directory** - The main engine containing all logic required to run the SDK. Must be copied next to your other services.
-      2. **brd\_api.js** - Frontend interface implementing the consent screen. Must be integrated with your application's frontend. See the sequence diagram for integrating the most common case.
-      <Frame>
-        <img
-          src="/integration-guides/image/sequence_diagram.png"
-          alt="Alt text"
-          width="200"
-        />
-      </Frame>
+        The tool will:
+
+        1. Download the latest BrightSDK zip from `cdn.bright-sdk.com/static/`
+        2. Extract `brd_api.js` and `brd_api.helper.js` into `app/`
+        3. Extract the `service/` directory for the background service
+        4. Inject SDK script tags into `app/index.html`
+        5. Save `brd_sdk.config.json` for future runs
+
+        Once the tool completes, skip to Step 3 - Configure and Initialize the SDK.
+      </Accordion>
+
+      <Accordion title="Option B - Manual">
+        Download the latest Bright SDK from the [Bright SDK Dashboard](https://bright-sdk.com/cp/docs/sdk/webos) and unzip it.
+
+        **SDK Structure:**
+
+        <Tree>
+          <Tree.Folder name="sample_app" />
+          <Tree.Folder name="iframe_sample_app" />
+          <Tree.Folder name="sdk" defaultOpen>
+            <Tree.Folder name="consent" defaultOpen>
+              <Tree.File name="brd_api.js" />
+            </Tree.Folder>
+            <Tree.Folder name="service" defaultOpen>
+              <Tree.Folder name="peer_node" />
+              <Tree.Folder name="util" />
+              <Tree.File name="index.js" />
+              <Tree.File name="package.json" />
+              <Tree.File name="services.json" />
+            </Tree.Folder>
+          </Tree.Folder>
+        </Tree>
+
+        **SDK Overview:**
+
+        - **sample\_app** - A standard webOS app architecture example. Can also be used as a reference for Hosted Web Apps.
+        - **iframe\_sample\_app** - Example for apps where the UI is rendered inside an iFrame.
+
+        **SDK Integration Components:**
+
+        1. `service `**directory** - The main engine containing all logic required to run the SDK. Must be copied next to your other services.
+        2. `brd_api.js` - Frontend interface implementing the consent screen. Must be integrated with your application's frontend.
+
+        See the sequence diagram for integrating the most common case:
+
+        <Frame>
+          <img
+            src="/integration-guides/image/sequence_diagram.png"
+            alt="Alt text"
+            width="200"
+          />
+        </Frame>
+      </Accordion>
+    </AccordionGroup>
   </Step>
-  <Step title="Integrate Bright SDK in Your Code" titleSize="h3">
+  <Step title="Configure and Initialize the SDK" titleSize="h3">
     You must update IDs in the SDK config files to match your application.
 
-    **Configure app/service identifiers**
+    **<u>Configure app/service identifiers</u>**
 
-    - **Update package.json**
-      - Set a correct name attribute.
-      - Keep the `.brd_sdk` postfix.
-      - Leave the rest untouched.
-    - **Update services.json**
-      - Set `id`, `services[0].id`, and `services[0].name`.
-      - Keep the `.brd_sdk` postfix.
-      - Leave the rest untouched.
-      <Info>
-        **Example Configuration** Given appID from dashboard: `webos_com.example.app`.
-        - `appinfo.json` ID should be: `com.example.app`.
-        - `package.json` \+ `services.json` ID must be: `com.example.app.brd_sdk`
-        <Note>
-          The SDK will add the `webos_prefix` automatically.
-        </Note>
-      </Info>
+    **Update package.json**
 
-    **Embed SDK Dialog in Your Code**
+    - Set a correct `name` attribute
+    - Keep the `.brd_sdk` postfix
+    - Leave the rest untouched
+
+    **Update services.json**
+
+    - Set `id`, `services[0].id`, and `services[0].name`
+    - Keep the `.brd_sdk` postfix
+    - Leave the rest untouched
+
+    <Info>
+      **Example Configuration**
+
+      Given appID from dashboard: `webos_com.example.app`
+
+      - `appinfo.json` ID should be: `com.example.app`
+      - `package.json` \+ `services.json` ID must be: `com.example.app.brd_sdk`
+
+      <Note>
+        The SDK will add the `webos_` prefix automatically.
+      </Note>
+    </Info>
+
+    **<u>Embed SDK Dialog in Your Code</u>**
 
     You can use `sample_app` as a reference.
 
-    - **Import brd\_api.js:**
-      - Copy `brd_api.js` and `webOSTV.js` into your app directory.
-      - Import it from the main file responsible for app initialization.
-      - After `brd_api.js` execution, the `brd_api` global object will be available.
-      ```html
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <script src="webOSTV.js"></script>
-          <script src="brd_api.js"></script>
-        </head>
-        <body></body>
-      </html>
-      ```
-    - **SDK embedding in case of iFrame:** If your app is rendered in an iFrame:
-      - `brd_api.js` must be included in the HTML page that is located on your server.
-      - Add `brd_iframe.js` on the `*.ipk` side `iframe_sample_app/lib/brd_iframe.js`).
-      - Set `iframe: true` in `api_settings`. The location of SDK components is presented in the table below. | TV (\*.ipk) | Server (iframe src) | | --- | --- | | webOSTV.js | brd\_api.js | | brd\_iframe.js |  | | service (folder) |  |
+    <Note>
+      If you used the CLI tool in Option A, `brd_api.js`, `brd_api.helper.js`, and the script tags in `index.html` are already in place - skip this sub-step.
+    </Note>
 
-    **Add SDK Initialization**
+    **Import brd\_api.js**
 
-    Call `brd_api.init()` after page load to access all SDK methods. Example:
+    1. Copy `brd_api.js` and `webOSTV.js` into your app directory.
+    2. Import it from the main file responsible for app initialization.
+    3. After `brd_api.js` execution, the `brd_api` global object will be available.
 
     ```html
     <!DOCTYPE html>
     <html>
       <head>
-    ...
+        <script src="webOSTV.js"></script>
+        <script src="brd_api.js"></script>
+      </head>
+      <body></body>
+    </html>
+    ```
+
+    <AccordionGroup>
+      <Accordion title="SDK embedding in case of iFrame">
+        If your app is rendered in an iFrame:
+
+        - `brd_api.js` must be included in the HTML page that is located on your server.
+        - Add `brd_iframe.js` on the `*.ipk` side (`iframe_sample_app/lib/brd_iframe.js`).
+        - Set `iframe: true` in `api_settings`.
+
+        | TV (\*.ipk) | Server (iframe src) |
+        | :-- | :-- |
+        | `webOSTV.js` | `brd_api.js` |
+        | `brd_iframe.js` |  |
+        | `service` (folder) |  |
+      </Accordion>
+    </AccordionGroup>
+
+    **<u>Add SDK Initialization</u>**
+
+    Call `brd_api.init()` after page load to access all SDK methods.
+
+    Example:
+
+    ```html
+    <!DOCTYPE html>
+    <html>
+      <head>
+      ...
         <script>
           window.onload = function(){
             var api_settings = {
@@ -140,17 +198,17 @@ import ApiDocumentation from "/snippets/api-documentation.mdx";
             }
           };
         </script>
-    ...
+      ...
       </head>
       <body>
-    ...
+      ...
       </body>
     </html>
     ```
 
     **Consent behavior:**
 
-    - On first call `brd_api.init()` will show a consent screen.
+    - On first call, `brd_api.init()` will show a consent screen.
     - The user must agree or disagree.
     - Get the result by setting the `on_status_change` callback.
     - The consent screen handles TV remote control input.
