@@ -30,7 +30,6 @@ import ApiDocumentation from "/snippets/api-documentation.mdx";
     You can set up the Bright SDK in your Tizen app in two ways:
 
     - [**Using the Bright SDK integration CLI tool (**](https://github.com/BrightSDK/bright-sdk-integration)<Badge color="green">Recommended</Badge>[**)**](https://github.com/BrightSDK/bright-sdk-integration) - automatically downloads the SDK, copies the required files into your app directory, and injects the script tags into `index.html`.
-
     - **Manually** - Download the SDK from the dashboard, copy the files yourself, and add the script tags manually.
 
     Either way, you will still need to configure your app/service identifiers and add the SDK initialization code to your app.
@@ -85,7 +84,11 @@ import ApiDocumentation from "/snippets/api-documentation.mdx";
   <Step title="Configure and Initialize the SDK" titleSize="h3">
     **<u>Prepare the Files</u>**
 
-    1. **Add Service to config.xml:** Add the following to your `config.xml`:
+    1. **Copy Service Folder:** copy `sdk/service` folder to your project.
+       <Note>
+         If you used the CLI tool in Option A, the `service/` directory is already in place - skip this sub-step.
+       </Note>
+    2. **Add Service to config.xml:** Add the following to your `config.xml`:
 
     ```xml
     ...
