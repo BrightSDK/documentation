@@ -34,12 +34,26 @@ import ApiDocumentation from "/snippets/api-documentation.mdx";
   <Step title="Install SDK Files" titleSize="h3">
     You can set up the Bright SDK in your webOS app in two ways:
 
-    - [**Using the Bright SDK integration CLI tool (**](https://github.com/BrightSDK/bright-sdk-integration)<Badge color="green">Recommended</Badge>[**)**](https://github.com/BrightSDK/bright-sdk-integration) - automatically downloads the SDK, copies the required files into your app directory, and injects the script tags into `index.html`.
+    - [**Using the Bright SDK integration CLI tool**](https://github.com/BrightSDK/bright-sdk-integration) <Badge color="green">Recommended</Badge> - automatically downloads the SDK, copies the required files into your app directory, and injects the script tags into `index.html`.
     - **Manually** - Download the SDK from the dashboard, copy the files yourself, and add the script tags manually.
 
     Either way, you will still need to configure your app/service identifiers and add the SDK initialization code to your app.
 
     <AccordionGroup>
+      <Accordion title="Option A - Using the Integration Tool (Recommended)">
+        Run the tool using the [bright-sdk-integration](https://github.com/BrightSDK/bright-sdk-integration) CLI. See the [webOS example](https://github.com/BrightSDK/bright-sdk-integration/blob/main/example/webos/README.md) for full setup instructions.
+
+        The tool will:
+
+        1. Download the latest BrightSDK zip from `cdn.bright-sdk.com/static/`
+        2. Extract `brd_api.js` and `brd_api.helper.js` into `app/`
+        3. Extract the `service/` directory for the background service
+        4. Inject SDK script tags into `app/index.html`
+        5. Save `brd_sdk.config.json` for future runs
+
+        Once the tool completes, skip to [Step 3 - Configure and Initialize the SDK](#configure-and-initialize-the-sdk).
+      </Accordion>
+
       <Accordion title="Option B - Manual">
         Download the latest Bright SDK from the [Bright SDK Dashboard](https://bright-sdk.com/cp/docs/sdk/webos) and unzip it.
 
@@ -69,7 +83,7 @@ import ApiDocumentation from "/snippets/api-documentation.mdx";
 
         **SDK Integration Components:**
 
-        1. `service `**directory** - The main engine containing all logic required to run the SDK. Must be copied next to your other services.
+        1. `service` **directory** - The main engine containing all logic required to run the SDK. Must be copied next to your other services.
         2. `brd_api.js` - Frontend interface implementing the consent screen. Must be integrated with your application's frontend.
 
         See the sequence diagram for integrating the most common case:
