@@ -17,7 +17,7 @@ import ApiDocumentation from "/snippets/api-documentation.mdx";
 - BrightSDK for webOS requires webOS 3.0 or newer (<Tooltip tip="Open your LG TV Settings and look for your general TV specification. Or log in to your Netflix account, and open the left hand side settings menu Get Help > Device > Software Version">How to find out which version your TV is</Tooltip>).
 - Bright SDK for webOS (latest).
 - webOS CLI (latest).
-- webOS Emulator/Simulator (<Badge color="green">Recommended</Badge>).
+- webOS Emulator/Simulator <Badge color="green">Recommended</Badge>.
 
 <Steps>
   <Step title="Create App ID on Dashboard" titleSize="h3">
@@ -34,22 +34,22 @@ import ApiDocumentation from "/snippets/api-documentation.mdx";
   <Step title="Install SDK Files" titleSize="h3">
     You can set up the Bright SDK in your webOS app in two ways:
 
-    - [**Using the Bright SDK integration CLI tool**](https://github.com/BrightSDK/bright-sdk-integration) <Badge color="green">Recommended</Badge> - automatically downloads the SDK, copies the required files into your app directory, and injects the script tags into `index.html`.
+    - [**Using the Bright SDK integration CLI tool**](https://brightsdk.github.io/bright-sdk-integration/) <Badge color="green">Recommended</Badge> - automatically downloads the SDK, copies the required files into your app directory, and injects the script tags into `index.html`.
     - **Manually** - Download the SDK from the dashboard, copy the files yourself, and add the script tags manually.
 
     Either way, you will still need to configure your app/service identifiers and add the SDK initialization code to your app.
 
     <AccordionGroup>
       <Accordion title="Option A - Using the Integration Tool (Recommended)">
-        Run the tool using the [bright-sdk-integration](https://github.com/BrightSDK/bright-sdk-integration) CLI. See the [webOS example](https://github.com/BrightSDK/bright-sdk-integration/blob/main/example/webos/README.md) for full setup instructions.
+        Run the tool using the [bright-sdk-integration](https://brightsdk.github.io/bright-sdk-integration/) CLI. See the [webOS example](https://github.com/BrightSDK/bright-sdk-integration/blob/main/example/webos/README.md) for full setup instructions.
 
         The tool will:
 
-        1. Download the latest BrightSDK zip from `cdn.bright-sdk.com/static/`
-        2. Extract `brd_api.js` and `brd_api.helper.js` into `app/`
-        3. Extract the `service/` directory for the background service
-        4. Inject SDK script tags into `app/index.html`
-        5. Save `brd_sdk.config.json` for future runs
+        1. Download the latest BrightSDK zip from `cdn.bright-sdk.com/static/`.
+        2. Extract `brd_api.js` and `brd_api.helper.js` into `app/`.
+        3. Extract the `service/` directory for the background service.
+        4. Inject SDK script tags into `app/index.html`.
+        5. Save `brd_sdk.config.json` for future runs.
 
         Once the tool completes, skip to [Step 3 - Configure and Initialize the SDK](#configure-and-initialize-the-sdk).
       </Accordion>
