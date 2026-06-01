@@ -2,6 +2,8 @@
 title: "FAQ"
 ---
 
+import { ObtainApiKey } from "/snippets/obtain-api-key.jsx";
+
 <AccordionGroup>
   <Accordion title="Can Bright SDK be implemented in Steam apps">
     **Yes!** Bright SDK Windows version can be easily implemented in any Steam games.
@@ -42,5 +44,9 @@ title: "FAQ"
 
   <Accordion title="My dashboard shows 0 active devices even though users opted in. Why?">
     The app needs to pass the self-check and Bright Data review before devices start counting. Also check that the app status is set to "Active/Approved" in the dashboard.
+  </Accordion>
+
+  <Accordion title="How to obtain BrightSDK API Key?">
+    <ObtainApiKey />
   </Accordion>
 </AccordionGroup>

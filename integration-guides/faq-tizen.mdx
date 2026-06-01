@@ -2,6 +2,8 @@
 title: "FAQ"
 ---
 
+import { ObtainApiKey } from "/snippets/obtain-api-key.jsx";
+
 <AccordionGroup>
   <Accordion title="How do I implement the Samsung TV SDK?">
     Here is a [link](https://docs.bright-sdk.com/integration-guides/tizen-integration) to our implementation guide.
@@ -47,5 +49,9 @@ title: "FAQ"
 
   <Accordion title="My dashboard shows 0 active devices even though users opted in. Why?">
     The app needs to pass the self-check and Bright Data review before devices start counting. Also check that the app status is set to "Active/Approved" in the dashboard.
+  </Accordion>
+
+  <Accordion title="How to obtain BrightSDK API Key?">
+    <ObtainApiKey />
   </Accordion>
 </AccordionGroup>
