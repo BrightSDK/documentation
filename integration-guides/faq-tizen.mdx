@@ -2,8 +2,6 @@
 title: "FAQ"
 ---
 
-import ObtainApiKey from "/snippets/obtain-api-key.mdx";
-
 <AccordionGroup>
   <Accordion title="How do I implement the Samsung TV SDK?">
     Here is a [link](https://docs.bright-sdk.com/integration-guides/tizen-integration) to our implementation guide.
@@ -52,6 +50,44 @@ import ObtainApiKey from "/snippets/obtain-api-key.mdx";
   </Accordion>
 
   <Accordion title="How to obtain BrightSDK API Key?">
-    <ObtainApiKey />
+    The BrightSDK tools authenticate with the releases API using an API key. Follow these steps to create one.
+
+    1. **Open API Keys**\
+       Log in to the [BrightSDK Control Panel](https://bright-sdk.com/cp/settings/company_profile#api_keys) - this links directly to the **API keys** section.
+       ![API keys section](https://raw.githubusercontent.com/BrightSDK/bright-sdk-integration/main/docs/img/auth_step2_api_keys.png)
+    2. **Create a new key**\
+       Click **\+ Add**. Choose an expiration (e.g. _One year_), give the key a descriptive name, then click **Generate key**.
+       ![Key creation dialog](https://raw.githubusercontent.com/BrightSDK/bright-sdk-integration/main/docs/img/auth_step3_key_creation.png)
+    3. **Copy your key**\
+       The generated key is shown **once only** - copy it immediately.
+       ![New API key revealed](https://raw.githubusercontent.com/BrightSDK/bright-sdk-integration/main/docs/img/auth_step4_key_revealed.png)
+       <Warning>
+         **Important:** Once you close this dialog the key cannot be retrieved. If lost, delete and create a new one.
+       </Warning>
+    4. **Set the environment variable**
+       **macOS / Linux** - export in your shell:
+       ```bash
+       export SDK_API_KEY="<your-api-key>"
+       ```
+       To persist across sessions:
+       ```bash
+       echo 'export SDK_API_KEY="<your-api-key>"' >> ~/.zshrc
+       ```
+       **Windows (PowerShell)** - set for the current session:
+       ```powershell
+       $env:SDK_API_KEY = "<your-api-key>"
+       ```
+       To persist for your user (survives reboots):
+       ```powershell
+       [Environment]::SetEnvironmentVariable("SDK_API_KEY", "<your-api-key>", "User")
+       ```
+       **Windows (CMD)** - set for the current session:
+       ```cmd
+       set SDK_API_KEY=<your-api-key>
+       ```
+       To persist for your user (survives reboots):
+       ```cmd
+       setx SDK_API_KEY "<your-api-key>"
+       ```
   </Accordion>
 </AccordionGroup>
