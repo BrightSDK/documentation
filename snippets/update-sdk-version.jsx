@@ -72,7 +72,7 @@ export const UpdateSdkVersion = ({ platform }) => {
             </ol>
           ) : (
             <ol>
-              <li><strong>Download</strong> the latest Bright SDK zip from the <a href={dashboardLink}>Bright SDK Dashboard</a>.</li>
+              <li><strong>Download</strong> the latest Bright SDK zip from the <a href={dashboardLink}>Bright SDK downloader</a>.</li>
               <li>Replace <code>brd_api.js</code> with the newer version.</li>
               <li>Delete the <code>service</code> directory and replace it with the newer version.</li>
               <li><strong>Copy Service Folder:</strong> copy <code>sdk/service</code> folder to your project.</li>
