@@ -1,11 +1,11 @@
 export const UpdateSdkVersion = ({ platform }) => {
   const integrationLink = platform === 'tizen' 
-    ? "https://github.com/BrightSDK/bright-sdk-integration/blob/main/example/tizen/README.md"
-    : "https://github.com/BrightSDK/bright-sdk-integration/blob/main/example/webos/README.md";
+    ? "https://brightsdk.github.io/bright-sdk-integration/"
+    : "https://brightsdk.github.io/bright-sdk-integration/";
 
   const dashboardLink = platform === 'tizen'
-    ? "https://bright-sdk.com/cp/docs/sdk/tizen"
-    : "https://bright-sdk.com/cp/docs/sdk/webos";
+    ? "https://brightsdk.github.io/bright-sdk-downloader-rs/"
+    : "https://brightsdk.github.io/bright-sdk-downloader-rs/";
 
   return (
     <>
@@ -55,7 +55,7 @@ export const UpdateSdkVersion = ({ platform }) => {
 
           {platform !== 'tizen' ? (
             <ol>
-              <li><strong>Download</strong> the latest Bright SDK zip from the <a href={dashboardLink}>Bright SDK Dashboard</a>.</li>
+              <li><strong>Download</strong> the latest Bright SDK zip from the <a href={dashboardLink}>Bright SDK downloader</a>.</li>
               <li>
                 <strong>Unzip</strong> and replace the following files in your project:
                 <ul>
