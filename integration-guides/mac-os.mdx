@@ -78,13 +78,17 @@ import API from "/snippets/api-documentation-apple.mdx";
         | `resign_net_updater.sh` | Script used in build phases to re-sign `net_updater` for your Apple team |
 
         <Warning>
-          Before using `brdsdk.framework` and `net_updater.app`, additional Xcode project configuration steps are required — see [Project Setup](https://docs.google.com/document/d/1Topce82TpDiun3AipmIa570je7RFgDat5zRhzcReetI/edit?tab=t.0#heading=h.8xufmydodl2e).
+          Before using `brdsdk.framework` and `net_updater.app`, additional Xcode project configuration steps are required — see [Project Setup](https://docs.bright-sdk.com/integration-guides/mac-os#option-b-manual:~:text=Integrate%20Bright%20SDK-,Project%20Setup,-Add%20the%20Framework).
         </Warning>
       </Accordion>
     </AccordionGroup>
   </Step>
   <Step title="Integrate Bright SDK" titleSize="h3">
     **Project Setup**
+
+    <Note>
+      **CLI Tool users:** `brdsdk.framework` and `net_updater.app` are already added and fully configured - skip to [Import the SDK](https://docs.bright-sdk.com/integration-guides/mac-os#option-b-manual:~:text=will%20not%20function.-,Import%20the%20SDK,-In%20your%20AppDelegate).
+    </Note>
 
     **Add the Framework and Service to Your Target**
 
