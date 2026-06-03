@@ -1,18 +1,15 @@
----
-title: "Update Sdk Version Windows"
----
+<AccordionGroup>
+  <Accordion title="Option A - Using the Gradle Plugin (Recommended)">
+    Run your Gradle build as usual. As long as `version` is set to `"latest"` (default), the plugin will automatically detect, download, and replace `bright_sdk.aar` with the latest version. To force a fresh check, run:
 
-Download the latest SDK from the [Bright SDK Dashboard](https://bright-sdk.com/cp/docs/sdk/windows) and follow these steps:
+    ```bash
+    ./gradlew build --refresh-dependencies
+    ```
+  </Accordion>
 
-**Replace SDK Files**
-
-Replace the following files with newer versions:
-
-- `net_updater32.exe` (or `net_updater64.exe`).
-- `lum_sdk.dll` (or `lum_sdk32.dll` / `lum_sdk64.dll`).
-- `brd_config.json`.
-
-**Rebuild Project**
-
-1. Clean your project.
-2. Rebuild your project.
+  <Accordion title="Option B - Manual">
+    1. Download the latest Bright SDK using the [Bright SDK downloader](https://bright-sdk.com/cp/docs/sdk/android), and unzip it.
+    2. Replace `bright_sdk.aar` in your `/libs` folder with the updated version.
+    3. If some methods are not available after updating, use **File → Invalidate Caches** in Android Studio.
+  </Accordion>
+</AccordionGroup>
