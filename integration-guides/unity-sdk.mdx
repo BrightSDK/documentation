@@ -5,15 +5,6 @@ sidebarTitle: "Unity SDK"
 noindex: true
 ---
 
-import OptInOut from "/snippets/add-opt-in-out-unity.mdx";
-import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
-
-<Note>
-  For the full Android integration reference, see the [Android SDK Integration Guide](https://docs.bright-sdk.com/integration-guides/android-sdk). This document covers only Unity-specific steps and should be used in conjunction with that guide.
-</Note>
-
-### Requirements
-
 - [Latest](https://bright-sdk.com/cp/docs/sdk/android) Bright SDK AAR for Android.
 - Unity Editor (latest recommended).
 - Android build support installed in Unity.
@@ -385,8 +376,21 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
     <CustomConsent platform="unity" />
   </Step>
   <Step title="How to Update the SDK" titleSize="h3">
-    1. Delete `bright_sdk.aar` from Assets \> Plugins \> Android.
-    2. Copy the new `bright_sdk.aar` file to Assets \> Plugins \> Android.
+    <AccordionGroup>
+      <Accordion title="Option A - Using the Unity Plugin (Recommended)">
+        The [Bright SDK Unity Plugin](https://github.com/BrightSDK/unity-plugin) handles updates automatically. As long as the version in `Assets/Editor/BrightSDK/BrightSDK.json` is set to `null` (latest), the plugin will fetch and replace the SDK on every build. No manual file replacement needed.
+
+        To trigger an update manually, simply build your project again:
+
+        1. Open **File → Build Settings**
+        2. Click **Build** or **Build and Run**
+      </Accordion>
+
+      <Accordion title="Option B - Manual">
+        1. Delete `bright_sdk.aar` from `Assets > Plugins > Android`
+        2. Copy the new `bright_sdk.aar` into `Assets > Plugins > Android`
+      </Accordion>
+    </AccordionGroup>
   </Step>
   <Step title="Migrating from API V1 to V2" titleSize="h3">
     The V2 API introduces new capabilities and a customizable consent screen. All main V1 methods are deprecated and replaced by `BrightApi` methods.
@@ -435,9 +439,9 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
         | `static Boolean getConsentChoice(Context context)` | Returns `true` if user is peer, `false` if not peer, `null` if no choice has been made yet. |
         | `static boolean isSvcProcess()` | Returns `true` if the current process is the SDK service process. |
         | `static void setTrackingId(String trackingId)` | Adds a unique tracking ID for reports and debugging. Must be called **before**`BrightApi.init`. |
-        | `static void reportConsentShown(Context context)` | <Warning>    Requires special permission.  </Warning>  Reports that a custom consent screen was shown. |
-        | `static void reportConsentBackPress(Context context)` | <Warning>    Requires special permission.  </Warning>  Reports that the user pressed back without making a choice. |
-        | `static void reportConsentOptOut(Context context)` | <Warning>    Requires special permission.  </Warning>  Reports that the user opted out via custom consent screen. |
+        | `static void reportConsentShown(Context context)` |  |
+        | `static void reportConsentBackPress(Context context)` |  |
+        | `static void reportConsentOptOut(Context context)` |  |
       </Step>
       <Step title="Settings">
         **Constructor:**
