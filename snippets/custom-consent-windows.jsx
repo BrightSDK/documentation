@@ -39,6 +39,10 @@ export const CustomConsentWin = ({ platform }) => (
       Bright Data runs in the background even after closing the application.
       Updates will be automatically downloaded by your device from time to time and will be subject to the EULA (End User Level Agreement)"`}</code></pre>
 
+    <Note>
+      <strong>Important:</strong> "<a href="https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing">Learn more</a>", "<a href="https://bright-sdk.com/privacy-policy">Privacy Policy</a>" and "<a href="https://bright-sdk.com/eula">EULA (End User Level Agreement)</a>" should redirect to the relevant links.
+    </Note>
+
     <ol start="3">
       <li><strong>Interactive Popups -</strong> Clicking on "<em>will only use</em>" → Opens popup:</li>
     </ol>
