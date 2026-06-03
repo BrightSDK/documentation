@@ -29,7 +29,7 @@ export const UpdateSDK = ({ platform }) => (
               <li>Remove the existing <code>brdsdk.unitypackage</code> asset from Unity Editor.</li>
             </ol>
             <img src="/snippets/image/update_SDK_iOS_2.png" alt="Alt text" width="400" />
-            <p>Re-import the new package following Step 3.5.1.</p>
+            <p>Re-import the new package following <a href="https://docs.bright-sdk.com/integration-guides/ios-tvos#option-b-manual:~:text=Import%20the%20SDK%20Package">Import the SDK Package</a> Step.</p>
           </>
         )}
       </Accordion>
