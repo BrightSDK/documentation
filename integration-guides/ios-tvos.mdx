@@ -41,17 +41,17 @@ noindex: true
     Either way, you will still need to add the SDK initialization code to your app.
 
     <AccordionGroup>
-      <Accordion title={<span>Option A - Using the Integration CLI Tool <Badge color="green" size="sm">Recommended</Badge></span>}>
+      <Accordion title={<span>Option A - Using the Integration CLI Tool <Badge color="green" size="md">Recommended</Badge></span>}>
         Run the tool using the [`bright-sdk-integration`](https://github.com/BrightSDK/bright-sdk-integration) CLI. See the [Apple example](https://github.com/BrightSDK/bright-sdk-integration/tree/main/example/apple) for full setup instructions.
 
         The tool will:
 
-        - Download the latest BrightSDK zip from `cdn.bright-sdk.com/static/`
-        - Extract `brdsdk.xcframework` into `BrightSDK/`
-        - Patch your `project.pbxproj` - adding `brdsdk.xcframework` with Embed & Sign and setting `FRAMEWORK_SEARCH_PATHS`
-        - Save `brd_sdk.config.json` for future runs
+        - Download the latest BrightSDK zip from `cdn.bright-sdk.com/static/`.
+        - Extract `brdsdk.xcframework` into `BrightSDK/`.
+        - Patch your `project.pbxproj` - adding `brdsdk.xcframework` with Embed & Sign and setting `FRAMEWORK_SEARCH_PATHS`.
+        - Save `brd_sdk.config.json` for future runs.
 
-        Once the tool completes, skip to Step 3 - Integrate Bright SDK.
+        Once the tool completes, skip to [Step 3 - Integrate Bright SDK](#integrate-bright-sdk).
       </Accordion>
 
       <Accordion title="Option B - Manual">
