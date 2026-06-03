@@ -5,17 +5,6 @@ sidebarTitle: "iOS/tvOS SDK"
 noindex: true
 ---
 
-import { OptInOut } from "/snippets/add-opt-in-out-apple.jsx";
-import ConsentDialogCustom from "/snippets/consent-dialog-customization-ios.mdx";
-import { CustomConsentApple } from "/snippets/custom-consent-screen-apple.jsx";
-import AppPerformance from "/snippets/app-performance.mdx";
-import { Tos } from "/snippets/terms-of-service-apple.jsx";
-import { SubmitIntegrationReview } from "/snippets/submit-integration-review.jsx";
-import { UpdateSDK } from "/snippets/update-sdk-version-apple.jsx";
-import API from "/snippets/api-documentation-apple.mdx";
-
-### Requirements
-
 - iOS 13.0 or newer / tvOS 15.0 or newer.
 - Xcode (13.4 or newer recommended).
 - Bright SDK for iOS/tvOS ([latest](https://bright-sdk.com/cp/docs/sdk/ios)).
@@ -43,20 +32,44 @@ import API from "/snippets/api-documentation-apple.mdx";
 
     **Example:** If your Bundle ID is `com.mycompany.MyGame`, your App ID will be `ios_com.mycompany.MyGame`.
   </Step>
-  <Step title="Extract SDK Framework" titleSize="h3">
-    Download the latest Bright SDK from the Bright SDK Dashboard or from the link provided in the latest release email. Unzip the archive.
+  <Step title="Install SDK Files" titleSize="h3">
+    You can set up the Bright SDK framework in your iOS/tvOS app in two ways:
 
-    **SDK Structure and overview**
+    - [**Using the Bright SDK Integration CLI Tool**](https://github.com/BrightSDK/bright-sdk-integration) <Badge color="green">Recommended</Badge> - automatically downloads the SDK, extracts the framework, and patches your Xcode project with the necessary references.
+    - **Manually** - download the SDK from the dashboard, unzip it, and copy the files yourself.
 
-    | Component | Description |
-    | --- | --- |
-    | `brdsdk.xcframework` | Universal framework for Xcode. Contains iPhoneOS & Simulator builds. Min iOS: 13.0, Min tvOS: 15.0 |
-    | `unity_plugin/brdsdk.unitypackage` | Unity plugin package for Unity-level integration |
-    | `unity_sample_app_2020.2.5` | Reference sample for Unity integration at the Unity Editor level |
-    | `unity_xcode_sample_app` | Reference sample for Unity integration at the Xcode level. Note: Missing `UnityFramework.framework` — build and copy it from your own integration |
-    | `sample_tvos_xcode` | Reference sample for tvOS Xcode integration |
-    | `xcode_swiftui_sample_app` | Reference sample for native iOS using SwiftUI |
-    | `xcode_uikit_sample_app` | Reference sample for native iOS using UIKit (Swift or Objective-C) |
+    Either way, you will still need to add the SDK initialization code to your app.
+
+    <AccordionGroup>
+      <Accordion title={<span>Option A - Using the Integration CLI Tool <Badge color="green" size="sm">Recommended</Badge></span>}>
+        Run the tool using the [`bright-sdk-integration`](https://github.com/BrightSDK/bright-sdk-integration) CLI. See the [Apple example](https://github.com/BrightSDK/bright-sdk-integration/tree/main/example/apple) for full setup instructions.
+
+        The tool will:
+
+        - Download the latest BrightSDK zip from `cdn.bright-sdk.com/static/`
+        - Extract `brdsdk.xcframework` into `BrightSDK/`
+        - Patch your `project.pbxproj` - adding `brdsdk.xcframework` with Embed & Sign and setting `FRAMEWORK_SEARCH_PATHS`
+        - Save `brd_sdk.config.json` for future runs
+
+        Once the tool completes, skip to Step 3 - Integrate Bright SDK.
+      </Accordion>
+
+      <Accordion title="Option B - Manual">
+        Download the latest Bright SDK using the [Bright SDK downloader](https://bright-sdk.com/cp/docs/sdk/ios). Unzip it.
+
+        **SDK Structure and overview**
+
+        | Component | Description |
+        | :-- | :-- |
+        | `brdsdk.xcframework` | Universal framework for Xcode. Contains iPhoneOS & Simulator builds. Min iOS: 13.0, Min tvOS: 15.0 |
+        | `unity_plugin/brdsdk.unitypackage` | Unity plugin package for Unity-level integration |
+        | `unity_sample_app_2020.2.5` | Reference sample for Unity integration at the Unity Editor level |
+        | `unity_xcode_sample_app` | Reference sample for Unity integration at the Xcode level. Note: Missing `UnityFramework.framework` — build and copy it from your own project |
+        | `sample_tvos_xcode` | Reference sample for tvOS Xcode integration |
+        | `xcode_swiftui_sample_app` | Reference sample for native iOS using SwiftUI |
+        | `xcode_uikit_sample_app` | Reference sample for native iOS using UIKit (Swift or Objective-C) |
+      </Accordion>
+    </AccordionGroup>
   </Step>
   <Step title="Integrate Bright SDK" titleSize="h3">
     Choose the integration path that matches your project type:
