@@ -2,6 +2,18 @@
 title: "Update Sdk Version Android"
 ---
 
-1. Download the latest SDK from the [Bright SDK Dashboard](https://bright-sdk.com/cp/docs/sdk/android).
-2. Replace `bright_sdk.aar` in your `/libs` folder with the updated version.
-3. If some methods are not available after updating, use **File → Invalidate Caches** in Android Studio.
+<AccordionGroup>
+  <Accordion title="Option A - Using the Gradle Plugin (Recommended)">
+    Run your Gradle build as usual. As long as `version` is set to `"latest"` (default), the plugin will automatically detect, download, and replace `bright_sdk.aar` with the latest version. To force a fresh check, run:
+
+    ```bash
+    ./gradlew build --refresh-dependencies
+    ```
+  </Accordion>
+
+  <Accordion title="Option B - Manual">
+    1. Download the latest Bright SDK using the [Bright SDK downloader](https://bright-sdk.com/cp/docs/sdk/android), and unzip it.
+    2. Replace `bright_sdk.aar` in your `/libs` folder with the updated version.
+    3. If some methods are not available after updating, use **File → Invalidate Caches** in Android Studio.
+  </Accordion>
+</AccordionGroup>
