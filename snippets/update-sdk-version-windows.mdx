@@ -1,15 +1,18 @@
 <AccordionGroup>
-  <Accordion title="Option A - Using the Gradle Plugin (Recommended)">
-    Run your Gradle build as usual. As long as `version` is set to `"latest"` (default), the plugin will automatically detect, download, and replace `bright_sdk.aar` with the latest version. To force a fresh check, run:
+  <Accordion title="Option A - Using the Integration CLI Tool (Recommended)">
+    Run the tool with the `--update` flag. It will automatically fetch and replace the SDK files in place without losing your config or consent flow settings:
 
     ```bash
-    ./gradlew build --refresh-dependencies
+    npx github:BrightSDK/bright-sdk-integration --platform windows --update
     ```
   </Accordion>
 
   <Accordion title="Option B - Manual">
-    1. Download the latest Bright SDK using the [Bright SDK downloader](https://bright-sdk.com/cp/docs/sdk/android), and unzip it.
-    2. Replace `bright_sdk.aar` in your `/libs` folder with the updated version.
-    3. If some methods are not available after updating, use **File → Invalidate Caches** in Android Studio.
+    1. Download the latest SDK using the [Bright SDK downloader](https://brightsdk.github.io/bright-sdk-downloader-rs/).
+    2. Replace the following files with the newer versions:
+       - `net_updater32.exe` (or `net_updater64.exe`)
+       - `lum_sdk.dll` (or `lum_sdk32.dll` / `lum_sdk64.dll` for C/C\+\+)
+       - `brd_config.json`
+    3. Clean and rebuild your project.
   </Accordion>
 </AccordionGroup>
