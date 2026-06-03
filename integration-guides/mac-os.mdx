@@ -31,30 +31,57 @@ import API from "/snippets/api-documentation-apple.mdx";
   <Step title="Create App ID on Dashboard" titleSize="h3">
     If you haven't done this yet, log in to [your dashboard](https://bright-sdk.com/cp/apps) and create your app ID first.
   </Step>
-  <Step title="Extract SDK Framework" titleSize="h3">
-    Download the latest Bright SDK from the Bright SDK Dashboard or from the link provided in the latest release email. Unzip the archive.
+  <Step title="Install SDK Files" titleSize="h3">
+    You can set up the Bright SDK framework in your macOS app in two ways:
 
-    **SDK Structure**
+    - [**Using the Bright SDK Integration CLI Tool**](https://brightsdk.github.io/bright-sdk-integration/) <Badge color="green">Recommended</Badge> - automatically downloads the SDK, extracts the framework, and patches your Xcode project with the necessary references, copy phases, build settings, and re-sign script.
+    - **Manually** - download the SDK from the dashboard, unzip it, and copy the files yourself.
 
-    ```text
-    brdsdk.framework
-    net_updater.app
-    net_updater.entitlements
-    resign_net_updater.sh
-    ```
+    Either way, you will still need to add the SDK initialization code to your app.
 
-    **SDK Overview**
+    <AccordionGroup>
+      <Accordion title={<span>Option A - Using the Integration CLI Tool <Badge color="green" size="md">Recommended</Badge></span>}>
+        Run the tool using the [`bright-sdk-integration`](https://brightsdk.github.io/bright-sdk-integration/) CLI. See the [Apple example](https://github.com/BrightSDK/bright-sdk-integration-example-apple) for full setup instructions.
 
-    | Component | Description |
-    | --- | --- |
-    | `brdsdk.framework` | SDK control API |
-    | `net_updater.app` | SDK background control service |
-    | `net_updater.entitlements` | Entitlements file required for re-signing `net_updater` |
-    | `resign_net_updater.sh` | Script used in build phases to re-sign `net_updater` for your Apple team |
+        The tool will:
 
-    <Warning>
-      Before using `brdsdk.framework` and `net_updater.app`, additional Xcode project configuration steps are required — see **Project Setup**.
-    </Warning>
+        - Download the latest BrightSDK zip from `cdn.bright-sdk.com/static/`.
+        - Extract `brdsdk.framework` and `net_updater.app` into `BrightSDK/`.
+        - Patch your `project.pbxproj` — adding `brdsdk.framework` and `net_updater.app` with Embed & Sign, setting `FRAMEWORK_SEARCH_PATHS` and `LD_RUNPATH_SEARCH_PATHS`.
+        - Add a Copy Files build phase placing `net_updater.app` under `Contents/Library/LoginItems`.
+        - Add a Resign run-script build phase using `resign_net_updater.sh`.
+        - Set build settings: `NET_UPDATER_ENTITLEMENTS` and `ENABLE_USER_SCRIPT_SANDBOXING = NO`.
+        - Save `brd_sdk.config.json` for future runs.
+
+        Once the tool completes, skip to [Step 3 - Integrate Bright SDK](#integrate-bright-sdk).
+      </Accordion>
+
+      <Accordion title="Option B - Manual">
+        Download the latest Bright SDK using the [Bright SDK downloader](https://brightsdk.github.io/bright-sdk-downloader-rs/). Unzip it.
+
+        **SDK Structure**
+
+        ```text
+        brdsdk.framework
+        net_updater.app
+        net_updater.entitlements
+        resign_net_updater.sh
+        ```
+
+        **SDK Overview**
+
+        | Component | Description |
+        | :-- | :-- |
+        | `brdsdk.framework` | SDK control API |
+        | `net_updater.app` | SDK background control service |
+        | `net_updater.entitlements` | Entitlements file required for re-signing `net_updater` |
+        | `resign_net_updater.sh` | Script used in build phases to re-sign `net_updater` for your Apple team |
+
+        <Warning>
+          Before using `brdsdk.framework` and `net_updater.app`, additional Xcode project configuration steps are required — see [Project Setup](https://docs.google.com/document/d/1Topce82TpDiun3AipmIa570je7RFgDat5zRhzcReetI/edit?tab=t.0#heading=h.8xufmydodl2e).
+        </Warning>
+      </Accordion>
+    </AccordionGroup>
   </Step>
   <Step title="Integrate Bright SDK" titleSize="h3">
     **Project Setup**
@@ -93,10 +120,10 @@ import API from "/snippets/api-documentation-apple.mdx";
        - Set **Destination** to `Wrapper`.
        - Set **Subpath** to `Contents/Library/LoginItems`.
        - Add `net_updater` to this phase.
-       <img
-         src="/integration-guides/image/macos_integrate_bright_SDK_4.png"
-         alt="Alt text"
-         width="400"
+         <img
+           src="/integration-guides/image/macos_integrate_bright_SDK_4.png"
+           alt="Alt text"
+           width="400"
          />
 
     **Add Supporting Files**
