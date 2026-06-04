@@ -84,7 +84,7 @@ import API from "/snippets/api-documentation-apple.mdx";
     </AccordionGroup>
   </Step>
   <Step title="Integrate Bright SDK" titleSize="h3">
-    **Project Setup**
+    **<u>3.1 Project Setup</u>**
 
     <Note>
       **CLI Tool users:** `brdsdk.framework` and `net_updater.app` are already added and fully configured - skip to [Import the SDK](https://docs.bright-sdk.com/integration-guides/mac-os#option-b-manual:~:text=will%20not%20function.-,Import%20the%20SDK,-In%20your%20AppDelegate).
@@ -159,7 +159,7 @@ import API from "/snippets/api-documentation-apple.mdx";
       App Sandbox is not supported. If your app has the sandbox entitlement, the SDK will not function.
     </Warning>
 
-    **Import the SDK**
+    **<u>3.2 Import the SDK</u>**
 
     In your `AppDelegate.swift`, import the Bright SDK:
 
@@ -169,7 +169,7 @@ import API from "/snippets/api-documentation-apple.mdx";
     import brdsdk
     ```
 
-    **Initialize the SDK**
+    **<u>3.3 Initialize the SDK</u>**
 
     Initialize the SDK once in your `AppDelegate`, typically inside `applicationDidFinishLaunching`. Create a dedicated setup function (e.g., `start_bright_sdk`) to keep initialization clean. Should be invoked only once.
 
