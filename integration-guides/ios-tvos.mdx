@@ -62,7 +62,7 @@ import API from "/snippets/api-documentation-apple.mdx";
         - Patch your `project.pbxproj` - adding `brdsdk.xcframework` with Embed & Sign and setting `FRAMEWORK_SEARCH_PATHS`
         - Save `brd_sdk.config.json` for future runs
 
-        Once the tool completes, skip to Step 3 - Integrate Bright SDK.
+        Once the tool completes, skip to [Step 3 - Integrate Bright SDK](#integrate-bright-sdk).
       </Accordion>
 
       <Accordion title="Option B - Manual">
@@ -87,11 +87,11 @@ import API from "/snippets/api-documentation-apple.mdx";
 
     | Project Type | Integration Path |
     | :-- | :-- |
-    | Native iOS (Swift) | Step 3.1 → Step 3.2 |
-    | Native iOS (Objective-C) | Step 3.1 → Step 3.3 |
-    | tvOS | Step 3.1 → Step 3.4 |
-    | Unity (Unity Editor level) | Step 3.5 |
-    | Unity (Xcode level) | Step 3.1 → Step 3.6 |
+    | Native iOS (Swift) | [Step 3.1](https://docs.bright-sdk.com/integration-guides/ios-tvos#:~:text=3.1%20Embedding%20the%20Framework%20in%20Xcode) → [Step 3.2](https://docs.bright-sdk.com/integration-guides/ios-tvos#:~:text=3.2%20Integration%20in%20Xcode%20\(iOS%20%E2%80%93%20Swift\)) |
+    | Native iOS (Objective-C) | [Step 3.1](https://docs.bright-sdk.com/integration-guides/ios-tvos#:~:text=3.1%20Embedding%20the%20Framework%20in%20Xcode) → [Step 3.3](https://docs.bright-sdk.com/integration-guides/ios-tvos#:~:text=3.3%20Integration%20in%20Xcode%20\(iOS%20%E2%80%93%20Objective%2DC\)) |
+    | tvOS | [Step 3.1](https://docs.bright-sdk.com/integration-guides/ios-tvos#:~:text=3.1%20Embedding%20the%20Framework%20in%20Xcode) → [Step 3.4](https://docs.bright-sdk.com/integration-guides/ios-tvos#:~:text=3.4%20Integration%20in%20Xcode%20\(tvOS\)) |
+    | Unity (Unity Editor level) | [Step 3.5](https://docs.bright-sdk.com/integration-guides/ios-tvos#:~:text=3.5%20Integration%20in%20Unity%20Editor) |
+    | Unity (Xcode level) | [Step 3.1](https://docs.bright-sdk.com/integration-guides/ios-tvos#:~:text=3.1%20Embedding%20the%20Framework%20in%20Xcode) → [Step 3.6](https://docs.bright-sdk.com/integration-guides/ios-tvos#:~:text=3.6%20Integration%20in%20Xcode%20\(Unity\)) |
 
     <Steps>
       <Step title="3.1 Embedding the Framework in Xcode">
@@ -238,20 +238,20 @@ import API from "/snippets/api-documentation-apple.mdx";
 
         Bright SDK must show a consent screen right after the app is launched. Your app must initialize the main screen first, show the consent screen, and only then pass control to other functions/screens.
 
-        1. Embed the framework - follow Step 3.1
-        2. Open `SampleAppApp.swift` from `sample_tvos_xcode` and implement similar SDK initialization logic in your app
+        1. Embed the framework - follow [Step 3.1](https://docs.bright-sdk.com/integration-guides/ios-tvos#option-b-manual:~:text=3.1%20Embedding%20the%20Framework%20in%20Xcode).
+        2. Open `SampleAppApp.swift` from `sample_tvos_xcode` and implement similar SDK initialization logic in your app.
         3. Open `SettingsView.swift` from `sample_tvos_xcode` and implement the settings screen similarly:
-           - **Web Indexing** section should have **Enable** and **Disable** buttons
+           - **Web Indexing** section should have **Enable** and **Disable** buttons.
            - Button actions delegate to `enableIndexingCallback`, then to `ContentViewModel.setIndexing(enable:, callback:)` (defined in `ContentView.swift`), which calls:
-             - `brd_api.show_consent()` - to enable the SDK
-             - `brd_api.opt_out()` - to disable the SDK
+             - `brd_api.show_consent()` - to enable the SDK.
+             - `brd_api.opt_out()` - to disable the SDK.
       </Step>
       <Step title="3.5 Integration in Unity Editor">
         This section will guide you on how to integrate SDK **at Unity level** (no code changes in Xcode).
 
         Reference sample: `unity_sample_app_2020.2.5`, `unity_admob_sample_app`
 
-        _Use this path if you want to integrate Bright SDK entirely at the Unity level without modifying Xcode. If you prefer to integrate at the Xcode level instead, skip to Step 3.6. Do not follow both - choose one._
+        _Use this path if you want to integrate Bright SDK entirely at the Unity level without modifying Xcode. If you prefer to integrate at the Xcode level instead, skip to [Step 3.6](https://docs.bright-sdk.com/integration-guides/ios-tvos#:~:text=3.6%20Integration%20in%20Xcode%20\(Unity\)). Do not follow both - choose one._
 
         <Tip>
           If you have other 3rd-party frameworks that need to initialize before your game launches, integrating via the Unity plugin ensures the correct user flow: Bright SDK consent screen → 3rd party initialization → game launch.
@@ -311,11 +311,11 @@ import API from "/snippets/api-documentation-apple.mdx";
 
         **<u>3.6.1 Embed the Bright SDK Framework</u>**
 
-        1. Follow Step 3.1 for the main app target
+        1. Follow [Step 3.1](https://docs.bright-sdk.com/integration-guides/ios-tvos#:~:text=3.1%20Embedding%20the%20Framework%20in%20Xcode) for the main app target.
         2. Additionally, link `brdsdk.xcframework` with `UnityFramework`:
-           - In **Project Navigator**, select the project → select **UnityFramework** under Targets
-           - Go to **Build Phases** → expand **Link Binary With Libraries**
-           - Click **\+**, select `brdsdk.xcframework`, click **Add**
+           - In **Project Navigator**, select the project → select **UnityFramework** under Targets.
+           - Go to **Build Phases** → expand **Link Binary With Libraries.**
+           - Click **\+**, select `brdsdk.xcframework`, click **Add.**
            <img
              src="/integration-guides/image/tvOS_Integrate_Bright_SDK_3.png"
              alt="Build Phases Link Binary"
@@ -332,7 +332,7 @@ import API from "/snippets/api-documentation-apple.mdx";
 
         Using `unity_xcode_sample_app` as a reference:
 
-        1. Copy the contents of `unity_xcode_sample_app/main/main.m` into `MainApp/main.mm` of your Unity project
+        1. Copy the contents of `unity_xcode_sample_app/main/main.m` into `MainApp/main.mm` of your Unity project.
         2. Open `MainApp/main.mm` and locate `loadBrightFramework` - set appropriate button titles for the consent screen:
            ```objective-c
            agree_btn:"PeerTextREMOVE_ADS"
@@ -345,9 +345,9 @@ import API from "/snippets/api-documentation-apple.mdx";
                // set up showing advertisements instead
            ```
         4. Embed the `Data` folder into `UnityFramework.framework`:
-           - Select the `Data` folder in **Project Navigator**
-           - In the **Inspector** pane (right side), find **Target Membership**
-           - Move the checkbox to the `UnityFramework` target
+           - Select the `Data` folder in **Project Navigator.**
+           - In the **Inspector** pane (right side), find **Target Membership.**
+           - Move the checkbox to the `UnityFramework` target.
            <img
              src="/integration-guides/image/tvOS_Integrate_Bright_SDK_5.png"
              alt="Target Membership Checkbox"
