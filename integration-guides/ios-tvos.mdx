@@ -105,20 +105,16 @@ import API from "/snippets/api-documentation-apple.mdx";
         2. Open your project in Xcode
         3. In the **Project Navigator** (left pane), select the project at the top
         4. Select your app target under the **Targets** list
-           <img
-             src="/integration-guides/image/tvOS_Integrate_Bright_SDK_1.png"
-             alt="Xcode Project Navigator"
-             width="600"
-           />
+           
+           <img src="/integration-guides/image/tvOS_Integrate_Bright_SDK_1.png" alt="Xcode Project Navigator" width="600" />
+           
         5. Go to the **General** tab → scroll to **Frameworks, Libraries, and Embedded Content**
         6. Click **\+** → **Add Other…** → **Add Files**
         7. Locate and select `brdsdk.xcframework` → click **Open**
         8. Confirm that it shows **Embed & Sign** next to `brdsdk.xcframework`
-           <img
-             src="/integration-guides/image/tvOS_Integrate_Bright_SDK_2.png"
-             alt="Embed and Sign"
-             width="600"
-           />
+           
+           <img src="/integration-guides/image/tvOS_Integrate_Bright_SDK_2.png" alt="Embed and Sign" width="600" />
+           
       </Step>
       <Step title="3.2 Integration in Xcode (iOS – Swift)">
         Reference sample: `xcode_swiftui_sample_app`, `xcode_uikit_sample_app`
@@ -316,43 +312,38 @@ import API from "/snippets/api-documentation-apple.mdx";
            - In **Project Navigator**, select the project → select **UnityFramework** under Targets.
            - Go to **Build Phases** → expand **Link Binary With Libraries.**
            - Click **\+**, select `brdsdk.xcframework`, click **Add.**
-           <img
-             src="/integration-guides/image/tvOS_Integrate_Bright_SDK_3.png"
-             alt="Build Phases Link Binary"
-             width="600"
-           />
+           
+           <img src="/integration-guides/image/tvOS_Integrate_Bright_SDK_3.png" alt="Build Phases Link Binary" width="600" />
 
         **<u>3.6.2 Embed the SDK Dialog in Your Code</u>**
 
-        <img
-          src="/integration-guides/image/tvOS_Integrate_Bright_SDK_4.png"
-          alt="Consent UI Mockup"
-          width="300"
-        />
+        <img src="/integration-guides/image/tvOS_Integrate_Bright_SDK_4.png" alt="Consent UI Mockup" width="300" />
 
         Using `unity_xcode_sample_app` as a reference:
 
         1. Copy the contents of `unity_xcode_sample_app/main/main.m` into `MainApp/main.mm` of your Unity project.
         2. Open `MainApp/main.mm` and locate `loadBrightFramework` - set appropriate button titles for the consent screen:
+           
            ```objective-c
            agree_btn:"PeerTextREMOVE_ADS"
            disagree_btn: "NotPeerTextADS"
            ```
+           
         3. If you offer ads as a monetization fallback, locate `loadUnityFramework` and enable your ad platform:
+           
            ```objective-c
            if (useMonetizationFallback) {
                // TODO: user did not agree to share resources with BrightData
                // set up showing advertisements instead
            ```
+           
         4. Embed the `Data` folder into `UnityFramework.framework`:
            - Select the `Data` folder in **Project Navigator.**
            - In the **Inspector** pane (right side), find **Target Membership.**
            - Move the checkbox to the `UnityFramework` target.
-           <img
-             src="/integration-guides/image/tvOS_Integrate_Bright_SDK_5.png"
-             alt="Target Membership Checkbox"
-             width="400"
-           />
+           
+           <img src="/integration-guides/image/tvOS_Integrate_Bright_SDK_5.png" alt="Target Membership Checkbox" width="400" />
+           
       </Step>
     </Steps>
   </Step>
