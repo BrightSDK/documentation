@@ -107,20 +107,15 @@ import API from "/snippets/api-documentation-apple.mdx";
         2. Open your project in Xcode
         3. In the **Project Navigator** (left pane), select the project at the top
         4. Select your app target under the **Targets** list
-           <img
-             src="/integration-guides/image/tvOS_Integrate_Bright_SDK_1.png"
-             alt="Xcode Project Navigator"
-             width="600"
-           />
+           
+           <img src="/integration-guides/image/tvOS_Integrate_Bright_SDK_1.png" alt="Xcode Project Navigator" width="600" />
+           
         5. Go to the **General** tab → scroll to **Frameworks, Libraries, and Embedded Content**
         6. Click **\+** → **Add Other…** → **Add Files**
         7. Locate and select `brdsdk.xcframework` → click **Open**
         8. Confirm that it shows **Embed & Sign** next to `brdsdk.xcframework`
-           <img
-             src="/integration-guides/image/tvOS_Integrate_Bright_SDK_2.png"
-             alt="Embed and Sign"
-             width="600"
-           />
+           
+           <img src="/integration-guides/image/tvOS_Integrate_Bright_SDK_2.png" alt="Embed and Sign" width="600" />
       </Step>
 
       <Step title="3.2 Integration in Xcode (iOS – Swift)">
@@ -323,19 +318,12 @@ import API from "/snippets/api-documentation-apple.mdx";
            - In **Project Navigator**, select the project → select **UnityFramework** under Targets
            - Go to **Build Phases** → expand **Link Binary With Libraries**
            - Click **\+**, select `brdsdk.xcframework`, click **Add**
-           <img
-             src="/integration-guides/image/tvOS_Integrate_Bright_SDK_3.png"
-             alt="Build Phases Link Binary"
-             width="600"
-           />
+           
+           <img src="/integration-guides/image/tvOS_Integrate_Bright_SDK_3.png" alt="Build Phases Link Binary" width="600" />
 
         **3.6.2 Embed the SDK Dialog in Your Code**
 
-        <img
-          src="/integration-guides/image/tvOS_Integrate_Bright_SDK_4.png"
-          alt="Consent UI Mockup"
-          width="300"
-        />
+        <img src="/integration-guides/image/tvOS_Integrate_Bright_SDK_4.png" alt="Consent UI Mockup" width="300" />
 
         Using `unity_xcode_sample_app` as a reference:
 
@@ -355,11 +343,8 @@ import API from "/snippets/api-documentation-apple.mdx";
            - Select the `Data` folder in **Project Navigator**
            - In the **Inspector** pane (right side), find **Target Membership**
            - Move the checkbox to the `UnityFramework` target
-           <img
-             src="/integration-guides/image/tvOS_Integrate_Bright_SDK_5.png"
-             alt="Target Membership Checkbox"
-             width="400"
-           />
+           
+           <img src="/integration-guides/image/tvOS_Integrate_Bright_SDK_5.png" alt="Target Membership Checkbox" width="400" />
       </Step>
     </Steps>
   </Step>
@@ -367,15 +352,19 @@ import API from "/snippets/api-documentation-apple.mdx";
   <Step title="Add Opt-In/Out Settings Option" titleSize="h3">
     <OptInOut platform="ios" />
   </Step>
+
   <Step title="Consent Dialog Customization" titleSize="h3">
     <ConsentDialogCustom />
   </Step>
+
   <Step title="Custom Consent Screen (optional)" titleSize="h3">
     <CustomConsentApple platform="ios" />
   </Step>
+
   <Step title="App Performance" titleSize="h3">
     <AppPerformance />
   </Step>
+
   <Step title="Build & Run Your App" titleSize="h3">
     **Native iOS / tvOS** - Use Xcode to build and run your app. Ensure New Build System is selected under File → Project Settings.
 
@@ -386,15 +375,19 @@ import API from "/snippets/api-documentation-apple.mdx";
     3. Configure Signing & Capabilities for the main target.
     4. Press Product → Run (⌘R).
   </Step>
+
   <Step title="Update Your Terms of Service" titleSize="h3">
     <Tos platform="ios" />
   </Step>
+
   <Step title="Submit Your Integration for Review" titleSize="h3">
     <SubmitIntegrationReview platform="ios" />
   </Step>
+
   <Step title="How to Update the SDK" titleSize="h3">
     <UpdateSDK platform="ios" />
   </Step>
+
   <Step title="API Documentation" titleSize="h3">
     <API />
   </Step>
