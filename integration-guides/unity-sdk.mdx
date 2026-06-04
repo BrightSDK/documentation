@@ -6,6 +6,13 @@ noindex: true
 ---
 
 import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
+import OptInOut from "/snippets/add-opt-in-out-unity.mdx";
+
+<Note>
+  For the full Android integration reference, see the [Android SDK Integration Guide](https://docs.bright-sdk.com/integration-guides/android-sdk). This document covers only Unity-specific steps and should be used in conjunction with that guide.
+</Note>
+
+### Requirements
 
 - [Latest](https://bright-sdk.com/cp/docs/sdk/android) Bright SDK AAR for Android.
 - Unity Editor (latest recommended).
@@ -31,7 +38,7 @@ import { CustomConsent } from "/snippets/custom-consent-android-unity.jsx";
     Either way, you will still need to configure your Gradle files and add the SDK initialization code to your app.
 
     <AccordionGroup>
-      <Accordion title={<span>Option A - Using the Unity Plugin <Badge color="green" size="sm">Recommended</Badge></span>}>
+      <Accordion title={<span>Option A - Using the Unity Plugin <Badge color="green" size="md">Recommended</Badge></span>}>
         Install the plugin by following the [Bright SDK Unity Plugin guide](https://github.com/BrightSDK/unity-plugin).
 
         The plugin will:
