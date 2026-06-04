@@ -5,17 +5,6 @@ sidebarTitle: "MacOS SDK"
 noindex: true
 ---
 
-import { OptInOut } from "/snippets/add-opt-in-out-apple.jsx";
-import ConsentDialogCustom from "/snippets/consent-dialog-customization-ios.mdx";
-import { CustomConsentWin } from "/snippets/custom-consent-windows.jsx";
-import AppPerformance from "/snippets/app-performance.mdx";
-import { Tos } from "/snippets/terms-of-service-apple.jsx";
-import { SubmitIntegrationReview } from "/snippets/submit-integration-review.jsx";
-import { UpdateSDK } from "/snippets/update-sdk-version-apple.jsx";
-import API from "/snippets/api-documentation-apple.mdx";
-
-### Requirements
-
 - macOS 10.15 or newer.
 - Xcode (latest recommended).
 - Bright SDK for macOS ([latest](https://bright-sdk.com/cp/docs/sdk/macos)).
@@ -84,131 +73,131 @@ import API from "/snippets/api-documentation-apple.mdx";
     </AccordionGroup>
   </Step>
   <Step title="Integrate Bright SDK" titleSize="h3">
-    **<u>3.1 Project Setup</u>**
+    <Steps>
+      <Step title="Project Setup">
+        <Note>
+          **CLI Tool users:** `brdsdk.framework` and `net_updater.app` are already added and fully configured - skip to [Import the SDK](https://docs.bright-sdk.com/integration-guides/mac-os#option-b-manual:~:text=will%20not%20function.-,Import%20the%20SDK,-In%20your%20AppDelegate).
+        </Note>
 
-    <Note>
-      **CLI Tool users:** `brdsdk.framework` and `net_updater.app` are already added and fully configured - skip to [Import the SDK](https://docs.bright-sdk.com/integration-guides/mac-os#option-b-manual:~:text=will%20not%20function.-,Import%20the%20SDK,-In%20your%20AppDelegate).
-    </Note>
+        **Add the Framework and Service to Your Target**
 
-    **Add the Framework and Service to Your Target**
+        1. In Xcode, select your target and navigate to the **General** tab.
+        2. In the **Frameworks, Libraries, and Embedded Content** section, add both `brdsdk.framework` and `net_updater.app`.
 
-    1. In Xcode, select your target and navigate to the **General** tab.
-    2. In the **Frameworks, Libraries, and Embedded Content** section, add both `brdsdk.framework` and `net_updater.app`.
+        <img
+          src="/integration-guides/image/macos_integrate_bright_SDK_1.png"
+          alt="Alt text"
+          width="400"
+        />
 
-    <img
-      src="/integration-guides/image/macos_integrate_bright_SDK_1.png"
-      alt="Alt text"
-      width="400"
-    />
+        3. Both items will now appear in the project structure.
 
-    3. Both items will now appear in the project structure.
+        <img
+          src="/integration-guides/image/macos_integrate_bright_SDK_2.png"
+          alt="Alt text"
+          width="400"
+        />
 
-    <img
-      src="/integration-guides/image/macos_integrate_bright_SDK_2.png"
-      alt="Alt text"
-      width="400"
-    />
+        **Configure net\_updater Copy Location**
 
-    **Configure net\_updater Copy Location**
+        1. Navigate to **Build Phases**.
+        2. In the **Copy Bundle Resources** section, remove `net_updater`.
 
-    1. Navigate to **Build Phases**.
-    2. In the **Copy Bundle Resources** section, remove `net_updater`.
+        <img
+          src="/integration-guides/image/macos_integrate_bright_SDK_3.png"
+          alt="Alt text"
+          width="400"
+        />
 
-    <img
-      src="/integration-guides/image/macos_integrate_bright_SDK_3.png"
-      alt="Alt text"
-      width="400"
-    />
+        3. Add a new **Copy Files** build phase:
+           - Set **Destination** to `Wrapper`.
+           - Set **Subpath** to `Contents/Library/LoginItems`.
+           - Add `net_updater` to this phase.
+             <img
+               src="/integration-guides/image/macos_integrate_bright_SDK_4.png"
+               alt="Alt text"
+               width="400"
+             />
 
-    3. Add a new **Copy Files** build phase:
-       - Set **Destination** to `Wrapper`.
-       - Set **Subpath** to `Contents/Library/LoginItems`.
-       - Add `net_updater` to this phase.
-         <img
-           src="/integration-guides/image/macos_integrate_bright_SDK_4.png"
-           alt="Alt text"
-           width="400"
-         />
+        **Add Supporting Files**
 
-    **Add Supporting Files**
+        - Copy `net_updater.entitlements` and `resign_net_updater.sh` into your project folder.
+        - These files do not need to be added to any Xcode target.
+        - `net_updater.entitlements` must be placed under the `${PROJECT_DIR}` path.
 
-    - Copy `net_updater.entitlements` and `resign_net_updater.sh` into your project folder.
-    - These files do not need to be added to any Xcode target.
-    - `net_updater.entitlements` must be placed under the `${PROJECT_DIR}` path.
+        **Configure Build Settings**
 
-    **Configure Build Settings**
+        In the **Build Settings** tab of your main app target, create a custom setting:
 
-    In the **Build Settings** tab of your main app target, create a custom setting:
+        - **Key:** `NET_UPDATER_ENTITLEMENTS`
+        - **Value:** Path to `net_updater.entitlements` relative to `${PROJECT_DIR}`
+        - Set `ENABLE_USER_SCRIPT_SANDBOXING` to `NO`
 
-    - **Key:** `NET_UPDATER_ENTITLEMENTS`
-    - **Value:** Path to `net_updater.entitlements` relative to `${PROJECT_DIR}`
-    - Set `ENABLE_USER_SCRIPT_SANDBOXING` to `NO`
+        **Add Re-sign Build Phase**
 
-    **Add Re-sign Build Phase**
+        - Add a **Run Script** build phase after the `net_updater` copy phase (e.g., name it `"Resign net_updater"`).
+        - Assign `resign_net_updater.sh` as its content (or paste the script contents directly).
 
-    - Add a **Run Script** build phase after the `net_updater` copy phase (e.g., name it `"Resign net_updater"`).
-    - Assign `resign_net_updater.sh` as its content (or paste the script contents directly).
+        <img
+          src="/integration-guides/image/macos_integrate_bright_SDK_5.png"
+          alt="Alt text"
+          width="400"
+        />
 
-    <img
-      src="/integration-guides/image/macos_integrate_bright_SDK_5.png"
-      alt="Alt text"
-      width="400"
-    />
+        <Warning>
+          App Sandbox is not supported. If your app has the sandbox entitlement, the SDK will not function.
+        </Warning>
+      </Step>
+      <Step title="Import the SDK">
+        In your `AppDelegate.swift`, import the Bright SDK:
 
-    <Warning>
-      App Sandbox is not supported. If your app has the sandbox entitlement, the SDK will not function.
-    </Warning>
+        ```swift
+        import Cocoa
+        // ... other imports ...
+        import brdsdk
+        ```
+      </Step>
+      <Step title="Initialize the SDK">
+        Initialize the SDK once in your `AppDelegate`, typically inside `applicationDidFinishLaunching`. Create a dedicated setup function (e.g., `start_bright_sdk`) to keep initialization clean. Should be invoked only once.
 
-    **<u>3.2 Import the SDK</u>**
-
-    In your `AppDelegate.swift`, import the Bright SDK:
-
-    ```swift
-    import Cocoa
-    // ... other imports ...
-    import brdsdk
-    ```
-
-    **<u>3.3 Initialize the SDK</u>**
-
-    Initialize the SDK once in your `AppDelegate`, typically inside `applicationDidFinishLaunching`. Create a dedicated setup function (e.g., `start_bright_sdk`) to keep initialization clean. Should be invoked only once.
-
-    ```swift
-    @NSApplicationMain
-    class AppDelegate: NSObject, NSApplicationDelegate {
-    
-        var sdk: brd_api?
-    
-        func applicationDidFinishLaunching(_ aNotification: Notification) {
-            // ...
-            try? start_bright_sdk()
-            // ...
+        ```swift
+        @NSApplicationMain
+        class AppDelegate: NSObject, NSApplicationDelegate {
+        
+            var sdk: brd_api?
+        
+            func applicationDidFinishLaunching(_ aNotification: Notification) {
+                // ...
+                try? start_bright_sdk()
+                // ...
+            }
+        
+            func start_bright_sdk() throws {
+                sdk = try brd_api(campaign: nil,
+                                 on_choice_change: { [weak self] new_choice in
+                    // Handle user selection
+                    switch new_choice {
+                        case .peer:
+                            // e.g. update local settings — SDK enabled
+                            myapp.options.set_bright_sdk_enabled()
+                        case .notPeer:
+                            // e.g. start a subscription process
+                            start_subscription_process()
+                        case .none:
+                            // e.g. update local settings — SDK disabled
+                            myapp.options.set_bright_sdk_disabled()
+                    }
+                })
+                show_bright_sdk()
+            }
+        
+            func show_bright_sdk() {
+                sdk?.show_consent(force: true, on_choice: { _ in })
+            }
         }
-    
-        func start_bright_sdk() throws {
-            sdk = try brd_api(campaign: nil,
-                             on_choice_change: { [weak self] new_choice in
-                // Handle user selection
-                switch new_choice {
-                    case .peer:
-                        // e.g. update local settings — SDK enabled
-                        myapp.options.set_bright_sdk_enabled()
-                    case .notPeer:
-                        // e.g. start a subscription process
-                        start_subscription_process()
-                    case .none:
-                        // e.g. update local settings — SDK disabled
-                        myapp.options.set_bright_sdk_disabled()
-                }
-            })
-            show_bright_sdk()
-        }
-    
-        func show_bright_sdk() {
-            sdk?.show_consent(force: true, on_choice: { _ in })
-        }
-    }
-    ```
+        ```
+      </Step>
+    </Steps>
   </Step>
   <Step title="Add Opt-In/Out Settings Option" titleSize="h3">
     <OptInOut platform="macos" />
