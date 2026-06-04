@@ -43,6 +43,7 @@ import API from "/snippets/api-documentation-apple.mdx";
 
     **Example:** If your Bundle ID is `com.mycompany.MyGame`, your App ID will be `ios_com.mycompany.MyGame`.
   </Step>
+  
   <Step title="Install SDK Files" titleSize="h3">
     You can set up the Bright SDK framework in your iOS/tvOS app in two ways:
 
@@ -82,6 +83,7 @@ import API from "/snippets/api-documentation-apple.mdx";
       </Accordion>
     </AccordionGroup>
   </Step>
+
   <Step title="Integrate Bright SDK" titleSize="h3">
     Choose the integration path that matches your project type:
 
@@ -120,6 +122,7 @@ import API from "/snippets/api-documentation-apple.mdx";
              width="600"
            />
       </Step>
+
       <Step title="3.2 Integration in Xcode (iOS – Swift)">
         Reference sample: `xcode_swiftui_sample_app`, `xcode_uikit_sample_app`
 
@@ -172,6 +175,7 @@ import API from "/snippets/api-documentation-apple.mdx";
         brd_api.opt_out()
         ```
       </Step>
+
       <Step title="3.3 Integration in Xcode (iOS – Objective-C)">
         Reference sample: `xcode_uikit_sample_app`
 
@@ -219,7 +223,8 @@ import API from "/snippets/api-documentation-apple.mdx";
 
         **Presenting the consent screen manually:**
 
-        ```objective-c [brd_api show_consent:self benefit:@"<BENEFIT>" agree_btn:@"<AGREE>" disagree_btn:@"<DISAGREE>" language:@"en"];
+        ```objective-c
+        [brd_api show_consent:self benefit:@"<BENEFIT>" agree_btn:@"<AGREE>" disagree_btn:@"<DISAGREE>" language:@"en"];
         ```
 
         **Opting out:**
@@ -228,6 +233,7 @@ import API from "/snippets/api-documentation-apple.mdx";
         [brd_api opt_out];
         ```
       </Step>
+
       <Step title="3.4 Integration in Xcode (tvOS)">
         Reference sample: `sample_tvos_xcode`
 
@@ -245,6 +251,7 @@ import API from "/snippets/api-documentation-apple.mdx";
              - `brd_api.show_consent()` - to enable the SDK
              - `brd_api.opt_out()` - to disable the SDK
       </Step>
+
       <Step title="3.5 Integration in Unity Editor">
         This section will guide you on how to integrate SDK **at Unity level** (no code changes in Xcode).
 
@@ -293,6 +300,7 @@ import API from "/snippets/api-documentation-apple.mdx";
         4. Confirm New Build System is selected: **File → Project Settings → Build System**
         5. Press **Product → Run** (⌘R)
       </Step>
+
       <Step title="3.6 Integration in Xcode (Unity)">
         This section will guide you on how to integrate SDK **in Xcode level** (no code changes in Xcode).
 
@@ -355,6 +363,7 @@ import API from "/snippets/api-documentation-apple.mdx";
       </Step>
     </Steps>
   </Step>
+
   <Step title="Add Opt-In/Out Settings Option" titleSize="h3">
     <OptInOut platform="ios" />
   </Step>
