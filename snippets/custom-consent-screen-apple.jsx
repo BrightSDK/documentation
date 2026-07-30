@@ -55,10 +55,15 @@ export const CustomConsentApple = ({ platform }) => (
 
         <p><strong>Mandatory text:</strong></p>
 
-        <pre><code className="language-text">{`"To [Benefit to user], please allow Web Indexing by Bright Data to use your device's free resources and IP address to download public web data from the Internet while you are using the app.
-None of your personal information is collected, except your IP address. Bright Data does not track you."`}</code></pre>
+        <pre><code className="language-text">{`"{benefit}, please allow web indexing by Bright Data to occasionally use your device’s free resources and IP address to download public web data from the Internet. 
 
-        <pre><code className="language-text">{`"Read Bright Data's Privacy Policy and End User License Agreement"`}</code></pre>
+Bright Data values your trust and takes every measure possible to protect your privacy and personal data. 
+
+Bright Data understands the security matters at stake in sharing your IP address and monitors all of its network traffic to ensure your safety. 
+
+Bright Data will only use your IP address for approved business-related use cases and never for unauthorized cases. 
+
+None of your personal information is accessed or collected except your IP address."`}</code></pre>
 
         <p><strong>Required links:</strong></p>
 
@@ -82,17 +87,12 @@ None of your personal information is collected, except your IP address. Bright D
               <td>End User License Agreement</td>
               <td><a href="https://bright-sdk.com/eula">https://bright-sdk.com/eula</a></td>
             </tr>
+            <tr>
+              <td>Use Cases</td>
+              <td><a href="https://bright-sdk.com/ethical-usage-of-residential-proxies">https://bright-sdk.com/ethical-usage-of-residential-proxies</a></td>
+            </tr>
           </tbody>
         </table>
-
-        <p><strong>Interactive element:</strong></p>
-        <p>Tapping "public web data" must open a popup with additional information:</p>
-
-        <img
-          src="/snippets/image/iOS_Custom_Consent_Screen_3.png"
-          alt="Popup Info"
-          width="400"
-        />
 
         <p><strong>Translations:</strong></p>
         <p>If you wish to translate your screen, use only the <a href="https://docs.google.com/spreadsheets/d/1G0Y1CY9emvfM9qlGC4o7wM-ypWqHbGo5Jxx8rT7DCVs/edit?gid=0#gid=0">provided official translations</a>. Contact your partnership manager for any missing languages.</p>
