@@ -131,6 +131,9 @@ None of your personal information is accessed or collected except your IP addres
           <li>After presenting your custom screen, call <code>consent_shown()</code>.</li>
         </ul>
 
+        <p>All customization parameters are available for Xcode-level integration. A subset is available for Unity Editor-level integration via <code>BrdsdkBridge.cs</code>.</p>
+        <p>You can customize the consent dialog by passing additional parameters during SDK initialization.</p>
+
         <p><strong>Flow of Showing the Consent Screen</strong></p>
         <ol>
           <li>Call <code>brd_api.authorizeDevice()</code> - status must be <code>.authorized</code> to proceed</li>
