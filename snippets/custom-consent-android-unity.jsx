@@ -7,10 +7,18 @@ export const CustomConsent = ({ platform }) => (
     <h3>Design Requirements</h3>
     <p>Your custom consent screen must include the following mandatory elements:</p>
 
-    <p><strong><u>Mandatory text:</u></strong></p>
-    <pre><code className="language-text">{`"To [Benefit to user], please allow Web Indexing by Bright Data to use your device's free resources and IP address to download public web data from the Internet. None of your personal information is collected, except your IP address. Bright Data does not track you."`}</code></pre>
+    <p><strong>Mandatory text:</strong></p>
+    <pre><code className="language-text">{`"{benefit}, please allow web indexing by Bright Data to occasionally use your device’s free resources and IP address to download public web data from the Internet. 
 
-    <p><strong><u>Required links:</u></strong></p>
+Bright Data values your trust and takes every measure possible to protect your privacy and personal data. 
+
+Bright Data understands the security matters at stake in sharing your IP address and monitors all of its network traffic to ensure your safety. 
+
+Bright Data will only use your IP address for approved business-related use cases and never for unauthorized cases. 
+
+None of your personal information is accessed or collected except your IP address."`}</code></pre>
+
+    <p><strong>Required links:</strong></p>
     <table>
       <thead>
         <tr>
@@ -31,6 +39,10 @@ export const CustomConsent = ({ platform }) => (
           <td>End User License Agreement</td>
           <td><a href="https://bright-sdk.com/EULA">https://bright-sdk.com/EULA</a></td>
         </tr>
+        <tr>
+          <td>Use Cases</td>
+          <td><a href="https://bright-sdk.com/ethical-usage-of-residential-proxies">https://bright-sdk.com/ethical-usage-of-residential-proxies</a></td>
+        </tr>
       </tbody>
     </table>
 
@@ -41,18 +53,7 @@ export const CustomConsent = ({ platform }) => (
 
     <p>Use your own branded QR code or a hosted version pointing to: <a href="https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing">https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing</a></p>
 
-    <p><strong><u>Interactive element:</u></strong></p>
-    <ul>
-      <li>Tapping "public web data" must open a popup with additional information.
-      <pre><code className="language-markdown">{`"Bright Data does not track you.Your IP address WILL be used for cases such as: 
-    Support academic research 
-    Help brands track sites selling fake products 
-    Collect public web data like product prices and reviews 
-    Aggregate travel information like flights and hotel prices "`}</code></pre>
-      </li>
-    </ul>
-
-    <p><strong><u>Translations:</u></strong></p>
+    <p><strong>Translations:</strong></p>
     <ul>
       <li>If you wish to translate your screen, use only the provided official translations. Contact your partnership manager for any missing languages.</li>
     </ul>
