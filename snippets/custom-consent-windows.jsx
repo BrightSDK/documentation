@@ -20,7 +20,7 @@ export const CustomConsentWin = ({ platform }) => (
       <li><strong>Mandatory Text -</strong> Your screen must include the following text exactly as written:</li>
     </ul>
 
-    <pre><code className="language-markdown">{`"{benefit}, please allow web indexing by Bright Data to occasionally use your device’s free resources and IP address to download public web data from the Internet. 
+    <pre><code className="language-markdown">{`"To [Benefit to user], please allow web indexing by Bright Data to occasionally use your device’s free resources and IP address to download public web data from the Internet. 
 
 Bright Data values your trust and takes every measure possible to protect your privacy and personal data. 
 
