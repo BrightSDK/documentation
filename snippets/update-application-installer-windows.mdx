@@ -1,5 +1,5 @@
 ---
-title: 'Update Application Installer Windows'
+title: "Update Application Installer Windows"
 ---
 
 **<u>Install:</u>**
@@ -27,6 +27,10 @@ Add the following to your application's uninstall script:
 1. Make sure no process uses `lum_sdk.dll` (terminate your application).
 2. Uninstall Bright Data service and remove all SDK files by executing  `net_updater32.exe --uninstall APPID`.
 3. Wait for uninstall to finish before proceeding.
+
+<Note>
+  You must run uninstall with **admin privileges** or the user will see a UAC prompt asking for elevation. **Admin privileges** are required for successful uninstallation.
+</Note>
 
 **<u>Update:</u>**
 
