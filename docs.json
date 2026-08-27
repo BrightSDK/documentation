@@ -30,7 +30,8 @@
                   "integration-guides/how-to-upload-apps-to-the-samsung-store",
                   "integration-guides/faq-tizen"
                 ],
-                "expanded": false
+                "expanded": false,
+                "hidden": true
               },
               {
                 "group": "Windows",
@@ -51,7 +52,8 @@
                   "integration-guides/LG-WebOS-SDK",
                   "integration-guides/faq-webos"
                 ],
-                "expanded": false
+                "expanded": false,
+                "hidden": true
               },
               {
                 "group": "iOS",
