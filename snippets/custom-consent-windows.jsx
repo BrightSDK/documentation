@@ -20,15 +20,15 @@ export const CustomConsentWin = ({ platform }) => (
       <li><strong>Mandatory Text -</strong> Your screen must include the following text exactly as written:</li>
     </ul>
 
-    <pre><code className="language-markdown">{`"To [Benefit to user], please allow web indexing by Bright Data to occasionally use your device’s free resources and IP address to download public web data from the Internet. 
+    <pre><code className="language-markdown">{`To Get [Benefit to user], please allow Web Indexing by [Bright Data] to use your device's free resources and IP address to download public web data from the Internet while you are using the app.
+    
+None of your personal information is collected, except your IP address. Bright Data does not track you.
 
-Bright Data values your trust and takes every measure possible to protect your privacy and personal data. 
+Bright Data will only use your IP address for approved business-related use cases and never for unauthorized cases.
 
-Bright Data understands the security matters at stake in sharing your IP address and monitors all of its network traffic to ensure your safety. 
+You may opt out any time by going to settings and switching off "Web Indexing".
 
-Bright Data will only use your IP address for approved business-related use cases and never for unauthorized cases. 
-
-None of your personal information is accessed or collected except your IP address. Bright Data does not track you"`}</code></pre>
+Read Bright Data's [Privacy Policy] and [End User License Agreement].`}</code></pre>
 
     <Note>
       <strong>Important:</strong> "<a href="https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing">Learn more</a>", "<a href="https://bright-sdk.com/privacy-policy">Privacy Policy</a>", "<a href="https://bright-sdk.com/eula">EULA (End User Level Agreement)</a>", and "<a href="https://bright-sdk.com/ethical-usage-of-residential-proxies">use cases</a>" should redirect to the relevant links.
