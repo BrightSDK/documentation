@@ -116,12 +116,12 @@ settings.Call("setSkipConsent", true);`}</code></pre>
 
     <p>See below some examples of possible custom consent screens:</p>
 
-    <img src="/snippets/image/android_unity_consent_2.png" alt="Popup example" width="400" />
+    <img src="/integration-guides/image/snippets/android_unity_consent_2.png" alt="Popup example" width="400" />
 
-    <img src="/snippets/image/android_unity_consent_3.png" alt="Popup example" width="400" />
+    <img src="/integration-guides/image/snippets/android_unity_consent_3.png" alt="Popup example" width="400" />
 
-    <img src="/snippets/image/android_unity_consent_4.png" alt="Popup example" width="400" />
+    <img src="/integration-guides/image/snippets/android_unity_consent_4.png" alt="Popup example" width="400" />
 
-    <img src="/snippets/image/android_unity_consent_5.png" alt="Popup example" width="400" />
+    <img src="/integration-guides/image/snippets/android_unity_consent_5.png" alt="Popup example" width="400" />
   </>
 );

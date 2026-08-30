@@ -9,7 +9,7 @@ export const Tos = ({ platform }) => (
         <p>Your existing privacy settings may already cover this (e.g., if you have ads in your app). If not, update your App Store privacy settings to include at minimum what Bright Data collects:</p>
 
         <img
-          src="/snippets/image/apple_update_tos_1.png"
+          src="/integration-guides/image/snippets/apple_update_tos_1.png"
           alt="Alt text"
           width="400"
         />
