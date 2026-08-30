@@ -24,7 +24,7 @@ export const CustomConsentWin = ({ platform }) => (
     
 None of your personal information is collected, except your IP address. Bright Data does not track you.
 
-Bright Data will only use your IP address for approved business-related use cases and never for unauthorized cases.
+Bright Data will only use your IP address for approved business-related [use cases] and never for unauthorized cases.
 
 You may opt out any time by going to settings and switching off "Web Indexing".
 
