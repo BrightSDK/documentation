@@ -63,7 +63,7 @@ Bright Data understands the security matters at stake in sharing your IP address
 
 Bright Data will only use your IP address for approved business-related use cases and never for unauthorized cases. 
 
-None of your personal information is accessed or collected except your IP address."`}</code></pre>
+None of your personal information is accessed or collected except your IP address. Bright Data does not track you."`}</code></pre>
 
         <p><strong>Required links:</strong></p>
 
