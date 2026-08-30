@@ -28,7 +28,7 @@ Bright Data understands the security matters at stake in sharing your IP address
 
 Bright Data will only use your IP address for approved business-related use cases and never for unauthorized cases. 
 
-None of your personal information is accessed or collected except your IP address."`}</code></pre>
+None of your personal information is accessed or collected except your IP address. Bright Data does not track you"`}</code></pre>
 
     <Note>
       <strong>Important:</strong> "<a href="https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing">Learn more</a>", "<a href="https://bright-sdk.com/privacy-policy">Privacy Policy</a>", "<a href="https://bright-sdk.com/eula">EULA (End User Level Agreement)</a>", and "<a href="https://bright-sdk.com/ethical-usage-of-residential-proxies">use cases</a>" should redirect to the relevant links.
