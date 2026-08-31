@@ -19,7 +19,7 @@ export const UpdateSDK = ({ platform }) => (
           <li>Clean the build folder: Product → Clean Build Folder in Xcode.</li>
         </ol>
         
-        <img src="/images/snippets/update_SDK_iOS_1.png" alt="Alt text" width="400" />
+        <img src="/_mintlify/image/brightdatasdk/images/snippets/update_SDK_iOS_1.png" alt="Alt text" width="400" />
         <p>If cleaning doesn't help, clear <code>DerivedData</code>...</p>
 
         {platform === "ios" && (
@@ -28,7 +28,7 @@ export const UpdateSDK = ({ platform }) => (
             <ol>
               <li>Remove the existing <code>brdsdk.unitypackage</code> asset from Unity Editor.</li>
             </ol>
-            <img src="/images/snippets/update_SDK_iOS_2.png" alt="Alt text" width="400" />
+            <img src="/_mintlify/image/brightdatasdk/images/snippets/update_SDK_iOS_2.png" alt="Alt text" width="400" />
             <p>Re-import the new package following <a href="https://docs.bright-sdk.com/integration-guides/ios-tvos#option-b-manual:~:text=Import%20the%20SDK%20Package">Import the SDK Package</a> Step.</p>
           </>
         )}
