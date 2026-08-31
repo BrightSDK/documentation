@@ -7,7 +7,7 @@ noindex: true
 
 import { OptInOut } from "/snippets/add-opt-in-out-apple.jsx";
 import ConsentDialogCustom from "/snippets/consent-dialog-customization-ios.mdx";
-import { CustomConsentWin } from "/snippets/custom-consent-windows.jsx";
+import CustomConsent from "/snippets/custom-consent-screen-macos.mdx";
 import AppPerformance from "/snippets/app-performance.mdx";
 import { Tos } from "/snippets/terms-of-service-apple.jsx";
 import { SubmitIntegrationReview } from "/snippets/submit-integration-review.jsx";
@@ -40,7 +40,7 @@ import API from "/snippets/api-documentation-apple.mdx";
     Either way, you will still need to add the SDK initialization code to your app.
 
     <AccordionGroup>
-      <Accordion title={<span>Option A - Using the Integration CLI Tool <Badge color="green" size="md">Recommended</Badge></span>}>
+      <Accordion title='&lt;span&gt;Option A - Using the Integration CLI Tool &lt;Badge color="green" size="md"&gt;Recommended&lt;/Badge&gt;&lt;/span&gt;'>
         Run the tool using the [`bright-sdk-integration`](https://brightsdk.github.io/bright-sdk-integration/) CLI. See the [Apple example](https://github.com/BrightSDK/bright-sdk-integration-example-apple) for full setup instructions.
 
         The tool will:
@@ -214,7 +214,7 @@ import API from "/snippets/api-documentation-apple.mdx";
     <OptInOut platform="macos" />
   </Step>
   <Step title="Custom Consent Screen (optional)" titleSize="h3">
-    <CustomConsentWin platform="macos" />
+    <CustomConsent />
   </Step>
   <Step title="App Performance" titleSize="h3">
     <AppPerformance />
