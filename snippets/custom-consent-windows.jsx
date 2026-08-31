@@ -7,7 +7,7 @@ export const CustomConsentWin = ({ platform }) => (
     <p>This is what it looks like on the default Bright SDK screen:</p>
 
     <img
-      src="/images/snippets/default_consent_screen.png"
+      src="/_mintlify/image/brightdatasdk/images/snippets/default_consent_screen.png"
       alt="Alt text"
       width="400"
     />
@@ -52,13 +52,13 @@ Read Bright Data's [Privacy Policy] and [End User License Agreement].`}</code></
         <p>Example Custom Screens:</p>
 
         <img
-          src="/images/snippets/custom-consent-windows-3.png"
+          src="/_mintlify/image/brightdatasdk/images/snippets/custom-consent-windows-3.png"
           alt="Alt text"
           width="400"
         />
         <br />
         <img
-          src="/images/snippets/custom-consent-windows-4.png"
+          src="/_mintlify/image/brightdatasdk/images/snippets/custom-consent-windows-4.png"
           alt="Alt text"
           width="400"
         />
