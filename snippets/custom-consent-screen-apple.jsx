@@ -32,7 +32,7 @@ export const CustomConsentApple = ({ platform }) => (
           <>
             <p>This is what it looks like on the default Bright SDK screen:</p>
             <img
-              src="/images/snippets/iOS_Custom_Consent_Screen_1.png"
+              src="/_mintlify/image/brightdatasdk/images/snippets/iOS_Custom_Consent_Screen_1.png"
               alt="Default iOS Screen"
               width="400"
             />
@@ -43,7 +43,7 @@ export const CustomConsentApple = ({ platform }) => (
           <>
             <p>This is what it looks like on the default Bright SDK screen:</p>
             <img
-              src="/images/snippets/iOS_Custom_Consent_Screen_2.png"
+              src="/_mintlify/image/brightdatasdk/images/snippets/iOS_Custom_Consent_Screen_2.png"
               alt="Default MacOS Screen"
               width="400"
             />
@@ -109,14 +109,14 @@ Read Bright Data's [Privacy Policy] and [End User License Agreement].`}</code></
         <Columns cols={2}>
           <Column>
             <img
-              src="/images/snippets/iOS_Custom_Consent_Screen_4.png"
+              src="/_mintlify/image/brightdatasdk/images/snippets/iOS_Custom_Consent_Screen_4.png"
               alt="Custom Consent Example 1"
               width="300"
             />
           </Column>
           <Column>
             <img
-              src="/images/snippets/iOS_Custom_Consent_Screen_5.png"
+              src="/_mintlify/image/brightdatasdk/images/snippets/iOS_Custom_Consent_Screen_5.png"
               alt="Custom Consent Example 2"
               width="300"
             />
