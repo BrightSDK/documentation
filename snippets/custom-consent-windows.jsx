@@ -57,7 +57,7 @@ Updates will be automatically downloaded by your device from time to time and wi
         </tr>
         <tr>
           <td>Bright Data</td>
-          <td><a href="https://brightdata.com/">https://brightdata.com/a></td>
+          <td><a href="https://brightdata.com/">https://brightdata.com/</a></td>
         </tr>
         <tr>
           <td>Privacy Policy</td>
