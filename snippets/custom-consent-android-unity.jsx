@@ -8,15 +8,15 @@ export const CustomConsent = ({ platform }) => (
     <p>Your custom consent screen must include the following mandatory elements:</p>
 
     <p><strong>Mandatory text:</strong></p>
-    <pre><code className="language-text">{`"To [Benefit to user], please allow web indexing by Bright Data to occasionally use your device’s free resources and IP address to download public web data from the Internet. 
+    <pre><code className="language-text">{`To [Benefit to user], please allow Web Indexing by Bright Data to use your device's free resources and IP address to download public web data from the Internet.
 
-Bright Data values your trust and takes every measure possible to protect your privacy and personal data. 
+Bright Data will only use your IP address for approved business-related use cases and never for unauthorized cases.
 
-Bright Data understands the security matters at stake in sharing your IP address and monitors all of its network traffic to ensure your safety. 
+None of your personal information is accessed or collected except your IP address. Bright Data does not track you.
 
-Bright Data will only use your IP address for approved business-related use cases and never for unauthorized cases. 
+Your participation is totally optional and you may opt out at any time.
 
-None of your personal information is accessed or collected except your IP address."`}</code></pre>
+Read Bright Data's Privacy Policy and End User License Agreement`}</code></pre>
 
     <p><strong>Required links:</strong></p>
     <table>
@@ -27,6 +27,10 @@ None of your personal information is accessed or collected except your IP addres
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <td>Web Indexing</td>
+          <td><a href="https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing">https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing</a></td>
+        </tr>
         <tr>
           <td>Bright Data</td>
           <td><a href="https://www.brightdata.com">https://www.brightdata.com</a></td>
