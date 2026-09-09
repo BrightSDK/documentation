@@ -36,7 +36,7 @@ None of your personal information is accessed or collected except your IP addres
 
     <pre><code className="language-markdown">{`Learn more about web indexing by Bright Data.
 
-Learn more about Bright Data's Privacy Policy
+Learn more about Bright Data's Privacy Policy.
 
 Bright Data runs in the background even after closing the application.
 
