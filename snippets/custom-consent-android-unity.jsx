@@ -125,7 +125,5 @@ settings.Call("setSkipConsent", true);`}</code></pre>
     <img src="/_mintlify/image/brightdatasdk/images/snippets/android-unity-consent-3-new.png" alt="Popup example" width="400" />
 
     <img src="/_mintlify/image/brightdatasdk/images/snippets/android-unity-consent-4-new.png" alt="Popup example" width="400" />
-
-    <img src="/_mintlify/image/brightdatasdk/images/snippets/android_unity_consent_5.png" alt="Popup example" width="400" />
   </>
 );
