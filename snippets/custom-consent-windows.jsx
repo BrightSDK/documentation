@@ -64,7 +64,7 @@ Updates will be automatically downloaded by your device from time to time and wi
           <td><a href="https://bright-sdk.com/privacy-policy">https://bright-sdk.com/privacy-policy</a></td>
         </tr>
         <tr>
-          <td>EULA (End User Level Agreement)</td>
+          <td>EULA (End User License Agreement)</td>
           <td><a href="https://bright-sdk.com/eula">https://bright-sdk.com/eula</a></td>
         </tr>
         <tr>
