@@ -7,7 +7,7 @@ export const CustomConsentWin = ({ platform }) => (
     <p>This is what it looks like on the default Bright SDK screen:</p>
 
     <img
-      src="/_mintlify/image/brightdatasdk/images/snippets/default_consent_screen.png"
+      src="/_mintlify/image/brightdatasdk/images/snippets/default_consent_screen_win.png"
       alt="Alt text"
       width="400"
     />
@@ -92,13 +92,13 @@ Updates will be automatically downloaded by your device from time to time and wi
         <p>Example Custom Screens:</p>
 
         <img
-          src="/_mintlify/image/brightdatasdk/images/snippets/custom-consent-windows-3.png"
+          src="/_mintlify/image/brightdatasdk/images/snippets/win-custome-consent-1.png"
           alt="Alt text"
           width="400"
         />
         <br />
         <img
-          src="/_mintlify/image/brightdatasdk/images/snippets/custom-consent-windows-4.png"
+          src="/_mintlify/image/brightdatasdk/images/snippets/win-custome-consent-2.png"
           alt="Alt text"
           width="400"
         />
