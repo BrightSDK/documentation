@@ -120,11 +120,11 @@ settings.Call("setSkipConsent", true);`}</code></pre>
 
     <p>See below some examples of possible custom consent screens:</p>
 
-    <img src="/_mintlify/image/brightdatasdk/images/snippets/android_unity_consent_2.png" alt="Popup example" width="400" />
+    <img src="/_mintlify/image/brightdatasdk/images/snippets/win-custome-consent-1.png" alt="Popup example" width="400" />
 
-    <img src="/_mintlify/image/brightdatasdk/images/snippets/android_unity_consent_3.png" alt="Popup example" width="400" />
+    <img src="/_mintlify/image/brightdatasdk/images/snippets/android-unity-consent-3-new.png" alt="Popup example" width="400" />
 
-    <img src="/_mintlify/image/brightdatasdk/images/snippets/android_unity_consent_4.png" alt="Popup example" width="400" />
+    <img src="/_mintlify/image/brightdatasdk/images/snippets/android-unity-consent-4-new.png" alt="Popup example" width="400" />
 
     <img src="/_mintlify/image/brightdatasdk/images/snippets/android_unity_consent_5.png" alt="Popup example" width="400" />
   </>
