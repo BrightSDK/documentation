@@ -8,15 +8,15 @@ export const CustomConsent = ({ platform }) => (
     <p>Your custom consent screen must include the following mandatory elements:</p>
 
     <p><strong>Mandatory text:</strong></p>
-    <pre><code className="language-text">{`To [Benefit to user], please allow Web Indexing by Bright Data to use your device's free resources and IP address to download public web data from the Internet.
+    <pre><code className="language-text">{`To {Benefit to user}, please allow Web Indexing by Bright Data to use your device's free resources and IP address to access public web data, without storing this data on your device.
 
-Bright Data will only use your IP address for approved business-related use cases and never for unauthorized cases.
+Bright Data will only use your IP address for approved business-related use cases and in strict accordance with Bright Data's usage policies.
 
 None of your personal information is accessed or collected except your IP address. Bright Data does not track you.
 
 Your participation is totally optional and you may opt out at any time.
 
-Read Bright Data's Privacy Policy and End User License Agreement`}</code></pre>
+Read Bright Data's Privacy Policy and End User License Agreement.`}</code></pre>
 
     <p><strong>Required links:</strong></p>
     <table>
