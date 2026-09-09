@@ -20,13 +20,13 @@ export const CustomConsentWin = ({ platform }) => (
       <li><strong>Mandatory Text -</strong> Your screen must include the following text exactly as written:</li>
     </ul>
 
-    <pre><code className="language-markdown">{`To [Benefit to user], please allow Web Indexing by Bright Data to use your device's free resources and IP address to download public web data from the Internet. 
+    <pre><code className="language-markdown">{`To [Benefit to user], please allow Web Indexing by Bright Data to use your device's free resources and IP address to access public web data, without storing this data on your device.
 
 Bright Data values your trust and takes every measure possible to protect your privacy and personal data. Bright Data does not track you.
 
 Bright Data understands the security matters at stake in sharing your IP address and monitors all of its network traffic to ensure your safety. 
 
-Bright Data will only use your IP address for approved business-related use cases and never for unauthorized cases. 
+Bright Data will only use your IP address for approved business-related use cases and in strict accordance with Bright Data's usage policies. 
 
 None of your personal information is accessed or collected except your IP address.`}</code></pre>
 
@@ -34,13 +34,13 @@ None of your personal information is accessed or collected except your IP addres
       <li><strong>Additional Required Text:</strong></li>
     </ul>
 
-    <pre><code className="language-markdown">{`Learn more about web indexing by Bright Data
+    <pre><code className="language-markdown">{`Learn more about web indexing by Bright Data.
 
-Learn more about Bright Data’s Privacy Policy
+Learn more about Bright Data's Privacy Policy
 
 Bright Data runs in the background even after closing the application.
 
-Updates will be automatically downloaded by your device from time to time and will be subject to the EULA (End User Level Agreement)`}</code></pre>
+Updates will be automatically downloaded by your device from time to time and will be subject to the EULA (End User License Agreement).`}</code></pre>
 
     <p><strong>Required links:</strong></p>
     <table>
@@ -83,8 +83,8 @@ Updates will be automatically downloaded by your device from time to time and wi
           <li><strong>Track Consent Screen Display - </strong>When your external consent screen is displayed, call <code>NotifyShowConsent()</code> method.</li>
           <li><strong>Handle User Response</strong>
             <ul>
-              <li>The opt-in button (e.g. "<em>I Agree</em>”) should call <code>ExternalOptIn()</code> method.</li>
-              <li>The opt-out button (e.g. "<em>I Disagree</em>”) should call <code>OptOut()</code> method.</li>
+              <li>The opt-in button (e.g. "<em>I Agree</em>") should call <code>ExternalOptIn()</code> method.</li>
+              <li>The opt-out button (e.g. "<em>I Disagree</em>") should call <code>OptOut()</code> method.</li>
             </ul>
           </li>
         </ol>
