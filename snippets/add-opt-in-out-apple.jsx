@@ -54,10 +54,6 @@ export const OptInOut = ({ platform }) => (
       </tbody>
     </table>
 
-    <p>Refrain from using technical terms like "opt in" / "opt out" — always speak in terms of user value.</p>
-
-    <p>You may add a confirmation dialog to discourage opting out (e.g., <em>"If you disable Web Indexing, you will start seeing ads. Continue?"</em>), and a confirmation message after opting out (e.g., <em>"Web Indexing disabled. You can re-enable it anytime from Settings."</em>)</p>
-
     <p><strong><u>Common mistakes to avoid:</u></strong></p>
     <table>
       <thead>
