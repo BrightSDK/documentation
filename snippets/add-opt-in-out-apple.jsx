@@ -56,10 +56,10 @@ export const OptInOut = ({ platform }) => (
     <p><strong><u>Examples of opted-in and opted-out scenarios:</u></strong></p>
 
     <Columns cols={2}>
-      <Card img="/images/snippets/opt-in-out-iphone-1.png"></Card>
-      <Card img="/images/snippets/opt-in-out-iphone-2.png"></Card>
-      <Card img="/images/snippets/opt-in-out-iphone-3.png"></Card>
-      <Card img="/images/snippets/opt-in-out-iphone-4.png"></Card>
+      <Card img="/_mintlify/image/brightdatasdk/images/snippets/opt-in-out-iphone-1.png"></Card>
+      <Card img="/_mintlify/image/brightdatasdk/images/snippets/opt-in-out-iphone-2.png"></Card>
+      <Card img="/_mintlify/image/brightdatasdk/images/snippets/opt-in-out-iphone-3.png"></Card>
+      <Card img="/_mintlify/image/brightdatasdk/images/snippets/opt-in-out-iphone-4.png"></Card>
     </Columns>
 
     <p><strong><u>Value text suggestions:</u></strong></p>
@@ -120,8 +120,8 @@ export const OptInOut = ({ platform }) => (
 
     <p><strong><u>Opt-Out Messages examples:</u></strong></p>
     <Columns cols={2}>
-      <Card img="/images/snippets/opt-in-out-iphone-5.png"></Card>
-      <Card img="/images/snippets/opt-in-out-iphone-6.png"></Card>
+      <Card img="/_mintlify/image/brightdatasdk/images/snippets/opt-in-out-iphone-5.png"></Card>
+      <Card img="/_mintlify/image/brightdatasdk/images/snippets/opt-in-out-iphone-6.png"></Card>
     </Columns>
   </>
 );
