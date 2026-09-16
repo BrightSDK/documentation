@@ -53,6 +53,15 @@ export const OptInOut = ({ platform }) => (
       There is no way to directly opt in. Only the user can decide. You must show the consent screen — opt-in happens automatically only if the user agrees.
     </Note>
 
+    <p><strong><u>Examples of opted-in and opted-out scenarios:</u></strong></p>
+
+    <Columns cols={2}>
+      <Card img="/images/snippets/opt-in-out-iphone-1.png"></Card>
+      <Card img="/images/snippets/opt-in-out-iphone-2.png"></Card>
+      <Card img="/images/snippets/opt-in-out-iphone-3.png"></Card>
+      <Card img="/images/snippets/opt-in-out-iphone-4.png"></Card>
+    </Columns>
+
     <p><strong><u>Value text suggestions:</u></strong></p>
     <table>
       <thead>
@@ -98,5 +107,21 @@ export const OptInOut = ({ platform }) => (
         </tr>
       </tbody>
     </table>
+
+    <p><strong><u>You may add pop-up/confirmation dialogs to:</u></strong></p>
+    <ul>
+      <li><strong>Discourage opt-out:</strong> "If you disable Web Indexing, you will start seeing ads. Do you want to see ads?"</li>
+      <li><strong>Confirm opt-out:</strong> "You have successfully disabled Web Indexing. You may enable it again anytime from the settings menu."</li>
+    </ul>
+
+    <Info>
+      You are responsible for the text and design. These will be reviewed before publishing.
+    </Info>
+
+    <p><strong><u>Opt-Out Messages examples:</u></strong></p>
+    <Columns cols={2}>
+      <Card img="/images/snippets/opt-in-out-iphone-5.png"></Card>
+      <Card img="/images/snippets/opt-in-out-iphone-6.png"></Card>
+    </Columns>
   </>
 );
