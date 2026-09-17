@@ -9,7 +9,7 @@ export const OptInOut = ({ platform }) => (
     <p><strong><u>Requirements:</u></strong></p>
     <ul>
       <li>Add a toggle/switch labeled "Web Indexing" that clearly reflects the current status (opted in or out).</li>
-      <li>Below the switch, add text emphasizing the value users receive when opting in. (<a href="h#add-opt-in%2Fout-settings-option:~:text=Value%20text%20suggestions">see examples</a>)</li>
+      <li>Below the switch, add text emphasizing the value users receive when opting in. (<a href="#add-opt-in%2Fout-settings-option:~:text=Value%20text%20suggestions">see examples</a>)</li>
       
       <li>Include a "Learn more" link that opens: <a href="https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing">https://bright-sdk.com/users#learn-more-about-bright-sdk-web-indexing</a>.</li>
     </ul>
@@ -144,11 +144,7 @@ export const OptInOut = ({ platform }) => (
         <tr><td><code>Opted in</code></td><td>"When enabled you get 100 extra coins"</td></tr>
       </tbody>
     </table>
-
-    <p>Refrain from using technical terms like "opt in" / "opt out" — always speak in terms of user value.</p>
-
-    <p>You may add a confirmation dialog to discourage opting out (e.g., <em>"If you disable Web Indexing, you will start seeing ads. Continue?"</em>), and a confirmation message after opting out (e.g., <em>"Web Indexing disabled. You can re-enable it anytime from Settings."</em>)</p>
-
+        
     <p><strong><u>Common mistakes to avoid:</u></strong></p>
     <table>
       <thead>
