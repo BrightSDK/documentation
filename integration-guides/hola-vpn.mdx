@@ -207,16 +207,15 @@ Implementation is simple - there are 3 steps:
       width="400"
     />
 
-    1. **Mandatory Text**
-       Optional offer by <a href="https://holavpn.com/"><img src="/images/guides/holavpn_integration_8.png" alt="Hola" noZoom style={{height: "1em", width: "auto", display: "inline"}} /></a>
-       **Access worldwide content with Hola VPN!**
-       **Install Hola VPN to enjoy:**
+    1. **Mandatory Text** Optional offer by
+       <a href="https://holavpn.com/">
+         <img src="/images/guides/holavpn_integration_8.png" alt="Hola" noZoom style={{height: "1em", width: "auto", display: "inline"}} />
+       </a>
+       **Access worldwide content with Hola VPN!** **Install Hola VPN to enjoy:**
        - Unrestricted access to the content you like.
-       - \+190 locations available 24/7.
-       - Ultra-fast and stable connection.
-       **Hola VPN provides you with free VPN** in return for allowing Bright SDK to occasionally use your device's free resources and IP address. When you click "Accept", you agree to install "Hola VPN" and consent to its [Privacy Policy](https://hola.org/legal/privacy) and [EULA](https://hola.org/legal/sla).
-    2. **Buttons**
-       "Decline" / "Accept"
+       - +190 locations available 24/7.
+       - Ultra-fast and stable connection. **Hola VPN provides you with free VPN** in return for allowing Bright SDK to occasionally use your device's free resources and IP address. When you click "Accept", you agree to install "Hola VPN" and consent to its [Privacy Policy](https://hola.org/legal/privacy) and [EULA](https://hola.org/legal/sla).
+    2. **Buttons** "Decline" / "Accept"
        <Warning>
          Make sure buttons return true value from user interaction ("Decline" = opt-out / "Accept" = opt-in). **DO NOT install anything on users' devices if they have not opted-in.**
        </Warning>
@@ -240,14 +239,16 @@ Implementation is simple - there are 3 steps:
 
     - Iran
     - Iraq
+    - India
     - Syria
     - Lebanon
     - Palestine
     - North Korea
     - Cuba
     - Sudan
+    - Belarus
+    - Russia
     - Crimea region of Russia
-    - India
   </Step>
   <Step title="Technical Integration" titleSize="h3">
     1. **Dynamically download** - the app using the link present in your bundle page in the Bright SDK control panel.
@@ -256,8 +257,7 @@ Implementation is simple - there are 3 steps:
          alt="Alt text"
          width="400"
        />
-       **<u>Downloaded filename format:</u>** `Hola-Setup-csa-aid-[AFFILIATE_CODE].exe.`\
-       **<u>Example:</u>** `Hola-Setup-csa-aid-a58kz.exe.`
+       **<u>Downloaded filename format:</u>** `Hola-Setup-csa-aid-[AFFILIATE_CODE].exe.`<br />**<u>Example:</u>** `Hola-Setup-csa-aid-a58kz.exe.`
        <Warning>
          **Important:** Keep the original filename as downloaded - the name contains your affiliate code that binds future installations to your account.
        </Warning>

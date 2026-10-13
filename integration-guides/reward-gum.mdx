@@ -76,11 +76,12 @@ Implementation is simple - there are 3 steps:
         width="400"
       />
 
-    1. **Mandatory Text**
-       Optional offer by <a href="https://rewardgum.com/"><img src="/images/guides/rgum_integration_2.png" alt="RewardGUM" noZoom style={{height: "1em", width: "auto", display: "inline"}} /></a>
+    1. **Mandatory Text** Optional offer by
+       <a href="https://rewardgum.com/">
+         <img src="/images/guides/rgum_integration_2.png" alt="RewardGUM" noZoom style={{height: "1em", width: "auto", display: "inline"}} />
+       </a>
        When you click "Accept", you agree to install "RewardGUM" and consent to its [Privacy Policy](https://rewardgum.com/privacy/) and [EULA](https://rewardgum.com/user-agreement/).
-    2. **Buttons**
-       "Decline" / "Accept"
+    2. **Buttons** "Decline" / "Accept"
        <Warning>
          Make sure buttons return true value from user interaction ("Decline" = opt-out / "Accept" = opt-in). **DO NOT install anything on users' devices if they have not opted-in.**
        </Warning>
@@ -102,14 +103,15 @@ Implementation is simple - there are 3 steps:
 
     - Iran
     - Iraq
+    - India
     - Syria
     - Lebanon
     - Palestine
-    - Russia
-    - Belarus
     - North Korea
     - Cuba
     - Sudan
+    - Belarus
+    - Russia
     - Crimea region of Russia
   </Step>
   <Step title="Technical Integration" titleSize="h3">
@@ -119,9 +121,7 @@ Implementation is simple - there are 3 steps:
          alt="Alt text"
          width="400"
        />
-       **Download URL format:** `https://cdn.bright-sdk.com/static/rewardgum_bundler.exe?filename=RewardGum-[your_bundle_code].exe`\
-       **Downloaded filename format:** `RewardGUM-XXXXX.exe`\
-       **Example:** `RewardGUM-zx76b.exe`
+       **Download URL format:** `https://cdn.bright-sdk.com/static/rewardgum_bundler.exe?filename=RewardGum-[your_bundle_code].exe`<br />**Downloaded filename format:** `RewardGUM-XXXXX.exe`<br />**Example:** `RewardGUM-zx76b.exe`
        <Warning>
          **Important:** Make sure that the bundler executable file has your bundle code in its filename - if it isn't present it will fail. The filename must end with `-XXXXX.exe`, where `XXXXX` is your unique bundle code.
        </Warning>
